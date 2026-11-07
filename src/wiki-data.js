@@ -1986,7 +1986,7 @@ export const EVENTS = [
   { year: 728, month: 5, seq: null, fac: ["天策", "万花", "唐军"], loc: ["洛阳"], title: "端午，洛阳南市，程凯救下被掳的幼年沈含英（右腕被刺伤留疤）；程广见其颈间玉坠，带程凯入程府", chars: ["chengkai", "shenhanying", "chengguang", "chengfeng"] },
   { year: 741, month: null, seq: "A", fac: ["万花"], loc: ["万花谷"], title: "许秋生之父染疫身亡，沈含英随师走方救其母子，引许秋生入谷——「怕么？」「自己双亲，怕什么。可你有法子么？」", chars: ["xuqiusheng", "shenhanying"] },
   { year: 741, month: null, seq: "B", fac: ["万花"], loc: ["万花谷"], title: "沈含英、许秋生、江蓠同场入门三选一：沈含英选刀（医者之勇），许秋生选木锨（医者之勤），江蓠选桃（医者之智）", chars: ["shenhanying", "xuqiusheng", "jiangli", "peiyuan"] },
-  { year: 749, month: 12, seq: null, fac: ["万花"], loc: ["万花谷"], title: "许秋生之母重症风寒，未能撑过这一冬（沈含英自天策府侍医期满返谷后那一冬）；新年夜沈含英留下相陪——「我们说的一心赴救，其实…常常并不落在那个『救』字上」", chars: ["xuqiusheng", "shenhanying"] },
+  { year: 749, month: 12, seq: null, fac: ["万花"], loc: ["新丰"], title: "许秋生之母重症风寒，未能撑过这一冬（沈含英自天策府侍医期满返谷后那一冬）；新年夜沈含英留下相陪——「我们说的一心赴救，其实…常常并不落在那个『救』字上」", chars: ["xuqiusheng", "shenhanying"] },
   { year: 747, month: 10, seq: "B", fac: ["天策", "万花"], loc: ["天策府/北邙山"], title: "沈含英随师至天策府为侍医（竞猎前夕；注：是月玄宗幸华清宫，校猎观军容之使当自骊山东来）；初到即遇天弓营吐泻、被疑下药，程凯挡箭护之，岚川云暗访搜证为其洗冤", chars: ["shenhanying", "chengkai", "lanchuanyun", "litingshen"] },
   { year: 749, month: null, seq: null, fac: ["天策", "万花"], loc: ["天策府/北邙山"], title: "沈含英侍医期满，离天策府返谷；程凯套车送行——「这东西两京之隔能有多远，往后要见，不难」", chars: ["shenhanying", "chengkai"] },
   { year: 751, month: 3, seq: null, fac: ["万花"], loc: ["长安"], title: "陈瑞和由庐州乡贡解送入京，应进士举屡试不第；许秋生赴岑菡家府雅集，与之相谈，荐其入万花", chars: ["chenruihe", "xuqiusheng", "cenhan"] },
@@ -2483,6 +2483,7 @@ export const LOC_COORDS = {
   "代州":        { x: 670, y: 254, kind: "city", la: "e", note: "雁门关南之州治（代县）" },
   /* —— 兩京走廊與關中 —— */
   "长安":        { x: 599, y: 354, kind: "city", la: "s" },
+  "新丰":        { x: 605, y: 351, kind: "city", la: "n", note: "许秋生乡里；天宝七载省入会昌、更名昭应，华清宫所在" },
   "洛阳":        { x: 653, y: 345, kind: "city", la: "e" },
   "天策府/北邙山": { x: 645, y: 327, kind: "sect", la: "w" },
   "嵩山-少林寺": { x: 668, y: 356, kind: "sect", la: "e" },
