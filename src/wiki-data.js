@@ -2220,7 +2220,7 @@ export const EVENTS = [
   { year: 746, month: 3, seq: null, fac: ["苍云"], loc: ["雁门关"], title: "暮春，残军回城、整理一切；薛直大丧，较战亡迟了几个月：三军衣缟，从冰室请出匆匆掩藏的遗骨装裹停放；送殡路上跑上来一只白狮子——丧毕，统帅方携闵方城、吕定仪、薛褚等往霸刀山庄", chars: ["xuezhi", "minfangcheng"] },
   { year: 757, month: 9, seq: null, fac: ["苍云"], loc: ["河西/凉州"], title: "秋，连朔在河西擢旅帅（马邑先登记功在前，随闵方城往河西平乱、留驻凉州有劳）；消息传回雁门，景惠时口中已称「小连旅帅」，年关席上柳戎以「新近升迁」相谑", chars: ["lianshuo"] },
   /* —— 2026-11-08 程家线（与 Notion 同步）：程广、程钊、程钧、叶曙兮母女，齐晟与玛奈丽 748—752，程锋晚年 —— */
-  { year: 715, month: null, seq: null, fac: ["唐军"], loc: ["洛阳"], title: "程广成婚；新婚夜夫人焚稿", chars: ["chengguang"] },
+  { year: 715, month: null, seq: null, fac: ["唐军"], loc: ["洛阳"], title: "程广成婚；新婚夜夫人焚稿（夫人696年生，时年二十）", chars: ["chengguang"] },
   { year: 716, month: null, seq: null, fac: ["天策", "唐军"], loc: ["洛阳"], title: "程锋出生（嫡长子）", chars: ["chengfeng"] },
   { year: 717, month: null, seq: null, fac: ["唐军"], loc: ["洛阳"], title: "程钊出生——庶出，生母为夫人陪嫁婢，生子后放良为妾", chars: ["chengzhao"] },
   { year: 722, month: 4, seq: null, fac: ["唐军"], loc: ["洛阳"], title: "程广回东都面圣受赏（是年玄宗驻跸东都），入歌楼遇阿玉", chars: ["chengguang"] },
