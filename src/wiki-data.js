@@ -1908,7 +1908,7 @@ export const EVENTS = [
   { year: 771, month: null, seq: null, add: true, fac: ["史实", "波斯"], loc: ["吐火罗"], title: "萨珊波斯余部犹在吐火罗地区活动，入贡之记录至是年犹存", chars: [] },
   { year: 735, month: null, seq: null, add: true, fac: ["西域"], loc: ["安西-龟兹"], title: "陆晚月随父行商遭遇马贼袭击，借住人家舍命相救", chars: ["luwanyue", "langdien"] },
   { year: 736, month: null, seq: null, add: true, fac: ["明教"], loc: ["安西-龟兹"], title: "陆晚月入明教，拜「影月」掌事陆羽鸣为师；陆晓随鸿胪寺任职的父亲前往安西、居龟兹，始与明教接触，圣山下讲坛成为他的波斯语角（Notion 编年一处作「736陆晓入教」，人设文档以741年为正式入教，兹以736记初接触并注明）", chars: ["luwanyue", "luyuming", "luxiao"] },
-  { year: 739, month: 9, seq: null, add: true, fac: ["明教", "天策", "凌雪阁"], loc: ["长安"], tloc: { luwanyue: null }, title: "秋，大光明寺事件：天策受命，与少林及凌雪阁围剿明教于长安西市义宁坊大光明寺。事前谋划调兵极其隐秘，主动请命赴长安的陆羽鸣仍于一间馆驿周围发现端倪、摸至天策众将集会处，而为时已迟——岚川云穷追，又有凌雪一重保障，使其折戟；陆晚月与岚川云视角皆以为其被高堑当场杀死，实则失踪，此后滞留中原十六年。陆南信因事不在城内，赶回城下时被戒严当夜部署城楼的少年程凯射穿右肘，伤未妥治，筋骨挛缩，无以用双刀", chars: ["luyuming", "luwanyue", "lunanxin", "lanchuanyun", "chengkai", "gaoyuan", "gaoqian"] },
+  { year: 739, month: 9, seq: "A", fac: ["明教", "天策", "凌雪阁"], loc: ["长安"], tloc: { luwanyue: null }, title: "秋，大光明寺事件：天策受命，与少林及凌雪阁围剿明教于长安西市义宁坊大光明寺。事前谋划调兵极其隐秘，主动请命赴长安的陆羽鸣仍于一间馆驿周围发现端倪、摸至天策众将集会处，而为时已迟——岚川云穷追，又有凌雪一重保障，使其折戟；陆晚月与岚川云视角皆以为其被高堑当场杀死，实则失踪，此后滞留中原十六年。陆南信因事不在城内，赶回城下时被戒严当夜部署城楼的少年程凯射穿右肘，伤未妥治，筋骨挛缩，无以用双刀", chars: ["luyuming", "luwanyue", "lunanxin", "lanchuanyun", "chengkai", "gaoyuan", "gaoqian"] },
   { year: 740, month: null, seq: null, add: true, fac: ["明教"], loc: ["西域"], title: "陆晚月成为「影月」旗下小杀手", chars: ["luwanyue"] },
   { year: 741, month: null, seq: null, add: true, fac: ["明教"], loc: ["安西-龟兹"], title: "陆晓成为明教正式教众", chars: ["luxiao"] },
   { year: 742, month: null, seq: null, fac: ["明教", "天策"], loc: ["西域-龙门"], title: "龙门再遇：陆晚月见师父身份牌在岚川云身上，二人大打出手；交谈中岚川云复述陆羽鸣临终音节（身份牌是否交还待定），陆晚月携音节回西域，陆南信认出为亡魂过桥之问；同年，陆隐流刑期满出狱，回归杀手小队", chars: ["luwanyue", "lanchuanyun", "luyin"] },
@@ -2260,6 +2260,13 @@ export const EVENTS = [
   { year: 767, month: null, seq: null, fac: ["天策", "唐军"], loc: ["北庭"], title: "程钊生母亡故，程锋葬之于程钊侧并作墓志（790年北庭陷落，墓地湮没）", chars: ["chengfeng", "chengzhao"] },
   { year: 780, month: null, seq: null, fac: ["天策", "唐军"], loc: [], title: "程锋亡故", chars: ["chengfeng"] },
   { year: 781, month: 7, seq: null, fac: [], loc: ["长安"], tloc: { chengyu: "北庭" }, title: "北庭使者经回纥道抵长安，北庭将吏叙官超七资（史）", chars: ["chengyu"] },
+  /* —— 2026-11-08 明教线：陆羽鸣 739 年长安始末（与 Notion 同步，含暗线三条） —— */
+  { year: 739, month: 2, seq: null, fac: ["明教"], loc: ["长安"], tloc: { luwanyue: "西域" }, title: "陆羽鸣赴长安，落脚城西卑路斯旧部后人家", chars: ["luyuming", "luwanyue"] },
+  { year: 739, month: 9, seq: "B", fac: ["明教", "天策", "凌雪阁"], loc: ["长安"], title: "暗线：屋顶一战，陆羽鸣抬头看岚川云，刀线偏开，颈侧下颌重伤失声、昏死，在场者皆以为已死；临昏前念《哈多赫特·纳斯克》2.10 前半句 cišca carāitiš ahi（亡魂过桥之问）", chars: ["luyuming", "lanchuanyun", "gaoqian"] },
+  { year: 739, month: 9, seq: "C", fac: ["凌雪阁", "天策", "明教"], loc: ["长安"], title: "高堑以刀尖挑下陆羽鸣的身份牌，交岚川云论功——「剩下的事就是我的了」，拖人离去；岚川云回守军师", chars: ["gaoqian", "lanchuanyun", "luyuming"] },
+  { year: 739, month: 9, seq: "D", fac: ["凌雪阁", "明教"], loc: ["长安"], title: "暗线：高堑拖人途中发觉陆羽鸣尚有气，不补刀，亦不送机枢府，送回其城西落脚的波斯旧族人家；此后不提（一改口即须剥去岚川云的杀获、交代自己当场让功）。745年高堑死，此事随之入墓林", chars: ["gaoqian", "luyuming", "lanchuanyun"] },
+  { year: 739, month: 10, seq: null, fac: ["明教"], loc: ["长安"], title: "暗线：陆羽鸣困居长安——无籍无过所，恐累收留之家，回教即受疑；教中知情者未定（拟仅陆危楼）", chars: ["luyuming"] },
+  { year: 739, month: 10, seq: null, fac: ["天策"], loc: ["长安"], title: "岚川云以陆羽鸣的身份牌论功，得出阵即有「杀获」的嘉奖（时剿杀明教徒甚众，未逐一查验）；身份牌此后留在她手上", chars: ["lanchuanyun", "luyuming"] },
 ];
 
 /* ---------- 關係（悉依《人山人海·人物关系》庫；d:1單向 甲→乙，ph殁后延续，da虚线） ---------- */
