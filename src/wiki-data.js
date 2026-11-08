@@ -1527,9 +1527,14 @@ export const CHARACTERS = [
   },
   /* —— 藏剑（依 Notion 档案库与增補文本：程钊家眷） —— */
   {
-    id: "yeshuxi", name: "叶曙兮", zi: "青燃", belong: ["藏剑"], birth: 726, death: null,
+    id: "yeshuxi", name: "叶曙兮", zi: "青燃", belong: ["藏剑"], birth: 716, death: null,
     birthplace: "门派（藏剑山庄）", pin: "", epithet: "", hao: "", gloss: "",
-    profile: F("藏剑中人。739年冬与程钊定婚，亲迎须俟程锋先娶，未及亲迎，程钊于740年殁于北庭西路；次年春生女叶忱，从母姓，携女回藏剑。不入程氏族谱。", "", "", "", "", "", "", ""),
+    profile: F("藏剑叶家旁支，这一家久在西域行走，为宗门铸剑寻觅良材。738年随家人西来寻镔铁，在北庭与经管甲仗的程钊相识；739年冬与之定婚，亲迎须俟程锋先娶，未及亲迎，程钊于740年殁于北庭西路；次年春生女叶忱，从母姓，携女回藏剑。不入程氏族谱。", "", "", "", "", "", "", ""),
+    anecdotes: [
+      "北庭兵器入冬寒脆易折，她改制的那一批熬过了738年的冬天。程钊的字「故廉」，她以铸剑人的眼光一眼读出本义：刃口被磨平了，有功不得封赏。",
+      "739年冬到740年，撮合程锋与陆灵——一半出于喜欢陆灵，一半因为那桩婚事成了，自己的才能成。程锋的婚事到741年才得允准，那时这层缘由已经没有了。",
+      "740年夏程钊赴北庭西路守捉，临行那一步是她先迈出的。程钊死后，她不肯把他的枪头回炉开刃。",
+    ],
   },
   {
     id: "yechen", name: "叶忱", zi: "", belong: ["藏剑"], birth: 741, death: null,
@@ -2232,8 +2237,8 @@ export const EVENTS = [
   { year: 739, month: 8, seq: null, fac: ["唐军"], loc: ["北庭"], title: "盖嘉运破碎叶，擒突骑施可汗吐火仙（史）；程广、程钊从征", chars: ["chengguang", "chengzhao"] },
   { year: 739, month: 11, seq: null, fac: ["天策", "唐军", "藏剑"], loc: ["北庭"], title: "程钊与藏剑叶曙兮定婚，亲迎须俟长兄先娶；程锋劝他先娶，程钊推辞", chars: ["chengzhao", "yeshuxi", "chengfeng"] },
   { year: 740, month: 3, seq: null, fac: ["唐军"], loc: ["长安"], title: "长安献俘，立阿史那昕为十姓可汗（史）；程广随盖嘉运入朝受赏，北庭无人主婚", chars: ["chengguang"] },
-  { year: 740, month: 5, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "莫贺达干怒阿史那昕之立，帅诸部叛（史）；程钊赴北庭西路守捉，临行与叶曙兮有了孩子", chars: ["chengzhao", "yeshuxi"] },
-  { year: 740, month: 10, seq: null, fac: ["天策", "唐军"], loc: ["北庭"], title: "程钊致书程锋交代后事，殁于北庭西路——史书只留「叛」与「降」，功劳记在主帅名下", chars: ["chengzhao", "chengfeng"] },
+  { year: 740, month: 5, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "莫贺达干怒阿史那昕之立，帅诸部叛（史）；程钊赴北庭西路守捉，临行叶曙兮越线（由她主动），有了孩子", chars: ["chengzhao", "yeshuxi"] },
+  { year: 740, month: 10, seq: null, fac: ["天策", "唐军"], loc: ["北庭"], title: "程钊致书程锋交代后事，殁于北庭西路——史书只留「叛」与「降」，功劳记在主帅名下；叶曙兮不肯将他的枪头回炉开刃", chars: ["chengzhao", "chengfeng", "yeshuxi"] },
   { year: 741, month: null, seq: null, fac: ["天策", "唐军", "藏剑"], loc: ["北庭"], title: "程广欲接回叶忱，程钊生母劝其放手，叶曙兮携女回藏剑；同年程广允准程锋与陆灵的婚事（「也罢……总占个心甘情愿」）", chars: ["chengguang", "yechen", "yeshuxi", "chengfeng", "luling"] },
   { year: 741, month: 2, seq: null, fac: ["藏剑"], loc: ["北庭"], title: "叶忱生于北庭，从母姓", chars: ["yechen", "yeshuxi"] },
   { year: 741, month: 10, seq: null, fac: ["天策", "唐军"], loc: ["北庭"], title: "程广以伊西北庭节度副使出北庭西路，讨不肯受抚的突骑施余部，在程钊殁身的那条路上被围；程凯随杨宁援边，率百骑解围，父子阵前相见——程凯问阿玉葬在哪里，程广答不上来", chars: ["chengkai", "chengguang"] },
@@ -2267,6 +2272,10 @@ export const EVENTS = [
   { year: 739, month: 9, seq: "D", fac: ["凌雪阁", "明教"], loc: ["长安"], title: "暗线：高堑拖人途中发觉陆羽鸣尚有气，不补刀，亦不送机枢府，送回其城西落脚的波斯旧族人家；此后不提（一改口即须剥去岚川云的杀获、交代自己当场让功）。745年高堑死，此事随之入墓林", chars: ["gaoqian", "luyuming", "lanchuanyun"] },
   { year: 739, month: 10, seq: null, fac: ["明教"], loc: ["长安"], title: "暗线：陆羽鸣困居长安——无籍无过所，恐累收留之家，回教即受疑；教中知情者未定（拟仅陆危楼）", chars: ["luyuming"] },
   { year: 739, month: 10, seq: null, fac: ["天策"], loc: ["长安"], title: "岚川云以陆羽鸣的身份牌论功，得出阵即有「杀获」的嘉奖（时剿杀明教徒甚众，未逐一查验）；身份牌此后留在她手上", chars: ["lanchuanyun", "luyuming"] },
+  /* —— 2026-11-08 叶曙兮：生年 716，738 年西来相识，撮合程锋陆灵（与 Notion 同步） —— */
+  { year: 738, month: null, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "叶曙兮随家人西来寻镔铁；北庭兵器遇寒脆折，她与经管甲仗的程钊相识", chars: ["yeshuxi", "chengzhao"] },
+  { year: 738, month: 12, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "叶曙兮改制的兵器熬过北庭寒冬；她以铸剑人的眼光读出程钊之字「故廉」的本义——刃口磨平，有功不得封赏", chars: ["yeshuxi", "chengzhao"] },
+  { year: 740, month: null, seq: null, fac: ["天策", "唐军", "藏剑", "明教"], loc: ["北庭"], title: "叶曙兮撮合程锋与陆灵（739冬—740）：一半出于喜欢陆灵，一半因为那桩婚事成了，自己的才能成", chars: ["yeshuxi", "chengfeng", "luling", "chengzhao"] },
 ];
 
 /* ---------- 關係（悉依《人山人海·人物关系》庫；d:1單向 甲→乙，ph殁后延续，da虚线） ---------- */
