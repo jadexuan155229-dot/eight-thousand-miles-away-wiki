@@ -701,6 +701,7 @@ export const CHARACTERS = [
     ),
     anecdotes: [
       "与程凯的关系：既认同程凯的能力，又对其个性不满，认为他太冲动、过于执拗，常对他冷眼以待。童年时对程凯并无特别关注，后来因程凯在家族中不受重视，多少有些怜悯，但并未主动亲近。在程凯打出家门自行投军天策府后，曾表示「他爱做什么就做什么吧」。",
+      "735年冬突骑施围北庭，初上阵；城头兵器遇寒脆折，他自请经管甲仗修补，此后一直留在甲仗上——738年西来寻铁的叶曙兮找上的，正是管甲仗的他。次年正月随盖嘉运出击破突骑施，史书只记主帅之名。",
       "739年冬与藏剑叶曙兮定婚，亲迎须俟长兄先娶，程锋劝他先娶，他推辞；740年夏莫贺达干叛，赴北庭西路守捉，临行与叶曙兮有了孩子，秋冬殁于任上。遗腹女叶忱741年春生于北庭，从母姓；族谱上记「未娶，有女一人，从母姓」。",
     ],
   },
@@ -2231,7 +2232,9 @@ export const EVENTS = [
   { year: 732, month: null, seq: null, fac: ["天策", "唐军"], loc: ["天策府/北邙山"], title: "程锋受荫入天策府", chars: ["chengfeng"] },
   { year: 733, month: null, seq: null, fac: ["唐军"], loc: ["北庭"], title: "程钊随生母赴北庭，比程锋早三年到边地（程锋736年至北庭）", chars: ["chengzhao"] },
   { year: 735, month: null, seq: null, fac: ["唐军"], loc: ["洛阳"], title: "程钧随三兄程铎习程家家传枪（槊）法（735—740）", chars: ["chengjun", "chengduo"] },
-  { year: 736, month: null, seq: null, fac: ["天策", "唐军", "明教"], loc: ["北庭"], title: "程锋至北庭，弱冠识陆灵", chars: ["chengfeng", "luling"] },
+  { year: 735, month: 10, seq: null, fac: ["唐军"], loc: ["北庭"], title: "突骑施寇北庭及安西拨换城（史）；程钊初上阵，随父守庭州——围城入冬，城头兵器遇寒脆折，他自请经管甲仗修补，此后一直留在甲仗上", chars: ["chengzhao", "chengguang"] },
+  { year: 736, month: 1, seq: null, fac: ["唐军"], loc: ["北庭"], title: "北庭都护盖嘉运率兵击突骑施，破之（史）；程广、程钊从征——史书只记主帅之名，是程钊头一回有功不得封赏", chars: ["chengguang", "chengzhao"] },
+  { year: 736, month: 3, seq: null, fac: ["天策", "唐军", "明教"], loc: ["北庭"], title: "程锋天策三年期满，至北庭，时突骑施新破——小一岁的庶弟已是见过血的人；识陆灵", chars: ["chengfeng", "luling"] },
   { year: 736, month: null, seq: null, fac: ["天策"], loc: ["洛阳"], title: "程凯带程钧溜出府看夜市，教他躲避父兄责罚（约735—737）", chars: ["chengkai", "chengjun"] },
   { year: 738, month: null, seq: null, fac: ["天策", "唐军"], loc: ["洛阳", "北庭"], tloc: { chengzhao: "北庭", chengguang: "北庭" }, title: "手钏被诬：程凯身上一件女人首饰（阿娘遗物）被人发现，程铎首告，诬他偷了夫人之物；程钧知情未言。程凯打出程府，投天策；洛阳来信报到北庭，程钊在父亲身边说「他爱做什么就做什么吧」", chars: ["chengkai", "chengduo", "chengjun", "chengzhao", "chengguang"] },
   { year: 739, month: 8, seq: null, fac: ["唐军"], loc: ["北庭"], title: "盖嘉运破碎叶，擒突骑施可汗吐火仙（史）；程广、程钊从征", chars: ["chengguang", "chengzhao"] },
