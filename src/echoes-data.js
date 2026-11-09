@@ -244,7 +244,7 @@ export const ECHOES = [
   { shock: "leitai757", who: "diyuanke", band: "result", order: 5, stance: "只知结果", stanceNote: "新任军纪官，入营第一件公事", mode: "从簿上一个字开始",
     arc: [
       { y: 757, m: 10, q: "B3", note: "记「荔非承烈，败」" },
-      { y: 757, m: 9, q: "B", note: "由此空降二团长官" },
+      { y: 757, m: 10, q: "B", note: "由此空降二团长官" },
       { y: 757, m: 11, q: "", note: "荔非「我不见那小子」" },
       { y: 761, m: 9, q: "", note: "主持擂台四，「台上已无旧柱」" },
       { y: 763, m: 10, q: "A", note: "为荔非正名，主导起草" },

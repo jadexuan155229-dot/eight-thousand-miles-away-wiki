@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { fc, CHARACTERS } from "./wiki-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { T } from "./theme";
@@ -31,6 +31,7 @@ function nodeText(n) {
 export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile }) {
   const shock = SHOCKS.find((s) => s.id === shockId) || SHOCKS[0];
   const t = (k) => echoUi(locale, k);
+  const [focusWho, setFocusWho] = useState(null); /* 键盘焦点环：SVG 的 <g> 不吃 CSS outline，自绘 */
   const rows = useMemo(() => ECHOES.filter((e) => e.shock === shock.id).sort((a, b) => a.order - b.order), [shock.id]);
   const dead = rows.filter((e) => e.band === "dead");
   const living = rows.filter((e) => e.band !== "dead");
@@ -148,8 +149,13 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             const fade = (p) => Math.max(0.16, 0.7 - (p - shockP) * 0.022);
             let prev = { x: shockX, p: shockP };
             return (
-              <g key={e.who} style={{ cursor: "pointer", transition: "opacity .2s" }}
-                onClick={() => onRoute({ shock: shock.id, who: on ? null : e.who })}>
+              <g key={e.who} style={{ cursor: "pointer", outline: "none" }}
+                role="button" tabIndex={0} aria-pressed={!!on} aria-label={`${tr?.name || c.name}：${modeText(locale, e.mode)}`}
+                onClick={() => onRoute({ shock: shock.id, who: on ? null : e.who })}
+                onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onRoute({ shock: shock.id, who: on ? null : e.who }); } }}
+                onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setFocusWho(e.who); }}
+                onBlur={() => setFocusWho((w) => (w === e.who ? null : w))}>
+                {focusWho === e.who && <rect x="6" y={it.y + 1} width={W - 12} height={ROW_H - 2} fill="none" stroke={T.accent} strokeWidth="1.5" rx="3" />}
                 {on && <rect x="8" y={it.y + 2} width={W - 16} height={ROW_H - 4} fill={T.panelHi} rx="3" />}
                 {/* 谱线与节点：未选中行整体退后一档，行首姓名与记忆方式仍清晰可读 */}
                 <g opacity={dim ? 0.45 : 1}>
@@ -199,7 +205,13 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
               <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted }}>
                 {bandLabel(locale, shock.id, selected.band, band ? band[1] : selected.stance)}
-                {selected.stanceNote && locale !== "en" ? `；${selected.stanceNote}` : ""}
+                {/* 在场姿态是这个人自己的位置，分带只是刻度：二者不同则并列；姿态原文为中文，英文版也保留 */}
+                {(selected.stance !== (band && band[1]) || (selected.stanceNote && selected.stanceNote !== (band && band[1]))) && (
+                  <span lang="zh">
+                    {selected.stance !== (band && band[1]) ? `　${selected.stance}` : ""}
+                    {selected.stanceNote && selected.stanceNote !== (band && band[1]) ? `；${selected.stanceNote}` : ""}
+                  </span>
+                )}
               </span>
               <button onClick={() => onOpenProfile(c.id)} style={{ marginLeft: "auto", fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" }}>
                 {t("查看檔案")}
