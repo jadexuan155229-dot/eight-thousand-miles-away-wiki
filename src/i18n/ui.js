@@ -1,7 +1,7 @@
 // UI copy only. Keys retain the original Chinese text for lossless Chinese fallback.
 const en = {
   人物檔案: 'Characters', 事件年表: 'Timeline', 山河輿圖: 'Map',
-  行星關係圖: 'Orbital Relations', 群像網絡: 'Character Network', 文庫: 'Library',
+  行星關係圖: 'Orbital Relations', 群像網絡: 'Character Network', 余波: 'Aftershocks', 文庫: 'Library',
   卷首: 'Opening', 回到卷首: 'Return to opening',
   生卒: 'Lifespan', 出身: 'Birthplace', 事件: 'Events', 字: 'Courtesy name',
   名字訓詁: 'Name and allusions', 檔案: 'Profile',

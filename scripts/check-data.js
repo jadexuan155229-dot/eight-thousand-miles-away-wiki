@@ -9,6 +9,8 @@
    ============================================================ */
 import { fc, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS } from "../src/wiki-data.js";
 import { CHAR_TERMS } from "../src/novel/char-terms.js";
+import { SHOCKS, ECHOES } from "../src/echoes-data.js";
+import { echoModesEn } from "../src/i18n/echoes.en.js";
 import { SEAL_SVG_FILE } from "../src/seals.js";
 import { missingFontChars } from "./font-chars.js";
 import { readdirSync, existsSync } from "node:fs";
@@ -95,6 +97,41 @@ for (const c of CHARACTERS) {
   if (c.readerNote != null && !termIds.has(c.id)) warn(`CHARACTERS ${c.name}`, "有 readerNote 而無 CHAR_TERMS 詞條——正文名字不可點，接入未完成");
 }
 
+/* ---------- 余波（震源與回響） ----------
+   余波層為作者按，與事實層分聲，但引用的人物與事件須可查：
+   錯（exit 1）：who 不在 CHARACTERS；band 不在本震源 bands；震源錨事件在 EVENTS 中查無；一人一震源重複
+   警告：有月份之節點在 EVENTS 同年同月無條目（可能出自人物卡，亦可能是年月筆誤）；mode 無英譯 */
+const shockIds = new Set();
+for (const s of SHOCKS) {
+  const tag = `SHOCKS「${s.title}」`;
+  if (shockIds.has(s.id)) err(tag, `id 重複：${s.id}`);
+  shockIds.add(s.id);
+  const hit = EVENTS.some((e) => e.year === s.ev.year && e.month === s.ev.month && String(e.title).includes(s.ev.has));
+  if (!hit) err(tag, `錨事件查無：${s.ev.year}年${s.ev.month}月、題含「${s.ev.has}」不在 EVENTS`);
+  if (!s.axis) err(tag, "缺 axis（縱軸刻度）");
+  if (!Array.isArray(s.bands) || !s.bands.length) err(tag, "缺 bands");
+}
+const echoSeen = new Set();
+const bandKeys = Object.fromEntries(SHOCKS.map((s) => [s.id, new Set(s.bands.map((b) => b[0]))]));
+ECHOES.forEach((x, i) => {
+  const who = CHARACTERS.find((c) => c.id === x.who);
+  const tag = `ECHOES[${i}] ${who ? who.name : x.who}·${x.shock}`;
+  if (!shockIds.has(x.shock)) { err(tag, `shock 引用不存在的震源：${x.shock}`); return; }
+  if (!who) err(tag, `who 引用不存在的人物 id：${x.who}`);
+  if (!bandKeys[x.shock].has(x.band)) err(tag, `band「${x.band}」不在本震源 bands`);
+  const key = `${x.shock}/${x.who}`;
+  if (echoSeen.has(key)) err(tag, "同一人於同一震源有兩條回響（體例：一人一震源一行）");
+  echoSeen.add(key);
+  if (!x.mode) err(tag, "缺 mode（記憶方式）");
+  else if (!echoModesEn[x.mode]) warn(tag, `mode「${x.mode}」尚無英譯（i18n/echoes.en.js）`);
+  for (const n of x.arc || []) {
+    if (n.y != null && (n.y < 700 || n.y > 820)) warn(tag, `節點年 ${n.y} 逾常理範圍`);
+    if (n.m != null && (n.m < 1 || n.m > 12)) err(tag, `節點月非法：${n.m}`);
+    if (n.y != null && n.m != null && !EVENTS.some((e) => e.year === n.y && e.month === n.m))
+      warn(tag, `節點 ${n.y}.${n.m}${n.q || ""}「${n.note.slice(0, 14)}…」在 EVENTS 無同年同月條目（出自人物卡則無妨）`);
+  }
+});
+
 /* ---------- 印章圖 ---------- */
 /* 映射表指向的檔案若被改名或刪除，瀏覽器只渲染一枚破圖、構建不報錯，
    故在此比對映射表、人物表與 public/images/seals/ 三方 */
@@ -139,7 +176,7 @@ if (missingGlyphs.length) {
 for (const w of warns) console.log(`  ⚠ ${w}`);
 for (const e of errors) console.log(`  ✗ ${e}`);
 console.log(
-  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} —— ` +
+  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length} —— ` +
   (errors.length ? `${errors.length} 錯` : "無錯") + (warns.length ? `，${warns.length} 警告` : "")
 );
 if (errors.length) process.exit(1);
