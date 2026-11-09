@@ -75,7 +75,6 @@ export const ECHOES = [
     ] },
   { shock: "yanmen745", who: "xuechu", band: "live", order: 7, stance: "亲历", stanceNote: "薛直同族后辈", mode: "为尊者讳",
     arc: [
-      { y: 745, m: 10, q: "", note: "归绛州见族中凉薄（行迹）" },
       { y: 745, m: 12, q: "", note: "廊下听「名声之论」，翌月即返" },
       { y: null, m: null, q: "", note: "隐去薛姓，营中称季韬将军（卡）" },
       { y: 756, m: 2, q: "", note: "薛坚留朔方军，只能远远关注" },
