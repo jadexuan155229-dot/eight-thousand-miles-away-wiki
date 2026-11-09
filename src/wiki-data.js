@@ -2638,8 +2638,7 @@ export const TRACK_SUPPLEMENTS = {
     { year: 756, month: 1, loc: "朔州", note: "遗体自静边军暂厝朔州，候大军扶榇返雁门" },
   ],
   xuechu: [
-    { year: 745, month: 10, loc: "河东-绛州", note: "雁门关之役薛直殁后，一度归绛州族地，见族中凉薄" },
-    { year: 745, month: 12, loc: "雁门关", note: "不久返回雁门" },
+    { year: 746, month: 1, loc: "雁门关", note: "自绛州返回雁门" },
   ],
   diyuanke: [
     { year: 768, loc: "代州", note: "任代州刺史" },

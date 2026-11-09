@@ -6,6 +6,9 @@ import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
 import { SEAL_SVG_FILE } from "./seals";
 import NovelReader from "./novel-reader";
+import Echoes from "./echoes";
+import { SHOCKS, ECHOES } from "./echoes-data";
+import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLanguage } from "./i18n/use-language";
 import { translateUI, eventCountText, libraryCountText } from "./i18n/ui";
 import { characterTranslation } from "./i18n/characters.en";
@@ -257,7 +260,7 @@ function dimAccent(hex, grayT, darkT, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, locale }) {
+function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, locale }) {
   const translated = characterTranslation(locale, c?.id);
   const t = (key) => translateUI(translated ? 'en' : 'zh', key);
   const [showAll, setShowAll] = useState(false);
@@ -524,6 +527,29 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, locale }) {
           </div>
         )}
 
+        {/* 所系之事：余波层的轻入口——作者按，不入事实层；有回响才出现 */}
+        {(() => {
+          const mine = ECHOES.filter((x) => x.who === c.id);
+          if (!mine.length) return null;
+          return (
+            <div style={{ marginTop: 24 }}>
+              <SectionLabel>{translated ? "Events that bear on them" : "所系之事"}</SectionLabel>
+              <div className="flex flex-wrap" style={{ gap: 8 }}>
+                {mine.map((x) => {
+                  const sh = SHOCKS.find((q) => q.id === x.shock);
+                  return (
+                    <button key={x.shock} onClick={() => { setShowAll(false); onOpenEcho(x.shock, c.id); }}
+                      style={{ textAlign: "left", fontFamily: "HuiwenZhengKai", background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "6px 12px", cursor: "pointer" }}>
+                      <div style={{ fontSize: 11, color: T.faint }}>{sh.year}.{sh.month} · {shockTitle(translated ? "en" : "zh", sh)}</div>
+                      <div style={{ fontSize: 14, color: T.ink, marginTop: 2 }}>{modeText(translated ? "en" : "zh", x.mode)}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
+
         {related.length > 0 ? (
           <div style={{ marginTop: 24 }}>
             <SectionLabel>{t("繫年事件（依 年·月·序號）")}</SectionLabel>
@@ -636,7 +662,9 @@ function FacBand({ segs, none, height = 4, maxWidth }) {
 }
 
 /* 事件行：年表主列表単條，供平鋪與月組兩種佈局共用 */
-function EvRow({ e, showYear, onOpenChar }) {
+function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
+  /* 震源锚事件：年表行上留一个淡淡的入口，通向余波页；未传 onOpenEcho 的视图（舆图）不出 */
+  const shock = onOpenEcho && SHOCKS.find((s) => s.ev.year === e.year && s.ev.month === e.month && e.title.includes(s.ev.has));
   return (
     <div style={{ position: "relative", padding: "0 0 24px 26px", fontFamily: "HuiwenZhengKai" }}>
       <div style={{ position: "absolute", left: -5, top: 7, width: 9, height: 9, background: showYear ? T.accent : T.faint, transform: "rotate(45deg)" }} />
@@ -657,6 +685,10 @@ function EvRow({ e, showYear, onOpenChar }) {
         )}
         {e.add && (
           <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: "#C9A15C", border: "1px solid #C9A15C55", padding: "0 6px", borderRadius: "3px" }} title="採自人設文檔，尚未錄入 Notion 事件庫">增補</span>
+        )}
+        {shock && (
+          <button onClick={() => onOpenEcho(shock.id)} title="余波：此事笼罩之人与其记忆方式"
+            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.seal, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>余波 ›</button>
         )}
         {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>门派未标</span>}
         {e.fac.map((f) => (
@@ -680,7 +712,7 @@ function EvRow({ e, showYear, onOpenChar }) {
   );
 }
 
-function Timeline({ onOpenChar }) {
+function Timeline({ onOpenChar, onOpenEcho }) {
   const NONE_FAC = "__none__"; /* 「门派未标」一級標籤之內部鍵 */
   const ETH_GROUP = "__ethnic__"; /* 【族属/地属】傘形標籤之內部鍵 */
   const [fsel, setFsel] = useState("all"); /* 一級：門派及同級標籤 */
@@ -1004,7 +1036,7 @@ function Timeline({ onOpenChar }) {
                       const row = (e, key) => {
                         const showYear = e.year !== lastYear;
                         lastYear = e.year;
-                        return <EvRow key={key} e={e} showYear={showYear} onOpenChar={onOpenChar} />;
+                        return <EvRow key={key} e={e} showYear={showYear} onOpenChar={onOpenChar} onOpenEcho={onOpenEcho} />;
                       };
                       if (!s.byMonth) return s.evs.map((e, i) => row(e, i));
                       /* 月份次級折疊：evs 已按 sortEvents 排定（未標月居首），依次歸組 */
@@ -2283,7 +2315,7 @@ export default function Wiki({ onOpenLanding }) {
           </h1>
         </div>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
-          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["novel", "文庫"]].map(([k, label]) => (
+          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"]].map(([k, label]) => (
             <button key={k} onClick={() => setTab(k)}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
@@ -2333,15 +2365,21 @@ export default function Wiki({ onOpenLanding }) {
             )}
           </>
         )}
-        {tab === "timeline" && <Timeline onOpenChar={setOpenChar} />}
+        {tab === "timeline" && <Timeline onOpenChar={setOpenChar} onOpenEcho={(shock) => nav({ tab: "echoes", char: null, shock, who: null })} />}
         {tab === "network" && <Planetary onOpenChar={setOpenChar} />}
         {tab === "map" && <GeoMap onOpenChar={setOpenChar} />}
         {tab === "community" && <Community onOpenChar={setOpenChar} />}
+        {tab === "echoes" && (
+          <Echoes shockId={route.shock} who={route.who} locale={locale}
+            onRoute={(p) => nav({ shock: p.shock, who: p.who })}
+            onOpenProfile={(id) => nav({ tab: "chars", char: id })} />
+        )}
         {tab === "novel" && <NovelReader path={route.novelPath} onNav={(p, replace) => nav({ novelPath: p }, replace)} />}
       </main>
 
       <DetailPanel c={openChar} locale={locale} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
-        onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })} />
+        onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
+        onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })} />
     </div>
   );
 }
