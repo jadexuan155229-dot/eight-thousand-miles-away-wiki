@@ -39,18 +39,36 @@ export const echoModesEn = {
   "不问，也不说破": "no question, no disclosure",
   "承接一条不知来处的线": "a lineage of unseen origin",
   "恰在交替处到来": "an arrival in the changeover",
+  "下落要等人来确认": "a fate awaiting confirmation",
+  "带着一道不愈的伤": "a wound that never closed",
+  "守着火种": "keeper of the embers",
+  "把人送出去，自己留下": "sending others out, staying behind",
+  "留在残营": "among those who stayed",
+  "在丧中成人": "a coming of age in mourning",
+  "绕了很远才回去": "the long way back",
+  "失散在外，死在别处": "scattered, and fallen elsewhere",
+  "认出旧恩，以命相还": "an old debt recognized, repaid in full",
+  "先怨，后服，终老其地": "resentment, then respect, then a lifetime",
+  "留下，又不得回应而去": "a stay that ended unanswered",
+  "为一座城留一纸愿": "a vow on paper, for a city",
+  "六年后，只抽出一天": "one day, six years late",
+  "想把人接回家": "an offer of home, declined",
+  "认得这种灭顶之灾": "a ruin she had seen before",
+  "把两个忌日对在一起": "two death-days, found to be one",
 };
 
 export const shocksEn = {
   yanmen745: { title: "The Battle of Yanmen Pass", gist: "A war's wound passed down the generations", axis: "Distance from the battle" },
   lvdingyi755: { title: "The Death of Lü Dingyi (Kept Secret)", gist: "How the place of the absent is filled", axis: "Distance from the dead" },
   leitai757: { title: "Lifei's Defeat by Qiu Hong", gist: "Many ways of keeping one secret", axis: "When one learned of the old wound" },
+  tiance756: { title: "The Fall of the Tiance Garrison", gist: "After a city is lost, where each one goes", axis: "Where one went after that night" },
 };
 
 export const bandsEn = {
   yanmen745: { dead: "The dead", live: "Those who lived it", young: "Present, but young", after: "Those who came after", far: "The other side" },
   lvdingyi755: { dead: "The dead", near: "Old comrades in camp", unmet: "Those who never met him", out: "Rivals and outsiders" },
   leitai757: { self: "The one involved", before: "Knew beforehand", during: "Learned in the moment", after: "Never asked, never said", result: "Knew only the result", never: "Never knew", none: "Did not know, did not need to" },
+  tiance756: { dead: "The dead", stay: "Left behind enemy lines", west: "Withdrew west", aid: "Those who came to help", out: "Outside the walls, and after" },
 };
 
 export const echoUiEn = {
@@ -63,6 +81,9 @@ export const echoUiEn = {
   在場姿態: "Position",
   回響節點: "Echoes through the years",
   無定年: "Undated",
+  前事: "Before",
+  待核: "Draft",
+  待核註: "Drafted, not yet reviewed line by line by the author.",
   人物卡: "From the character profile",
   查看檔案: "Open profile",
   導語: "Each shock is an event that hangs over many people. Each person is placed by their distance from it, and each remembers it differently. Click a name to read their echoes.",

@@ -18,7 +18,7 @@ import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi } from ".
 const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
 
 /* 版面常量（SVG 用户空间） */
-const W = 1000, PLOT_L = 250, PLOT_R = 930, UNDATED_X = 962;
+const W = 1000, PLOT_L = 250, PLOT_R = 930, UNDATED_X = 962, PRE_X = 218, PRE_YEARS = 10; /* 早于震源十年以上的节点收进左侧「前事」栏，不拉长横轴 */
 const ROW_H = 42, BAND_H = 30, TOP = 58, SHOCK_ROW_H = 56;
 
 const posOf = (y, m) => y + (m != null ? (m - 1) / 12 : 0.5);
@@ -51,8 +51,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
 
   /* 横轴：自最早的定年节点（或震源）到最晚者 */
   const { x0, x1 } = useMemo(() => {
-    const ys = rows.flatMap((e) => e.arc.filter((n) => n.y != null).map((n) => posOf(n.y, n.m)));
     const sp = posOf(shock.year, shock.month);
+    const ys = rows.flatMap((e) => e.arc.filter((n) => n.y != null).map((n) => posOf(n.y, n.m))).filter((p) => p >= sp - PRE_YEARS);
     return { x0: Math.floor(Math.min(sp, ...ys) - 0.2), x1: Math.ceil(Math.max(sp, ...ys) + 0.2) };
   }, [rows, shock]);
   const xOf = (p) => PLOT_L + ((p - x0) / (x1 - x0)) * (PLOT_R - PLOT_L);
@@ -65,7 +65,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
     return e.arc.filter((n) => n.y != null).sort((a, b) => posOf(a.y, a.m) - posOf(b.y, b.m)).map((n) => {
       const k = `${n.y}.${n.m}`;
       const j = (seen[k] = (seen[k] || 0) + 1) - 1;
-      return { n, x: xOf(posOf(n.y, n.m)) + j * 11, p: posOf(n.y, n.m) };
+      const p = posOf(n.y, n.m);
+      return { n, x: p < shockP - PRE_YEARS ? PRE_X : xOf(p) + j * 11, p };
     });
   };
   /* 选中行：节点下直接落字（年月＋短题），贪心分道避让 */
@@ -146,6 +147,9 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             );
           })}
           <text x={UNDATED_X} y={TOP - 22} textAnchor="middle" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint}>{t("無定年")}</text>
+          {rows.some((e) => e.arc.some((n) => n.y != null && posOf(n.y, n.m) < shockP - PRE_YEARS)) && (
+            <text x={PRE_X} y={TOP - 22} textAnchor="middle" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint}>{t("前事")}</text>
+          )}
 
           {/* 震源竖线 */}
           <line x1={shockX} x2={shockX} y1={TOP - 14} y2={H - 14} stroke={T.accent} strokeOpacity="0.55" strokeWidth="1" strokeDasharray="3 4" />
@@ -183,7 +187,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             let prev = { x: shockX, p: shockP };
             return (
               <g key={e.who} style={{ cursor: "pointer", outline: "none" }}
-                role="button" tabIndex={0} aria-pressed={!!on} aria-label={`${tr?.name || c.name}：${modeText(locale, e.mode)}`}
+                role="button" tabIndex={0} aria-pressed={!!on} aria-label={`${tr?.name || c.name}：${modeText(locale, e.mode)}${e.draft ? `（${t("待核")}）` : ""}`}
                 onClick={() => onRoute({ shock: shock.id, who: on ? null : e.who })}
                 onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onRoute({ shock: shock.id, who: on ? null : e.who }); } }}
                 onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setFocusWho(e.who); }}
@@ -222,6 +226,10 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 </g>
                 {/* 行首：姓名 + 记忆方式 */}
                 <text x={it.dead ? 34 : 20} y={cy - 2} fontFamily="JingHuaLaoSong" fontSize="15" fill={on ? T.ink : T.muted}>{tr?.name || c.name}</text>
+                {/* 起草待核：行首姓名后一枚小标，与「作者定」之行区分 */}
+                {e.draft && (
+                  <text x={(it.dead ? 34 : 20) + textW(tr?.name || c.name, 15) + 8} y={cy - 3} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.seal} fillOpacity="0.85">{t("待核")}</text>
+                )}
                 <text x={it.dead ? 34 : 20} y={cy + 14} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={on ? T.ink : T.muted} fillOpacity={on ? 0.95 : 0.8}>{modeText(locale, e.mode)}</text>
                 {/* 选中行：字直接落在点下 */}
                 {on && selLabels.labels.map((L, k) => {
@@ -257,7 +265,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             const by = hover.cy - 14 - bh < 4 ? hover.cy + 14 : hover.cy - 14 - bh;
             return (
               <g pointerEvents="none">
-                {hover.n.m != null && <line x1={xOf(posOf(hover.n.y, hover.n.m))} x2={xOf(posOf(hover.n.y, hover.n.m))} y1={TOP - 14} y2={H - 14} stroke={T.ink} strokeOpacity="0.22" strokeWidth="1" />}
+                {hover.n.m != null && posOf(hover.n.y, hover.n.m) >= shockP - PRE_YEARS && <line x1={xOf(posOf(hover.n.y, hover.n.m))} x2={xOf(posOf(hover.n.y, hover.n.m))} y1={TOP - 14} y2={H - 14} stroke={T.ink} strokeOpacity="0.22" strokeWidth="1" />}
                 <rect x={bx} y={by} width={bw} height={bh} rx="3" fill={T.bg || T.panel} stroke={T.line} />
                 <text x={bx + 11} y={by + 17} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.accent}>{date}</text>
                 {lines.map((l, i) => (
@@ -275,6 +283,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         <span>● {locale === "en" ? "from the chronology" : "年表条目"}</span>
         <span>○ {locale === "en" ? "from a character profile" : "人物卡轶事"}</span>
         <span>◌ {t("無定年")}</span>
+        {rows.some((e) => e.draft) && <span style={{ color: T.seal }}>{t("待核")}{locale === "en" ? ": not yet reviewed by the author" : "：作者尚未逐行核定"}</span>}
         <span>{locale === "en" ? "Hover a point to see what it is, and who else it reached that month." : "悬停一点：看它是什么事，以及同月还落在谁身上"}</span>
       </div>
 
@@ -288,6 +297,9 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
           <section aria-live="polite" style={{ marginTop: 18, padding: "18px 22px", background: T.panel, border: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
             <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
+              {selected.draft && (
+                <span title={locale === "en" ? t("待核註") : "起草待核：作者尚未逐行核定"} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 7px", borderRadius: 3, letterSpacing: "0.15em" }}>{t("待核")}</span>
+              )}
               <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted }}>
                 {bandLabel(locale, shock.id, selected.band, band ? band[1] : selected.stance)}
                 {/* 在场姿态是这个人自己的位置，分带只是刻度：二者不同则并列；姿态原文为中文，英文版也保留 */}
