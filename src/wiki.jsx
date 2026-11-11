@@ -541,7 +541,10 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, locale }
                     <button key={x.shock} onClick={() => { setShowAll(false); onOpenEcho(x.shock, c.id); }}
                       style={{ textAlign: "left", fontFamily: "HuiwenZhengKai", background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "6px 12px", cursor: "pointer" }}>
                       <div style={{ fontSize: 11, color: T.faint }}>{sh.year}.{sh.month} · {shockTitle(translated ? "en" : "zh", sh)}</div>
-                      <div style={{ fontSize: 14, color: T.ink, marginTop: 2 }}>{modeText(translated ? "en" : "zh", x.mode)}</div>
+                      <div style={{ fontSize: 14, color: T.ink, marginTop: 2 }}>
+                        {modeText(translated ? "en" : "zh", x.mode)}
+                        {x.draft && <span title={translated ? "Drafted, not yet reviewed line by line by the author." : "起草待核：作者尚未逐行核定"} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{translated ? "Draft" : "待核"}</span>}
+                      </div>
                     </button>
                   );
                 })}

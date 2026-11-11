@@ -55,6 +55,13 @@ export const echoModesEn = {
   "想把人接回家": "an offer of home, declined",
   "认得这种灭顶之灾": "a ruin she had seen before",
   "把两个忌日对在一起": "two death-days, found to be one",
+  "活着，却回不去": "alive, with no way back",
+  "让出功劳，带走实情": "a credit given away, a truth taken to the grave",
+  "教中唯一知情的人": "the only one in the order who knew",
+  "揣着一枚不属于自己的印石": "a seal stone that was never hers to keep",
+  "追一枚印石和半句话": "chasing a seal stone and half a sentence",
+  "认出那半句": "half a sentence, recognized",
+  "不在弟弟的秘密里": "outside his brother's secret",
 };
 
 export const shocksEn = {
@@ -62,6 +69,7 @@ export const shocksEn = {
   lvdingyi755: { title: "The Death of Lü Dingyi (Kept Secret)", gist: "How the place of the absent is filled", axis: "Distance from the dead" },
   leitai757: { title: "Lifei's Defeat by Qiu Hong", gist: "Many ways of keeping one secret", axis: "When one learned of the old wound" },
   tiance756: { title: "The Fall of the Tiance Garrison", gist: "After a city is lost, where each one goes", axis: "Where one went after that night" },
+  daguangming739: { title: "The Great Bright Temple: The Death of Lu Yuming", gist: "A man taken for dead for sixteen years", axis: "After that night, who knew whether he lived" },
 };
 
 export const bandsEn = {
@@ -69,6 +77,7 @@ export const bandsEn = {
   lvdingyi755: { dead: "The dead", near: "Old comrades in camp", unmet: "Those who never met him", out: "Rivals and outsiders" },
   leitai757: { self: "The one involved", before: "Knew beforehand", during: "Learned in the moment", after: "Never asked, never said", result: "Knew only the result", never: "Never knew", none: "Did not know, did not need to" },
   tiance756: { dead: "The dead", stay: "Left behind enemy lines", west: "Withdrew west", aid: "Those who came to help", out: "Outside the walls, and after" },
+  daguangming739: { self: "The one involved", knew: "Knew he lived", thought: "Believed him dead", outside: "Outside the matter" },
 };
 
 export const echoUiEn = {
