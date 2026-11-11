@@ -20,6 +20,8 @@ export const SHOCKS = [
     bands: [["self", "当事人"], ["before", "事前知"], ["during", "事中得知"], ["after", "事后不问"], ["result", "只知结果"], ["never", "终生不知"], ["none", "不知亦无需知"]] },
   { id: "tiance756", year: 756, month: 2, ev: { year: 756, month: 2, has: "府城破，天策府生力西撤" }, title: "天策府城破", gist: "一座城丢了之后，各人往哪里去", axis: "那一夜之后往哪里去",
     bands: [["dead", "逝者"], ["stay", "留在敌后"], ["west", "西撤"], ["aid", "来援者"], ["out", "城外与后来者"]] },
+  { id: "daguangming739", year: 739, month: 9, ev: { year: 739, month: 9, has: "大光明寺事件" }, title: "大光明寺·陆羽鸣之死", gist: "一个人被当作死了十六年", axis: "那一夜之后，知道他是死是活",
+    bands: [["self", "当事人"], ["knew", "知他未死"], ["thought", "以为他死了"], ["outside", "不在此事之内"]] },
 ];
 
 export const ECHOES = [
@@ -394,5 +396,59 @@ export const ECHOES = [
       { y: 769, m: null, q: "", note: "程凯病中致信请其看顾" },
       { y: 770, m: 4, q: "", note: "末次相见，「我们阁中是树，你们是碑」" },
       { y: 770, m: 12, q: "", note: "检得程凯忌日与师父高垣同一天，隔了十八年" },
+    ] },
+  /* ---- 大光明寺·陆羽鸣之死 ---- */
+  { shock: "daguangming739", who: "luyuming", band: "self", order: 1, stance: "当事人", stanceNote: "重伤失声，被当作已死", mode: "活着，却回不去",
+    arc: [
+      { y: 739, m: 2, q: "", note: "主动请命赴长安，落脚城西卑路斯旧部后人家" },
+      { y: 739, m: 9, q: "B", note: "屋顶一战抬头看岚川云，刀线偏开；临昏前念亡魂过桥之问的前半句" },
+      { y: null, m: null, q: "", note: "最后一眼在岚川神态里看到陆晚月的模样，一度起了救度之念", card: true },
+      { y: 739, m: 10, q: "", note: "困居长安：无籍无过所，恐累收留之家，回教即受疑" },
+      { y: 756, m: 7, q: "A", note: "长安城郊宅中，与陆晚月重逢" },
+      { y: 756, m: 7, q: "B", note: "照料重伤的岚川云，嗓音露出旧事" },
+    ] },
+  { shock: "daguangming739", who: "gaoqian", band: "knew", order: 2, stance: "知他未死", stanceNote: "不补刀，也不上报", mode: "让出功劳，带走实情",
+    arc: [
+      { y: 739, m: 9, q: "", note: "有斩敌之功，房顶为岚川云解围" },
+      { y: 739, m: 9, q: "C", note: "以刀尖挑下他的萨珊玛瑙印石，交岚川云论功——「剩下的事就是我的了」" },
+      { y: 739, m: 9, q: "D", note: "发觉尚有气，不补刀，不送机枢府，送回波斯旧族人家；此后不提" },
+      { y: 745, m: null, q: "", note: "身亡，此事随之入墓林" },
+    ] },
+  { shock: "daguangming739", who: "luweilou", draft: true, band: "knew", order: 3, stance: "知他未死", stanceNote: "教主，教中唯一知情者", mode: "教中唯一知情的人",
+    arc: [
+      { y: null, m: null, q: "", note: "与陆羽鸣祖辈父辈早有交，无论在琐教中还是行商", card: true },
+      { y: 739, m: 10, q: "", note: "陆羽鸣困居长安，回教即受疑；教中知情者仅他一人" },
+    ] },
+  { shock: "daguangming739", who: "lanchuanyun", band: "thought", order: 4, stance: "以为他死了", stanceNote: "穷追者，凭印石论功", mode: "揣着一枚不属于自己的印石",
+    arc: [
+      { y: 736, m: 9, q: "", note: "母亲殁于明教徒长安街头生事" },
+      { y: 739, m: 9, q: "A", note: "知不敌仍穷追" },
+      { y: 739, m: 10, q: "", note: "以他的萨珊玛瑙印石论功，得「杀获」嘉奖，印石此后留在手上" },
+      { y: 742, m: null, q: "", note: "龙门，复述他临终的音节" },
+      { y: 750, m: null, q: "", note: "三去西域，会明教求和解" },
+      { y: 756, m: 7, q: "B", note: "重伤中被他照料（细节未定）" },
+    ] },
+  { shock: "daguangming739", who: "luwanyue", band: "thought", order: 5, stance: "以为他死了", stanceNote: "弟子，时年十二", mode: "追一枚印石和半句话",
+    arc: [
+      { y: null, m: null, q: "", note: "总记得师父蹲下摸头的触感", card: true },
+      { y: 739, m: 2, q: "", note: "师父赴长安" },
+      { y: 740, m: null, q: "", note: "成为「影月」旗下小杀手" },
+      { y: 742, m: null, q: "", note: "龙门见师父的印石在岚川云身上，大打出手；携音节回西域" },
+      { y: 752, m: 2, q: "", note: "为岚川云解围" },
+      { y: 756, m: 2, q: "E", note: "得知天策府城破，想起大光明寺" },
+      { y: 756, m: 7, q: "A", note: "循胡商之线所得安全屋，即师父藏身处" },
+    ] },
+  { shock: "daguangming739", who: "lunanxin", draft: true, band: "thought", order: 6, stance: "以为他死了", stanceNote: "赶回城下中箭", mode: "认出那半句",
+    arc: [
+      { y: 739, m: 9, q: "A", note: "赶回城下，被（程凯）射穿右肘，筋骨挛缩，无以用双刀" },
+      { y: 742, m: null, q: "", note: "认出陆晚月带回的音节是亡魂过桥之问" },
+      { y: null, m: null, q: "", note: "退修明尊心法，归教后殿中静修，反有反思与洞察", card: true },
+      { y: null, m: null, q: "", note: "其实不想让陆晚月踏足中原", card: true },
+    ] },
+  { shock: "daguangming739", who: "gaoyuan", band: "outside", order: 7, stance: "不在此事之内", stanceNote: "与高堑同队布局，不知情", mode: "不在弟弟的秘密里",
+    arc: [
+      { y: 739, m: 9, q: "", note: "与高堑同队「知君青骨」，早往长安布局，为天策传递机要" },
+      { y: 739, m: null, q: "", note: "试岚川云：「你有恨。」" },
+      { y: 745, m: null, q: "", note: "高堑死前诬告兄长；那桩事他始终不知" },
     ] },
 ];

@@ -959,7 +959,7 @@ export const CHARACTERS = [
     ),
     anecdotes: [
       "总记得师父蹲下摸头的触感；陆南信常给她投喂霜糖。教中人讲汉话较生硬，她因此反而觉得师父准确好听的讲法有点怪，多年后到了长安才明白过来。",
-      "741年于西域孤城初会岚川云；742年龙门再遇，见师父身份牌在她身上，二人大打出手，后在交谈中了解到师父身死当晚的一些线索；745年探查龙门红衣教魔鬼城再遇；756年潼关城破，自潼关救下岚川云至长安城郊，置宅其地——并在那里重逢滞留中原十六年的师父。",
+      "741年于西域孤城初会岚川云；742年龙门再遇，见师父的萨珊玛瑙印石在她身上，二人大打出手，后在交谈中了解到师父身死当晚的一些线索；745年探查龙门红衣教魔鬼城再遇；756年潼关城破，自潼关救下岚川云至长安城郊，置宅其地——并在那里重逢滞留中原十六年的师父。",
     ],
   },
   {
@@ -1918,7 +1918,7 @@ export const EVENTS = [
   { year: 739, month: 9, seq: "A", fac: ["明教", "天策", "凌雪阁"], loc: ["长安"], tloc: { luwanyue: null }, title: "秋，大光明寺事件：天策受命，与少林及凌雪阁围剿明教于长安西市义宁坊大光明寺。事前谋划调兵极其隐秘，主动请命赴长安的陆羽鸣仍于一间馆驿周围发现端倪、摸至天策众将集会处，而为时已迟——岚川云穷追，又有凌雪一重保障，使其折戟；陆晚月与岚川云视角皆以为其被高堑当场杀死，实则失踪，此后滞留中原十六年。陆南信因事不在城内，赶回城下时被戒严当夜部署城楼的少年程凯射穿右肘，伤未妥治，筋骨挛缩，无以用双刀", chars: ["luyuming", "luwanyue", "lunanxin", "lanchuanyun", "chengkai", "gaoyuan", "gaoqian"] },
   { year: 740, month: null, seq: null, add: true, fac: ["明教"], loc: ["西域"], title: "陆晚月成为「影月」旗下小杀手", chars: ["luwanyue"] },
   { year: 741, month: null, seq: null, add: true, fac: ["明教"], loc: ["安西-龟兹"], title: "陆晓成为明教正式教众", chars: ["luxiao"] },
-  { year: 742, month: null, seq: null, fac: ["明教", "天策"], loc: ["西域-龙门"], title: "龙门再遇：陆晚月见师父身份牌在岚川云身上，二人大打出手；交谈中岚川云复述陆羽鸣临终音节（身份牌是否交还待定），陆晚月携音节回西域，陆南信认出为亡魂过桥之问；同年，陆隐流刑期满出狱，回归杀手小队", chars: ["luwanyue", "lanchuanyun", "luyin"] },
+  { year: 742, month: null, seq: null, fac: ["明教", "天策"], loc: ["西域-龙门"], title: "龙门再遇：陆晚月见师父的萨珊玛瑙印石在岚川云身上，二人大打出手；交谈中岚川云复述陆羽鸣临终音节（印石是否交还待定），陆晚月携音节回西域，陆南信认出为亡魂过桥之问；同年，陆隐流刑期满出狱，回归杀手小队", chars: ["luwanyue", "lanchuanyun", "luyin"] },
   { year: 745, month: null, seq: null, add: true, fac: ["明教", "红衣教", "天策"], loc: ["西域-龙门"], title: "岚川云再至西域，处置红衣教之乱；陆晚月探查龙门红衣教魔鬼城，两人再遇；岚川云以弓弦扼杀陆隐", chars: ["luwanyue", "lanchuanyun", "luyin"] },
   { year: 747, month: 9, seq: null, fac: ["明教"], loc: ["西域"], title: "伽罕巴尔节，玛奈丽随村人往圣山途中被吐蕃游骑掳走", chars: ["maneili"] },
   { year: 756, month: 7, seq: "A", fac: ["明教", "天策"], loc: ["长安"], title: "六七月间，陆晚月自潼关谷地救岚川云至长安城郊，置宅其地——宅中重逢滞留中原十六年的师父陆羽鸣；岚川云大体康复之际，并遇晁衡一行（按：作者编年一处作「756年秋」，当指康复遇晁衡之时；兹从 Notion 系于六七月）", chars: ["luwanyue", "lanchuanyun", "luyuming"] },
@@ -2275,10 +2275,10 @@ export const EVENTS = [
   /* —— 2026-11-08 明教线：陆羽鸣 739 年长安始末（与 Notion 同步，含暗线三条） —— */
   { year: 739, month: 2, seq: null, fac: ["明教"], loc: ["长安"], tloc: { luwanyue: "西域" }, title: "陆羽鸣赴长安，落脚城西卑路斯旧部后人家", chars: ["luyuming", "luwanyue"] },
   { year: 739, month: 9, seq: "B", fac: ["明教", "天策", "凌雪阁"], loc: ["长安"], title: "暗线：屋顶一战，陆羽鸣抬头看岚川云，刀线偏开，颈侧下颌重伤失声、昏死，在场者皆以为已死；临昏前念《哈多赫特·纳斯克》2.10 前半句 cišca carāitiš ahi（亡魂过桥之问）", chars: ["luyuming", "lanchuanyun", "gaoqian"] },
-  { year: 739, month: 9, seq: "C", fac: ["凌雪阁", "天策", "明教"], loc: ["长安"], title: "高堑以刀尖挑下陆羽鸣的身份牌，交岚川云论功——「剩下的事就是我的了」，拖人离去；岚川云回守军师", chars: ["gaoqian", "lanchuanyun", "luyuming"] },
+  { year: 739, month: 9, seq: "C", fac: ["凌雪阁", "天策", "明教"], loc: ["长安"], title: "高堑以刀尖挑下陆羽鸣的萨珊玛瑙印石，交岚川云论功——「剩下的事就是我的了」，拖人离去；岚川云回守军师", chars: ["gaoqian", "lanchuanyun", "luyuming"] },
   { year: 739, month: 9, seq: "D", fac: ["凌雪阁", "明教"], loc: ["长安"], title: "暗线：高堑拖人途中发觉陆羽鸣尚有气，不补刀，亦不送机枢府，送回其城西落脚的波斯旧族人家；此后不提（一改口即须剥去岚川云的杀获、交代自己当场让功）。745年高堑死，此事随之入墓林", chars: ["gaoqian", "luyuming", "lanchuanyun"] },
-  { year: 739, month: 10, seq: null, fac: ["明教"], loc: ["长安"], title: "暗线：陆羽鸣困居长安——无籍无过所，恐累收留之家，回教即受疑；教中知情者未定（拟仅陆危楼）", chars: ["luyuming"] },
-  { year: 739, month: 10, seq: null, fac: ["天策"], loc: ["长安"], title: "岚川云以陆羽鸣的身份牌论功，得出阵即有「杀获」的嘉奖（时剿杀明教徒甚众，未逐一查验）；身份牌此后留在她手上", chars: ["lanchuanyun", "luyuming"] },
+  { year: 739, month: 10, seq: null, fac: ["明教"], loc: ["长安"], title: "暗线：陆羽鸣困居长安——无籍无过所，恐累收留之家，回教即受疑；教中知情者仅陆危楼（作者定）", chars: ["luyuming", "luweilou"] },
+  { year: 739, month: 10, seq: null, fac: ["天策"], loc: ["长安"], title: "岚川云以陆羽鸣的萨珊玛瑙印石论功，得出阵即有「杀获」的嘉奖（时剿杀明教徒甚众，未逐一查验）；印石此后留在她手上", chars: ["lanchuanyun", "luyuming"] },
   /* —— 2026-11-08 叶曙兮：生年 716，738 年西来相识，撮合程锋陆灵（与 Notion 同步） —— */
   { year: 738, month: null, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "叶曙兮随家人西来寻镔铁；北庭兵器遇寒脆折，她与经管甲仗的程钊相识", chars: ["yeshuxi", "chengzhao"] },
   { year: 738, month: 12, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "叶曙兮改制的兵器熬过北庭寒冬；她以铸剑人的眼光读出程钊之字「故廉」的本义——刃口磨平，有功不得封赏；程钊生母给她送去冬衣，是程家最先接纳她的人", chars: ["yeshuxi", "chengzhao"] },
