@@ -7,7 +7,7 @@
      mode               记忆方式（核心声部）；英文见 i18n/echoes.en.js，键为 mode 原文
      draft              true＝起草待核（作者尚未逐行核定；Notion「状态」列），页面标「待核」
      arc                此事在其后岁月重新浮出的节点：y 年、m 月、q 年表序号（如 B1），
-                        note 说明；card 表示出自人物卡轶事而非年表条目。y 为 null＝无定年
+                        note 说明；card 表示出自年表以外（人物卡、关系数据、文稿如《红绡》）。y 为 null＝无定年
    校验见 scripts/check-data.js（who∈CHARACTERS；shock.ev 与有月份之节点对照 EVENTS）。
    ============================================================ */
 
@@ -22,6 +22,8 @@ export const SHOCKS = [
     bands: [["dead", "逝者"], ["stay", "留在敌后"], ["west", "西撤"], ["aid", "来援者"], ["out", "城外与后来者"]] },
   { id: "daguangming739", year: 739, month: 9, ev: { year: 739, month: 9, has: "大光明寺事件" }, title: "大光明寺·陆羽鸣之死", gist: "一个人被当作死了十六年", axis: "那一夜之后，知道他是死是活",
     bands: [["self", "当事人"], ["knew", "知他未死"], ["thought", "以为他死了"], ["outside", "不在此事之内"]] },
+  { id: "enchou739", year: 739, month: 9, ev: { year: 739, month: 9, has: "大光明寺事件" }, title: "大光明寺·恩仇", gist: "后来大寺烈焰冲天", axis: "围剿那一夜站在哪一边",
+    bands: [["dead", "逝者"], ["ming", "明教一侧"], ["tian", "天策一侧"], ["pre", "前情"]] },
 ];
 
 export const ECHOES = [
@@ -438,7 +440,7 @@ export const ECHOES = [
       { y: 756, m: 2, q: "E", note: "得知天策府城破，想起大光明寺" },
       { y: 756, m: 7, q: "A", note: "循胡商之线所得安全屋，即师父藏身处" },
     ] },
-  { shock: "daguangming739", who: "lunanxin", draft: true, band: "thought", order: 6, stance: "以为他死了", stanceNote: "赶回城下中箭", mode: "认出那半句",
+  { shock: "daguangming739", who: "lunanxin", band: "thought", order: 6, stance: "以为他死了", stanceNote: "赶回城下中箭", mode: "认出那半句",
     arc: [
       { y: 739, m: 9, q: "A", note: "赶回城下，被（程凯）射穿右肘，筋骨挛缩，无以用双刀" },
       { y: 742, m: null, q: "", note: "认出陆晚月带回的音节是亡魂过桥之问" },
@@ -450,5 +452,116 @@ export const ECHOES = [
       { y: 739, m: 9, q: "", note: "与高堑同队「知君青骨」，早往长安布局，为天策传递机要" },
       { y: 739, m: null, q: "", note: "试岚川云：「你有恨。」" },
       { y: 745, m: null, q: "", note: "高堑死前诬告兄长；那桩事他始终不知" },
+    ] },
+  /* ---- 大光明寺·恩仇 ---- */
+  { shock: "enchou739", who: "luyuming", band: "dead", order: 1, stance: "逝者", stanceNote: "教中皆作身死接受（详见「陆羽鸣之死」）", mode: "明教记下的那个死者",
+    arc: [
+      { y: 739, m: 9, q: "A", note: "围剿当夜折戟；时剿杀明教徒甚众，未逐一查验" },
+      { y: 742, m: null, q: "", note: "陆晚月把他临终的音节带回西域" },
+      { y: 756, m: 7, q: "A", note: "其实未死——见「陆羽鸣之死」" },
+    ] },
+  { shock: "enchou739", who: "lunanxin", band: "ming", order: 2, stance: "明教一侧", stanceNote: "赶回城下中箭", mode: "失了双刀",
+    arc: [
+      { y: 739, m: 9, q: "A", note: "被（程凯）射穿右肘，伤未妥治，筋骨挛缩，无以用双刀" },
+      { y: null, m: null, q: "", note: "退修明尊心法，归教后殿中静修，反有反思与洞察", card: true },
+      { y: null, m: null, q: "", note: "其实不想让陆晚月踏足中原", card: true },
+      { y: 750, m: null, q: "", note: "天策杨宁一行访明教，与岚川云、程凯相见（详情待填）" },
+      { y: null, m: null, q: "", note: "陆晚月启程那晚：「只怕你的朋友要受苦了」", card: true },
+    ] },
+  { shock: "enchou739", who: "luwanyue", band: "ming", order: 3, stance: "明教一侧", stanceNote: "弟子，时年十二", mode: "从动手到救人",
+    arc: [
+      { y: 739, m: 9, q: "A", note: "师门覆灭" },
+      { y: 741, m: 9, q: "", note: "西域孤城，初会来援的天策人岚川云" },
+      { y: 742, m: null, q: "", note: "龙门，与岚川云大打出手" },
+      { y: 742, m: null, q: "", note: "742–745 与岚川云有嫌隙（关系）", card: true },
+      { y: 745, m: null, q: "", note: "不在场；回来见带队师兄陆隐陈尸在地，猜出几分，没有告诉玛奈丽：「日后我来护着姐姐」（《红绡》）", card: true },
+      { y: 752, m: 2, q: "", note: "为岚川云解围" },
+      { y: 756, m: 6, q: "B", note: "对岚川云说：「这是那个人的亲妹妹。如若世上还有无罪的人，她本来应该算一个」（《红绡》）", card: true },
+      { y: 756, m: 7, q: "A", note: "自潼关谷地救下岚川云" },
+      { y: 756, m: null, q: "", note: "自此为挚友（关系）", card: true },
+      { y: null, m: null, q: "", note: "后来知道玛奈丽未死，故意从未与岚川云、齐晟说起（《红绡》）", card: true },
+    ] },
+  { shock: "enchou739", who: "luyin", band: "ming", order: 4, stance: "明教一侧", stanceNote: "围剿时在流刑中", mode: "那一夜不在，后来死在天策人手里",
+    arc: [
+      { y: 736, m: 9, q: "", note: "长安街头一案元谋，科流三千里（前情）" },
+      { y: 742, m: 1, q: "", note: "天宝改元大赦，获释，回影月旗" },
+      { y: 742, m: null, q: "", note: "带陆晚月所在的杀手小队" },
+      { y: 745, m: null, q: "", note: "被岚川云以弓弦扼死" },
+      { y: 745, m: null, q: "", note: "岚川云早认出他，待红衣教事毕、将返洛时潜入宿处（《红绡》）", card: true },
+    ] },
+  { shock: "enchou739", who: "maneili", band: "ming", order: 5, stance: "明教一侧", stanceNote: "陆隐之妹", mode: "被天策的人擒住，又被放走",
+    arc: [
+      { y: 745, m: null, q: "", note: "兄长被杀后身世流落", card: true },
+      { y: 748, m: 8, q: "", note: "天长节，与天策齐晟同台献演" },
+      { y: 749, m: 1, q: "", note: "齐晟不复来寻" },
+      { y: 756, m: 6, q: "B", note: "为岚川云、齐晟所擒；岚川云以陆晚月之药致其假死脱身" },
+      { y: 756, m: 6, q: "B", note: "定三日后处斩；药由陆晚月交岚川云转入牢中（《红绡》）", card: true },
+      { y: 756, m: 6, q: "B", note: "问斩前夜，为帮齐晟独自上山解铁索，中箭坠谷；陆晓半空接住，免于一死（《红绡》）", card: true },
+      { y: 757, m: null, q: "", note: "与陆晓成为伴侣（关系）", card: true },
+    ] },
+  { shock: "enchou739", who: "luling", band: "ming", order: 6, stance: "明教一侧", stanceNote: "陆晚月师姐", mode: "嫁进天策人家",
+    arc: [
+      { y: 736, m: 3, q: "", note: "程锋至北庭，识陆灵" },
+      { y: 740, m: null, q: "", note: "围剿后一冬，叶曙兮撮合她与程锋" },
+      { y: 742, m: null, q: "", note: "程锋娶陆灵" },
+      { y: 746, m: 3, q: "", note: "程宇生于庭州" },
+      { y: 753, m: null, q: "", note: "程骞生于北庭" },
+    ] },
+  { shock: "enchou739", who: "luxiao", draft: true, band: "ming", order: 7, stance: "明教一侧", stanceNote: "陆南信弟子，741 年入教", mode: "接住坠谷的人",
+    arc: [
+      { y: 736, m: null, q: "", note: "随父居龟兹，始与明教接触" },
+      { y: 741, m: null, q: "", note: "成为明教正式教众" },
+      { y: 756, m: 6, q: "B", note: "玛奈丽坠谷，从半空接住并带离（《红绡》）", card: true },
+      { y: 757, m: null, q: "", note: "与玛奈丽成为伴侣（关系）", card: true },
+    ] },
+  { shock: "enchou739", who: "lanchuanyun", band: "tian", order: 8, stance: "天策一侧", stanceNote: "围剿当夜穷追", mode: "从穷追到求和解",
+    arc: [
+      { y: 739, m: 9, q: "A", note: "知不敌仍穷追" },
+      { y: 739, m: 10, q: "", note: "得出阵即有「杀获」的嘉奖" },
+      { y: 739, m: null, q: "", note: "高垣试之：「你有恨。」「原以为一场杀戮，便能荡平，原来没有。」" },
+      { y: 741, m: 9, q: "", note: "往救西域一孤城，城内有陆晚月亲眷，她不知" },
+      { y: 745, m: null, q: "", note: "再至西域，以弓弦扼杀陆隐" },
+      { y: 745, m: null, q: "", note: "早认出陆隐，待事毕将返时潜入其宿处（《红绡》）", card: true },
+      { y: 750, m: null, q: "", note: "随杨宁三去西域，会明教求和解" },
+      { y: 756, m: 6, q: "B", note: "擒玛奈丽时不知她是谁；陆晚月告以「那个人的亲妹妹」，遂转药放人：「『多少』，的确是算不过来的了。但一个人，也许还可以算一算。」（《红绡》）", card: true },
+      { y: 756, m: 7, q: "A", note: "被陆晚月所救" },
+    ] },
+  { shock: "enchou739", who: "chengkai", band: "tian", order: 9, stance: "天策一侧", stanceNote: "戒严当夜部署城楼的少年", mode: "城楼上的一箭",
+    arc: [
+      { y: 739, m: 9, q: "A", note: "射穿陆南信右肘" },
+      { y: 741, m: 9, q: "", note: "与岚川云同赴西域援边" },
+      { y: 742, m: null, q: "", note: "兄长程锋娶明教陆灵" },
+      { y: 750, m: null, q: "", note: "随杨宁访明教，见到陆南信（互动待定）" },
+      { y: 752, m: 2, q: "", note: "负伤，护送他的岚川云遇伏，陆晚月解围" },
+    ] },
+  { shock: "enchou739", who: "qisheng", band: "tian", order: 10, stance: "天策一侧", mode: "同过台，后来不再去寻",
+    arc: [
+      { y: 748, m: 8, q: "", note: "天长节，与玛奈丽同台献演" },
+      { y: 749, m: 1, q: "", note: "上元夜，老人一席话，不复去寻玛奈丽，随戏班回乡" },
+      { y: 748, m: null, q: "", note: "748–757 与玛奈丽有情而未遂（关系）", card: true },
+      { y: 756, m: 6, q: "B", note: "与岚川云擒玛奈丽；「为狼牙效力者，都应正法」，临了却帮腔，让那具「尸身」早些拉走（《红绡》）", card: true },
+      { y: 757, m: 2, q: "A", note: "太原战亡，不知她未死，至死愧悔（《红绡》）", card: true },
+    ] },
+  { shock: "enchou739", who: "chengfeng", draft: true, band: "tian", order: 11, stance: "天策一侧", stanceNote: "程凯之兄，时在北庭", mode: "娶了明教的人",
+    arc: [
+      { y: 736, m: 3, q: "", note: "至北庭，识陆灵" },
+      { y: 742, m: null, q: "", note: "娶陆灵" },
+      { y: 746, m: 3, q: "", note: "程宇生于庭州" },
+      { y: 753, m: null, q: "", note: "程骞生于北庭" },
+    ] },
+  { shock: "enchou739", who: "zhaoyingzhen", band: "pre", order: 12, stance: "前情", stanceNote: "736 年殁于明教徒街头生事", mode: "一句没说完的话",
+    arc: [
+      { y: 736, m: 9, q: "", note: "倚墙尚道：「莫急，云儿…你去寻个大夫，阿娘是要…」", card: true },
+    ] },
+  { shock: "enchou739", who: "ahui", band: "pre", order: 13, stance: "前情", stanceNote: "岚川云义兄", mode: "一把跟着她的短刀",
+    arc: [
+      { y: 737, m: 9, q: "", note: "以屡未能护主为耻，自尽" },
+      { y: 738, m: 9, q: "", note: "他的短刀随岚川云投天策府" },
+    ] },
+  { shock: "enchou739", who: "jingyan", band: "pre", order: 14, stance: "前情", stanceNote: "岚川云之父", mode: "不肯以杀相报",
+    arc: [
+      { y: null, m: null, q: "", note: "「以杀相报，我们成什么了？」", card: true },
+      { y: 738, m: 9, q: "", note: "送女儿投军" },
+      { y: 747, m: null, q: "", note: "临终问：「他们安了没有，你又安了没有」" },
     ] },
 ];

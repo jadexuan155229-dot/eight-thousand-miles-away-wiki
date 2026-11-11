@@ -34,6 +34,14 @@ const textW = (str, size) => [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 
 const wrapText = (str, n) => { const out = []; const cs = [...str]; for (let i = 0; i < cs.length; i += n) out.push(cs.slice(i, i + n).join("")); return out; };
 const LANE_H = 17, LABEL_FS = 11;
 
+/* 年表以外之节点的来源小标：句末注《某篇》者＝文稿，注（关系）者＝关系，余为人物卡 */
+function srcLabel(n, locale) {
+  const en = locale === "en";
+  if (/（《[^》]+》）$/.test(n.note)) return en ? "manuscript" : "文稿";
+  if (/（关系）$/.test(n.note)) return en ? "relations" : "关系";
+  return en ? "profile" : "卡";
+}
+
 function nodeText(n) {
   if (n.y == null) return "";
   return `${n.y}${n.m != null ? `.${n.m}` : ""}${n.q || ""}`;
@@ -77,7 +85,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       const date = nodeText(n), short = shortNote(n.note);
       const w = textW(date, LABEL_FS) + 6 + textW(short, LABEL_FS);
       const lx = Math.max(PLOT_L - 30, Math.min(x - 5, W - 12 - w));
-      let lane = ends.findIndex((end) => end + 12 <= lx);
+      let lane = ends.findIndex((end) => end + 18 <= lx);
       if (lane < 0) { lane = ends.length; ends.push(0); }
       ends[lane] = lx + w;
       return { n, x, lx, w, lane, date, short };
@@ -258,7 +266,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
           {/* 悬停：同年同月的竖向引线 + 浮签 */}
           {hover && hover.shock === shock.id && (() => {
             const lines = wrapText(hover.n.note, 24);
-            const date = nodeText(hover.n) + (hover.n.card ? `　${t("人物卡")}` : "");
+            const date = nodeText(hover.n) + (hover.n.card ? `　${t("年表以外")}·${srcLabel(hover.n, locale)}` : "");
             const bw = Math.max(textW(date, 11.5), ...lines.map((l) => textW(l, 12))) + 22;
             const bh = 26 + lines.length * 17;
             const bx = Math.max(8, Math.min(hover.x - 14, W - 8 - bw));
@@ -281,7 +289,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       {/* 图例 */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 8, fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>
         <span>● {locale === "en" ? "from the chronology" : "年表条目"}</span>
-        <span>○ {locale === "en" ? "from a character profile" : "人物卡轶事"}</span>
+        <span>○ {locale === "en" ? "outside the chronology (profiles, relations, manuscript)" : "年表以外（人物卡、关系、文稿）"}</span>
         <span>◌ {t("無定年")}</span>
         {rows.some((e) => e.draft) && <span style={{ color: T.seal }}>{t("待核")}{locale === "en" ? ": not yet reviewed by the author" : "：作者尚未逐行核定"}</span>}
         <span>{locale === "en" ? "Hover a point to see what it is, and who else it reached that month." : "悬停一点：看它是什么事，以及同月还落在谁身上"}</span>
@@ -322,7 +330,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 <div style={{ minWidth: 72, fontFamily: "HuiwenZhengKai", fontSize: 13, color: n.y != null ? T.accent : T.faint }}>{n.y != null ? nodeText(n) : "—"}</div>
                 <div lang="zh" style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.8 }}>
                   {n.note}
-                  {n.card && <span title={t("人物卡")} style={{ marginLeft: 8, fontSize: 10.5, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>卡</span>}
+                  {n.card && <span title={t("年表以外")} style={{ marginLeft: 8, fontSize: 10.5, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>{srcLabel(n, locale)}</span>}
                 </div>
               </div>
             ))}

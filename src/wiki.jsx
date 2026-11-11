@@ -667,7 +667,7 @@ function FacBand({ segs, none, height = 4, maxWidth }) {
 /* 事件行：年表主列表単條，供平鋪與月組兩種佈局共用 */
 function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
   /* 震源锚事件：年表行上留一个淡淡的入口，通向余波页；未传 onOpenEcho 的视图（舆图）不出 */
-  const shock = onOpenEcho && SHOCKS.find((s) => s.ev.year === e.year && s.ev.month === e.month && e.title.includes(s.ev.has));
+  const shocks = onOpenEcho ? SHOCKS.filter((s) => s.ev.year === e.year && s.ev.month === e.month && e.title.includes(s.ev.has)) : []; /* 一事可为多个震源之锚 */
   return (
     <div style={{ position: "relative", padding: "0 0 24px 26px", fontFamily: "HuiwenZhengKai" }}>
       <div style={{ position: "absolute", left: -5, top: 7, width: 9, height: 9, background: showYear ? T.accent : T.faint, transform: "rotate(45deg)" }} />
@@ -689,10 +689,10 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
         {e.add && (
           <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: "#C9A15C", border: "1px solid #C9A15C55", padding: "0 6px", borderRadius: "3px" }} title="採自人設文檔，尚未錄入 Notion 事件庫">增補</span>
         )}
-        {shock && (
-          <button onClick={() => onOpenEcho(shock.id)} title="余波：此事笼罩之人与其记忆方式"
-            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.seal, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>余波 ›</button>
-        )}
+        {shocks.map((shock) => (
+          <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={`余波：${shock.title}——此事笼罩之人与其记忆方式`}
+            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.seal, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>余波{shocks.length > 1 ? `·${shock.title.split("·").pop()}` : ""} ›</button>
+        ))}
         {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>门派未标</span>}
         {e.fac.map((f) => (
           <span key={f} style={{ fontSize: 11, color: fc(f), border: `1px solid ${fc(f)}44`, padding: "0 6px", borderRadius: "3px" }}>{f}</span>
