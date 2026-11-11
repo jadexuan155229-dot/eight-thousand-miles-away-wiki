@@ -23,7 +23,9 @@ export const ECHOES = [
   /* ---- 雁门关之役 ---- */
   { shock: "yanmen745", who: "xuezhi", band: "dead", order: 1, stance: "逝者", mode: "声名悬而未决",
     arc: [
-      { y: 745, m: 12, q: "", note: "薛褚归绛州，族宅廊下「名声之论」；圣人降罪、丧仪不提、族中不请褒辞（卡）· 746.3 大丧迟于战亡数月，遗骨自冰室请出" },
+      { y: 745, m: 12, q: "", note: "薛褚归绛州，族宅廊下「名声之论」" },
+      { y: 745, m: 12, q: "", note: "圣人降罪、丧仪不提、族中不请褒辞", card: true },
+      { y: 746, m: 3, q: "", note: "大丧迟于战亡数月，遗骨自冰室请出" },
       { y: 757, m: 7, q: "", note: "老兽医醉中将狄元恪误认作故统帅" },
       { y: 762, m: 9, q: "", note: "昔年坐骑摔伤致死，闵方城跪守三五日" },
       { y: 763, m: 10, q: "", note: "荔非污名传来，薛褚想起「名声之论」，撂下兵器出武库" },
@@ -37,7 +39,8 @@ export const ECHOES = [
     ] },
   { shock: "yanmen745", who: "minfangcheng", band: "live", order: 3, stance: "亲历", stanceNote: "出关寻回统帅遗体", mode: "替亡者守着",
     arc: [
-      { y: 745, m: 11, q: "", note: "成名之战「临阵受辱而色不变」（卡）；只许景惠时医，不许她说话" },
+      { y: 745, m: 11, q: "", note: "成名之战「临阵受辱而色不变」", card: true },
+      { y: 745, m: 11, q: "", note: "只许景惠时医，不许她说话" },
       { y: null, m: null, q: "", note: "守着薛直的战马十几年", card: true },
       { y: 747, m: 9, q: "", note: "首次恢复考课，「原来这就是先统帅看中过的人」自此每年一回" },
       { y: 753, m: 11, q: "", note: "便装巡广武城，「他知道原先薛直也这样」" },
@@ -49,7 +52,7 @@ export const ECHOES = [
     ] },
   { shock: "yanmen745", who: "lifei", band: "live", order: 4, stance: "亲历", stanceNote: "于薛直身侧倒下，被当作已死", mode: "以无功自铭",
     arc: [
-      { y: 745, m: null, q: "", note: "后始有「无功」之字（卡·名义）" },
+      { y: 745, m: null, q: "", note: "后始有「无功」之字（卡·名义）", card: true },
       { y: 746, m: 7, q: "", note: "残营乏治文事者，他把靳沉白带回来" },
       { y: 756, m: 11, q: "C", note: "榆林河后点验俘虏，一言不发，「不提738年，薛直不出名」" },
       { y: 757, m: 10, q: "", note: "乱后首开考课，旧柱不能告免，带伤上台" },
@@ -76,22 +79,22 @@ export const ECHOES = [
   { shock: "yanmen745", who: "xuechu", band: "live", order: 7, stance: "亲历", stanceNote: "薛直同族后辈", mode: "为尊者讳",
     arc: [
       { y: 745, m: 12, q: "", note: "廊下听「名声之论」，翌月即返" },
-      { y: null, m: null, q: "", note: "隐去薛姓，营中称季韬将军（卡）" },
+      { y: null, m: null, q: "", note: "隐去薛姓，营中称季韬将军", card: true },
       { y: 756, m: 2, q: "", note: "薛坚留朔方军，只能远远关注" },
       { y: 763, m: 10, q: "", note: "污名传来，出武库求见，被关岳拦下" },
       { y: 764, m: 2, q: "", note: "薛坚生死凭一纸名册得知，「在武库照旧修甲」" },
     ] },
   { shock: "yanmen745", who: "guanyue", band: "young", order: 8, stance: "在场", stanceNote: "十六岁；关山堂弟", mode: "接下兄长的位置",
     arc: [
-      { y: 745, m: null, q: "", note: "745–765 与闵方城「主副·恩义」（关系）" },
+      { y: 745, m: null, q: "", note: "745–765 与闵方城「主副·恩义」（关系）", card: true },
       { y: 757, m: 7, q: "", note: "引狄元恪入营" },
       { y: 763, m: 10, q: "", note: "拦下薛褚" },
       { y: 764, m: 11, q: "", note: "把女儿放在闵方城寝帐；后关氏子女无一人再沾军伍" },
     ] },
   { shock: "yanmen745", who: "xuejian", band: "young", order: 9, stance: "在场", stanceNote: "十一岁；薛直独子", mode: "以打代哭",
     arc: [
-      { y: 745, m: null, q: "", note: "闵方城不穿孝，牵来驯好的马，扛手靶任他打到跪地（卡）" },
-      { y: null, m: null, q: "", note: "「我所能倚凭唯我自身，唯我手中盾刀」（卡）" },
+      { y: 745, m: null, q: "", note: "闵方城不穿孝，牵来驯好的马，扛手靶任他打到跪地", card: true },
+      { y: null, m: null, q: "", note: "「我所能倚凭唯我自身，唯我手中盾刀」", card: true },
       { y: 756, m: 2, q: "", note: "不随苍云归，自此入朔方军" },
       { y: 762, m: 11, q: "D", note: "朔方军纵掠，他拦未拦，正文不说破" },
       { y: 763, m: 12, q: "B", note: "归省祭父，探闵方城——「郎君」" },
@@ -106,7 +109,7 @@ export const ECHOES = [
   { shock: "yanmen745", who: "rujin", band: "young", order: 11, stance: "在场", stanceNote: "十一岁；匠户之女", mode: "从死者身上脱甲",
     arc: [
       { y: null, m: null, q: "", note: "神色自若；苍云无力再雇匠役，茹家不愿舍业", card: true },
-      { y: null, m: null, q: "", note: "长孙忘情丧礼期间见其缝补，驻足良久，自此不再提让匠户自去（长孙卡）" },
+      { y: null, m: null, q: "", note: "长孙忘情丧礼期间见其缝补，驻足良久，自此不再提让匠户自去（长孙卡）", card: true },
     ] },
   { shock: "yanmen745", who: "jinchenbai", band: "after", order: 12, stance: "事后来者", stanceNote: "同年在雁塔理殉塔文书", mode: "从文书里认识这场仗",
     arc: [
@@ -251,7 +254,7 @@ export const ECHOES = [
     ] },
   { shock: "leitai757", who: "minfangcheng", band: "after", order: 6, stance: "事前不知（作者定：只是放学有所成的邱鸿上去试身手）", stanceNote: "事后不问", mode: "不问，也不说破",
     arc: [
-      { y: 750, m: 9, q: "", note: "考课邱鸿记败而实为天赋，闵方城要为弟子——与757年成镜像（荔非卡）" },
+      { y: 750, m: 9, q: "", note: "考课邱鸿记败而实为天赋，闵方城要为弟子——与757年成镜像（荔非卡）", card: true },
       { y: 757, m: 11, q: "", note: "邱鸿夜饮，「闵方城看一眼墙上挂的」" },
       { y: 757, m: 12, q: "", note: "荔非祭吕定仪时他在侧" },
       { y: 761, m: 2, q: "", note: "凤州见荔非方知其未归田" },
