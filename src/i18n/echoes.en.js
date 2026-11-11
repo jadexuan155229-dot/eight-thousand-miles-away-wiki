@@ -82,6 +82,8 @@ export const echoUiEn = {
   回響節點: "Echoes through the years",
   無定年: "Undated",
   前事: "Before",
+  待核: "Draft",
+  待核註: "Drafted, not yet reviewed line by line by the author.",
   人物卡: "From the character profile",
   查看檔案: "Open profile",
   導語: "Each shock is an event that hangs over many people. Each person is placed by their distance from it, and each remembers it differently. Click a name to read their echoes.",

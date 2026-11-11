@@ -5,6 +5,7 @@
    回响 ECHOES：一人对一震源一条——
      stance/stanceNote  在场姿态（stance 取本震源 bands 之带，逝者例外：贴震源行）
      mode               记忆方式（核心声部）；英文见 i18n/echoes.en.js，键为 mode 原文
+     draft              true＝起草待核（作者尚未逐行核定；Notion「状态」列），页面标「待核」
      arc                此事在其后岁月重新浮出的节点：y 年、m 月、q 年表序号（如 B1），
                         note 说明；card 表示出自人物卡轶事而非年表条目。y 为 null＝无定年
    校验见 scripts/check-data.js（who∈CHARACTERS；shock.ev 与有月份之节点对照 EVENTS）。
@@ -302,7 +303,7 @@ export const ECHOES = [
       { y: 761, m: 3, q: "B", note: "府城再失，西退陕州" },
       { y: 770, m: 12, q: "", note: "程凯去后几年，上书乞骸骨" },
     ] },
-  { shock: "tiance756", who: "weiqian", band: "stay", order: 4, stance: "留在敌后", stanceNote: "残营斥候，联络内外", mode: "把人送出去，自己留下",
+  { shock: "tiance756", who: "weiqian", draft: true, band: "stay", order: 4, stance: "留在敌后", stanceNote: "残营斥候，联络内外", mode: "把人送出去，自己留下",
     arc: [
       { y: 756, m: 2, q: "D", note: "随李庭深留残营，以斥候联络内外" },
       { y: 756, m: 12, q: "", note: "提议请李庭深为项旌取字" },
@@ -312,7 +313,7 @@ export const ECHOES = [
       { y: 759, m: 3, q: "B", note: "程凯抗命回寻，于相藉尸身中翻找出来" },
       { y: 770, m: 4, q: "", note: "宣杨告程凯：监军伏诛，「魏谦兄弟可以瞑目」" },
     ] },
-  { shock: "tiance756", who: "mayi", band: "stay", order: 5, stance: "留在敌后", stanceNote: "残营，程凯、李庭深的师兄", mode: "留在残营",
+  { shock: "tiance756", who: "mayi", draft: true, band: "stay", order: 5, stance: "留在敌后", stanceNote: "残营，程凯、李庭深的师兄", mode: "留在残营",
     arc: [
       { y: 756, m: 2, q: "D", note: "随李庭深留残营（因果待定）" },
       { y: 757, m: null, q: "", note: "秋收两京前夕，李庭深一营为狼牙所围，他去破阵而身亡（卡；设想，俟作者定）", card: true },
@@ -334,7 +335,7 @@ export const ECHOES = [
       { y: 757, m: 12, q: "", note: "外祖父天策旧甲入手，「愈发知道天策府是她归处」" },
       { y: 762, m: 11, q: "", note: "返回天策府，见到程凯" },
     ] },
-  { shock: "tiance756", who: "qisheng", band: "west", order: 8, stance: "西撤", stanceNote: "城破前已隔在潼关", mode: "失散在外，死在别处",
+  { shock: "tiance756", who: "qisheng", draft: true, band: "west", order: 8, stance: "西撤", stanceNote: "城破前已隔在潼关", mode: "失散在外，死在别处",
     arc: [
       { y: 755, m: 12, q: "", note: "自崤山随高仙芝、封常清西撤入潼关，天策府自此被留在敌后" },
       { y: 756, m: 6, q: "B", note: "与岚川云率残军对峙潼关，潼关失陷" },
@@ -380,7 +381,7 @@ export const ECHOES = [
       { y: 770, m: 12, q: "", note: "提出接回家中安养，程凯不听" },
       { y: 771, m: null, q: "", note: "程凯亡后领命镇梁州" },
     ] },
-  { shock: "tiance756", who: "luwanyue", band: "out", order: 15, stance: "城外与后来者", stanceNote: "明教", mode: "认得这种灭顶之灾",
+  { shock: "tiance756", who: "luwanyue", draft: true, band: "out", order: 15, stance: "城外与后来者", stanceNote: "明教", mode: "认得这种灭顶之灾",
     arc: [
       { y: 739, m: 9, q: "A", note: "大光明寺事件，师门覆灭，以为师父被杀" },
       { y: 756, m: 2, q: "E", note: "得知天策府城破，想起大光明寺——同样是师门的灭顶之灾" },
