@@ -23,6 +23,17 @@ const ROW_H = 42, BAND_H = 30, TOP = 58, SHOCK_ROW_H = 56;
 
 const posOf = (y, m) => y + (m != null ? (m - 1) / 12 : 0.5);
 
+/* 行内短题：取节点说明的第一小句（5–14 字内遇标点即断），否则截 13 字 */
+function shortNote(note) {
+  const m = note.slice(0, 15).search(/[，；：。—]/);
+  if (m >= 4) return note.slice(0, m);
+  return note.length > 14 ? `${note.slice(0, 13)}…` : note;
+}
+/* 估字宽（SVG 用户单位）：汉字全宽，西文数字约半宽 */
+const textW = (str, size) => [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? size : size * 0.56), 0);
+const wrapText = (str, n) => { const out = []; const cs = [...str]; for (let i = 0; i < cs.length; i += n) out.push(cs.slice(i, i + n).join("")); return out; };
+const LANE_H = 17, LABEL_FS = 11;
+
 function nodeText(n) {
   if (n.y == null) return "";
   return `${n.y}${n.m != null ? `.${n.m}` : ""}${n.q || ""}`;
@@ -32,6 +43,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
   const shock = SHOCKS.find((s) => s.id === shockId) || SHOCKS[0];
   const t = (k) => echoUi(locale, k);
   const [focusWho, setFocusWho] = useState(null); /* 键盘焦点环：SVG 的 <g> 不吃 CSS outline，自绘 */
+  const [hover, setHover] = useState(null); /* { who, k, n, x, cy }：悬停的节点，出浮签并点亮他行同年同月者 */
   const rows = useMemo(() => ECHOES.filter((e) => e.shock === shock.id).sort((a, b) => a.order - b.order), [shock.id]);
   const dead = rows.filter((e) => e.band === "dead");
   const living = rows.filter((e) => e.band !== "dead");
@@ -47,18 +59,44 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
   const shockP = posOf(shock.year, shock.month);
   const shockX = xOf(shockP);
 
+  /* 一行的定年节点及其横坐标（同年同月者右移错开） */
+  const ptsOf = (e) => {
+    const seen = {};
+    return e.arc.filter((n) => n.y != null).sort((a, b) => posOf(a.y, a.m) - posOf(b.y, b.m)).map((n) => {
+      const k = `${n.y}.${n.m}`;
+      const j = (seen[k] = (seen[k] || 0) + 1) - 1;
+      return { n, x: xOf(posOf(n.y, n.m)) + j * 11, p: posOf(n.y, n.m) };
+    });
+  };
+  /* 选中行：节点下直接落字（年月＋短题），贪心分道避让 */
+  const selLabels = (() => {
+    if (!selected) return { labels: [], lanes: 0 };
+    const ends = [];
+    const labels = ptsOf(selected).map(({ n, x }) => {
+      const date = nodeText(n), short = shortNote(n.note);
+      const w = textW(date, LABEL_FS) + 6 + textW(short, LABEL_FS);
+      const lx = Math.max(PLOT_L - 30, Math.min(x - 5, W - 12 - w));
+      let lane = ends.findIndex((end) => end + 12 <= lx);
+      if (lane < 0) { lane = ends.length; ends.push(0); }
+      ends[lane] = lx + w;
+      return { n, x, lx, w, lane, date, short };
+    });
+    return { labels, lanes: ends.length };
+  })();
+  const rowH = (e) => ROW_H + (selected && selected.who === e.who && selLabels.lanes ? selLabels.lanes * LANE_H + 12 : 0);
+
   /* 纵向排布：震源行 → 逝者行 → 各带（带题 + 本带诸行） */
   const layout = [];
   let y = TOP;
   layout.push({ kind: "shock", y });
   y += SHOCK_ROW_H;
-  dead.forEach((e) => { layout.push({ kind: "row", e, y, dead: true }); y += ROW_H; });
+  dead.forEach((e) => { layout.push({ kind: "row", e, y, h: rowH(e), dead: true }); y += rowH(e); });
   shock.bands.filter(([k]) => k !== "dead").forEach(([k, label]) => {
     const inBand = living.filter((e) => e.band === k);
     if (!inBand.length) return;
     layout.push({ kind: "band", label: bandLabel(locale, shock.id, k, label), y });
     y += BAND_H;
-    inBand.forEach((e) => { layout.push({ kind: "row", e, y, dead: false }); y += ROW_H; });
+    inBand.forEach((e) => { layout.push({ kind: "row", e, y, h: rowH(e), dead: false }); y += rowH(e); });
   });
   const H = y + 24;
   const ticks = [];
@@ -93,7 +131,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       </div>
 
       <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="img"
+        <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="img" onMouseLeave={() => setHover(null)}
           aria-label={`${shockTitle(locale, shock)} — ${shockAxis(locale, shock)}`}>
           {/* 年刻度 */}
           {ticks.map((yr) => {
@@ -138,14 +176,9 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             const dim = selected && !on;
             const cy = it.y + ROW_H / 2;
             const tr = characterTranslation(locale, c.id);
-            const dated = e.arc.filter((n) => n.y != null).sort((a, b) => posOf(a.y, a.m) - posOf(b.y, b.m));
             const undated = e.arc.filter((n) => n.y == null);
-            const seen = {};
-            const pts = dated.map((n) => {
-              const k = `${n.y}.${n.m}`;
-              const j = (seen[k] = (seen[k] || 0) + 1) - 1;
-              return { n, x: xOf(posOf(n.y, n.m)) + j * 9, p: posOf(n.y, n.m) };
-            });
+            const pts = ptsOf(e);
+            const lit = (n) => hover && hover.shock === shock.id && n.m != null && hover.n.y === n.y && hover.n.m === n.m; /* 与悬停节点同年同月 */
             const fade = (p) => Math.max(0.16, 0.7 - (p - shockP) * 0.022);
             let prev = { x: shockX, p: shockP };
             return (
@@ -155,10 +188,10 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onRoute({ shock: shock.id, who: on ? null : e.who }); } }}
                 onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setFocusWho(e.who); }}
                 onBlur={() => setFocusWho((w) => (w === e.who ? null : w))}>
-                {focusWho === e.who && <rect x="6" y={it.y + 1} width={W - 12} height={ROW_H - 2} fill="none" stroke={T.accent} strokeWidth="1.5" rx="3" />}
-                {on && <rect x="8" y={it.y + 2} width={W - 16} height={ROW_H - 4} fill={T.panelHi} rx="3" />}
+                {focusWho === e.who && <rect x="6" y={it.y + 1} width={W - 12} height={it.h - 2} fill="none" stroke={T.accent} strokeWidth="1.5" rx="3" />}
+                {on && <rect x="8" y={it.y + 2} width={W - 16} height={it.h - 4} fill={T.panelHi} rx="3" />}
                 {/* 谱线与节点：未选中行整体退后一档，行首姓名与记忆方式仍清晰可读 */}
-                <g opacity={dim ? 0.45 : 1}>
+                <g opacity={dim ? 0.6 : 1}>
                 {/* 谱线：自震源起，分段渐淡 */}
                 {pts.map(({ x, p }, k) => {
                   const seg = (
@@ -168,13 +201,18 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                   prev = { x, p };
                   return seg;
                 })}
-                {/* 节点 */}
-                {pts.map(({ n, x, p }, k) => (
-                  <circle key={k} cx={x} cy={cy} r={on ? 5 : 4} fill={it.dead ? T.panel : col} fillOpacity={Math.max(0.5, fade(p) + 0.2)}
-                    stroke={col} strokeOpacity={Math.max(0.5, fade(p) + 0.2)} strokeWidth="1.3">
-                    <title>{`${nodeText(n)}　${n.note}`}</title>
-                  </circle>
-                ))}
+                {/* 节点：实心＝年表条目，空心＝人物卡轶事；悬停时他行同年同月者一并点亮 */}
+                {pts.map(({ n, x, p }, k) => {
+                  const hot = lit(n);
+                  const op = hot ? 1 : Math.max(0.78, fade(p) + 0.3);
+                  return (
+                    <g key={k}>
+                      {hot && <circle cx={x} cy={cy} r="9.5" fill="none" stroke={T.ink} strokeOpacity="0.55" strokeWidth="1" />}
+                      <circle cx={x} cy={cy} r={hot ? 6.5 : on ? 5.5 : 5} fill={n.card ? T.panel : col} fillOpacity={n.card ? 1 : op}
+                        stroke={col} strokeOpacity={op} strokeWidth={n.card ? 1.6 : 1.2} />
+                    </g>
+                  );
+                })}
                 {undated.length > 0 && (
                   <g>
                     <circle cx={UNDATED_X} cy={cy} r="4" fill="none" stroke={col} strokeOpacity="0.6" strokeWidth="1.2" strokeDasharray="2 2" />
@@ -185,12 +223,59 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 {/* 行首：姓名 + 记忆方式 */}
                 <text x={it.dead ? 34 : 20} y={cy - 2} fontFamily="JingHuaLaoSong" fontSize="15" fill={on ? T.ink : T.muted}>{tr?.name || c.name}</text>
                 <text x={it.dead ? 34 : 20} y={cy + 14} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={on ? T.ink : T.muted} fillOpacity={on ? 0.95 : 0.8}>{modeText(locale, e.mode)}</text>
-                <rect x="0" y={it.y} width={W} height={ROW_H} fill="transparent" />
+                {/* 选中行：字直接落在点下 */}
+                {on && selLabels.labels.map((L, k) => {
+                  const ly = it.y + ROW_H + 6 + L.lane * LANE_H + 9;
+                  const ax = Math.max(L.lx + 3, Math.min(L.x, L.lx + L.w - 3));
+                  return (
+                    <g key={`l${k}`}>
+                      <polyline points={`${L.x},${cy + 7} ${L.x},${ly - 14} ${ax},${ly - 10}`} fill="none" stroke={col} strokeOpacity="0.45" strokeWidth="0.8" />
+                      <text x={L.lx} y={ly} fontFamily="HuiwenZhengKai" fontSize={LABEL_FS}>
+                        <tspan fill={T.accent}>{L.date}</tspan>
+                        <tspan dx="6" fill={T.ink} fillOpacity="0.9">{L.short}</tspan>
+                      </text>
+                    </g>
+                  );
+                })}
+                <rect x="0" y={it.y} width={W} height={it.h} fill="transparent" />
+                {/* 节点感应区（在整行感应层之上） */}
+                {pts.map(({ n, x }, k) => (
+                  <circle key={`h${k}`} cx={x} cy={cy} r="9" fill="transparent"
+                    onMouseEnter={() => setHover({ shock: shock.id, who: e.who, k, n, x, cy })}
+                    onMouseLeave={() => setHover((h) => (h && h.who === e.who && h.k === k ? null : h))} />
+                ))}
               </g>
             );
           })}
+          {/* 悬停：同年同月的竖向引线 + 浮签 */}
+          {hover && hover.shock === shock.id && (() => {
+            const lines = wrapText(hover.n.note, 24);
+            const date = nodeText(hover.n) + (hover.n.card ? `　${t("人物卡")}` : "");
+            const bw = Math.max(textW(date, 11.5), ...lines.map((l) => textW(l, 12))) + 22;
+            const bh = 26 + lines.length * 17;
+            const bx = Math.max(8, Math.min(hover.x - 14, W - 8 - bw));
+            const by = hover.cy - 14 - bh < 4 ? hover.cy + 14 : hover.cy - 14 - bh;
+            return (
+              <g pointerEvents="none">
+                {hover.n.m != null && <line x1={xOf(posOf(hover.n.y, hover.n.m))} x2={xOf(posOf(hover.n.y, hover.n.m))} y1={TOP - 14} y2={H - 14} stroke={T.ink} strokeOpacity="0.22" strokeWidth="1" />}
+                <rect x={bx} y={by} width={bw} height={bh} rx="3" fill={T.bg || T.panel} stroke={T.line} />
+                <text x={bx + 11} y={by + 17} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.accent}>{date}</text>
+                {lines.map((l, i) => (
+                  <text key={i} x={bx + 11} y={by + 35 + i * 17} fontFamily="HuiwenZhengKai" fontSize="12" fill={T.ink}>{l}</text>
+                ))}
+              </g>
+            );
+          })()}
           <text x={W - 12} y={H - 4} textAnchor="end" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint} fillOpacity="0.7">{shockAxis(locale, shock)}　↓</text>
         </svg>
+      </div>
+
+      {/* 图例 */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 8, fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>
+        <span>● {locale === "en" ? "from the chronology" : "年表条目"}</span>
+        <span>○ {locale === "en" ? "from a character profile" : "人物卡轶事"}</span>
+        <span>◌ {t("無定年")}</span>
+        <span>{locale === "en" ? "Hover a point to see what it is, and who else it reached that month." : "悬停一点：看它是什么事，以及同月还落在谁身上"}</span>
       </div>
 
       {/* 选中一行：展开其回响 */}
