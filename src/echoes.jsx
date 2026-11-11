@@ -34,6 +34,14 @@ const textW = (str, size) => [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 
 const wrapText = (str, n) => { const out = []; const cs = [...str]; for (let i = 0; i < cs.length; i += n) out.push(cs.slice(i, i + n).join("")); return out; };
 const LANE_H = 17, LABEL_FS = 11;
 
+/* 年表以外之节点的来源小标：句末注《某篇》者＝文稿，注（关系）者＝关系，余为人物卡 */
+function srcLabel(n, locale) {
+  const en = locale === "en";
+  if (/（《[^》]+》）$/.test(n.note)) return en ? "manuscript" : "文稿";
+  if (/（关系）$/.test(n.note)) return en ? "relations" : "关系";
+  return en ? "profile" : "卡";
+}
+
 function nodeText(n) {
   if (n.y == null) return "";
   return `${n.y}${n.m != null ? `.${n.m}` : ""}${n.q || ""}`;
@@ -258,7 +266,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
           {/* 悬停：同年同月的竖向引线 + 浮签 */}
           {hover && hover.shock === shock.id && (() => {
             const lines = wrapText(hover.n.note, 24);
-            const date = nodeText(hover.n) + (hover.n.card ? `　${t("年表以外")}` : "");
+            const date = nodeText(hover.n) + (hover.n.card ? `　${t("年表以外")}·${srcLabel(hover.n, locale)}` : "");
             const bw = Math.max(textW(date, 11.5), ...lines.map((l) => textW(l, 12))) + 22;
             const bh = 26 + lines.length * 17;
             const bx = Math.max(8, Math.min(hover.x - 14, W - 8 - bw));
@@ -322,7 +330,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 <div style={{ minWidth: 72, fontFamily: "HuiwenZhengKai", fontSize: 13, color: n.y != null ? T.accent : T.faint }}>{n.y != null ? nodeText(n) : "—"}</div>
                 <div lang="zh" style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.8 }}>
                   {n.note}
-                  {n.card && <span title={t("年表以外")} style={{ marginLeft: 8, fontSize: 10.5, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>卡</span>}
+                  {n.card && <span title={t("年表以外")} style={{ marginLeft: 8, fontSize: 10.5, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>{srcLabel(n, locale)}</span>}
                 </div>
               </div>
             ))}
