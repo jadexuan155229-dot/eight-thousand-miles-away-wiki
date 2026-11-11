@@ -23,7 +23,8 @@ export const ECHOES = [
   /* ---- 雁门关之役 ---- */
   { shock: "yanmen745", who: "xuezhi", band: "dead", order: 1, stance: "逝者", mode: "声名悬而未决",
     arc: [
-      { y: 745, m: 12, q: "", note: "薛褚归绛州，族宅廊下「名声之论」；圣人降罪、丧仪不提、族中不请褒辞（卡）" },
+      { y: 745, m: 12, q: "", note: "薛褚归绛州，族宅廊下「名声之论」" },
+      { y: 745, m: 12, q: "", note: "圣人降罪、丧仪不提、族中不请褒辞", card: true },
       { y: 746, m: 3, q: "", note: "大丧迟于战亡数月，遗骨自冰室请出" },
       { y: 757, m: 7, q: "", note: "老兽医醉中将狄元恪误认作故统帅" },
       { y: 762, m: 9, q: "", note: "昔年坐骑摔伤致死，闵方城跪守三五日" },
@@ -38,7 +39,8 @@ export const ECHOES = [
     ] },
   { shock: "yanmen745", who: "minfangcheng", band: "live", order: 3, stance: "亲历", stanceNote: "出关寻回统帅遗体", mode: "替亡者守着",
     arc: [
-      { y: 745, m: 11, q: "", note: "成名之战「临阵受辱而色不变」（卡）；只许景惠时医，不许她说话" },
+      { y: 745, m: 11, q: "", note: "成名之战「临阵受辱而色不变」", card: true },
+      { y: 745, m: 11, q: "", note: "只许景惠时医，不许她说话" },
       { y: null, m: null, q: "", note: "守着薛直的战马十几年", card: true },
       { y: 747, m: 9, q: "", note: "首次恢复考课，「原来这就是先统帅看中过的人」自此每年一回" },
       { y: 753, m: 11, q: "", note: "便装巡广武城，「他知道原先薛直也这样」" },
