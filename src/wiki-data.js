@@ -2277,7 +2277,7 @@ export const EVENTS = [
   { year: 739, month: 9, seq: "B", fac: ["明教", "天策", "凌雪阁"], loc: ["长安"], title: "暗线：屋顶一战，陆羽鸣抬头看岚川云，刀线偏开，颈侧下颌重伤失声、昏死，在场者皆以为已死；临昏前念《哈多赫特·纳斯克》2.10 前半句 cišca carāitiš ahi（亡魂过桥之问）", chars: ["luyuming", "lanchuanyun", "gaoqian"] },
   { year: 739, month: 9, seq: "C", fac: ["凌雪阁", "天策", "明教"], loc: ["长安"], title: "高堑以刀尖挑下陆羽鸣的萨珊玛瑙印石，交岚川云论功——「剩下的事就是我的了」，拖人离去；岚川云回守军师", chars: ["gaoqian", "lanchuanyun", "luyuming"] },
   { year: 739, month: 9, seq: "D", fac: ["凌雪阁", "明教"], loc: ["长安"], title: "暗线：高堑拖人途中发觉陆羽鸣尚有气，不补刀，亦不送机枢府，送回其城西落脚的波斯旧族人家；此后不提（一改口即须剥去岚川云的杀获、交代自己当场让功）。745年高堑死，此事随之入墓林", chars: ["gaoqian", "luyuming", "lanchuanyun"] },
-  { year: 739, month: 10, seq: null, fac: ["明教"], loc: ["长安"], title: "暗线：陆羽鸣困居长安——无籍无过所，恐累收留之家，回教即受疑；教中知情者仅陆危楼（作者定）", chars: ["luyuming", "luweilou"] },
+  { year: 739, month: 10, seq: null, fac: ["明教"], loc: ["长安"], tloc: { luweilou: null }, title: "暗线：陆羽鸣困居长安——无籍无过所，恐累收留之家，回教即受疑；教中知情者仅陆危楼（作者定）", chars: ["luyuming", "luweilou"] },
   { year: 739, month: 10, seq: null, fac: ["天策"], loc: ["长安"], title: "岚川云以陆羽鸣的萨珊玛瑙印石论功，得出阵即有「杀获」的嘉奖（时剿杀明教徒甚众，未逐一查验）；印石此后留在她手上", chars: ["lanchuanyun", "luyuming"] },
   /* —— 2026-11-08 叶曙兮：生年 716，738 年西来相识，撮合程锋陆灵（与 Notion 同步） —— */
   { year: 738, month: null, seq: null, fac: ["唐军", "藏剑"], loc: ["北庭"], title: "叶曙兮随家人西来寻镔铁；北庭兵器遇寒脆折，她与经管甲仗的程钊相识", chars: ["yeshuxi", "chengzhao"] },
