@@ -62,6 +62,20 @@ export const echoModesEn = {
   "追一枚印石和半句话": "chasing a seal stone and half a sentence",
   "认出那半句": "half a sentence, recognized",
   "不在弟弟的秘密里": "outside his brother's secret",
+  "明教记下的那个死者": "the death the order counted",
+  "失了双刀": "twin blades lost",
+  "从动手到救人": "from blows to rescue",
+  "那一夜不在，后来死在天策人手里": "absent that night, later dead at a Tiance hand",
+  "被天策的人擒住，又被放走": "taken by Tiance hands, and let go",
+  "嫁进天策人家": "married into a Tiance house",
+  "接住坠谷的人": "the one who caught her fall",
+  "从穷追到求和解": "from pursuit to suing for peace",
+  "城楼上的一箭": "one arrow from the gate tower",
+  "同过台，后来不再去寻": "a shared stage, then no more seeking",
+  "娶了明教的人": "married across the line",
+  "一句没说完的话": "a sentence left unfinished",
+  "一把跟着她的短刀": "a blade that went with her",
+  "不肯以杀相报": "refusing blood for blood",
 };
 
 export const shocksEn = {
@@ -70,6 +84,7 @@ export const shocksEn = {
   leitai757: { title: "Lifei's Defeat by Qiu Hong", gist: "Many ways of keeping one secret", axis: "When one learned of the old wound" },
   tiance756: { title: "The Fall of the Tiance Garrison", gist: "After a city is lost, where each one goes", axis: "Where one went after that night" },
   daguangming739: { title: "The Great Bright Temple: The Death of Lu Yuming", gist: "A man taken for dead for sixteen years", axis: "After that night, who knew whether he lived" },
+  enchou739: { title: "The Great Bright Temple: Debts of Blood and Grace", gist: "And then the great temple went up in flames", axis: "Which side one stood on, the night of the purge" },
 };
 
 export const bandsEn = {
@@ -78,6 +93,7 @@ export const bandsEn = {
   leitai757: { self: "The one involved", before: "Knew beforehand", during: "Learned in the moment", after: "Never asked, never said", result: "Knew only the result", never: "Never knew", none: "Did not know, did not need to" },
   tiance756: { dead: "The dead", stay: "Left behind enemy lines", west: "Withdrew west", aid: "Those who came to help", out: "Outside the walls, and after" },
   daguangming739: { self: "The one involved", knew: "Knew he lived", thought: "Believed him dead", outside: "Outside the matter" },
+  enchou739: { dead: "The dead", ming: "On the Mingjiao side", tian: "On the Tiance side", pre: "What came before" },
 };
 
 export const echoUiEn = {
@@ -91,6 +107,7 @@ export const echoUiEn = {
   回響節點: "Echoes through the years",
   無定年: "Undated",
   前事: "Before",
+  年表以外: "Outside the chronology",
   待核: "Draft",
   待核註: "Drafted, not yet reviewed line by line by the author.",
   人物卡: "From the character profile",
