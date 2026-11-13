@@ -76,6 +76,17 @@ export const echoModesEn = {
   "一句没说完的话": "a sentence left unfinished",
   "一把跟着她的短刀": "a blade that went with her",
   "不肯以杀相报": "refusing blood for blood",
+  "凭一支簪认回来": "known again by a hairpin",
+  "一套旧甲，传到外孙女手里": "an old armour, passed to a granddaughter",
+  "把他没做完的事做完": "finishing what he left undone",
+  "从旁观到动手": "from looking on to striking",
+  "锻刀千口，以清罪孽": "a thousand blades against a debt",
+  "舍了平民的衣裳": "the commoner's coat, set down",
+  "前脚出去，后脚城陷": "one step out, and the city fell behind her",
+  "来迟一步，在城上守了半年": "a step too late, then half a year on the wall",
+  "一双穿旧的靴子": "a pair of worn boots",
+  "一封迟到的家信": "a family letter, months late",
+  "从一套旧甲认出来处": "where she came from, read off an old armour",
 };
 
 export const shocksEn = {
@@ -85,6 +96,7 @@ export const shocksEn = {
   tiance756: { title: "The Fall of the Tiance Garrison", gist: "After a city is lost, where each one goes", axis: "Where one went after that night" },
   daguangming739: { title: "The Great Bright Temple: The Death of Lu Yuming", gist: "A man taken for dead for sixteen years", axis: "After that night, who knew whether he lived" },
   enchou739: { title: "The Great Bright Temple: Debts of Blood and Grace", gist: "And then the great temple went up in flames", axis: "Which side one stood on, the night of the purge" },
+  changshan756: { title: "The Fall of Changshan", gist: "Blood, and the flame passed on", axis: "Where one stood when the city fell" },
 };
 
 export const bandsEn = {
@@ -94,6 +106,7 @@ export const bandsEn = {
   tiance756: { dead: "The dead", stay: "Left behind enemy lines", west: "Withdrew west", aid: "Those who came to help", out: "Outside the walls, and after" },
   daguangming739: { self: "The one involved", knew: "Knew he lived", thought: "Believed him dead", outside: "Outside the matter" },
   enchou739: { dead: "The dead", ming: "On the Mingjiao side", tian: "On the Tiance side", pre: "What came before" },
+  changshan756: { dead: "The dead", inside: "Inside the city", out: "Carried word out", aid: "Came to relieve", far: "Far away, hearing late" },
 };
 
 export const echoUiEn = {
