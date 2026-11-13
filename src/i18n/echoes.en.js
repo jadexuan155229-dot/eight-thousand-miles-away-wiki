@@ -16,7 +16,7 @@ export const echoModesEn = {
   "自风筝上目睹": "a view from the kite",
   "从死者身上脱甲": "armor off the dead",
   "从文书里认识这场仗": "a battle known on paper",
-  "九岁，不记得": "nine years old, no memory",
+  "八岁，不记得": "eight years old, no memory",
   "穿上他人的记忆": "another man's memory, worn",
   "同一场战事的另一端": "the other end of the same war",
   "不曾在场": "never there",

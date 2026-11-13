@@ -302,7 +302,7 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "biansaiyuan", name: "边赛远", zi: "舍衡", belong: ["苍云"], birth: 736, death: null,
+    id: "biansaiyuan", name: "边赛远", zi: "舍衡", belong: ["苍云"], birth: 737, death: null,
     birthplace: "河东道 代州 五台县", pin: "疾", epithet: "", hao: "",
     gloss: "西晋·张协《杂诗十首·其七》：“长铗鸣鞘中，烽火列边亭。舍我衡门衣，更被缦胡缨。”衡门衣，即平民衣服。舍衡门衣而从戎，言其故事。",
     profile: F(

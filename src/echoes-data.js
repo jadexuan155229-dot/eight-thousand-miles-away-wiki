@@ -124,7 +124,7 @@ export const ECHOES = [
       { y: 746, m: 7, q: "", note: "关外地形与敌袭路线复盘图，被荔非带回关城" },
       { y: 757, m: 7, q: "", note: "那幅图久用，挂在帐后" },
     ] },
-  { shock: "yanmen745", who: "biansaiyuan", band: "young", order: 13, stance: "在场", stanceNote: "九岁；736年生于雁门", mode: "九岁，不记得",
+  { shock: "yanmen745", who: "biansaiyuan", band: "young", order: 13, stance: "在场", stanceNote: "八岁；737年生于雁门", mode: "八岁，不记得",
     arc: [
       { y: 756, m: 6, q: "", note: "拜入苍云——理由是李庭泽，不是745（《忠诚与遗忘》）" },
       { y: 757, m: 12, q: "A", note: "擒墨昆" },
