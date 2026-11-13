@@ -2182,7 +2182,7 @@ export const EVENTS = [
   /* —— 增補：岚川家眷属（平民）编年 —— */
   { year: 717, month: null, seq: null, add: true, fac: ["史实", "平民"], loc: ["长安"], title: "开元五年，岚川靖彦（716年为元正天皇选为遣唐留学生）随左大臣多治比县守使团自难波港出发，四船并联、一行五百五十七人西渡东海，扬州登陆赴长安苦读——同行有阿倍仲麻吕（晁衡）、学问僧玄昉、吉备真备；后授秘书监校书郎，累迁中书省主书", chars: ["jingyan"] },
   { year: 728, month: null, seq: null, add: true, fac: ["平民"], loc: ["日本-奈良"], title: "靖彦于奈良西郊宅后河边救起重伤漂流的少年斥候，夫妇照料收留；赵盈贞以早夭幼弟之名为其命名「辉」——「这就是了，人间哪…没有无端相逢」。阿辉自此为岚川家帮工护院，待之如家人无二；两年间带幼年岚川云跑遍林野，以九宫桩石授其轻功底子", chars: ["jingyan", "zhaoyingzhen", "ahui", "lanchuanyun"] },
-  { year: 756, month: 1, seq: "B", add: true, fac: ["平民", "天策", "长歌"], loc: ["河北-常山"], title: "常山城破，赵廷之（早年天策府兵，伤退后经营铁器，晚年归乡）翻出旧日甲胄——亮银札甲、枣红罩袍、「天策府」赵字腰牌——披挂以保乡民，卒阵；这套天策旧甲后为长歌门岑菡、杜徵等人收得，托付闵方城，756年六月随苍云军带回雁门寄放", chars: ["zhaotingzhi", "cenhan", "duzheng"] },
+  { year: 756, month: 1, seq: "B", add: true, fac: ["平民", "天策", "长歌"], loc: ["河北-常山"], title: "常山城破，赵廷之（早年天策府兵，伤退后经营铁器，晚年归乡）翻出旧日甲胄——亮银札甲、枣红罩袍、「天策府」赵字腰牌——披挂以保乡民，卒阵；这套天策旧甲后为长歌门岑菡、杜徵等人收得，托付闵方城，756年六月下旬随苍云军离常山，七月初抵雁门寄放", chars: ["zhaotingzhi", "cenhan", "duzheng"] },
   { year: 757, month: 12, seq: null, add: true, fac: ["苍云", "天策", "平民"], loc: ["雁门关"], title: "冬，寄放苍云的赵廷之天策旧甲，由闵方城亲手交予新至的岚川云——外祖父遗甲入手，她才对自己扶危忠臣之后的身份有所认识，愈发知道天策府是她归处，最初没有选错", chars: ["lanchuanyun", "minfangcheng"] },
   /* —— 2026-11-05 剑南线：程铎编年（740—768）与 751—752 天策在蜀（与 Notion 同步；765—768 结局三条作者标待定）。成都诸事地点暂系「蜀中」，西洱河系「南诏」 —— */
   { year: 740, month: 3, seq: null, fac: ["唐军"], loc: ["蜀中"], title: "剑南节度使章仇兼琼策反吐蕃安戎城守将翟都局、维州别驾董承晏，开城尽杀吐蕃将卒，以监察御史许远守城；程铎时年二十，随军入城，此为其入剑南后第一份军功（按：738年程铎尚在洛阳首告程凯，故其入剑南系于739年前后，不取738年九月王昱安戎城之败）", chars: ["chengduo"] },
@@ -2307,7 +2307,7 @@ export const RELATIONS = [
   { a: "minfangcheng", b: "fanzhang", t: "传功", d: 1, y0: 757, y1: 765 },
   { a: "minfangcheng", b: "xuechu", t: "同门·同盟", y0: 740, y1: 765 },
   { a: "minfangcheng", b: "biansaiyuan", t: "收留", d: 1, y0: 756, y1: 765 },
-  { a: "minfangcheng", b: "duzheng", t: "旧恩", d: 1, y0: 743, y1: 758 },
+  { a: "minfangcheng", b: "duzheng", t: "旧恩", d: 1, y0: 743, y1: 757 },
   { a: "minfangcheng", b: "duzheng", t: "知音", y0: 758 },
   { a: "minfangcheng", b: "chengkai", t: "交谊", y0: 762, y1: 765 },
   { a: "lianshuo", b: "helan", t: "救援", d: 1, y0: 756, y1: 756 },
