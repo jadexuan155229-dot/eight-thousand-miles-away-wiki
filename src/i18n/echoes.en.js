@@ -87,6 +87,20 @@ export const echoModesEn = {
   "一双穿旧的靴子": "a pair of worn boots",
   "一封迟到的家信": "a family letter, months late",
   "从一套旧甲认出来处": "where she came from, read off an old armour",
+  "留下几个孩子": "a few children left behind",
+  "死后被当众叫出名字": "named aloud after his death",
+  "在墙下翻土": "turning soil beneath the wall",
+  "玉石俱焚，再拿自己去赎": "burning it all down, then paying with herself",
+  "知道了冰是哪里来的": "learning where the ice comes from",
+  "一半拉扯，一半扶着": "half dragging, half holding up",
+  "记成自己欠下的": "kept as a debt of her own",
+  "被自己疑过的人救出火海": "pulled from the fire by the one he doubted",
+  "事前一句话，事后一纸文书": "a word beforehand, a report after",
+  "拿一条胳膊去换，换来的不是那个": "an arm given, and not for what it bought",
+  "魇在盾里，被一声「放手」叫回来": "locked inside the shield, called back by “let go”",
+  "不说话，去守后头的火种": "saying nothing, keeping the embers alive",
+  "接过医帐，后来照看那几个孩子": "taking over the tent, then the children",
+  "借别人的刀": "another man’s blade",
 };
 
 export const shocksEn = {
@@ -97,6 +111,7 @@ export const shocksEn = {
   daguangming739: { title: "The Great Bright Temple: The Death of Lu Yuming", gist: "A man taken for dead for sixteen years", axis: "After that night, who knew whether he lived" },
   enchou739: { title: "The Great Bright Temple: Debts of Blood and Grace", gist: "And then the great temple went up in flames", axis: "Which side one stood on, the night of the purge" },
   changshan756: { title: "The Fall of Changshan", gist: "Blood, and the flame passed on", axis: "Where one stood when the city fell" },
+  xizhong760: { title: "Min Fangcheng Kills the Xi Herders", gist: "Someone to carry it", axis: "Where each stood at the execution" },
 };
 
 export const bandsEn = {
@@ -107,6 +122,7 @@ export const bandsEn = {
   daguangming739: { self: "The one involved", knew: "Knew he lived", thought: "Believed him dead", outside: "Outside the matter" },
   enchou739: { dead: "The dead", ming: "On the Mingjiao side", tian: "On the Tiance side", pre: "What came before" },
   changshan756: { dead: "The dead", inside: "Inside the city", out: "Carried word out", aid: "Came to relieve", far: "Far away, hearing late" },
+  xizhong760: { dead: "The dead", order: "Gave the order", stop: "Tried to stop it", present: "Present", out: "Unconscious", away: "Not there" },
 };
 
 export const echoUiEn = {
