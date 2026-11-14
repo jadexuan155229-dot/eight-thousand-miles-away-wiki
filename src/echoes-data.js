@@ -178,8 +178,8 @@ export const ECHOES = [
     arc: [
       { y: 755, m: 12, q: "", note: "「你去。」「我不……」" },
       { y: 756, m: 7, q: "", note: "自常山返，初至墓前" },
-      { y: 758, m: 1, q: "B", note: "请杜徵复原《九原调》并记谱" },
       { y: 757, m: 12, q: "", note: "荔非祭拜时他在侧" },
+      { y: 758, m: 1, q: "B", note: "请杜徵复原《九原调》并记谱" },
     ] },
   { shock: "lvdingyi755", who: "lifei", band: "near", order: 4, stance: "袍泽", stanceNote: "738年吕定仪救其右膝", mode: "以旧物送别",
     arc: [
@@ -190,8 +190,8 @@ export const ECHOES = [
     ] },
   { shock: "lvdingyi755", who: "xuechu", band: "near", order: 5, stance: "留守旧部", mode: "在门口接",
     arc: [
-      { y: 756, m: 2, q: "", note: "于关城门口接灵柩" },
       { y: 755, m: 12, q: "D", note: "同月将地下病亡二人报作阵亡——另一桩不说破的死" },
+      { y: 756, m: 2, q: "", note: "于关城门口接灵柩" },
     ] },
   { shock: "lvdingyi755", who: "jinghuishi", band: "near", order: 6, stance: "军医", mode: "为新主缝旗",
     arc: [
