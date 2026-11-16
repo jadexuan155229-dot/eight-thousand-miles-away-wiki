@@ -140,11 +140,11 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       </div>
 
       {back && (
-        <div role="tablist" aria-label={t("翻面")} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
+        <div role="group" aria-label={t("翻面")} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
           {[[front, "正面"], [back, "翻面"]].map(([s, label]) => {
             const on = s.id === shock.id;
             return (
-              <button key={s.id} role="tab" aria-selected={on} onClick={() => onRoute({ shock: s.id, who: null })}
+              <button key={s.id} type="button" aria-pressed={on} onClick={() => onRoute({ shock: s.id, who: null })}
                 style={{ background: on ? T.panelHi : "none", border: `1px solid ${on ? T.accent + "99" : T.line}`, borderRadius: 3, padding: "4px 12px", cursor: "pointer", color: on ? T.ink : T.muted, fontFamily: "HuiwenZhengKai", fontSize: 12.5 }}>
                 <span style={{ color: on ? T.accent : T.faint, letterSpacing: "0.15em", marginRight: 8 }}>{t(label)}</span>
                 <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 13.5 }}>{shockTitle(locale, s)}</span>
