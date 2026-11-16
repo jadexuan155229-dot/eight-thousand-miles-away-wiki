@@ -117,6 +117,12 @@ export const echoModesEn = {
   "一封无头无款的信": "a letter with no heading and no name",
   "寄过方子，没等到回信，也没能去": "prescriptions sent, no reply, no visit",
   "不记得": "not remembering",
+  "替他照看一匹马，再还一匹": "keeping one horse for him, and returning another",
+  "枕边绸包里的玉牌；一手他教的字": "a jade tablet by the pillow; a hand he was taught to write with",
+  "一句「偶然」，一条套马索，一河杏花": "a line about chance, a lasso, a riverful of apricot blossom",
+  "一支请人记下来的曲子": "a tune he had someone write down",
+  "只许她医，不许她说话": "letting her tend him, never letting her speak",
+  "一句醉话：墙下翻土": "a drunk line about turning soil under the wall",
 };
 
 export const shocksEn = {
@@ -129,6 +135,7 @@ export const shocksEn = {
   changshan756: { title: "The Fall of Changshan", gist: "Blood, and the flame passed on", axis: "Where one stood when the city fell" },
   xizhong760: { title: "Min Fangcheng Kills the Xi Herders", gist: "Someone to carry it", axis: "Where each stood at the execution" },
   minsi765: { title: "The Death of Min Fangcheng", gist: "It was given back", axis: "When each last saw him" },
+  yisheng765: { title: "That Was a Life", gist: "Down that road he brought back Xue Zhi, brought back Guan Shan, brought back Lian Shuo", axis: "The order in which they left him" },
 };
 
 export const bandsEn = {
@@ -141,6 +148,7 @@ export const bandsEn = {
   changshan756: { dead: "The dead", inside: "Inside the city", out: "Carried word out", aid: "Came to relieve", far: "Far away, hearing late" },
   xizhong760: { dead: "The dead", order: "Gave the order", stop: "Tried to stop it", present: "Present", out: "Unconscious", away: "Not there" },
   minsi765: { dead: "The dead", tent: "In the tent that last night", pass: "Stayed at the pass", gone: "Had already left Yanmen", unseen: "Never saw him again", forget: "Does not remember" },
+  yisheng765: { back: "Those he brought back", notback: "Those he could not bring back" },
 };
 
 export const echoUiEn = {
@@ -148,6 +156,7 @@ export const echoUiEn = {
   作者按: "Author's gloss",
   所系之事: "Events that bear on them",
   震源: "Shock",
+  对开: "Companion table",
   逝者: "The dead",
   記憶方式: "Mode of remembering",
   在場姿態: "Position",
