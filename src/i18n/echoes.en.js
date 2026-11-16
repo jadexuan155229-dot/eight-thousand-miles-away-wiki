@@ -101,6 +101,22 @@ export const echoModesEn = {
   "不说话，去守后头的火种": "saying nothing, keeping the embers alive",
   "接过医帐，后来照看那几个孩子": "taking over the tent, then the children",
   "借别人的刀": "another man’s blade",
+  "梦见长城开了花": "dreaming the wall in blossom",
+  "穿回银红衣甲，给他看了一眼": "back in silver and red, for him to see once",
+  "听出那一晚没有弹《甘州》": "noticing the one night Ganzhou went unplayed",
+  "知道是缓期，还是拿狐尾去挠他": "knowing it was borrowed time, and still reaching with the fox-tail",
+  "替他把话带到": "carrying his words where they were meant to go",
+  "飞马把人追回来": "riding the news after them",
+  "身上那口钟，余响不绝": "the bell he left ringing in the body",
+  "心丧三年": "three years’ mourning of the heart",
+  "不许他有失": "would not have him lost",
+  "留在离故土最近的地方，又被召回": "posted nearest the lost home, then recalled",
+  "收下一匹青黑马": "taking the blue-black horse",
+  "年节燃香，向雁门遥拜": "incense toward Yanmen each new year",
+  "留下一句「都会回家的」": "leaving one line: we all go home",
+  "一封无头无款的信": "a letter with no heading and no name",
+  "寄过方子，没等到回信，也没能去": "prescriptions sent, no reply, no visit",
+  "不记得": "not remembering",
 };
 
 export const shocksEn = {
@@ -112,6 +128,7 @@ export const shocksEn = {
   enchou739: { title: "The Great Bright Temple: Debts of Blood and Grace", gist: "And then the great temple went up in flames", axis: "Which side one stood on, the night of the purge" },
   changshan756: { title: "The Fall of Changshan", gist: "Blood, and the flame passed on", axis: "Where one stood when the city fell" },
   xizhong760: { title: "Min Fangcheng Kills the Xi Herders", gist: "Someone to carry it", axis: "Where each stood at the execution" },
+  minsi765: { title: "The Death of Min Fangcheng", gist: "It was given back", axis: "When each last saw him" },
 };
 
 export const bandsEn = {
@@ -123,6 +140,7 @@ export const bandsEn = {
   enchou739: { dead: "The dead", ming: "On the Mingjiao side", tian: "On the Tiance side", pre: "What came before" },
   changshan756: { dead: "The dead", inside: "Inside the city", out: "Carried word out", aid: "Came to relieve", far: "Far away, hearing late" },
   xizhong760: { dead: "The dead", order: "Gave the order", stop: "Tried to stop it", present: "Present", out: "Unconscious", away: "Not there" },
+  minsi765: { dead: "The dead", tent: "In the tent that last night", pass: "Stayed at the pass", gone: "Had already left Yanmen", unseen: "Never saw him again", forget: "Does not remember" },
 };
 
 export const echoUiEn = {
