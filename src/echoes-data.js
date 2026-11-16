@@ -30,8 +30,8 @@ export const SHOCKS = [
     bands: [["dead", "逝者"], ["order", "下令的人"], ["stop", "拦的人"], ["present", "在场的人"], ["out", "昏着的人"], ["away", "不在场的人"]] },
   { id: "minsi765", year: 765, month: 1, ev: { year: 765, month: 1, has: "闵方城帐中亡故" }, title: "闵方城之死", gist: "是还回去了", axis: "最后一面在什么时候",
     bands: [["dead", "逝者"], ["tent", "上元夜还在帐里的人"], ["pass", "留在关上的人"], ["gone", "已经离开雁门的人"], ["unseen", "没能再见的人"], ["forget", "不记得的人"]] },
-  /* kind: "life" ＝ 对开表，不是震源；pre ＝ 横轴向前容纳的年数（默认十年） */
-  { id: "yisheng765", kind: "life", pre: 30, year: 765, month: 1, ev: { year: 765, month: 1, has: "闵方城帐中亡故" }, title: "那就是一生", gist: "从那条路上他带回薛直，带回关山，带回连朔", axis: "先后离开他的次序",
+  /* flipOf ＝ 此条是所指震源的翻面，不进选择栏；pre ＝ 横轴向前容纳的年数（默认十年） */
+  { id: "yisheng765", flipOf: "minsi765", pre: 30, year: 765, month: 1, ev: { year: 765, month: 1, has: "闵方城帐中亡故" }, title: "那就是一生", gist: "从那条路上他带回薛直，带回关山，带回连朔", axis: "先后离开他的次序",
     bands: [["back", "他带回来的人"], ["notback", "没能由他带回的人"]] },
 ];
 

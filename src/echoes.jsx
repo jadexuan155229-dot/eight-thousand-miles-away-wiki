@@ -50,6 +50,9 @@ function nodeText(n) {
 export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile }) {
   const shock = SHOCKS.find((s) => s.id === shockId) || SHOCKS[0];
   const t = (k) => echoUi(locale, k);
+  /* 翻面：带 flipOf 的条目不进震源选择栏，挂在所指震源之下，由正反两枚小签切换 */
+  const front = shock.flipOf ? SHOCKS.find((q) => q.id === shock.flipOf) || shock : shock;
+  const back = SHOCKS.find((q) => q.flipOf === front.id) || null;
   const [focusWho, setFocusWho] = useState(null); /* 键盘焦点环：SVG 的 <g> 不吃 CSS outline，自绘 */
   const [hover, setHover] = useState(null); /* { who, k, n, x, cy }：悬停的节点，出浮签并点亮他行同年同月者 */
   const rows = useMemo(() => ECHOES.filter((e) => e.shock === shock.id).sort((a, b) => a.order - b.order), [shock.id]);
@@ -124,8 +127,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
 
       {/* 震源选择 */}
       <div role="tablist" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 22 }}>
-        {SHOCKS.map((s) => {
-          const on = s.id === shock.id;
+        {SHOCKS.filter((s) => !s.flipOf).map((s) => {
+          const on = s.id === front.id;
           return (
             <button key={s.id} role="tab" aria-selected={on} onClick={() => onRoute({ shock: s.id, who: null })}
               style={{ textAlign: "left", background: on ? T.panelHi : "none", border: `1px solid ${on ? T.accent + "99" : T.line}`, borderRadius: 3, padding: "8px 14px", cursor: "pointer", color: on ? T.ink : T.muted }}>
@@ -135,6 +138,21 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
           );
         })}
       </div>
+
+      {back && (
+        <div role="group" aria-label={t("翻面")} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
+          {[[front, "正面"], [back, "翻面"]].map(([s, label]) => {
+            const on = s.id === shock.id;
+            return (
+              <button key={s.id} type="button" aria-pressed={on} onClick={() => onRoute({ shock: s.id, who: null })}
+                style={{ background: on ? T.panelHi : "none", border: `1px solid ${on ? T.accent + "99" : T.line}`, borderRadius: 3, padding: "4px 12px", cursor: "pointer", color: on ? T.ink : T.muted, fontFamily: "HuiwenZhengKai", fontSize: 12.5 }}>
+                <span style={{ color: on ? T.accent : T.faint, letterSpacing: "0.15em", marginRight: 8 }}>{t(label)}</span>
+                <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 13.5 }}>{shockTitle(locale, s)}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.muted, marginBottom: 6 }}>
         {shockGist(locale, shock)} <span style={{ color: T.faint }}>· {t("在場姿態")}：{shockAxis(locale, shock)}</span>
@@ -170,7 +188,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                   <circle cx={shockX} cy={it.y + 18} r="8" fill="none" stroke={T.accent} strokeWidth="1.6" />
                   <circle cx={shockX} cy={it.y + 18} r="3.2" fill={T.accent} />
                   <text x="20" y={it.y + 14} fontFamily="JingHuaLaoSong" fontSize="16" fill={T.ink}>{shockTitle(locale, shock)}</text>
-                  <text x="20" y={it.y + 33} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.faint}>{shock.year}.{shock.month} · {t(shock.kind === "life" ? "对开" : "震源")}</text>
+                  <text x="20" y={it.y + 33} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.faint}>{shock.year}.{shock.month} · {t(shock.flipOf ? "翻面" : "震源")}</text>
                 </g>
               );
             }
