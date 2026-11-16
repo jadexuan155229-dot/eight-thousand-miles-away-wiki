@@ -2124,7 +2124,7 @@ export const EVENTS = [
   { year: 763, month: 11, seq: null, fac: ["苍云"], loc: ["凤翔", "邠州"], tloc: { qiuhong: "邠州", lifei: null }, title: "靳沉白、邱鸿、薛褚赴凤翔取证验骨：靳沉白封存凤翔幕府往来邠州书牍副本与调令底稿；邱鸿赴邠州扣下旧录事参军；薛褚验骨，见臼齿齐整而点头（吐蕃围凤翔解后方至）", chars: ["jinchenbai", "qiuhong", "xuechu", "lifei"] },
   { year: 764, month: 3, seq: null, fac: ["苍云"], loc: ["雁门关"], title: "雁门边地粮站：靳沉白遇少年书手任迪简，廪给簿册出入——簿记须真，人另设法护之（与荔非归葬平行）（月份推定）", chars: ["jinchenbai", "rendijian"] },
   { year: 764, month: 9, seq: null, fac: ["苍云", "唐军"], loc: ["雁门关", "太原府"], tloc: { diyuanke: "太原府" }, title: "狄元恪离苍云，南归太原任河东节度（辛云京）行军司马；关岳以营副暂兼领二团，再遴选主将（月份推定；伏笔：764年初怀恩之变中辛云京识之，见764.1B；又接762.11B）", chars: ["diyuanke", "guanyue", "fanzhang"] },
-  { year: 765, month: null, seq: null, fac: ["苍云"], loc: ["雁门关"], tloc: { qutuzhen: null }, title: "邱鸿接掌一团后，以军饷收容边地孤幼，其中有几个说奚语的孩子（不点名，不交代来历）；贺兰以医女协理（与婚事拆开，婚事另见767条；系年月份待定，在邱鸿接掌一团之后，不与闵方城亡故同月）", chars: ["qiuhong", "helan", "qutuzhen"] },
+  { year: 765, month: null, seq: null, fac: ["苍云"], loc: ["雁门关"], tloc: { qutuzhen: null }, title: "邱鸿接掌一团后，以军饷收容边地孤幼，其中有几个说奚语的孩子（作者定：即屈突真身边那几个孩子；正文不点名，不交代来历）；贺兰以医女协理（与婚事拆开，婚事另见767条；系年月份待定，在邱鸿接掌一团之后，不与闵方城亡故同月）", chars: ["qiuhong", "helan", "qutuzhen"] },
   { year: 766, month: null, seq: null, fac: ["天策", "长歌", "七秀"], loc: ["天策府/北邙山", "长歌门"], tloc: { zhulu: "长歌门" }, title: "程骞服毒草，随李庭深下江南入长歌；李庭深娶朱鹭", chars: ["chengqian", "litingshen", "zhulu"] },
   /* —— 2026-11-04 陕州线：史实锚点与人物勾连（与 Notion 同步；人物勾连条作者已坐定，说明语作「注」） —— */
   { year: 755, month: 12, seq: null, fac: ["史实"], loc: ["陕州", "潼关"], title: "封常清东京兵败，西奔陕郡，与屯陕之高仙芝弃陕退保潼关，焚太原仓而去，陕郡遂陷；旋为监军边令诚所奏，二将并斩于潼关", chars: [] },

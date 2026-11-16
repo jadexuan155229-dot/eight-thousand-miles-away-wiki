@@ -56,13 +56,14 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
   const dead = rows.filter((e) => e.band === "dead");
   const living = rows.filter((e) => e.band !== "dead");
   const selected = rows.find((e) => e.who === who) || null;
+  const PRE = shock.pre ?? PRE_YEARS; /* 对开表（kind: "life"）铺开一生，不收前事栏 */
 
   /* 横轴：自最早的定年节点（或震源）到最晚者 */
   const { x0, x1 } = useMemo(() => {
     const sp = posOf(shock.year, shock.month);
-    const ys = rows.flatMap((e) => e.arc.filter((n) => n.y != null).map((n) => posOf(n.y, n.m))).filter((p) => p >= sp - PRE_YEARS);
+    const ys = rows.flatMap((e) => e.arc.filter((n) => n.y != null).map((n) => posOf(n.y, n.m))).filter((p) => p >= sp - PRE);
     return { x0: Math.floor(Math.min(sp, ...ys) - 0.2), x1: Math.ceil(Math.max(sp, ...ys) + 0.2) };
-  }, [rows, shock]);
+  }, [rows, shock, PRE]);
   const xOf = (p) => PLOT_L + ((p - x0) / (x1 - x0)) * (PLOT_R - PLOT_L);
   const shockP = posOf(shock.year, shock.month);
   const shockX = xOf(shockP);
@@ -74,7 +75,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       const k = `${n.y}.${n.m}`;
       const j = (seen[k] = (seen[k] || 0) + 1) - 1;
       const p = posOf(n.y, n.m);
-      return { n, x: p < shockP - PRE_YEARS ? PRE_X : xOf(p) + j * 11, p };
+      return { n, x: p < shockP - PRE ? PRE_X : xOf(p) + j * 11, p };
     });
   };
   /* 选中行：节点下直接落字（年月＋短题），贪心分道避让 */
@@ -155,7 +156,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             );
           })}
           <text x={UNDATED_X} y={TOP - 22} textAnchor="middle" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint}>{t("無定年")}</text>
-          {rows.some((e) => e.arc.some((n) => n.y != null && posOf(n.y, n.m) < shockP - PRE_YEARS)) && (
+          {rows.some((e) => e.arc.some((n) => n.y != null && posOf(n.y, n.m) < shockP - PRE)) && (
             <text x={PRE_X} y={TOP - 22} textAnchor="middle" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint}>{t("前事")}</text>
           )}
 
@@ -169,7 +170,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                   <circle cx={shockX} cy={it.y + 18} r="8" fill="none" stroke={T.accent} strokeWidth="1.6" />
                   <circle cx={shockX} cy={it.y + 18} r="3.2" fill={T.accent} />
                   <text x="20" y={it.y + 14} fontFamily="JingHuaLaoSong" fontSize="16" fill={T.ink}>{shockTitle(locale, shock)}</text>
-                  <text x="20" y={it.y + 33} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.faint}>{shock.year}.{shock.month} · {t("震源")}</text>
+                  <text x="20" y={it.y + 33} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.faint}>{shock.year}.{shock.month} · {t(shock.kind === "life" ? "对开" : "震源")}</text>
                 </g>
               );
             }
@@ -273,7 +274,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             const by = hover.cy - 14 - bh < 4 ? hover.cy + 14 : hover.cy - 14 - bh;
             return (
               <g pointerEvents="none">
-                {hover.n.m != null && posOf(hover.n.y, hover.n.m) >= shockP - PRE_YEARS && <line x1={xOf(posOf(hover.n.y, hover.n.m))} x2={xOf(posOf(hover.n.y, hover.n.m))} y1={TOP - 14} y2={H - 14} stroke={T.ink} strokeOpacity="0.22" strokeWidth="1" />}
+                {hover.n.m != null && posOf(hover.n.y, hover.n.m) >= shockP - PRE && <line x1={xOf(posOf(hover.n.y, hover.n.m))} x2={xOf(posOf(hover.n.y, hover.n.m))} y1={TOP - 14} y2={H - 14} stroke={T.ink} strokeOpacity="0.22" strokeWidth="1" />}
                 <rect x={bx} y={by} width={bw} height={bh} rx="3" fill={T.bg || T.panel} stroke={T.line} />
                 <text x={bx + 11} y={by + 17} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.accent}>{date}</text>
                 {lines.map((l, i) => (
