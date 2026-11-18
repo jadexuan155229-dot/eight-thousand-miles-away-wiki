@@ -943,9 +943,9 @@ export const ECHOES = [
       { y: 760, m: 12, q: "D", note: "「罢了。将军…将军安好。」" },
       { y: 764, m: 4, q: "", note: "传功日纵马赶到小院" },
       { y: 764, m: 4, q: "", note: "望着他缓缓坐下去，靠着墙垛，变成城墙的一部分（《狄、邱、樊》）", card: true },
-      { y: 764, m: 8, q: "", note: "后累迁代州刺史，每至年节燃香，向雁门遥拜" },
       { y: 764, m: 9, q: "", note: "离苍云，南归太原" },
       { y: 765, m: null, q: "", note: "不久，闻闵方城病故（《狄、邱、樊》）", card: true },
+      { y: null, m: null, q: "", note: "后又数年，累迁代州刺史；每至年节燃香，向雁门遥拜（《狄、邱、樊》）", card: true },
     ] },
   { shock: "minsi765", who: "xiamingcang", band: "unseen", order: 13, stance: "没能再见的人", stanceNote: "药宗医者，763年春来诊", mode: "留下一句「都会回家的」",
     arc: [

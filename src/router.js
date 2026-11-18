@@ -3,14 +3,15 @@
    哈希為唯一事實源：頁籤、檔案彈窗、文庫章節均由此派生，
    刷新不丟、鏈接可分享、瀏覽器前進後退可用。
    體例：
-     #/<頁籤>            chars / timeline / map / network / community / echoes / novel
+     #/<頁籤>            chars / posts / timeline / map / network / community / echoes / novel
+                         （posts＝人物檔案之「編制」子視圖，導航上仍亮「人物檔案」）
      #/<頁籤>/<人物id>    非文庫頁籤第二段＝打開的檔案彈窗
      #/novel/<線>/<章>[/<子章>]   文庫章節，同 FLAT 路徑
      #/echoes[/<震源id>[/<人物id>]]  余波頁：第二段＝震源，第三段＝選中之行（不開檔案彈窗，
                                      查看檔案走 #/chars/<人物id>）
    未知頁籤回落 chars；文庫路徑不編碼人物（入文庫即收檔案彈窗）。
    ============================================================ */
-export const TABS = ["chars", "timeline", "map", "network", "community", "echoes", "novel"];
+export const TABS = ["chars", "posts", "timeline", "map", "network", "community", "echoes", "novel"];
 
 export function parseRoute(h) {
   const seg = (h || "")

@@ -7,6 +7,7 @@ import NOVEL_MENTIONS from "virtual:novel-mentions";
 import { SEAL_SVG_FILE } from "./seals";
 import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
+import Posts, { tenuresOf, tenureSpan, tenureTitle } from "./posts";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLanguage } from "./i18n/use-language";
@@ -260,7 +261,7 @@ function dimAccent(hex, grayT, darkT, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, locale }) {
+function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPosts, locale }) {
   const translated = characterTranslation(locale, c?.id);
   const t = (key) => translateUI(translated ? 'en' : 'zh', key);
   const [showAll, setShowAll] = useState(false);
@@ -463,6 +464,39 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, locale }
             ))}
           </div>
         )}
+
+        {/* 任職履歷：自任職庫（posts-data.js）生成；跨職位者在編制圖上各有一色 */}
+        {(() => {
+          const ts = tenuresOf(c.id);
+          if (!ts.length) return null;
+          return (
+            <div style={{ marginTop: 24 }}>
+              <SectionLabel>{t("任職履歷")}</SectionLabel>
+              {ts.map((x, i) => {
+                const e = translated && x.en;
+                return (
+                  <div key={i} style={{ display: "flex", gap: 14, padding: "6px 0", borderBottom: `1px solid ${T.line}44` }}>
+                    <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{tenureSpan(x)}</div>
+                    <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.85 }}>
+                      {e ? e.title : tenureTitle(x)}
+                      {x.kind !== "正授" && !e && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{x.kind}</span>}
+                      {x.draft && <span style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
+                      {(e ? e.how || e.end : x.how || x.end) && (
+                        <div style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
+                          {e ? [e.how, e.end].filter(Boolean).join("; ") : [x.how, x.end && `→ ${x.end}`].filter(Boolean).join("　")}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              <button onClick={() => { setShowAll(false); onOpenPosts(); }}
+                style={{ marginTop: 8, fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "3px 12px", borderRadius: 3, cursor: "pointer" }}>
+                {t("在編制圖中看")} ›
+              </button>
+            </div>
+          );
+        })()}
 
         {anecdotes.length > 0 && (
           <div style={{ marginTop: 24 }}>
@@ -2320,7 +2354,7 @@ export default function Wiki({ onOpenLanding }) {
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
           {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"]].map(([k, label]) => (
             <button key={k} onClick={() => setTab(k)}
-              style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k ? T.ink : T.muted, cursor: "pointer" }}>
+              style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
             </button>
           ))}
@@ -2344,6 +2378,18 @@ export default function Wiki({ onOpenLanding }) {
 
       {locale === "en" && <p className="translation-scope" lang="en" style={{ color: T.muted }}>{t("英文試驗範圍")}</p>}
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>
+        {(tab === "chars" || tab === "posts") && (
+          /* 人物檔案的兩個子視圖：檔案一覽／編制（任職圖） */
+          <div role="group" aria-label={t("人物檔案")} style={{ display: "flex", gap: 6, marginBottom: 18 }}>
+            {[["chars", "檔案一覽"], ["posts", "編制"]].map(([k, label]) => (
+              <button key={k} type="button" aria-pressed={tab === k} onClick={() => setTab(k)}
+                style={{ fontFamily: "JingHuaLaoSong", fontSize: 13.5, padding: "4px 14px", background: tab === k ? T.panelHi : "none", border: `1px solid ${tab === k ? T.accent + "99" : T.line}`, borderRadius: 3, color: tab === k ? T.ink : T.muted, cursor: "pointer" }}>
+                {t(label)}
+              </button>
+            ))}
+          </div>
+        )}
+        {tab === "posts" && <Posts locale={locale} onOpenChar={setOpenChar} />}
         {tab === "chars" && (
           <>
             <div className="flex flex-wrap items-center" style={{ gap: 8, marginBottom: 20 }}>
@@ -2382,7 +2428,8 @@ export default function Wiki({ onOpenLanding }) {
 
       <DetailPanel c={openChar} locale={locale} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
         onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
-        onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })} />
+        onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })}
+        onOpenPosts={() => nav({ tab: "posts", char: null })} />
     </div>
   );
 }
