@@ -90,3 +90,17 @@ export const TENURES = [
   { post: "nw", who: "helan", y0: 756, m0: null, y1: null, m1: null, kind: "正授", rank: "医女", how: "入女卫营，为景惠时弟子", src: ["755.12C", "760.11"], approx: ["y0"], note: "760.11 景惠时停职期间调度医帐；后承静息帐" },
   { post: "yt", who: "louyi", y0: 745, m0: 7, y1: null, m1: null, kind: "正授", rank: "雁塔守备长官", how: "父楼准坠塔，十五岁临危受命", src: ["卡"], approx: ["y0"] },
 ];
+
+/* ---------- 供档案卡与编制图共用 ---------- */
+const ym = (y, m) => (y == null ? "？" : m != null ? `${y}.${m}` : `${y}`);
+const at = (y, m) => y + (m != null ? (m - 1) / 12 : 0);
+export function tenureSpan(t) {
+  return `${ym(t.y0, t.m0)}${t.approx?.includes("y0") ? "（约）" : ""}—${t.y1 == null ? "" : ym(t.y1, t.m1)}${t.approx?.includes("y1") ? "（约）" : ""}`;
+}
+export function tenureTitle(t) {
+  return t.rank || POST_FULL[t.post];
+}
+export function tenuresOf(id) {
+  const k = (t) => (t.y0 == null ? -1 : at(t.y0, t.m0));
+  return TENURES.filter((t) => t.who === id).sort((a, b) => k(a) - k(b));
+}

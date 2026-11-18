@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { CHARACTERS } from "./wiki-data";
-import { POSTS, POST_FULL, TENURES } from "./posts-data";
+import { POSTS, TENURES, tenureSpan, tenureTitle } from "./posts-data";
 import { T } from "./theme";
 import { characterTranslation } from "./i18n/characters.en";
 
@@ -34,18 +34,6 @@ const MARKS = [
   { p: pos(755, 11), label: "安史乱起" },
   { p: pos(765, 1), label: "闵方城卒", left: true },
 ];
-
-const ym = (y, m) => (y == null ? "？" : m != null ? `${y}.${m}` : `${y}`);
-export function tenureSpan(t) {
-  return `${ym(t.y0, t.m0)}${t.approx?.includes("y0") ? "（约）" : ""}—${t.y1 == null ? "" : ym(t.y1, t.m1)}${t.approx?.includes("y1") ? "（约）" : ""}`;
-}
-export function tenureTitle(t) {
-  return t.rank || POST_FULL[t.post];
-}
-export function tenuresOf(id) {
-  const k = (t) => (t.y0 == null ? -1 : pos(t.y0, t.m0));
-  return TENURES.filter((t) => t.who === id).sort((a, b) => k(a) - k(b));
-}
 
 export default function Posts({ locale, onOpenChar }) {
   const en = locale === "en";
