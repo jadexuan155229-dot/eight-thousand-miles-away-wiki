@@ -107,8 +107,8 @@ export default function Posts({ locale, onOpenChar }) {
       </div>
 
       <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="img"
-          aria-label={en ? "Cangyun posts, 737–766" : "苍云编制任期图，737—766"} onMouseLeave={() => setHover(null)}>
+        <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="group"
+          aria-label={en ? "Cangyun posts, 737–766. Each tenure is a button that opens the profile." : "苍云编制任期图，737—766。每段任期是一个按钮，可打开档案"} onMouseLeave={() => setHover(null)}>
           <defs>
             {/* 起点不明／在任至卷末：色带在左右缘渐隐 */}
             <linearGradient id="posts-fade-l" x1="0" x2="1"><stop offset="0" stopColor={T.panel} stopOpacity="1" /><stop offset="1" stopColor={T.panel} stopOpacity="0" /></linearGradient>
@@ -117,14 +117,14 @@ export default function Posts({ locale, onOpenChar }) {
           {ticks.map((yr) => {
             const major = yr % 5 === 0;
             return (
-              <g key={yr}>
+              <g key={yr} aria-hidden="true">
                 <line x1={xOf(yr)} x2={xOf(yr)} y1={TOP - 10} y2={H - 10} stroke={T.line} strokeOpacity={major ? 0.7 : 0.22} strokeWidth="1" />
                 {major && <text x={xOf(yr)} y={TOP - 18} textAnchor="middle" fontFamily="HuiwenZhengKai" fontSize="11" fill={T.faint}>{yr}</text>}
               </g>
             );
           })}
           {MARKS.map((m) => (
-            <g key={m.label}>
+            <g key={m.label} aria-hidden="true">
               <line x1={xOf(m.p)} x2={xOf(m.p)} y1={TOP - 6} y2={H - 10} stroke={T.accent} strokeOpacity="0.4" strokeWidth="1" strokeDasharray="3 4" />
               <text x={xOf(m.p) + (m.left ? -4 : 4)} y={TOP - 4} textAnchor={m.left ? "end" : "start"} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.accent} fillOpacity="0.75">{m.label}</text>
             </g>
@@ -133,7 +133,7 @@ export default function Posts({ locale, onOpenChar }) {
           {layout.map((it, k) => {
             if (it.kind === "group") {
               return (
-                <g key={`g${k}`}>
+                <g key={`g${k}`} aria-hidden="true">
                   <text x="16" y={it.y + 18} fontFamily="JingHuaLaoSong" fontSize="13.5" letterSpacing="1" fill={T.ink}>{it.label}</text>
                   <line x1="16" x2={PLOT_R} y1={it.y + 24} y2={it.y + 24} stroke={T.line} strokeOpacity="0.6" strokeWidth="1" />
                 </g>
@@ -141,8 +141,9 @@ export default function Posts({ locale, onOpenChar }) {
             }
             const { post, items, y } = it;
             return (
-              <g key={post.id}>
-                <text x="30" y={y + ROW_H / 2 + 4} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={T.muted}>
+              /* 读屏：一个职位格是一组，组名「单位 · 职位」；格内每段任期是一个按钮 */
+              <g key={post.id} role="group" aria-label={`${post.group} · ${post.label}`}>
+                <text aria-hidden="true" x="30" y={y + ROW_H / 2 + 4} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={T.muted}>
                   {post.label}
                   {post.hint && <title>{post.hint}</title>}
                 </text>
@@ -167,7 +168,8 @@ export default function Posts({ locale, onOpenChar }) {
                   const solid = SOLID.has(t.kind);
                   return (
                     <g key={i} opacity={dim ? 0.32 : 1} tabIndex={0} role="button" style={{ cursor: "pointer", outline: "none" }}
-                      aria-label={`${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}`}
+                      aria-label={`${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
+                      aria-describedby={hover && hover.i === i ? "posts-tip" : undefined}
                       onMouseEnter={show} onFocus={show} onBlur={() => setHover(null)} onClick={open}
                       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}>
                       {thin ? (
@@ -200,7 +202,7 @@ export default function Posts({ locale, onOpenChar }) {
         const t = TENURES[hover.i];
         const c = byId[t.who];
         return (
-          <div role="tooltip" style={{ position: "absolute", left: hover.x, top: hover.y, width: 300, boxSizing: "border-box", pointerEvents: "none",
+          <div id="posts-tip" role="tooltip" style={{ position: "absolute", left: hover.x, top: hover.y, width: 300, boxSizing: "border-box", pointerEvents: "none",
             background: T.panelHi, border: `1px solid ${colorOf(t.who)}88`, borderRadius: 3, padding: "8px 12px", fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.ink, lineHeight: 1.75, zIndex: 5 }}>
             <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14 }}>
               {c.name}<span style={{ color: T.muted, marginLeft: 8 }}>{tenureTitle(t)}</span>

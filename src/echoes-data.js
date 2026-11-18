@@ -796,7 +796,8 @@ export const ECHOES = [
       { y: 761, m: 1, q: "A", note: "烙「韬」字于革垫；演阵再立" },
       { y: 761, m: 1, q: "A", note: "去幽居处见闵方城，二人饮酒" },
       { y: 763, m: 11, q: "", note: "墨昆阵前叫嚣：那右前臂是他斩下的（《763-4》）", card: true },
-      { y: 765, m: null, q: "", note: "接掌一团，以军饷收容边地孤幼，有几个说奚语的孩子" },
+      { y: 764, m: 3, q: "", note: "接掌一团" },
+      { y: 765, m: null, q: "", note: "以一团军饷收容边地孤幼，有几个说奚语的孩子" },
     ] },
   { shock: "xizhong760", who: "fanzhang", band: "out", order: 11, stance: "昏着的人", stanceNote: "狄元恪亲兵", mode: "魇在盾里，被一声「放手」叫回来",
     arc: [
@@ -910,7 +911,7 @@ export const ECHOES = [
       { y: 750, m: 9, q: "", note: "被他从擂台下要到身边" },
       { y: 761, m: 1, q: "A", note: "幽居处对饮" },
       { y: 763, m: 10, q: "B", note: "预备继任一团" },
-      { y: 765, m: null, q: "", note: "接掌一团" },
+      { y: 764, m: 3, q: "", note: "接掌一团（闵方城退居二线，763.10 所定人事生效）" },
       { y: 767, m: null, q: "", note: "心丧三年期满，与贺兰成婚" },
     ] },
   { shock: "minsi765", who: "zswq", band: "pass", order: 9, stance: "留在关上的人", stanceNote: "统帅", mode: "不许他有失",
