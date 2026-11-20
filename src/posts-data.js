@@ -309,7 +309,7 @@ export const TENURES = [
   { post: "jn-sb", who: "tangqingyang", y0: 738, m0: null, y1: 739, m1: null, kind: "无名目", rank: "征行人（替父应征）", how: "王昱安戎大败后剑南补兵，青神点到他家，替父亲去", end: "情愿改充长任健儿", src: ["738.9A", "739"], approx: ["y0"], note: "名册上写的是父亲的名字" },
   { post: "jn-sb", who: "tangqingyang", y0: 739, m0: null, y1: 741, m1: null, kind: "无名目", rank: "长任健儿（弩手）", how: "开元二十五年诏，自征行人中招募", end: "升火长", src: ["739", "740.3", "740.6B"], approx: ["y1"] },
   { post: "jn-sb", who: "tangqingyang", y0: 741, m0: null, y1: 745, m1: null, kind: "正授", rank: "火长（平戎城，程铎麾下）", end: "升副队头", src: ["卡"], approx: ["y0", "y1"], note: "领十人；职名据《通典》卷一四八引李靖兵法" },
-  { post: "jn-sb", who: "tangqingyang", y0: 745, m0: null, y1: 750, m1: null, kind: "正授", rank: "副队头", end: "升队头", src: ["卡"], approx: ["y0", "y1"] },
+  { post: "jn-sb", who: "tangqingyang", y0: 745, m0: null, y1: 750, m1: null, kind: "正授", rank: "副队头", end: "升队头", src: ["745.6B", "卡"], approx: ["y0", "y1"] },
   { post: "jn-sb", who: "tangqingyang", y0: 750, m0: null, y1: 751, m1: 4, kind: "正授", rank: "队头（弩队）", end: "西洱河后补押官", src: ["751.4"], approx: ["y0"], note: "西洱河带弩队断后" },
   { post: "jn-sb", who: "tangqingyang", y0: 751, m0: 4, y1: 754, m1: 3, kind: "正授", rank: "押官", how: "西洱河死者六万，活下来的补缺", end: "押送眉州乡人时，赶在点验入册前私放其人，未回营；程铎追十五日不得", src: ["751.4", "752.2", "754.3A", "754.3B"], approx: ["y0"], note: "押官为一队五十人之主官（《通典》卷一四八引李靖兵法）" },
 ];
