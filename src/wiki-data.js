@@ -2058,7 +2058,7 @@ export const EVENTS = [
   { year: 757, month: 6, seq: "A", fac: ["天策", "万花"], loc: ["天策府/北邙山"], title: "残营营啸，师兄闯院斥程凯「龟缩深院」，许秋生以医针制之；江蓠结阵为众兵安神", chars: ["chengkai", "xuqiusheng", "jiangli", "litingshen"] },
   { year: 757, month: 6, seq: "C", fac: ["天策", "唐军"], loc: ["天策府/北邙山"], title: "程凯不欲长久苟安，谋求起复，与李庭深有所争驰；后攻拔半山狼牙营垒而建功（受李光弼南面偏师节制，李光弼本人仍在太原）；李庭深联络程锋暗中相助，陆灵援手；复职，得三百人营", chars: ["chengkai", "litingshen", "chengfeng", "luling", "xuqiusheng"] },
   { year: 757, month: 8, seq: null, fac: ["天策", "唐军"], loc: ["上党郡"], title: "程锋派驻上党郡", chars: ["chengfeng", "chengyu", "luling"] },
-  { year: 757, month: 9, seq: null, fac: ["天策", "唐军"], loc: ["上党郡"], title: "九月初，燕将蔡希德围上党，程锋出城欲生擒之，桥梁塌陷、为伏兵刺伤所执——「乍可失帅，不可失城」；拒受伪官，押往洛阳城北苑舍严加看管，腰伤自此耽搁（按：史载上党守将程千里亦为蔡希德所擒、囚于洛阳，十月安庆绪弃洛时与哥舒翰等同被害，程锋此劫与之同轨）", chars: ["chengfeng", "chengyu"] },
+  { year: 757, month: 9, seq: null, fac: ["天策", "唐军"], loc: ["上党郡"], title: "九月初，燕将蔡希德围上党，程锋出城欲生擒之，桥梁塌陷、为伏兵刺伤所执——「乍可失帅，不可失城」；拒受伪官，押往洛阳城北苑舍严加看管，腰伤自此耽搁", chars: ["chengfeng", "chengyu"] },
   { year: 757, month: 9, seq: "B", fac: ["史实"], loc: ["长安"], title: "九月二十八日（香积寺之战次日），长安收复", chars: [] },
   { year: 757, month: 10, seq: "F", fac: ["天策", "唐军"], loc: ["洛阳", "天策府/北邙山"], tloc: { chengkai: "天策府/北邙山", litingshen: "天策府/北邙山" }, title: "十月十五日新店之战，十八日广平王入东京；天策余部下旬回府", chars: ["chengkai", "litingshen"] },
   { year: 758, month: 9, seq: null, fac: ["天策", "唐军"], loc: ["邺城"], title: "九节度讨安庆绪，不置元帅，以鱼朝恩为观军容宣慰处置使；天策随李光弼北上围邺", chars: ["chengkai", "litingshen", "weiqian", "xiangjing"] },
