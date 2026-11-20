@@ -16,7 +16,7 @@
      approx：["y0"] / ["y1"] 起止推定。draft：起草待核。
    GRANTS：勋官、散官的授予（不是职位，不上图，只进档案卡履历）。
      y/m 授予之时；xun 勋官；san 散官，pin 其品；approx 系年推定（授予本身有据、年月是推的）；
-     draft 待核（授予本身尚未经作者裁定）。
+     draft 待核（授予本身尚未经作者裁定）；zeng 身后追赠（y/m 为卒时）。
    ============================================================ */
 
 export const POSTS = [
@@ -181,7 +181,7 @@ export const TENURES = [
   { post: "wz-tg", who: "chengkai", y0: 755, m0: 4, y1: 755, m1: 12, kind: "代领", rank: "暂领潼关府兵（曹雪阳遥领）", how: "岚川云潼关失子后，曹雪阳递话命他照顾；潼关府兵暂交予他", end: "回府守城", src: ["755.4", "〈登楼 C10〉"], approx: ["y1"] },
   { post: "tc-ty", who: "lanchuanyun", y0: 756, m0: 10, y1: 757, m1: 2, kind: "无名目", rank: "太原轻骑（与齐晟）", how: "自彭原转赴太原，见齐晟", end: "齐晟战亡", src: ["756.10", "757.2A"] },
   { post: "wz-tg", who: "lanchuanyun", y0: 766, m0: null, y1: null, m1: null, kind: "兼领", rank: "兼领潼关事", how: "李庭深娶亲那几年起，又领潼关事：巡视关城、崤山、枫华谷，再布暗哨", src: ["766", "〈殿〉"], approx: ["y0"] },
-  { post: "wz-tg", who: "qisheng", y0: 752, m0: 9, y1: 755, m1: 4, kind: "正授", rank: "潼关大营旅帅（掌守备训练）", how: "南诏回，叙功", end: "调去崤山", src: ["卡", "〈登楼 C10〉"], approx: ["y0"], note: "人设卡的「从五品下」是早期设定；此处降为旅帅", draft: true },
+  { post: "wz-tg", who: "qisheng", y0: 752, m0: 9, y1: 755, m1: 4, kind: "正授", rank: "潼关大营旅帅（掌守备训练）", how: "南诏回，叙功", end: "调去崤山", src: ["卡", "〈登楼 C10〉"], approx: ["y0"], note: "生前为旅帅；人设卡的从五品下是 757.2 战殁后的追赠" },
   { post: "wz-xs", who: "qisheng", y0: 755, m0: 4, y1: 755, m1: 12, kind: "差遣", rank: "崤山工事（接程凯）", how: "接程凯守崤山", end: "随高仙芝、封常清弃陕，退入潼关", src: ["〈登楼 C10〉", "755.12"] },
   { post: "tc-tg", who: "qisheng", y0: 755, m0: 12, y1: 756, m1: 6, kind: "差遣", rank: "潼关残军主将", how: "退入潼关；756.5 起与岚川云率残军对峙", end: "枫华谷失陷，重伤", src: ["755.12", "756.6B"] },
   { post: "tc-ty", who: "qisheng", y0: 756, m0: 10, y1: 757, m1: 2, kind: "无名目", rank: "太原轻骑（自组）", how: "辗转到太原，搜罗同袍，组成一队轻骑", end: "守太原战殁", src: ["卡", "756.10", "757.2A"] },
@@ -222,9 +222,10 @@ export const GRANTS = [
   { who: "lanchuanyun", y: 762, m: 11, xun: "骑都尉", san: "归德郎将", pin: "从五品下", src: ["762.11", "卡"] },
   { who: "chengkai", y: 762, m: 11, xun: "上轻车都尉", san: "壮武将军", pin: "正四品下", src: ["卡", "764"], approx: true },
   { who: "litingshen", y: 762, m: 11, xun: "上轻车都尉", san: "忠武将军", pin: "正四品上", src: ["卡"], approx: true },
-  { who: "qisheng", y: 752, m: 9, xun: "云骑尉", san: "致果副尉", pin: "正七品下", src: ["卡"], approx: true, draft: true, note: "人设卡作「骑都尉；游击将军（从五品下）」，是早期设定；此为降调后的建议" },
-  { who: "weiqian", y: 752, m: 9, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡", "〈于林之下〉"], approx: true },
+  { who: "qisheng", y: 752, m: 9, xun: "云骑尉", src: ["卡"], approx: true, draft: true, note: "南诏战功。原拟兼授致果副尉（正七品下），但岚川云 756.10 才授散官，为免同期散官高过她，删去散官，与魏谦后挪同理" },
+  { who: "weiqian", y: 757, m: 4, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡", "〈于林之下〉", "757.4"], approx: true, note: "残营与河东官军接上关系，留营诸人叙功；757.5〈于林之下〉A 已称「魏校尉」。原系 752.9，因散官高过当时的岚川云，后挪" },
   { who: "xiangjing", y: 762, m: 11, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡"] },
+  { who: "qisheng", y: 757, m: 2, xun: "骑都尉", san: "游击将军", pin: "从五品下", src: ["卡", "757.2A"], zeng: true, note: "守太原战殁，追赠；人设卡「时为」从五品下，即此" },
 ];
 
 /* ---------- 供档案卡与编制图共用 ---------- */
@@ -248,5 +249,5 @@ export function grantsOf(id) {
   return GRANTS.filter((g) => g.who === id).sort((a, b) => at(a.y, a.m) - at(b.y, b.m));
 }
 export function grantLabel(g) {
-  return [g.xun, g.san && `${g.san}（${g.pin}）`].filter(Boolean).join("；");
+  return (g.zeng ? "追赠" : "") + [g.xun, g.san && `${g.san}（${g.pin}）`].filter(Boolean).join("；");
 }
