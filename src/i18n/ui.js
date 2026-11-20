@@ -13,7 +13,7 @@ const en = {
   '見於文庫（本名計數）': 'Library appearances (name counts)',
   關閉檔案: 'Close profile', 站內導航: 'Main navigation',
   檔案一覽: 'Profiles', 編制: 'Posts', 任職履歷: 'Posts held', 在編制圖中看: 'See on the posts chart',
-  門派: 'Faction', 苍云: 'Cangyun', 天策: 'Tiance', '勳、散': 'Merit grade and prestige rank',
+  門派: 'Faction', 苍云: 'Cangyun', 天策: 'Tiance', 唐军: 'Tang army', '勳、散': 'Merit grade and prestige rank',
   英文試驗範圍: 'English prototype: navigation and Lü Dingyi’s profile only. Other content remains in Chinese.',
 };
 export const translateUI = (locale, key) => locale === 'en' ? en[key] ?? key : key;

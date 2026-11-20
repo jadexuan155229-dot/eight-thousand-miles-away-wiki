@@ -180,7 +180,8 @@ for (const f of FACTIONS) if (!POST_FAC_SLUG[f.id]) err(`FACTIONS ${f.id}`, "rou
 for (const sl of Object.values(POST_FAC_SLUG)) if (charIds.has(sl)) err(`POST_FAC_SLUG ${sl}`, "與人物 id 重名，#/posts/<段> 將無法區分");
 /* 編制圖路由往返：新舊兩式都得解回原意 */
 for (const [h, want] of [["#/posts", { fac: "苍云", char: null }], ["#/posts/lanchuanyun", { fac: "苍云", char: "lanchuanyun" }],
-  ["#/posts/tiance", { fac: "天策", char: null }], ["#/posts/tiance/chengkai", { fac: "天策", char: "chengkai" }]]) {
+  ["#/posts/tiance", { fac: "天策", char: null }], ["#/posts/tiance/chengkai", { fac: "天策", char: "chengkai" }],
+  ["#/posts/tangjun", { fac: "唐军", char: null }], ["#/posts/tangjun/chengduo", { fac: "唐军", char: "chengduo" }]]) {
   const r = parseRoute(h);
   if (r.fac !== want.fac || r.char !== want.char) err(`router ${h}`, `解析為 ${r.fac}/${r.char}`);
   if (routeHash(r) !== h) err(`router ${h}`, `回寫為 ${routeHash(r)}`);
@@ -217,7 +218,7 @@ GRANTS.forEach((g, i) => {
   if (!charIds.has(g.who)) err(tag, `who 引用不存在的人物 id：${g.who}`);
   if (typeof g.y !== "number") err(tag, "缺授予年");
   if (g.m != null && (g.m < 1 || g.m > 12)) err(tag, `月份非法：${g.m}`);
-  if (!g.xun && !g.san) err(tag, "勳、散皆空");
+  if (!g.xun && !g.san && !g.guan) err(tag, "勳、散、贈官皆空");
   if (g.san && !g.pin) warn(tag, "散官缺品");
   const c = CHARACTERS.find((x) => x.id === g.who);
   if (c && c.death != null && g.y > c.death) err(tag, `授於卒年 ${c.death} 之後`);
