@@ -85,6 +85,7 @@ export function setSkin(k) {
   skin = k;
   Object.assign(T, SKINS[k]);
   toneCache.clear();
+  inkCache.clear();
   applyDocument(k);
   try { window.localStorage.setItem(SKIN_KEY, k); } catch { /* 存不下：本次會話內照常切換 */ }
   listeners.forEach((f) => f(k));
@@ -183,6 +184,27 @@ export function tone(hex, min = 3) {
   while (contrastOn(out, bg) < min && L > 0.2) { L -= 0.004; out = fit(); }
   const res = "#" + out.map((v) => v.toString(16).padStart(2, "0")).join("").toUpperCase();
   toneCache.set(key, res);
+  return res;
+}
+
+/* 字色專用：tone() 之上再守一道 3:1。PAPER_TONE 裡為保色相放寬過的（藏劍 2.6、七秀 2.5），
+   作 11px 門派籤之類小字時發虛；字色在此同色相再壓暗至 3:1，框線、綾邊、圖上色塊仍用原定色。
+   以 T.bg 計（諸卡面 T.panel 更淺，對比只會更高）。玄墨下原樣返回 */
+const inkCache = new Map();
+export function toneText(hex, min = 3) {
+  const c = tone(hex);
+  if (skin !== "paper" || !/^#[0-9a-fA-F]{6}$/.test(c)) return c;
+  const key = c + min;
+  if (inkCache.has(key)) return inkCache.get(key);
+  const bg = rgbOf(PAPER.bg);
+  let out = rgbOf(c);
+  if (contrastOn(out, bg) < min) {
+    let [L, C, H] = toOklch(out);
+    const fit = () => { let o; while (!(o = fromOklch(L, C, H)) && C > 0) C -= 0.003; return o || out; };
+    while (contrastOn(out, bg) < min && L > 0.2) { L -= 0.004; out = fit(); }
+  }
+  const res = "#" + out.map((v) => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+  inkCache.set(key, res);
   return res;
 }
 

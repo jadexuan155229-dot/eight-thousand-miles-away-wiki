@@ -1,10 +1,11 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from "react";
-import { serif, T, tone, useSkin, useNarrow } from "./theme";
+import { serif, T, tone, toneText, useSkin, useNarrow } from "./theme";
 import { NOVELS, FLAT, loadTexts } from "./novel";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 
 const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
+const fcText = (f) => toneText(fcRaw(f)); /* 作字時用：素紙下守 3:1 */
 
 /* ============================================================
    文庫 · 正文閱讀器
@@ -225,7 +226,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
           {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
-            <span key={f} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: fc(f), border: `1px solid ${fc(f)}55`, padding: "1px 8px", borderRadius: 2 }}>{f}</span>
+            <span key={f} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}55`, padding: "1px 8px", borderRadius: 2 }}>{f}</span>
           ))}
         </div>
         {years && (
