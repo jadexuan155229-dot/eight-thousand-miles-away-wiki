@@ -210,8 +210,8 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                         <text x={x1 + 5} y={cy + 4} fontFamily="HuiwenZhengKai" fontSize="11.5" pointerEvents="none"
                           fill={solid && t.kind === "正授" ? "#15181D" : T.ink} fillOpacity={solid ? 0.95 : 0.85}>{fitLabel}</text>
                       )}
-                      {/* 感应区：细线与短带都放宽到整道高 */}
-                      <rect x={x1 - 2} y={cy - 10} width={x2 - x1 + 4} height="20" fill="transparent" />
+                      {/* 感应区：细线与短带都放宽到整道高；细线尾挂了名字的，连名字一并算进去 */}
+                      <rect x={x1 - 2} y={cy - 10} width={x2 - x1 + 4 + (tail ? textW(tail, 10.5) + 6 : 0)} height="20" fill="transparent" />
                     </g>
                   );
                 })}

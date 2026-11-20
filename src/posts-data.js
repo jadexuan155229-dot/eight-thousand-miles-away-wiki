@@ -177,7 +177,7 @@ export const TENURES = [
   { post: "tc-bm", who: "litingshen", y0: 757, m0: 10, y1: 762, m1: 11, kind: "署理", rank: "兵马使（权）", how: "回府，接徐长海之缺；经营府中粮草马匹军械", end: "正授", src: ["757.10F", "759.9", "〈殿〉"] },
   { post: "tc-bm", who: "litingshen", y0: 762, m0: 11, y1: 774, m1: null, kind: "正授", how: "府城再度收复", end: "乞骸骨，致仕", src: ["762.11", "〈758（秋）江蓠走〉", "770.12", "〈殿〉"], approx: ["y1"], note: "致仕在程凯去后几年；在敬德楼理事，那是军师旧日常驻处（〈殿〉）" },
   { post: "tc-lz", who: "litingshen", y0: 765, m0: null, y1: 770, m1: null, kind: "差遣", how: "屡被借往灵州治军", end: "归府", src: ["卡", "〈770 年末见李庭深〉"], approx: ["y0", "y1"], note: "年份待核", draft: true },
-  { post: "wz-xs", who: "chengkai", y0: 755, m0: null, y1: 755, m1: 4, kind: "差遣", rank: "崤山工事", how: "在崤山盯着修工事", end: "调往潼关", src: ["755.4", "〈登楼 C09〉"], approx: ["y0"], note: "起点不明，755 春已在崤山" },
+  { post: "wz-xs", who: "chengkai", y0: 755, m0: null, y1: 755, m1: 4, kind: "差遣", rank: "崤山工事", how: "在崤山盯着修工事", end: "调往潼关", src: ["755.4", "〈登楼 C09〉"], approx: ["y0"], note: "起点推定：755 春已在崤山，何时去的不明；不留空，是因为空起点会自年轴左缘（737）画起，而他 746—756 在天弓营任副尉" },
   { post: "wz-tg", who: "chengkai", y0: 755, m0: 4, y1: 755, m1: 12, kind: "代领", rank: "暂领潼关府兵（曹雪阳遥领）", how: "岚川云潼关失子后，曹雪阳递话命他照顾；潼关府兵暂交予他", end: "回府守城", src: ["755.4", "〈登楼 C10〉"], approx: ["y1"] },
   { post: "tc-ty", who: "lanchuanyun", y0: 756, m0: 10, y1: 757, m1: 2, kind: "无名目", rank: "太原轻骑（与齐晟）", how: "自彭原转赴太原，见齐晟", end: "齐晟战亡", src: ["756.10", "757.2A"] },
   { post: "wz-tg", who: "lanchuanyun", y0: 766, m0: null, y1: null, m1: null, kind: "兼领", rank: "兼领潼关事", how: "李庭深娶亲那几年起，又领潼关事：巡视关城、崤山、枫华谷，再布暗哨", src: ["766", "〈殿〉"], approx: ["y0"] },
