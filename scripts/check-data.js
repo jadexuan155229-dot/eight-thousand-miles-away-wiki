@@ -11,6 +11,7 @@ import { fc, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS } from
 import { CHAR_TERMS } from "../src/novel/char-terms.js";
 import { SHOCKS, ECHOES } from "../src/echoes-data.js";
 import { FACTIONS, GRANTS, POSTS, POST_FULL, TENURES } from "../src/posts-data.js";
+import { POST_FAC_SLUG, parseRoute, routeHash } from "../src/router.js";
 import { echoModesEn } from "../src/i18n/echoes.en.js";
 import { SEAL_SVG_FILE } from "../src/seals.js";
 import { missingFontChars } from "./font-chars.js";
@@ -175,6 +176,15 @@ for (const p of POSTS) {
   if (!facIds.has(p.fac)) err(`POSTS ${p.id}`, `fac 不在 FACTIONS：${p.fac}`);
 }
 if (postIds.size !== POSTS.length) err("POSTS", "職位格 id 重複");
+for (const f of FACTIONS) if (!POST_FAC_SLUG[f.id]) err(`FACTIONS ${f.id}`, "router.js POST_FAC_SLUG 缺此門派的哈希段");
+for (const sl of Object.values(POST_FAC_SLUG)) if (charIds.has(sl)) err(`POST_FAC_SLUG ${sl}`, "與人物 id 重名，#/posts/<段> 將無法區分");
+/* 編制圖路由往返：新舊兩式都得解回原意 */
+for (const [h, want] of [["#/posts", { fac: "苍云", char: null }], ["#/posts/lanchuanyun", { fac: "苍云", char: "lanchuanyun" }],
+  ["#/posts/tiance", { fac: "天策", char: null }], ["#/posts/tiance/chengkai", { fac: "天策", char: "chengkai" }]]) {
+  const r = parseRoute(h);
+  if (r.fac !== want.fac || r.char !== want.char) err(`router ${h}`, `解析為 ${r.fac}/${r.char}`);
+  if (routeHash(r) !== h) err(`router ${h}`, `回寫為 ${routeHash(r)}`);
+}
 const KINDS_T = new Set(["正授", "署理", "代領", "代领", "兼領", "兼领", "停職", "停职", "暫任", "暂任", "差遣", "無名目", "无名目", "充任"]);
 const evRef = /^(\d{3})\.(\d{1,2})([A-Z]\d?)?$|^(\d{3})$/;
 const checkSrc = (tag, src) => {
@@ -233,7 +243,7 @@ if (missingGlyphs.length) {
 for (const w of warns) console.log(`  ⚠ ${w}`);
 for (const e of errors) console.log(`  ✗ ${e}`);
 console.log(
-  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length} · 勳散 ${GRANTS.length} —— ` +
+  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length} · 勳散 ${GRANTS.length}（待核 ${GRANTS.filter((g) => g.draft).length}） —— ` +
   (errors.length ? `${errors.length} 錯` : "無錯") + (warns.length ? `，${warns.length} 警告` : "")
 );
 if (errors.length) process.exit(1);

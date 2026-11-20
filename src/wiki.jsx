@@ -501,7 +501,10 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                   {gs.map((g, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, padding: "3px 0" }}>
                       <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? "（约）" : ""}</div>
-                      <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>{grantLabel(g)}</div>
+                      <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>
+                        {grantLabel(g)}
+                        {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -2344,7 +2347,6 @@ export default function Wiki({ onOpenLanding }) {
     else window.location.hash = h;
   };
   const tab = route.tab;
-  const [postsFac, setPostsFac] = useState("苍云"); /* 編制圖當前門派（不入哈希） */
   const openChar = route.char ? byId[route.char] || null : null; /* 壞 id 鏈接：不開彈窗、不作報錯 */
   const setTab = (k) => nav({ tab: k });
   const setOpenChar = (c) => nav({ char: c ? c.id : null });
@@ -2410,7 +2412,7 @@ export default function Wiki({ onOpenLanding }) {
             ))}
           </div>
         )}
-        {tab === "posts" && <Posts locale={locale} onOpenChar={setOpenChar} fac={postsFac} onFac={setPostsFac} />}
+        {tab === "posts" && <Posts locale={locale} onOpenChar={setOpenChar} fac={route.fac} onFac={(f) => nav({ fac: f })} />}
         {tab === "chars" && (
           <>
             <div className="flex flex-wrap items-center" style={{ gap: 8, marginBottom: 20 }}>
@@ -2450,7 +2452,7 @@ export default function Wiki({ onOpenLanding }) {
       <DetailPanel c={openChar} locale={locale} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
         onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
         onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })}
-        onOpenPosts={(f) => { if (f) setPostsFac(f); nav({ tab: "posts", char: null }); }} />
+        onOpenPosts={(f) => nav({ tab: "posts", fac: f || "苍云", char: null })} />
     </div>
   );
 }
