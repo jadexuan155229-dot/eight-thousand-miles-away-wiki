@@ -1,8 +1,9 @@
 /* ============================================================
-   任職 (posts-data.js) —— 事實層：各人在門派編制中的任期（苍云、天策）
+   任職 (posts-data.js) —— 事實層：各人在門派編制中的任期（苍云、天策、唐军）
    Notion「人山人海 · 任職」先改，此處隨之（「Notion 先改，wiki 随之」）。
    苍云編制依文稿〈重看人物、軍隊體系〉：伍、火、队、旅、团、营、军；破阵营辖三团。
    天策依 docs/tiance-posts-draft.md、-draft-2.md：府中诸将／府僚（天策上将府旧制）／营伍（参照折冲府）。
+   唐军依 docs/tang-posts-draft.md：按方镇分组；边将所带卫府武官之衔（果毅、将军之类）写进 rank，不另立格。
    POSTS：图上一行＝一个职位格（单位 × 职位），fac 门派，按 group 分组、按数组次序排；
    TENURES：一段任期一行；同一人换职、同职复任各为一行。
      y0/m0 起，y1/m1 止；y0 为 null＝起点不明（图上自左缘淡入），
@@ -16,7 +17,8 @@
      approx：["y0"] / ["y1"] 起止推定。draft：起草待核。
    GRANTS：勋官、散官的授予（不是职位，不上图，只进档案卡履历）。
      y/m 授予之时；xun 勋官；san 散官，pin 其品；approx 系年推定（授予本身有据、年月是推的）；
-     draft 待核（授予本身尚未经作者裁定）；zeng 身后追赠（y/m 为卒时）。
+     draft 待核（授予本身尚未经作者裁定）；zeng 身后追赠（y/m 为卒时）；
+     guan 赠授的职事官（如追赠凉州都督），与勋、散并列。
    ============================================================ */
 
 export const POSTS = [
@@ -72,6 +74,37 @@ export const POSTS = [
   { id: "yg-jy", fac: "天策", group: "府中医官与外请", label: "军医", hint: "外门在府任职：万花" },
   { id: "yg-bs", fac: "天策", group: "府中医官与外请", label: "医博士", hint: "外门在府任职：万花" },
   { id: "wq-jx", fac: "天策", group: "府中医官与外请", label: "客座教习", hint: "外门在府任职：凌雪阁" },
+  /* ---------- 唐军（依 docs/tang-posts-draft.md，2026-11-20 作者定） ---------- */
+  { id: "bt-fs", fac: "唐军", group: "北庭", label: "节度副使", hint: "741 年北庭与安西四镇再次分设" },
+  { id: "bt-dz", fac: "唐军", group: "北庭", label: "都知兵马使", hint: "节度使之下统领本道诸军的大将" },
+  { id: "bt-bm", fac: "唐军", group: "北庭", label: "兵马使" },
+  { id: "bt-zj", fac: "唐军", group: "北庭", label: "子将" },
+  { id: "bt-jz", fac: "唐军", group: "北庭", label: "兵曹", hint: "都护府依州制，兵曹参军掌兵甲器仗" },
+  { id: "bt-sz", fac: "唐军", group: "北庭", label: "俱六守捉", hint: "碎叶路上庭州以西、轮台县以东的守捉，开元北庭文书已见" },
+  { id: "bt-cz", fac: "唐军", group: "北庭", label: "行营从征", hint: "史书只记主帅之名" },
+  { id: "bt-hs", fac: "唐军", group: "北庭", label: "护送诏使" },
+  { id: "bt-xz", fac: "唐军", group: "北庭", label: "西州", hint: "790 年北庭陷落后" },
+  { id: "ax-xb", fac: "唐军", group: "安西行营", label: "小勃律行营", hint: "747 年高仙芝讨小勃律" },
+  { id: "jn-sb", fac: "唐军", group: "剑南", label: "士卒" },
+  { id: "jn-pr", fac: "唐军", group: "剑南", label: "平戎城", hint: "安戎城 740 年收复后改名平戎城" },
+  { id: "jn-yy", fac: "唐军", group: "剑南", label: "押衙", hint: "节度使牙前统兵的军将" },
+  { id: "jn-dj", fac: "唐军", group: "剑南", label: "点兵" },
+  { id: "jn-yh", fac: "唐军", group: "剑南", label: "都虞候", hint: "掌军纪、军法" },
+  { id: "jn-pl", fac: "唐军", group: "剑南", label: "平乱" },
+  { id: "jn-tg", fac: "唐军", group: "剑南", label: "讨旰" },
+  { id: "jn-xz", fac: "唐军", group: "剑南", label: "闲置" },
+  { id: "jn-sc", fac: "唐军", group: "剑南", label: "守城" },
+  { id: "hd-qw", fac: "唐军", group: "河东与东都", label: "勤王" },
+  { id: "hd-xs", fac: "唐军", group: "河东与东都", label: "行军司马", hint: "使府的上佐幕职，掌军务" },
+  { id: "hd-sd", fac: "唐军", group: "河东与东都", label: "上党" },
+  { id: "hd-lb", fac: "唐军", group: "河东与东都", label: "帐前练兵" },
+  { id: "hd-qf", fac: "唐军", group: "河东与东都", label: "前锋" },
+  { id: "hd-xy", fac: "唐军", group: "河东与东都", label: "东都行营" },
+  { id: "sf-jz", fac: "唐军", group: "朔方军", label: "朔方军", hint: "郭子仪麾下；郭子仪罢后一度归仆固怀恩" },
+  { id: "sf-yc", fac: "唐军", group: "朔方军", label: "攻榆次", hint: "764 年仆固怀恩之变" },
+  { id: "jx-fq", fac: "唐军", group: "京西与北道", label: "防秋" },
+  { id: "jx-fs", fac: "唐军", group: "京西与北道", label: "奉使" },
+  { id: "sn-bm", fac: "唐军", group: "山南西道", label: "梁州", hint: "梁州是山南西道治所，节度使另有其人" },
 ];
 /* 单位全称：档案卡「任职履历」与浮签用（行名只写「长官」，须冠以单位） */
 export const POST_FULL = {
@@ -111,6 +144,37 @@ export const POST_FULL = {
   "yg-jy": "军医",
   "yg-bs": "天策府医博士",
   "wq-jx": "天杀营客座教习",
+  /* 唐军 */
+  "bt-fs": "伊西北庭节度副使",
+  "bt-dz": "北庭都知兵马使",
+  "bt-bm": "北庭兵马使",
+  "bt-zj": "北庭子将",
+  "bt-jz": "北庭都护府兵曹参军事",
+  "bt-sz": "北庭俱六守捉",
+  "bt-cz": "随主帅从征",
+  "bt-hs": "护送诏使赴北庭",
+  "bt-xz": "退守西州",
+  "ax-xb": "小勃律行营（随高仙芝）",
+  "jn-sb": "剑南军中",
+  "jn-pr": "平戎城子将",
+  "jn-yy": "剑南节度押衙",
+  "jn-dj": "留守成都点兵",
+  "jn-yh": "剑南都虞候",
+  "jn-pl": "随军平乱",
+  "jn-tg": "讨崔旰",
+  "jn-xz": "闲置",
+  "jn-sc": "守成都",
+  "hd-qw": "东归勤王",
+  "hd-xs": "行军司马",
+  "hd-sd": "上党守将",
+  "hd-lb": "帐前练兵",
+  "hd-qf": "前锋",
+  "hd-xy": "东都行营",
+  "sf-jz": "朔方军",
+  "sf-yc": "攻榆次（仆固玚兵）",
+  "jx-fq": "京西防秋",
+  "jx-fs": "奉使西行",
+  "sn-bm": "山南西道兵马使",
 };
 
 export const TENURES = [
@@ -204,6 +268,45 @@ export const TENURES = [
   { post: "yg-jy", who: "xuqiusheng", y0: 756, m0: 2, y1: 764, m1: null, kind: "差遣", rank: "军医（万花）", how: "府城破后两日内来援，为李庭深营中军医；后随府", end: "授医博士", src: ["756.2A", "卡"] },
   { post: "yg-bs", who: "xuqiusheng", y0: 764, m0: null, y1: null, m1: null, kind: "正授", rank: "天策府医博士（万花）", how: "战后叙功", src: ["764", "卡"], note: "此后终老天策府" },
   { post: "yg-jy", who: "jiangli", y0: 756, m0: 2, y1: 758, m1: 7, kind: "差遣", rank: "留营军医（万花）", how: "府城破后两日内来援", end: "闻谷中危难，返万花谷", src: ["756.2A", "758.7"] },
+  /* ---------- 唐军（依 docs/tang-posts-draft.md，2026-11-20 作者定） ---------- */
+  { post: "bt-dz", who: "chengguang", y0: 735, m0: 10, y1: 741, m1: null, kind: "正授", how: "盖嘉运帐下统兵", end: "升节度副使", src: ["735.10", "736.1", "739.8", "〈程家系列〉"], approx: ["y0"], note: "〈程家系列〉【4】：边府幕前一等一的名将" },
+  { post: "bt-cz", who: "chengguang", y0: 736, m0: 1, y1: 736, m1: 2, kind: "差遣", rank: "随盖嘉运击突骑施", how: "随盖嘉运击突骑施", src: ["736.1"] },
+  { post: "bt-cz", who: "chengguang", y0: 739, m0: 8, y1: 739, m1: 9, kind: "差遣", rank: "随盖嘉运破碎叶", how: "随盖嘉运破碎叶、擒吐火仙", src: ["739.8"] },
+  { post: "bt-fs", who: "chengguang", y0: 741, m0: null, y1: 747, m1: 7, kind: "正授", how: "北庭与安西四镇再次分设", end: "殁于小勃律之役", src: ["卡", "741.10", "747.7"], note: "741.10 以副使出北庭西路，被围，程凯率百骑解围" },
+  { post: "ax-xb", who: "chengguang", y0: 747, m0: 3, y1: 747, m1: 7, kind: "差遣", how: "以北庭节度副使从高仙芝讨小勃律", end: "殁于军中", src: ["747.7"], approx: ["y0"] },
+  { post: "bt-jz", who: "chengzhao", y0: 735, m0: 10, y1: 740, m1: 5, kind: "署理", rank: "摄北庭都护府兵曹参军（经管庭州甲仗）", how: "初上阵守庭州，兵器遇寒脆折，自请经管", end: "赴俱六守捉", src: ["735.10", "738", "738.12"], note: "都护府依州制，兵曹掌兵甲器仗；摄官，未经吏部正授——事是他做的，告身不是他的；叶曙兮读出的「故廉」就是这一条" },
+  { post: "bt-cz", who: "chengzhao", y0: 736, m0: 1, y1: 736, m1: 2, kind: "差遣", rank: "随盖嘉运击突骑施", how: "随父从盖嘉运击突骑施", src: ["736.1"], note: "史书只记主帅之名，是他头一回有功不得封赏" },
+  { post: "bt-cz", who: "chengzhao", y0: 739, m0: 8, y1: 739, m1: 9, kind: "差遣", rank: "随盖嘉运破碎叶", how: "随父从盖嘉运破碎叶", src: ["739.8"] },
+  { post: "bt-sz", who: "chengzhao", y0: 740, m0: 5, y1: 740, m1: 10, kind: "正授", rank: "俱六守捉副使", how: "莫贺达干叛，赴俱六守捉", end: "不愿受抚的部落袭击守捉，战亡", src: ["740.5", "740.10"], note: "功劳记在主帅名下；俱六守捉在庭州以西、轮台县以东，开元北庭文书已见，另有俱六行营" },
+  { post: "jn-sb", who: "chengduo", y0: 739, m0: null, y1: 740, m1: 3, kind: "无名目", rank: "入剑南军中", how: "入剑南", src: ["740.3"], approx: ["y0"], note: "738 年尚在洛阳首告程凯，入剑南系于 739 年前后" },
+  { post: "jn-pr", who: "chengduo", y0: 740, m0: 3, y1: 750, m1: null, kind: "正授", rank: "平戎城子将", how: "随章仇兼琼入安戎城，初立军功", end: "入牙前", src: ["740.3"], approx: ["y1"] },
+  { post: "jn-yy", who: "chengduo", y0: 750, m0: null, y1: 755, m1: null, kind: "正授", rank: "剑南节度押衙", how: "入牙前统兵", end: "迁都虞候", src: ["751.4", "751.9", "752.2"], approx: ["y0", "y1"], note: "751.4 所部护鲜于仲通突围；751.9 不追逃兵；752.2 部下牵连通敌案" },
+  { post: "jn-dj", who: "chengduo", y0: 754, m0: null, y1: 754, m1: 6, kind: "差遣", rank: "留守成都，点兵", how: "再征南诏，兵源仍靠强征", end: "李宓全军覆没，名册无一人回", src: ["754", "754.6"], note: "追唐青阳也在这一段" },
+  { post: "jn-yh", who: "chengduo", y0: 755, m0: null, y1: 765, m1: 10, kind: "正授", rank: "剑南都虞候", how: "掌军纪", end: "郭英乂死；此后去向年表待定", src: ["762.7"], approx: ["y0"], note: "与剑南兵马使徐知道同在使府；762.7 徐知道反，自己营里已有人跟了他" },
+  { post: "jn-pl", who: "chengduo", y0: 757, m0: 7, y1: 757, m1: 8, kind: "差遣", rank: "随军平郭千仞", how: "郭千仞之变", src: ["757.7"] },
+  { post: "jn-tg", who: "chengduo", y0: 765, m0: 10, y1: 766, m1: null, kind: "差遣", rank: "讨崔旰（随柏茂琳诸将）", how: "站朝廷委任的节度使", end: "杜鸿渐入蜀，姑息崔旰", src: ["765.10"], note: "年表此条待定；月份待核", draft: true },
+  { post: "jn-xz", who: "chengduo", y0: 766, m0: null, y1: 768, m1: null, kind: "无名目", rank: "闲置（带左武卫将军员外置衔）", how: "讨旰诸将各得安置，独他被闲置", src: ["766"], note: "年表此条待定；衔名可换", draft: true },
+  { post: "jn-sc", who: "chengduo", y0: 768, m0: null, y1: 768, m1: null, kind: "充任", rank: "替崔宁守成都（随崔宽）", how: "杨子琳乘虚袭入成都", src: ["768"], note: "年表此条待定；与唐遐同在一面城墙上", draft: true },
+  { post: "bt-zj", who: "chengfeng", y0: 736, m0: 3, y1: 749, m1: null, kind: "正授", how: "天策三年期满，至北庭父亲麾下", end: "擢兵马使", src: ["736.3"], approx: ["y1"], note: "职名文中未写" },
+  { post: "bt-bm", who: "chengfeng", y0: 749, m0: null, y1: 756, m1: 8, kind: "正授", end: "随北庭边兵东归勤王", src: ["〈两个士兵〉"], approx: ["y0"], note: "〈两个士兵〉：北庭节度使府出身的大哥" },
+  { post: "hd-qw", who: "chengfeng", y0: 756, m0: 8, y1: 757, m1: 4, kind: "差遣", rank: "随北庭边兵东归勤王", how: "随北庭边兵东归勤王", src: ["756.8"], note: "经朔方入河东" },
+  { post: "hd-xs", who: "chengfeng", y0: 757, m0: 4, y1: 757, m1: 8, kind: "正授", rank: "行军司马（李光弼幕下）", how: "入李光弼幕", end: "派驻上党", src: ["757.4", "〈程家系列〉"] },
+  { post: "hd-sd", who: "chengfeng", y0: 757, m0: 8, y1: 757, m1: 9, kind: "差遣", rank: "派驻上党，为守将", how: "派驻上党", end: "出城欲生擒蔡希德，桥塌被执，囚于洛阳", src: ["757.8", "757.9"], note: "「乍可失帅，不可失城」" },
+  { post: "hd-lb", who: "chengfeng", y0: 757, m0: 10, y1: 759, m1: null, kind: "无名目", rank: "自贬，在李光弼帐前练兵", how: "以生执贼庭固求自贬", end: "起复", src: ["757.10E", "〈程家系列〉"], approx: ["y1"], note: "起复年份不明" },
+  { post: "hd-qf", who: "chengfeng", y0: 762, m0: 10, y1: 763, m1: 3, kind: "差遣", rank: "随仆固怀恩出前锋", how: "随仆固怀恩前锋发陕州", end: "北追叛军还洛", src: ["762.10D", "763.3"], note: "追击燕军残部往河北" },
+  { post: "hd-xy", who: "chengfeng", y0: 763, m0: 3, y1: 764, m1: 8, kind: "无名目", rank: "东都行营（职名不定）", how: "北追还洛", end: "入王缙幕", src: ["763.3", "〈程家系列〉"], note: "〈程家系列〉【7】：驻于城外行营，协管调度与都城防诸事" },
+  { post: "hd-xs", who: "chengfeng", y0: 764, m0: 8, y1: 766, m1: 5, kind: "正授", rank: "行军司马（王缙幕下）", how: "王缙代李光弼都统河南诸行营、兼东都留守", end: "奉命西行", src: ["764", "〈程家系列〉"], approx: ["y0"], note: "〈程家系列〉【7】【9】称「程司马」" },
+  { post: "jx-fq", who: "chengfeng", y0: 765, m0: 10, y1: 765, m1: 11, kind: "差遣", rank: "京西防秋", how: "京西防秋", src: ["765.10"], note: "初识回纥上层" },
+  { post: "jx-fs", who: "chengfeng", y0: 766, m0: 5, y1: 767, m1: null, kind: "差遣", rank: "奉使西行，经灵州、天德军，取道回鹘", how: "奉命西行", end: "抵北庭", src: ["766.5", "767"] },
+  { post: "bt-fs", who: "chengfeng", y0: 767, m0: null, y1: 768, m1: 12, kind: "正授", how: "取道回鹘再返庭州驻守", end: "腰伤加重，因伤辞官返洛", src: ["767", "768.12", "〈程家系列〉"], approx: ["y0"], note: "职名推定，与父亲同一格" },
+  { post: "sn-bm", who: "chengfeng", y0: 771, m0: null, y1: 780, m1: null, kind: "正授", rank: "山南西道兵马使（镇梁州）", how: "程凯亡后领命镇梁州，以御京师", end: "亡故", src: ["771", "卡", "780"] },
+  { post: "bt-hs", who: "chengyu", y0: 772, m0: 8, y1: 773, m1: null, kind: "差遣", rank: "率小队护送诏使赴北庭（带果毅都尉衔）", how: "得知吐蕃陷河陇，屡屡请命", end: "抵北庭", src: ["772.8"], approx: ["y1"], note: "果毅都尉是衔：天宝以后多为军功授官，不赴任" },
+  { post: "bt-zj", who: "chengyu", y0: 773, m0: null, y1: 790, m1: 5, kind: "正授", rank: "北庭瀚海军子将", end: "北庭陷落", src: ["781.7", "790.5"], approx: ["y0"], note: "职名推定；781.7 北庭将吏叙官超七资" },
+  { post: "bt-xz", who: "chengyu", y0: 790, m0: 5, y1: 792, m1: null, kind: "无名目", rank: "随杨袭古退守西州", how: "北庭陷落", end: "殉于西州", src: ["790.5", "792"] },
+  { post: "sf-jz", who: "xuejian", y0: 756, m0: 2, y1: 764, m1: 1, kind: "正授", rank: "朔方军子将", how: "未随苍云归雁门，留郭子仪帐下", end: "被编入仆固玚攻榆次之兵", src: ["756.2", "762.11D"], note: "职名推定；「出去到军中历练，屡有功勋」；郭子仪罢后随朔方军归仆固怀恩" },
+  { post: "sf-yc", who: "xuejian", y0: 764, m0: 1, y1: 764, m1: 2, kind: "差遣", rank: "被编入仆固玚攻榆次之兵", how: "仆固怀恩反", end: "仆固玚死，随众归郭子仪", src: ["764.1D", "764.2B"], note: "名在朔方军籍，非其所择" },
+  { post: "sf-jz", who: "xuejian", y0: 764, m0: 2, y1: null, m1: null, kind: "正授", rank: "朔方军（郭子仪麾下）", how: "随众归郭子仪", src: ["764.2B", "765.1B"] },
+  { post: "jn-sb", who: "tangqingyang", y0: null, m0: null, y1: 754, m1: null, kind: "无名目", rank: "剑南士卒（程铎麾下）", end: "拒绝强征，脱离程铎", src: ["754"] },
 ];
 
 /* 门派：年轴范围与参照线（编制图按门派切换） */
@@ -213,6 +316,9 @@ export const FACTIONS = [
   ] },
   { id: "天策", range: [737, 776], marks: [
     { y: 756, m: 2, label: "府城破", left: true }, { y: 757, m: 10, label: "回府" }, { y: 762, m: 11, label: "再回府" }, { y: 770, m: 12, label: "程凯卒" },
+  ] },
+  { id: "唐军", range: [733, 792], marks: [
+    { y: 741, m: null, label: "北庭分镇" }, { y: 755, m: 11, label: "安史乱起" }, { y: 763, m: 1, label: "乱平" }, { y: 790, m: 5, label: "北庭陷", left: true },
   ] },
 ];
 
@@ -226,6 +332,10 @@ export const GRANTS = [
   { who: "weiqian", y: 757, m: 4, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡", "〈于林之下〉", "757.4"], approx: true, note: "残营与河东官军接上关系，留营诸人叙功；757.5〈于林之下〉A 已称「魏校尉」。原系 752.9，因散官高过当时的岚川云，后挪" },
   { who: "xiangjing", y: 762, m: 11, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡"] },
   { who: "qisheng", y: 757, m: 2, xun: "骑都尉", san: "游击将军", pin: "从五品下", src: ["卡", "757.2A"], zeng: true, note: "守太原战殁，追赠；人设卡「时为」从五品下，即此" },
+  { who: "chengguang", y: 740, m: 3, xun: "上护军", san: "云麾将军", pin: "从三品", src: ["740.3"], note: "随盖嘉运入朝受赏" },
+  { who: "chengguang", y: 747, m: 7, guan: "凉州都督", xun: null, src: ["747.7"], zeng: true, note: "殁于小勃律；州名可换" },
+  { who: "chengduo", y: 751, m: null, xun: "骁骑尉", src: ["751.4"], approx: true, note: "西洱河大败，杨国忠掩败叙功" },
+  { who: "chengfeng", y: 763, m: null, xun: "护军", san: "云麾将军", pin: "从三品", src: ["卡"], approx: true, note: "收复东都后叙功；〈程家系列〉【7】764 年已称三品大员" },
 ];
 
 /* ---------- 供档案卡与编制图共用 ---------- */
@@ -249,5 +359,5 @@ export function grantsOf(id) {
   return GRANTS.filter((g) => g.who === id).sort((a, b) => at(a.y, a.m) - at(b.y, b.m));
 }
 export function grantLabel(g) {
-  return (g.zeng ? "追赠" : "") + [g.xun, g.san && `${g.san}（${g.pin}）`].filter(Boolean).join("；");
+  return (g.zeng ? "追赠" : "") + [g.guan, g.xun, g.san && `${g.san}（${g.pin}）`].filter(Boolean).join("；");
 }

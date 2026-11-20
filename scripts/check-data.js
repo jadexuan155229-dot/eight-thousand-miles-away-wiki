@@ -180,20 +180,25 @@ for (const f of FACTIONS) if (!POST_FAC_SLUG[f.id]) err(`FACTIONS ${f.id}`, "rou
 for (const sl of Object.values(POST_FAC_SLUG)) if (charIds.has(sl)) err(`POST_FAC_SLUG ${sl}`, "與人物 id 重名，#/posts/<段> 將無法區分");
 /* 編制圖路由往返：新舊兩式都得解回原意 */
 for (const [h, want] of [["#/posts", { fac: "苍云", char: null }], ["#/posts/lanchuanyun", { fac: "苍云", char: "lanchuanyun" }],
-  ["#/posts/tiance", { fac: "天策", char: null }], ["#/posts/tiance/chengkai", { fac: "天策", char: "chengkai" }]]) {
+  ["#/posts/tiance", { fac: "天策", char: null }], ["#/posts/tiance/chengkai", { fac: "天策", char: "chengkai" }],
+  ["#/posts/tangjun", { fac: "唐军", char: null }], ["#/posts/tangjun/chengduo", { fac: "唐军", char: "chengduo" }]]) {
   const r = parseRoute(h);
   if (r.fac !== want.fac || r.char !== want.char) err(`router ${h}`, `解析為 ${r.fac}/${r.char}`);
   if (routeHash(r) !== h) err(`router ${h}`, `回寫為 ${routeHash(r)}`);
 }
 const KINDS_T = new Set(["正授", "署理", "代領", "代领", "兼領", "兼领", "停職", "停职", "暫任", "暂任", "差遣", "無名目", "无名目", "充任"]);
 const evRef = /^(\d{3})\.(\d{1,2})([A-Z]\d?)?$|^(\d{3})$/;
-const checkSrc = (tag, src) => {
+/* 依據年表條目整條標「（待定）」「（待定；…）」而任期未標 draft：讀者會把待定的情節當成定了的。
+   只認整條待定；「葬處待定」「月份待核」之類細節不算 */
+const WHOLE_TBD = /（待定[）；]/;
+const checkSrc = (tag, src, who, draft) => {
   for (const ref of src || []) {
     const m = ref.match(evRef);
     if (!m) continue; /* 〈文稿〉與「卡」不校 */
     const y = Number(m[1] || m[4]), mo = m[2] != null ? Number(m[2]) : null, q = m[3] || null;
-    const hit = EVENTS.some((e) => e.year === y && (mo == null || e.month === mo) && (q == null || e.seq === q));
-    if (!hit) err(tag, `依據 ${ref} 在年表中找不到（年月序號不符？）`);
+    const evs = EVENTS.filter((e) => e.year === y && (mo == null || e.month === mo) && (q == null || e.seq === q));
+    if (!evs.length) err(tag, `依據 ${ref} 在年表中找不到（年月序號不符？）`);
+    if (!draft && evs.some((e) => (e.chars || []).includes(who) && WHOLE_TBD.test(e.title))) warn(tag, `依據 ${ref} 在年表中整條待定，任期卻未標 draft`);
   }
 };
 TENURES.forEach((t, i) => {
@@ -210,21 +215,31 @@ TENURES.forEach((t, i) => {
   // 試訓收的本是少年（年表 764：程骞入天策府試訓，時年十一），不算任職，不報年幼
   if (c && c.birth != null && t.y0 != null && t.y0 - c.birth < 12 && t.post !== "sx-sx") warn(tag, `任期起時年僅 ${t.y0 - c.birth}`);
   if (!Array.isArray(t.src) || !t.src.length) warn(tag, "缺 src（依據）");
-  checkSrc(tag, t.src);
+  checkSrc(tag, t.src, t.who, t.draft);
 });
 GRANTS.forEach((g, i) => {
   const tag = `GRANTS[${i}] ${g.who}`;
   if (!charIds.has(g.who)) err(tag, `who 引用不存在的人物 id：${g.who}`);
   if (typeof g.y !== "number") err(tag, "缺授予年");
   if (g.m != null && (g.m < 1 || g.m > 12)) err(tag, `月份非法：${g.m}`);
-  if (!g.xun && !g.san) err(tag, "勳、散皆空");
+  if (!g.xun && !g.san && !g.guan) err(tag, "勳、散、贈官皆空");
   if (g.san && !g.pin) warn(tag, "散官缺品");
   const c = CHARACTERS.find((x) => x.id === g.who);
   if (c && c.death != null && g.y > c.death) err(tag, `授於卒年 ${c.death} 之後`);
   if (g.zeng && c && c.death != null && g.y !== c.death) warn(tag, `追贈不在卒年 ${c.death}`);
   if (!Array.isArray(g.src) || !g.src.length) warn(tag, "缺 src（依據）");
-  checkSrc(tag, g.src);
+  checkSrc(tag, g.src, g.who, g.draft);
 });
+/* 下一段待核，上一段的「如何下」卻把那段情節寫成定論（如「出成都討崔旰」）：
+   同一人、上一段止點＝待核段起點，且 end 含待核段職銜的主幹（括號前）即報 */
+for (const d of TENURES.filter((t) => t.draft)) {
+  const core = (d.rank || "").split("（")[0];
+  if (core.length < 2) continue;
+  for (const p of TENURES) {
+    if (p === d || p.draft || p.who !== d.who || p.y1 !== d.y0 || (p.m1 ?? null) !== (d.m0 ?? null)) continue;
+    if ((p.end || "").includes(core)) warn(`TENURES ${p.who}·${p.post}`, `下一段（${d.post}）待核，本段「如何下」卻寫了「${core}」`);
+  }
+}
 for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length; j++) {
   const s1 = TENURES[i], s2 = TENURES[j];
   if (s1.post !== s2.post || s1.who !== s2.who) continue;
@@ -245,7 +260,7 @@ if (missingGlyphs.length) {
 for (const w of warns) console.log(`  ⚠ ${w}`);
 for (const e of errors) console.log(`  ✗ ${e}`);
 console.log(
-  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length} · 勳散 ${GRANTS.length}（待核 ${GRANTS.filter((g) => g.draft).length}） —— ` +
+  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length}（待核 ${TENURES.filter((t) => t.draft).length}） · 勳散 ${GRANTS.length}（待核 ${GRANTS.filter((g) => g.draft).length}） —— ` +
   (errors.length ? `${errors.length} 錯` : "無錯") + (warns.length ? `，${warns.length} 警告` : "")
 );
 if (errors.length) process.exit(1);
