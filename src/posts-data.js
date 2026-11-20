@@ -2,7 +2,7 @@
    任職 (posts-data.js) —— 事實層：各人在門派編制中的任期（苍云、天策）
    Notion「人山人海 · 任職」先改，此處隨之（「Notion 先改，wiki 随之」）。
    苍云編制依文稿〈重看人物、軍隊體系〉：伍、火、队、旅、团、营、军；破阵营辖三团。
-   天策依 docs/tiance-posts-draft.md：府中诸将／府僚（天策上将府旧制）／营伍（参照折冲府）。
+   天策依 docs/tiance-posts-draft.md、-draft-2.md：府中诸将／府僚（天策上将府旧制）／营伍（参照折冲府）。
    POSTS：图上一行＝一个职位格（单位 × 职位），fac 门派，按 group 分组、按数组次序排；
    TENURES：一段任期一行；同一人换职、同职复任各为一行。
      y0/m0 起，y1/m1 止；y0 为 null＝起点不明（图上自左缘淡入），
@@ -16,7 +16,7 @@
      approx：["y0"] / ["y1"] 起止推定。draft：起草待核。
    GRANTS：勋官、散官的授予（不是职位，不上图，只进档案卡履历）。
      y/m 授予之时；xun 勋官；san 散官，pin 其品；approx 系年推定（授予本身有据、年月是推的）；
-     draft 待核（授予本身尚未经作者裁定）。
+     draft 待核（授予本身尚未经作者裁定）；zeng 身后追赠（y/m 为卒时）。
    ============================================================ */
 
 export const POSTS = [
@@ -40,7 +40,7 @@ export const POSTS = [
   { id: "wk", fac: "苍云", group: "堡内与关外", label: "武库" },
   { id: "nw", fac: "苍云", group: "堡内与关外", label: "女卫营" },
   { id: "yt", fac: "苍云", group: "堡内与关外", label: "雁塔" },
-  /* ---------- 天策（依 docs/tiance-posts-draft.md，2026-11-20 作者定） ---------- */
+  /* ---------- 天策（依 docs/tiance-posts-draft.md 与 -draft-2.md，2026-11-20 作者定） ---------- */
   { id: "tc-jl", fac: "天策", group: "府中诸将", label: "教练使", hint: "府中诸将之一，掌教练。原是杨宁的位子" },
   { id: "tc-bm", fac: "天策", group: "府中诸将", label: "兵马使", hint: "府中诸将之一，掌兵马。原是徐长海的位子" },
   { id: "tc-bc", fac: "天策", group: "府僚", label: "兵曹参军事", hint: "天策上将府旧制六曹之一，掌兵士簿帐、差点" },
@@ -48,15 +48,30 @@ export const POSTS = [
   { id: "tg-xw", fac: "天策", group: "天弓营", label: "校尉", hint: "营伍参照折冲府：校尉领三百人" },
   { id: "tg-fw", fac: "天策", group: "天弓营", label: "副尉", hint: "营中俗称副将" },
   { id: "tg-lv", fac: "天策", group: "天弓营", label: "旅帅", hint: "领百人" },
+  { id: "tg-dz", fac: "天策", group: "天弓营", label: "队正", hint: "领五十人" },
+  { id: "tq-lv", fac: "天策", group: "天枪营", label: "旅帅", hint: "天策不设单独的女兵营，女兵编入各营" },
   { id: "ch-xw", fac: "天策", group: "斥候", label: "校尉", hint: "回府后掌斥候遴训与情报；职名为编制草稿所拟" },
   { id: "ch-shou", fac: "天策", group: "斥候", label: "斥候首", hint: "府中差遣，无品级" },
   { id: "ch-lv", fac: "天策", group: "斥候", label: "旅帅" },
   { id: "ch-bing", fac: "天策", group: "斥候", label: "天杀营", hint: "冷天锋帐下，受训于叔宝阁" },
+  { id: "ch-sh", fac: "天策", group: "斥候", label: "斥候" },
+  { id: "sw-xw", fac: "天策", group: "宿卫", label: "各殿卫戍" },
+  { id: "wz-tg", fac: "天策", group: "外驻", label: "潼关府兵", hint: "两京一线的外驻营之一" },
+  { id: "wz-xs", fac: "天策", group: "外驻", label: "崤山工事" },
   { id: "ly-lh", fac: "天策", group: "留营", label: "留后", hint: "756.2 府城破、统领与军师西撤后，留下的残营由谁领" },
+  { id: "ly-fj", fac: "天策", group: "留营", label: "副将" },
   { id: "ly-zw", fac: "天策", group: "留营", label: "以阵亡论", hint: "名录上已是亡人，不能复官带兵" },
   { id: "tc-tg", fac: "天策", group: "行营与外借", label: "潼关残军" },
+  { id: "tc-ty", fac: "天策", group: "行营与外借", label: "太原轻骑" },
+  { id: "tc-tw", fac: "天策", group: "行营与外借", label: "府城突围" },
   { id: "tc-cy", fac: "天策", group: "行营与外借", label: "在苍云", hint: "苍云那边的任职见苍云编制图" },
+  { id: "tc-lf", fac: "天策", group: "行营与外借", label: "离府" },
   { id: "tc-lz", fac: "天策", group: "行营与外借", label: "借往灵州" },
+  { id: "sx-sx", fac: "天策", group: "试训", label: "试训" },
+  { id: "yg-sy", fac: "天策", group: "府中医官与外请", label: "侍医", hint: "外门在府任职：万花" },
+  { id: "yg-jy", fac: "天策", group: "府中医官与外请", label: "军医", hint: "外门在府任职：万花" },
+  { id: "yg-bs", fac: "天策", group: "府中医官与外请", label: "医博士", hint: "外门在府任职：万花" },
+  { id: "wq-jx", fac: "天策", group: "府中医官与外请", label: "客座教习", hint: "外门在府任职：凌雪阁" },
 ];
 /* 单位全称：档案卡「任职履历」与浮签用（行名只写「长官」，须冠以单位） */
 export const POST_FULL = {
@@ -72,15 +87,30 @@ export const POST_FULL = {
   "tg-xw": "天弓营校尉",
   "tg-fw": "天弓营副尉",
   "tg-lv": "天弓营旅帅",
+  "tg-dz": "天弓营队正",
+  "tq-lv": "天枪营旅帅",
   "ch-xw": "斥候营校尉",
   "ch-shou": "府中斥候首",
   "ch-lv": "旅帅（辖斥候）",
   "ch-bing": "天杀营斥候",
+  "ch-sh": "斥候（兵）",
+  "sw-xw": "各殿卫戍校尉",
+  "wz-tg": "潼关大营 · 潼关府兵",
+  "wz-xs": "崤山工事",
   "ly-lh": "天策府留后",
+  "ly-fj": "留营副将",
   "ly-zw": "以阵亡论（名籍已除）",
   "tc-tg": "潼关残军",
+  "tc-ty": "太原轻骑",
+  "tc-tw": "府城突围",
   "tc-cy": "离府，在苍云",
+  "tc-lf": "离府",
   "tc-lz": "借往灵州治军",
+  "sx-sx": "入府试训",
+  "yg-sy": "天策府侍医",
+  "yg-jy": "军医",
+  "yg-bs": "天策府医博士",
+  "wq-jx": "天杀营客座教习",
 };
 
 export const TENURES = [
@@ -129,7 +159,7 @@ export const TENURES = [
   { post: "nw", who: "jinghuishi", y0: null, m0: null, y1: 761, m1: 2, kind: "正授", rank: "军医，协理女卫营", end: "凤州，为救边赛远而死", src: ["卡", "761.2"] },
   { post: "nw", who: "helan", y0: 756, m0: null, y1: null, m1: null, kind: "正授", rank: "医女", how: "入女卫营，为景惠时弟子", src: ["755.12C", "760.11"], approx: ["y0"], note: "760.11 景惠时停职期间调度医帐；后承静息帐" },
   { post: "yt", who: "louyi", y0: 745, m0: 7, y1: null, m1: null, kind: "正授", rank: "雁塔守备长官", how: "父楼准坠塔，十五岁临危受命", src: ["卡"], approx: ["y0"] },
-  /* ---------- 天策（依 docs/tiance-posts-draft.md，2026-11-20 作者定） ---------- */
+  /* ---------- 天策（依 docs/tiance-posts-draft.md 与 -draft-2.md，2026-11-20 作者定） ---------- */
   { post: "tg-lv", who: "chengkai", y0: 741, m0: 10, y1: 746, m1: null, kind: "正授", how: "随杨宁援边，率百骑解围", src: ["741.10", "〈程家系列〉"], approx: ["y0", "y1"], note: "743 已是「堂堂军府一旅帅」（〈程家系列〉）" },
   { post: "tg-fw", who: "chengkai", y0: 746, m0: null, y1: 756, m1: 2, kind: "正授", rank: "天弓营副尉（子阳将军）", how: "石堡城压阵断后成名后擢", end: "伤兵营中被一刀穿胸，以阵亡论", src: ["745.9", "747.10B"], approx: ["y0"], note: "营中俗称副将" },
   { post: "ly-zw", who: "chengkai", y0: 756, m0: 2, y1: 757, m1: 6, kind: "无名目", rank: "以阵亡论", how: "传言战死，实被医者救回；756.10 起带训残营士兵", end: "复职", src: ["756.2A", "〈程家系列〉"], note: "名籍已除，不能复官带兵" },
@@ -145,8 +175,35 @@ export const TENURES = [
   { post: "tc-bc", who: "litingshen", y0: 750, m0: null, y1: 756, m1: 2, kind: "正授", rank: "兵曹参军事（李参军）", how: "在朱剑秋身边，协掌军中文翰", end: "府城破，军师临行授意统军", src: ["卡", "756.2D"], approx: ["y0"], note: "同期兼入京上番、近前戍卫" },
   { post: "ly-lh", who: "litingshen", y0: 756, m0: 2, y1: 757, m1: 10, kind: "代领", rank: "天策府留后", how: "军师临行一句，从兵曹参军事提拔，收拢伤兵残队", end: "回府", src: ["756.2D", "756.12", "757.4", "〈于林之下〉"], note: "757.4 起受李光弼南面偏师节制" },
   { post: "tc-bm", who: "litingshen", y0: 757, m0: 10, y1: 762, m1: 11, kind: "署理", rank: "兵马使（权）", how: "回府，接徐长海之缺；经营府中粮草马匹军械", end: "正授", src: ["757.10F", "759.9", "〈殿〉"] },
-  { post: "tc-bm", who: "litingshen", y0: 762, m0: 11, y1: 774, m1: null, kind: "正授", how: "府城再度收复", end: "乞骸骨，致仕", src: ["762.11", "〈758（秋）江蓠走〉", "770.12"], approx: ["y1"], note: "致仕在程凯去后几年" },
+  { post: "tc-bm", who: "litingshen", y0: 762, m0: 11, y1: 774, m1: null, kind: "正授", how: "府城再度收复", end: "乞骸骨，致仕", src: ["762.11", "〈758（秋）江蓠走〉", "770.12", "〈殿〉"], approx: ["y1"], note: "致仕在程凯去后几年；在敬德楼理事，那是军师旧日常驻处（〈殿〉）" },
   { post: "tc-lz", who: "litingshen", y0: 765, m0: null, y1: 770, m1: null, kind: "差遣", how: "屡被借往灵州治军", end: "归府", src: ["卡", "〈770 年末见李庭深〉"], approx: ["y0", "y1"], note: "年份待核", draft: true },
+  { post: "wz-xs", who: "chengkai", y0: 755, m0: null, y1: 755, m1: 4, kind: "差遣", rank: "崤山工事", how: "在崤山盯着修工事", end: "调往潼关", src: ["755.4", "〈登楼 C09〉"], approx: ["y0"], note: "起点推定：755 春已在崤山，何时去的不明；不留空，是因为空起点会自年轴左缘（737）画起，而他 746—756 在天弓营任副尉" },
+  { post: "wz-tg", who: "chengkai", y0: 755, m0: 4, y1: 755, m1: 12, kind: "代领", rank: "暂领潼关府兵（曹雪阳遥领）", how: "岚川云潼关失子后，曹雪阳递话命他照顾；潼关府兵暂交予他", end: "回府守城", src: ["755.4", "〈登楼 C10〉"], approx: ["y1"] },
+  { post: "tc-ty", who: "lanchuanyun", y0: 756, m0: 10, y1: 757, m1: 2, kind: "无名目", rank: "太原轻骑（与齐晟）", how: "自彭原转赴太原，见齐晟", end: "齐晟战亡", src: ["756.10", "757.2A"] },
+  { post: "wz-tg", who: "lanchuanyun", y0: 766, m0: null, y1: null, m1: null, kind: "兼领", rank: "兼领潼关事", how: "李庭深娶亲那几年起，又领潼关事：巡视关城、崤山、枫华谷，再布暗哨", src: ["766", "〈殿〉"], approx: ["y0"] },
+  { post: "wz-tg", who: "qisheng", y0: 752, m0: 9, y1: 755, m1: 4, kind: "正授", rank: "潼关大营旅帅（掌守备训练）", how: "南诏回，叙功", end: "调去崤山", src: ["卡", "〈登楼 C10〉"], approx: ["y0"], note: "生前为旅帅；人设卡的从五品下是 757.2 战殁后的追赠" },
+  { post: "wz-xs", who: "qisheng", y0: 755, m0: 4, y1: 755, m1: 12, kind: "差遣", rank: "崤山工事（接程凯）", how: "接程凯守崤山", end: "随高仙芝、封常清弃陕，退入潼关", src: ["〈登楼 C10〉", "755.12"] },
+  { post: "tc-tg", who: "qisheng", y0: 755, m0: 12, y1: 756, m1: 6, kind: "差遣", rank: "潼关残军主将", how: "退入潼关；756.5 起与岚川云率残军对峙", end: "枫华谷失陷，重伤", src: ["755.12", "756.6B"] },
+  { post: "tc-ty", who: "qisheng", y0: 756, m0: 10, y1: 757, m1: 2, kind: "无名目", rank: "太原轻骑（自组）", how: "辗转到太原，搜罗同袍，组成一队轻骑", end: "守太原战殁", src: ["卡", "756.10", "757.2A"] },
+  { post: "ch-sh", who: "weiqian", y0: 749, m0: null, y1: 756, m1: 2, kind: "无名目", rank: "斥候（隶岚川云）", how: "投天策，曹雪阳让岚川云带训两年", end: "府城破", src: ["〈柳戎〉", "〈于林之下〉", "752.2"], note: "752 南诏查实通敌案" },
+  { post: "ch-shou", who: "weiqian", y0: 756, m0: 2, y1: 757, m1: 5, kind: "充任", rank: "斥候首（留营）", how: "随李庭深留营，以斥候联络内外", end: "斥候风波", src: ["756.2D", "〈于林之下〉"], note: "底下有斥候队正吴敬先、队副宋辉" },
+  { post: "ch-shou", who: "weiqian", y0: 757, m0: 5, y1: 757, m1: 6, kind: "停职", rank: "斥候首（停职扣押）", how: "停职扣押留审", end: "查明复职", src: ["757.5A", "〈于林之下〉"], approx: ["y1"] },
+  { post: "ch-shou", who: "weiqian", y0: 757, m0: 6, y1: 759, m1: 3, kind: "充任", rank: "斥候首", how: "复职", end: "邺城战殁", src: ["〈于林之下〉", "759.3A", "759.3B"], approx: ["y0"] },
+  { post: "tc-cj", who: "xiangjing", y0: 756, m0: 2, y1: 762, m1: 11, kind: "正授", rank: "参军（传令、录事簿记，在李庭深左右）", how: "李庭深点在身边（战前在军师左右誊抄时已识）", end: "回府", src: ["756.2", "卡"] },
+  { post: "sw-xw", who: "xiangjing", y0: 762, m0: 11, y1: null, m1: null, kind: "正授", rank: "各殿卫戍校尉", how: "回府策为翊麾校尉，统各殿卫戍", src: ["卡", "770.12"] },
+  { post: "tg-xw", who: "mayi", y0: null, m0: null, y1: 756, m1: 2, kind: "正授", how: "程凯、李庭深的师兄", end: "府城破，随李庭深留营", src: ["卡", "〈岚川云 盾版·故事一览〉"], note: "程凯为副尉时的直属上官；程凯的铁牢是跟着他练的" },
+  { post: "ly-fj", who: "mayi", y0: 756, m0: 2, y1: 757, m1: 9, kind: "正授", rank: "留营副将", how: "佐留后李庭深（师弟）", end: "收两京大军集结前夕，李庭深这一营在山下被围，破阵战殁", src: ["756.2D", "卡"], approx: ["y1"] },
+  { post: "tq-lv", who: "qinhui", y0: 752, m0: null, y1: 756, m1: 2, kind: "正授", rank: "天枪营旅帅", how: "以弓马骑战见长（752 联合军演）", end: "府城破", src: ["752", "卡"], approx: ["y0"], note: "推定，依〈狄、邱、樊〉「从天策府带兵突围」；天策不设单独的女兵营" },
+  { post: "tc-tw", who: "qinhui", y0: 756, m0: 2, y1: 756, m1: 3, kind: "差遣", rank: "府城突围（随秦颐岩）", how: "随叔父秦颐岩突围，带兵", end: "伤重牺牲", src: ["卡"] },
+  { post: "tg-dz", who: "chengyu", y0: 763, m0: 3, y1: 771, m1: null, kind: "正授", rank: "天弓营队正", how: "入府，在叔父帐下（久在唐军随父历练）", end: "随父往梁州", src: ["763.3", "〈殿〉", "764.11"] },
+  { post: "tc-lf", who: "chengyu", y0: 771, m0: null, y1: null, m1: null, kind: "无名目", rank: "离府，随父镇梁州", how: "随父镇梁州", src: ["771"], note: "772.8 率小队护送诏使赴北庭，为果毅都尉（属唐军）" },
+  { post: "sx-sx", who: "chengqian", y0: 764, m0: null, y1: 766, m1: null, kind: "无名目", rank: "试训", how: "入府试训，程凯亲训", end: "受挫，嚼食毒草；随李庭深下江南入长歌", src: ["764", "766", "〈殿〉"] },
+  { post: "wq-jx", who: "gaoyuan", y0: 739, m0: null, y1: 741, m1: null, kind: "差遣", rank: "天杀营客座教习（凌雪阁）", how: "受托往来天杀营，授近身擒搏、侦讯与反讯问之技", src: ["739", "〈黍梁·青苔〉"] },
+  { post: "yg-sy", who: "shenhanying", y0: 747, m0: 10, y1: 749, m1: null, kind: "正授", rank: "天策府侍医（万花）", how: "随师至天策府为侍医", end: "侍医期满返谷", src: ["747.10B", "749"] },
+  { post: "yg-jy", who: "shenhanying", y0: 756, m0: 2, y1: 756, m1: 5, kind: "差遣", rank: "留营军医（万花）", how: "府城破后两日内来援", end: "护卫伤兵而亡", src: ["756.2A", "756.5D"] },
+  { post: "yg-jy", who: "xuqiusheng", y0: 756, m0: 2, y1: 764, m1: null, kind: "差遣", rank: "军医（万花）", how: "府城破后两日内来援，为李庭深营中军医；后随府", end: "授医博士", src: ["756.2A", "卡"] },
+  { post: "yg-bs", who: "xuqiusheng", y0: 764, m0: null, y1: null, m1: null, kind: "正授", rank: "天策府医博士（万花）", how: "战后叙功", src: ["764", "卡"], note: "此后终老天策府" },
+  { post: "yg-jy", who: "jiangli", y0: 756, m0: 2, y1: 758, m1: 7, kind: "差遣", rank: "留营军医（万花）", how: "府城破后两日内来援", end: "闻谷中危难，返万花谷", src: ["756.2A", "758.7"] },
 ];
 
 /* 门派：年轴范围与参照线（编制图按门派切换） */
@@ -165,6 +222,10 @@ export const GRANTS = [
   { who: "lanchuanyun", y: 762, m: 11, xun: "骑都尉", san: "归德郎将", pin: "从五品下", src: ["762.11", "卡"] },
   { who: "chengkai", y: 762, m: 11, xun: "上轻车都尉", san: "壮武将军", pin: "正四品下", src: ["卡", "764"], approx: true },
   { who: "litingshen", y: 762, m: 11, xun: "上轻车都尉", san: "忠武将军", pin: "正四品上", src: ["卡"], approx: true },
+  { who: "qisheng", y: 752, m: 9, xun: "云骑尉", san: "致果副尉", pin: "正七品下", src: ["卡"], approx: true, note: "南诏战功。生前勋散；卡上的从五品下为 757.2 战殁追赠" },
+  { who: "weiqian", y: 757, m: 4, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡", "〈于林之下〉", "757.4"], approx: true, note: "残营与河东官军接上关系，留营诸人叙功；757.5〈于林之下〉A 已称「魏校尉」。原系 752.9，因散官高过当时的岚川云，后挪" },
+  { who: "xiangjing", y: 762, m: 11, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡"] },
+  { who: "qisheng", y: 757, m: 2, xun: "骑都尉", san: "游击将军", pin: "从五品下", src: ["卡", "757.2A"], zeng: true, note: "守太原战殁，追赠；人设卡「时为」从五品下，即此" },
 ];
 
 /* ---------- 供档案卡与编制图共用 ---------- */
@@ -188,5 +249,5 @@ export function grantsOf(id) {
   return GRANTS.filter((g) => g.who === id).sort((a, b) => at(a.y, a.m) - at(b.y, b.m));
 }
 export function grantLabel(g) {
-  return [g.xun, g.san && `${g.san}（${g.pin}）`].filter(Boolean).join("；");
+  return (g.zeng ? "追赠" : "") + [g.xun, g.san && `${g.san}（${g.pin}）`].filter(Boolean).join("；");
 }

@@ -207,7 +207,8 @@ TENURES.forEach((t, i) => {
   if (a > b) err(tag, `起止倒置：${t.y0}.${t.m0} > ${t.y1}.${t.m1}`);
   const c = CHARACTERS.find((x) => x.id === t.who);
   if (c && c.death != null && t.y0 != null && t.y0 > c.death) err(tag, `任期起於卒年 ${c.death} 之後`);
-  if (c && c.birth != null && t.y0 != null && t.y0 - c.birth < 12) warn(tag, `任期起時年僅 ${t.y0 - c.birth}`);
+  // 試訓收的本是少年（年表 764：程骞入天策府試訓，時年十一），不算任職，不報年幼
+  if (c && c.birth != null && t.y0 != null && t.y0 - c.birth < 12 && t.post !== "sx-sx") warn(tag, `任期起時年僅 ${t.y0 - c.birth}`);
   if (!Array.isArray(t.src) || !t.src.length) warn(tag, "缺 src（依據）");
   checkSrc(tag, t.src);
 });
@@ -220,6 +221,7 @@ GRANTS.forEach((g, i) => {
   if (g.san && !g.pin) warn(tag, "散官缺品");
   const c = CHARACTERS.find((x) => x.id === g.who);
   if (c && c.death != null && g.y > c.death) err(tag, `授於卒年 ${c.death} 之後`);
+  if (g.zeng && c && c.death != null && g.y !== c.death) warn(tag, `追贈不在卒年 ${c.death}`);
   if (!Array.isArray(g.src) || !g.src.length) warn(tag, "缺 src（依據）");
   checkSrc(tag, g.src);
 });
