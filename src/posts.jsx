@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CHARACTERS } from "./wiki-data";
 import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./posts-data";
 import { translateUI } from "./i18n/ui";
@@ -47,6 +47,14 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
   const [foc, setFoc] = useState(null);
   const hover = hov || foc;
   const clearTip = () => { setHov(null); setFoc(null); };
+  /* 浮签在时，Esc 一律收起——挂在 document 上，因为鼠标悬停打开浮签时键盘焦点可能根本不在任期段上 */
+  const tipOn = !!(hov || foc);
+  useEffect(() => {
+    if (!tipOn) return undefined;
+    const onKey = (e) => { if (e.key === "Escape") { setHov(null); setFoc(null); } };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [tipOn]);
   const wrapRef = useRef(null);
   const F = FACTIONS.find((f) => f.id === fac) || FACTIONS[0];
   /* 换门派（不论是点切换钮，还是从档案卡的链接、浏览器后退进来）时收起浮签：原先聚焦的那段已不在图上，
@@ -205,8 +213,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                       /* 鼠标离开这一段只收鼠标那一份（且只收自己的，免得盖掉刚移入的下一段）；键盘焦点若还在，浮签退回焦点那段 */
                       onMouseLeave={() => setHov((h) => (h && h.i === i ? null : h))}
                       onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
-                        else if (e.key === "Escape") clearTip(); /* 浮签可用 Esc 关掉，不必挪开焦点 */
+                        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } /* Esc 由上面 document 上的监听统一处理 */
                       }}>
                       {thin ? (
                         <line x1={x1} x2={x2} y1={cy} y2={cy} stroke={col} strokeWidth={on ? 5 : 4} strokeLinecap="round" />
