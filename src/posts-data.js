@@ -222,7 +222,7 @@ export const GRANTS = [
   { who: "lanchuanyun", y: 762, m: 11, xun: "骑都尉", san: "归德郎将", pin: "从五品下", src: ["762.11", "卡"] },
   { who: "chengkai", y: 762, m: 11, xun: "上轻车都尉", san: "壮武将军", pin: "正四品下", src: ["卡", "764"], approx: true },
   { who: "litingshen", y: 762, m: 11, xun: "上轻车都尉", san: "忠武将军", pin: "正四品上", src: ["卡"], approx: true },
-  { who: "qisheng", y: 752, m: 9, xun: "云骑尉", src: ["卡"], approx: true, draft: true, note: "南诏战功。原拟兼授致果副尉（正七品下），但岚川云 756.10 才授散官，为免同期散官高过她，删去散官，与魏谦后挪同理" },
+  { who: "qisheng", y: 752, m: 9, xun: "云骑尉", san: "致果副尉", pin: "正七品下", src: ["卡"], approx: true, note: "南诏战功。生前勋散；卡上的从五品下为 757.2 战殁追赠" },
   { who: "weiqian", y: 757, m: 4, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡", "〈于林之下〉", "757.4"], approx: true, note: "残营与河东官军接上关系，留营诸人叙功；757.5〈于林之下〉A 已称「魏校尉」。原系 752.9，因散官高过当时的岚川云，后挪" },
   { who: "xiangjing", y: 762, m: 11, xun: null, san: "翊麾校尉", pin: "从七品上", src: ["卡"] },
   { who: "qisheng", y: 757, m: 2, xun: "骑都尉", san: "游击将军", pin: "从五品下", src: ["卡", "757.2A"], zeng: true, note: "守太原战殁，追赠；人设卡「时为」从五品下，即此" },
