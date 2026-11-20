@@ -22,7 +22,8 @@ const W = 1000, PLOT_L = 168, PLOT_R = 984, TOP = 44, ROW_H = 26, LANE_H = 20, G
 const pos = (y, m) => y + (m != null ? (m - 1) / 12 : 0);
 const textW = (str, size) => [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? size : size * 0.56), 0);
 
-/* 跨职位格者着色；色取暗底上可辨、彼此不近的五种，余者中性 */
+/* 跨职位格者着色；色取暗底上可辨、彼此不近的六种，余者中性。
+   跨格者多于色数时（天策补入外门、营伍诸人后），只给跨三格以上者着色，免得同色两人互相冒认 */
 const MOVER_COLORS = ["#D29A4A", "#C8673E", "#5FA88A", "#8E84D6", "#7FA3C8", "#C98BA8"];
 const NEUTRAL = "#6E7885";
 const SOLID = new Set(["正授", "署理", "暂任"]);
@@ -31,8 +32,8 @@ const SOLID = new Set(["正授", "署理", "暂任"]);
 const INTRO = {
   苍云: ["苍云编制，依文稿〈重看人物、军队体系〉：伍、火、队、旅、团、营，破阵营辖三团。一行一个职位，一条一段任期。",
     "Cangyun posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."],
-  天策: ["天策编制：府中诸将、府僚（天策上将府旧制）、营伍（参照折冲府）。一行一个职位，一条一段任期。目前录有程凯、岚川云、李庭深三人。",
-    "Tiance posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). For now: Cheng Kai, Lanchuan Yun and Li Tingshen. Content remains in Chinese."],
+  天策: ["天策编制：府中诸将、府僚（天策上将府旧制）、营伍（参照折冲府）。一行一个职位，一条一段任期。录有府中十人，另有万花、凌雪阁来府任职者四人列于末组；剑三原有的府中诸将不上图。",
+    "Tiance posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). Ten of the household’s own people, plus four from Wanhua and Lingxue who served there, in the last group; the game’s own senior officers are left off. Content remains in Chinese."],
 };
 
 export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
@@ -50,7 +51,8 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
   const colorOf = useMemo(() => {
     const posts = {};
     for (const { t } of mine) (posts[t.who] ??= new Set()).add(t.post);
-    const movers = Object.keys(posts).filter((w) => posts[w].size > 1);
+    let movers = Object.keys(posts).filter((w) => posts[w].size > 1);
+    if (movers.length > MOVER_COLORS.length) movers = movers.filter((w) => posts[w].size >= 3);
     /* 按首任先后分色，色随人走、不随排名 */
     const first = (w) => Math.min(...mine.filter(({ t }) => t.who === w).map(({ t }) => (t.y0 == null ? F.range[0] : pos(t.y0, t.m0))));
     movers.sort((a, b) => first(a) - first(b));
@@ -162,7 +164,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                   {post.label}
                   {post.hint && <title>{post.hint}</title>}
                 </text>
-                {items.map(({ t, i, a, b, lane }) => {
+                {items.map(({ t, i, a, b, lane }, k) => {
                   const col = colorOf(t.who);
                   const x1 = xOf(a), x2 = Math.max(xOf(b), x1 + 3);
                   const cy = y + ROW_H / 2 + lane * LANE_H;
@@ -181,6 +183,9 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                   const open = () => onOpenChar(byId[t.who]);
                   const thin = t.kind === "差遣";
                   const solid = SOLID.has(t.kind);
+                  /* 细线写不下字，名字挂在线尾；同道后面紧接着别人、或到了右缘，就不挂 */
+                  const room = Math.min(PLOT_R, ...items.filter((o, j) => j !== k && o.lane === lane && o.a >= b).map((o) => xOf(o.a))) - x2;
+                  const tail = thin && textW(name, 10.5) + 10 < room ? name : "";
                   return (
                     <g key={i} opacity={dim ? 0.32 : 1} tabIndex={0} role="button" style={{ cursor: "pointer", outline: "none" }}
                       aria-label={`${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
@@ -198,6 +203,9 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                       {t.y0 == null && <rect x={x1} y={cy - 9} width="34" height="18" fill="url(#posts-fade-l)" />}
                       {t.y1 == null && <rect x={x2 - 30} y={cy - 9} width="30" height="18" fill="url(#posts-fade-r)" />}
                       {t.draft && <circle cx={x1 + 3} cy={cy - 8} r="2.6" fill={T.seal} />}
+                      {tail && (
+                        <text x={x2 + 5} y={cy + 3.5} fontFamily="HuiwenZhengKai" fontSize="10.5" pointerEvents="none" fill={T.muted}>{tail}</text>
+                      )}
                       {!thin && fitLabel && (
                         <text x={x1 + 5} y={cy + 4} fontFamily="HuiwenZhengKai" fontSize="11.5" pointerEvents="none"
                           fill={solid && t.kind === "正授" ? "#15181D" : T.ink} fillOpacity={solid ? 0.95 : 0.85}>{fitLabel}</text>
