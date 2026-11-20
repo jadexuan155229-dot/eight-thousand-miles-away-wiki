@@ -187,22 +187,48 @@ export function tone(hex, min = 3) {
   return res;
 }
 
-/* 字色專用：tone() 之上再守一道 3:1。PAPER_TONE 裡為保色相放寬過的（藏劍 2.6、七秀 2.5），
-   作 11px 門派籤之類小字時發虛；字色在此同色相再壓暗至 3:1，框線、綾邊、圖上色塊仍用原定色。
-   以 T.bg 計（諸卡面 T.panel 更淺，對比只會更高）。玄墨下原樣返回 */
+/* 字色專用（門派籤、圖上門派名之類的小字）：兩膚皆守 4.5:1。
+   門派色原為「認色」而定，作 11px 小字時多半不夠——玄墨下天策對面板僅 1.8:1，素紙下藏劍、七秀放寬後不到 3:1。
+   字色另算，框線、綾邊、圖上色塊仍用原定色（fc／tone）。
+   做法同 tone()：明度按比例壓縮而非一刀切到 4.5:1（一刀切則諸字同明度，紅色一族又並成一色）：
+     素紙：OKLCH 的 L ∈ [0.30, 0.64] 壓進 [0.30, 0.52]（0.52 以上對 T.bg 不足 4.5:1）；
+     玄墨：L ∈ [0.38, 0.80] 抬進 [0.66, 0.90]（0.65 以下對 T.panelHi 不足 4.5:1）。
+   如此兩膚字色最近一對色差（素紙 0.031、玄墨 0.029）與圖形色（0.030、0.031）相當。
+   色相不動，彩度只在出色域時才收；壓抬之後仍不足者再補足。
+   參照面取該膚最不利者：素紙取 T.bg（諸卡面更淺）、玄墨取 T.panelHi（懸停與浮簽底，比卡面、頁底都亮）。 */
+const TEXT_MIN = 4.5;
+const TEXT_MAP = {
+  paper: { surface: PAPER.bg, from: [0.30, 0.64], to: [0.30, 0.52], dir: -1 },
+  night: { surface: NIGHT.panelHi, from: [0.38, 0.80], to: [0.66, 0.90], dir: 1 },
+};
+/* 例外（作者定），鍵為玄墨原色：
+   素紙：七秀、藏劍的字只守 3:1——4.5:1 時七秀成深玫瑰、藏劍成暗褐，粉與金盡失；
+   玄墨：紅色一族（天策、凌雪阁、红衣教、唐军）的字不抬，照用原色——
+     紅本是深色，深底上抬到 4.5:1 所需明度（≈0.65）便成粉、成紫、成肉粉色；
+     若只抬到仍算紅的明度、把彩度拉滿，則成刺眼的正紅，且天策、红衣教、南诏三色並成一色，
+     對比也只到 3:1 上下。兩害相權，留原色（對卡面 1.8 至 2.7:1），由框線、綾邊同色相佐。 */
+const TEXT_EXCEPT = {
+  paper: { "#E08389": 3, "#DBB53C": 3 }, /* 七秀、藏劍 */
+  night: { "#7E3038": 0, "#811A50": 0, "#9E170C": 0, "#9C4E38": 0 }, /* 天策、凌雪阁、红衣教、唐军：0＝不調 */
+};
 const inkCache = new Map();
-export function toneText(hex, min = 3) {
+export function toneText(hex) {
   const c = tone(hex);
-  if (skin !== "paper" || !/^#[0-9a-fA-F]{6}$/.test(c)) return c;
-  const key = c + min;
+  if (typeof c !== "string" || !/^#[0-9a-fA-F]{6}$/.test(c)) return c;
+  const ex = TEXT_EXCEPT[skin][hex.toUpperCase()];
+  if (ex === 0) return c;
+  const key = skin + c;
   if (inkCache.has(key)) return inkCache.get(key);
-  const bg = rgbOf(PAPER.bg);
-  let out = rgbOf(c);
-  if (contrastOn(out, bg) < min) {
-    let [L, C, H] = toOklch(out);
-    const fit = () => { let o; while (!(o = fromOklch(L, C, H)) && C > 0) C -= 0.003; return o || out; };
-    while (contrastOn(out, bg) < min && L > 0.2) { L -= 0.004; out = fit(); }
+  const m = TEXT_MAP[skin], surf = rgbOf(m.surface);
+  let [L, C, H] = toOklch(rgbOf(c));
+  if (!ex) {
+    const t = Math.min(1, Math.max(0, (L - m.from[0]) / (m.from[1] - m.from[0])));
+    if (m.dir < 0 ? L > m.from[0] : true) L = m.to[0] + (m.to[1] - m.to[0]) * t;
   }
+  const min = ex || TEXT_MIN;
+  const fit = () => { let o; while (!(o = fromOklch(L, C, H)) && C > 0) C -= 0.003; return o || rgbOf(c); };
+  let out = ex ? rgbOf(c) : fit();
+  while (contrastOn(out, surf) < min && L > 0.05 && L < 0.99) { L += 0.004 * m.dir; out = fit(); }
   const res = "#" + out.map((v) => v.toString(16).padStart(2, "0")).join("").toUpperCase();
   inkCache.set(key, res);
   return res;
