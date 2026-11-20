@@ -41,9 +41,18 @@ const INTRO = {
 export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
   const en = locale === "en";
   const t_ = (k) => translateUI(locale, k);
-  const [hover, setHover] = useState(null); /* { i, x, y }：悬停或聚焦的任期（i 为 TENURES 下标）；x、y 相对外框 */
+  /* 悬停与键盘焦点分开记：{ i, x, y }（i 为 TENURES 下标；x、y 相对外框）。浮签先看鼠标，鼠标移走就退回焦点那一段，
+     免得鼠标扫过就把键盘打开的浮签关掉；Esc 两个都收 */
+  const [hov, setHov] = useState(null);
+  const [foc, setFoc] = useState(null);
+  const hover = hov || foc;
+  const clearTip = () => { setHov(null); setFoc(null); };
   const wrapRef = useRef(null);
   const F = FACTIONS.find((f) => f.id === fac) || FACTIONS[0];
+  /* 换门派（不论是点切换钮，还是从档案卡的链接、浏览器后退进来）时收起浮签：原先聚焦的那段已不在图上，
+     浏览器不一定为被移除的元素发 blur，不收就会留下另一张图的浮签 */
+  const [tipFac, setTipFac] = useState(F.id);
+  if (tipFac !== F.id) { setTipFac(F.id); setHov(null); setFoc(null); }
   const [Y0, Y1] = F.range;
   const xOf = (p) => PLOT_L + ((p - Y0) / (Y1 - Y0)) * (PLOT_R - PLOT_L);
   const marks = F.marks.map((m) => ({ ...m, p: pos(m.y, m.m) }));
@@ -101,7 +110,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
       {/* 门派切换 */}
       <div role="group" aria-label={t_("門派")} style={{ display: "flex", gap: 6, marginBottom: 10 }}>
         {FACTIONS.map((f) => (
-          <button key={f.id} type="button" aria-pressed={f.id === F.id} onClick={() => { setHover(null); onFac?.(f.id); }}
+          <button key={f.id} type="button" aria-pressed={f.id === F.id} onClick={() => { clearTip(); onFac?.(f.id); }}
             style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, padding: "2px 12px", background: f.id === F.id ? T.panelHi : "none", border: `1px solid ${f.id === F.id ? T.muted : T.line}`, borderRadius: 3, color: f.id === F.id ? T.ink : T.muted, cursor: "pointer" }}>
             {t_(f.id)}
           </button>
@@ -127,7 +136,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
 
       <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="group"
-          aria-label={en ? `${t_(F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}编制任期图，${Y0}—${Y1}。每段任期是一个按钮，可打开档案`} onMouseLeave={() => setHover(null)}>
+          aria-label={en ? `${t_(F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}编制任期图，${Y0}—${Y1}。每段任期是一个按钮，可打开档案`} onMouseLeave={() => setHov(null)}>
           <defs>
             {/* 起点不明／在任至卷末：色带在左右缘渐隐 */}
             <linearGradient id="posts-fade-l" x1="0" x2="1"><stop offset="0" stopColor={T.panel} stopOpacity="1" /><stop offset="1" stopColor={T.panel} stopOpacity="0" /></linearGradient>
@@ -175,12 +184,12 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                   const name = characterTranslation(locale, t.who)?.name || byId[t.who].name;
                   const label = t.rank && !t.rank.startsWith(post.label) ? `${name} · ${t.rank}` : name;
                   const fitLabel = textW(label, 11.5) + 10 < x2 - x1 ? label : textW(name, 11.5) + 10 < x2 - x1 ? name : "";
-                  const show = (e) => {
+                  const place = (e) => {
                     const box = e.currentTarget.ownerSVGElement.getBoundingClientRect();
                     const wrap = wrapRef.current.getBoundingClientRect();
                     const sx = box.width / W;
                     const x = box.left - wrap.left + ((x1 + x2) / 2) * sx;
-                    setHover({ i, x: Math.min(Math.max(x - 150, 0), Math.max(0, wrap.width - 300)), y: box.top - wrap.top + (cy + 13) * sx });
+                    return { i, x: Math.min(Math.max(x - 150, 0), Math.max(0, wrap.width - 300)), y: box.top - wrap.top + (cy + 13) * sx };
                   };
                   const open = () => onOpenChar(byId[t.who]);
                   const thin = t.kind === "差遣";
@@ -192,13 +201,12 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                     <g key={i} opacity={dim ? 0.32 : 1} tabIndex={0} role="button" style={{ cursor: "pointer", outline: "none" }}
                       aria-label={`${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
                       aria-describedby={hover && hover.i === i ? "posts-tip" : undefined}
-                      onMouseEnter={show} onFocus={show} onBlur={() => setHover(null)} onClick={open}
-                      /* 离开这一段就收起浮签（只收自己的，免得盖掉刚移入的下一段）；原先只在整张图的外框上收，
-                         图内移到空白处浮签和高亮都留着 */
-                      onMouseLeave={() => setHover((h) => (h && h.i === i ? null : h))}
+                      onMouseEnter={(e) => setHov(place(e))} onFocus={(e) => setFoc(place(e))} onBlur={() => setFoc(null)} onClick={open}
+                      /* 鼠标离开这一段只收鼠标那一份（且只收自己的，免得盖掉刚移入的下一段）；键盘焦点若还在，浮签退回焦点那段 */
+                      onMouseLeave={() => setHov((h) => (h && h.i === i ? null : h))}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
-                        else if (e.key === "Escape") setHover(null); /* 浮签可用 Esc 关掉，不必挪开焦点 */
+                        else if (e.key === "Escape") clearTip(); /* 浮签可用 Esc 关掉，不必挪开焦点 */
                       }}>
                       {thin ? (
                         <line x1={x1} x2={x2} y1={cy} y2={cy} stroke={col} strokeWidth={on ? 5 : 4} strokeLinecap="round" />
