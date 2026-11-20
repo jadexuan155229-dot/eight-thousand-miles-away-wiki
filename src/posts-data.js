@@ -281,7 +281,7 @@ export const TENURES = [
   { post: "jn-sb", who: "chengduo", y0: 739, m0: null, y1: 740, m1: 3, kind: "无名目", rank: "入剑南军中", how: "入剑南", src: ["740.3"], approx: ["y0"], note: "738 年尚在洛阳首告程凯，入剑南系于 739 年前后" },
   { post: "jn-pr", who: "chengduo", y0: 740, m0: 3, y1: 750, m1: null, kind: "正授", rank: "平戎城子将", how: "随章仇兼琼入安戎城，初立军功", end: "入牙前", src: ["740.3"], approx: ["y1"] },
   { post: "jn-yy", who: "chengduo", y0: 750, m0: null, y1: 755, m1: null, kind: "正授", rank: "剑南节度押衙", how: "入牙前统兵", end: "迁都虞候", src: ["751.4", "751.9", "752.2"], approx: ["y0", "y1"], note: "751.4 所部护鲜于仲通突围；751.9 不追逃兵；752.2 部下牵连通敌案" },
-  { post: "jn-dj", who: "chengduo", y0: 754, m0: null, y1: 754, m1: 6, kind: "差遣", rank: "留守成都，点兵", how: "再征南诏，兵源仍靠强征", end: "李宓全军覆没，名册无一人回", src: ["754", "754.6"], note: "追唐青阳也在这一段" },
+  { post: "jn-dj", who: "chengduo", y0: 754, m0: null, y1: 754, m1: 6, kind: "差遣", rank: "留守成都，点兵", how: "再征南诏，兵源仍靠强征", end: "李宓全军覆没，名册无一人回", src: ["754.3A", "754.3B", "754.6"], note: "追唐青阳也在这一段" },
   { post: "jn-yh", who: "chengduo", y0: 755, m0: null, y1: 765, m1: 10, kind: "正授", rank: "剑南都虞候", how: "掌军纪", end: "郭英乂死；此后去向年表待定", src: ["762.7"], approx: ["y0"], note: "与剑南兵马使徐知道同在使府；762.7 徐知道反，自己营里已有人跟了他" },
   { post: "jn-pl", who: "chengduo", y0: 757, m0: 7, y1: 757, m1: 8, kind: "差遣", rank: "随军平郭千仞", how: "郭千仞之变", src: ["757.7"] },
   { post: "jn-tg", who: "chengduo", y0: 765, m0: 10, y1: 766, m1: null, kind: "差遣", rank: "讨崔旰（随柏茂琳诸将）", how: "站朝廷委任的节度使", end: "杜鸿渐入蜀，姑息崔旰", src: ["765.10"], note: "年表此条待定；月份待核", draft: true },
@@ -306,7 +306,12 @@ export const TENURES = [
   { post: "sf-jz", who: "xuejian", y0: 756, m0: 2, y1: 764, m1: 1, kind: "正授", rank: "朔方军子将", how: "未随苍云归雁门，留郭子仪帐下", end: "被编入仆固玚攻榆次之兵", src: ["756.2", "762.11D"], note: "职名推定；「出去到军中历练，屡有功勋」；郭子仪罢后随朔方军归仆固怀恩" },
   { post: "sf-yc", who: "xuejian", y0: 764, m0: 1, y1: 764, m1: 2, kind: "差遣", rank: "被编入仆固玚攻榆次之兵", how: "仆固怀恩反", end: "仆固玚死，随众归郭子仪", src: ["764.1D", "764.2B"], note: "名在朔方军籍，非其所择" },
   { post: "sf-jz", who: "xuejian", y0: 764, m0: 2, y1: null, m1: null, kind: "正授", rank: "朔方军（郭子仪麾下）", how: "随众归郭子仪", src: ["764.2B", "765.1B"] },
-  { post: "jn-sb", who: "tangqingyang", y0: null, m0: null, y1: 754, m1: null, kind: "无名目", rank: "剑南士卒（程铎麾下）", end: "拒绝强征，脱离程铎", src: ["754"] },
+  { post: "jn-sb", who: "tangqingyang", y0: 738, m0: null, y1: 739, m1: null, kind: "无名目", rank: "征行人（替父应征）", how: "王昱安戎大败后剑南补兵，青神点到他家，替父亲去", end: "情愿改充长任健儿", src: ["738.9A", "739"], approx: ["y0"], note: "名册上写的是父亲的名字" },
+  { post: "jn-sb", who: "tangqingyang", y0: 739, m0: null, y1: 741, m1: null, kind: "无名目", rank: "长任健儿（弩手）", how: "开元二十五年诏，自征行人中招募", end: "升火长", src: ["739", "740.3", "740.6B"], approx: ["y1"] },
+  { post: "jn-sb", who: "tangqingyang", y0: 741, m0: null, y1: 745, m1: null, kind: "正授", rank: "火长（平戎城，程铎麾下）", end: "升副队头", src: ["卡"], approx: ["y0", "y1"], note: "领十人；职名据《通典》卷一四八引李靖兵法" },
+  { post: "jn-sb", who: "tangqingyang", y0: 745, m0: null, y1: 750, m1: null, kind: "正授", rank: "副队头", end: "升队头", src: ["745.6B", "卡"], approx: ["y0", "y1"] },
+  { post: "jn-sb", who: "tangqingyang", y0: 750, m0: null, y1: 751, m1: 4, kind: "正授", rank: "队头（弩队）", end: "西洱河后补押官", src: ["751.4"], approx: ["y0"], note: "西洱河带弩队断后" },
+  { post: "jn-sb", who: "tangqingyang", y0: 751, m0: 4, y1: 754, m1: 3, kind: "正授", rank: "押官", how: "西洱河死者六万，活下来的补缺", end: "押送眉州乡人时，赶在点验入册前私放其人，未回营；程铎追十五日不得", src: ["751.4", "752.2", "754.3A", "754.3B"], approx: ["y0"], note: "押官为一队五十人之主官（《通典》卷一四八引李靖兵法）" },
 ];
 
 /* 门派：年轴范围与参照线（编制图按门派切换） */
