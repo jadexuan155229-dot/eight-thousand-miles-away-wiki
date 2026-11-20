@@ -193,7 +193,13 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                       aria-label={`${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
                       aria-describedby={hover && hover.i === i ? "posts-tip" : undefined}
                       onMouseEnter={show} onFocus={show} onBlur={() => setHover(null)} onClick={open}
-                      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } }}>
+                      /* 离开这一段就收起浮签（只收自己的，免得盖掉刚移入的下一段）；原先只在整张图的外框上收，
+                         图内移到空白处浮签和高亮都留着 */
+                      onMouseLeave={() => setHover((h) => (h && h.i === i ? null : h))}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+                        else if (e.key === "Escape") setHover(null); /* 浮签可用 Esc 关掉，不必挪开焦点 */
+                      }}>
                       {thin ? (
                         <line x1={x1} x2={x2} y1={cy} y2={cy} stroke={col} strokeWidth={on ? 5 : 4} strokeLinecap="round" />
                       ) : (
