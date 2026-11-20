@@ -1,9 +1,11 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
-import { serif, T, SKINS, tone, useSkin, useNarrow, useCoarsePointer } from "./theme";
+import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer } from "./theme";
 
 /* 門派色隨膚調（見 theme.js tone）：wiki-data 的 fc 是數據層、亦供 vite.config 在 Node 下讀，不宜引入皮膚狀態，故在此包一層 */
 const fc = (f) => tone(fcRaw(f));
+/* 門派色作字時用此（素紙下守 3:1，見 theme.js toneText）；框線、色條仍用 fc */
+const fcText = (f) => toneText(fcRaw(f));
 import { parseRoute, routeHash } from "./router";
 import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
@@ -247,7 +249,7 @@ function CharCard({ c, onOpen, locale }) {
         {/* 門派籤：試驗卡於標目三行之下另起一行，留白略寬於行距即可分出層次（14 → 9，壓緊） */}
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: tt ? 9 : 10 }}>
           {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
-            <span key={f} style={{ fontSize: 11, color: fc(f), border: `1px solid ${fc(f)}55`, padding: "1px 7px", borderRadius: "3px" }}>{f}</span>
+            <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}55`, padding: "1px 7px", borderRadius: "3px" }}>{f}</span>
           ))}
         </div>
       </div>
@@ -438,7 +440,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
         </div>
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: 8 }}>
           {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
-            <span key={f} style={{ fontSize: 11, color: fc(f), border: `1px solid ${fc(f)}55`, padding: "1px 7px", borderRadius: "3px" }}>{f}</span>
+            <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}55`, padding: "1px 7px", borderRadius: "3px" }}>{f}</span>
           ))}
         </div>
 
@@ -757,7 +759,7 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
         ))}
         {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>门派未标</span>}
         {e.fac.map((f) => (
-          <span key={f} style={{ fontSize: 11, color: fc(f), border: `1px solid ${fc(f)}44`, padding: "0 6px", borderRadius: "3px" }}>{f}</span>
+          <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}44`, padding: "0 6px", borderRadius: "3px" }}>{f}</span>
         ))}
         {e.loc.map((l) => (
           <span key={l} style={{ fontSize: 11, color: T.faint }}>{l}</span>
@@ -767,7 +769,7 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
       {e.chars.length > 0 && (
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: 7 }}>
           {e.chars.map((id) => (
-            <button key={id} onClick={() => onOpenChar(byId[id])} style={{ fontSize: 11.5, fontFamily: "HuiwenZhengKai", color: fc(byId[id].belong[0]), border: `1px solid ${fc(byId[id].belong[0])}44`, background: "none", padding: "1px 8px", borderRadius: "3px", cursor: "pointer" }}>
+            <button key={id} onClick={() => onOpenChar(byId[id])} style={{ fontSize: 11.5, fontFamily: "HuiwenZhengKai", color: fcText(byId[id].belong[0]), border: `1px solid ${fc(byId[id].belong[0])}44`, background: "none", padding: "1px 8px", borderRadius: "3px", cursor: "pointer" }}>
               {byId[id].name}
             </button>
           ))}
@@ -1498,7 +1500,7 @@ function Planetary({ onOpenChar }) {
     return (
       <g key={"star" + k} style={{ cursor: "pointer" }} onClick={() => { if (movedRef.current > 5) return; onOpenChar(c); }}>
         <text x={CX[k]} y={CY - 66} textAnchor="middle"
-          style={{ fontFamily: gUI, fontSize: 11.5, fill: fc(c.belong[0]), letterSpacing: "0.45em" }}>
+          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: "0.45em" }}>
           {CENTERS_META[k].tag}
         </text>
         <circle cx={CX[k]} cy={CY} r={40} fill={T.panel} stroke={T.accent} strokeWidth={2.4} />
@@ -1580,7 +1582,7 @@ function Planetary({ onOpenChar }) {
                 {run.i1 - run.i0 >= 2 && (
                   <text x={lx} y={ly} textAnchor="middle" dominantBaseline="central"
                     transform={`rotate(${rot.toFixed(2)} ${lx.toFixed(1)} ${ly.toFixed(1)})`}
-                    style={{ fontFamily: gUI, fontSize: 9.5, fill: col, opacity: 0.75, letterSpacing: "0.08em" }}>
+                    style={{ fontFamily: gUI, fontSize: 9.5, fill: fcText(run.f), opacity: 0.75, letterSpacing: "0.08em" }}>
                     {run.f || "無門派"}
                   </text>
                 )}
@@ -1735,7 +1737,7 @@ function Community({ onOpenChar }) {
             onClick={() => { if (movedRef.current > 5) return; setHover(null); }} />
           {centers.map((g) => (
             <text key={g.f} x={g.gx} y={g.gy - g.cr - 10} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: 13, fill: fc(g.f), letterSpacing: "0.3em", opacity: 0.8 }}>
+              style={{ fontFamily: gUI, fontSize: 13, fill: fcText(g.f), letterSpacing: "0.3em", opacity: 0.8 }}>
               {g.f}
             </text>
           ))}
