@@ -160,7 +160,7 @@ export const FACTIONS = [
 ];
 
 export const GRANTS = [
-  { who: "lanchuanyun", y: 739, m: 10, xun: "武骑尉", src: ["739.10"], draft: true, note: "年表只记论功嘉奖；是否授勋，作者未单独裁定" },
+  { who: "lanchuanyun", y: 739, m: 10, xun: "武骑尉", src: ["739.10"] },
   { who: "lanchuanyun", y: 756, m: 10, xun: "飞骑尉", san: "振威校尉", pin: "从六品上", src: ["756.10", "〈762年10月 昭觉寺〉"] },
   { who: "lanchuanyun", y: 762, m: 11, xun: "骑都尉", san: "归德郎将", pin: "从五品下", src: ["762.11", "卡"] },
   { who: "chengkai", y: 762, m: 11, xun: "上轻车都尉", san: "壮武将军", pin: "正四品下", src: ["卡", "764"], approx: true },
