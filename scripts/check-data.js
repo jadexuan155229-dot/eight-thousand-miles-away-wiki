@@ -188,13 +188,17 @@ for (const [h, want] of [["#/posts", { fac: "苍云", char: null }], ["#/posts/l
 }
 const KINDS_T = new Set(["正授", "署理", "代領", "代领", "兼領", "兼领", "停職", "停职", "暫任", "暂任", "差遣", "無名目", "无名目", "充任"]);
 const evRef = /^(\d{3})\.(\d{1,2})([A-Z]\d?)?$|^(\d{3})$/;
-const checkSrc = (tag, src) => {
+/* 依據年表條目整條標「（待定）」「（待定；…）」而任期未標 draft：讀者會把待定的情節當成定了的。
+   只認整條待定；「葬處待定」「月份待核」之類細節不算 */
+const WHOLE_TBD = /（待定[）；]/;
+const checkSrc = (tag, src, who, draft) => {
   for (const ref of src || []) {
     const m = ref.match(evRef);
     if (!m) continue; /* 〈文稿〉與「卡」不校 */
     const y = Number(m[1] || m[4]), mo = m[2] != null ? Number(m[2]) : null, q = m[3] || null;
-    const hit = EVENTS.some((e) => e.year === y && (mo == null || e.month === mo) && (q == null || e.seq === q));
-    if (!hit) err(tag, `依據 ${ref} 在年表中找不到（年月序號不符？）`);
+    const evs = EVENTS.filter((e) => e.year === y && (mo == null || e.month === mo) && (q == null || e.seq === q));
+    if (!evs.length) err(tag, `依據 ${ref} 在年表中找不到（年月序號不符？）`);
+    if (!draft && evs.some((e) => (e.chars || []).includes(who) && WHOLE_TBD.test(e.title))) warn(tag, `依據 ${ref} 在年表中整條待定，任期卻未標 draft`);
   }
 };
 TENURES.forEach((t, i) => {
@@ -211,7 +215,7 @@ TENURES.forEach((t, i) => {
   // 試訓收的本是少年（年表 764：程骞入天策府試訓，時年十一），不算任職，不報年幼
   if (c && c.birth != null && t.y0 != null && t.y0 - c.birth < 12 && t.post !== "sx-sx") warn(tag, `任期起時年僅 ${t.y0 - c.birth}`);
   if (!Array.isArray(t.src) || !t.src.length) warn(tag, "缺 src（依據）");
-  checkSrc(tag, t.src);
+  checkSrc(tag, t.src, t.who, t.draft);
 });
 GRANTS.forEach((g, i) => {
   const tag = `GRANTS[${i}] ${g.who}`;
@@ -224,7 +228,7 @@ GRANTS.forEach((g, i) => {
   if (c && c.death != null && g.y > c.death) err(tag, `授於卒年 ${c.death} 之後`);
   if (g.zeng && c && c.death != null && g.y !== c.death) warn(tag, `追贈不在卒年 ${c.death}`);
   if (!Array.isArray(g.src) || !g.src.length) warn(tag, "缺 src（依據）");
-  checkSrc(tag, g.src);
+  checkSrc(tag, g.src, g.who, g.draft);
 });
 for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length; j++) {
   const s1 = TENURES[i], s2 = TENURES[j];
@@ -246,7 +250,7 @@ if (missingGlyphs.length) {
 for (const w of warns) console.log(`  ⚠ ${w}`);
 for (const e of errors) console.log(`  ✗ ${e}`);
 console.log(
-  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length} · 勳散 ${GRANTS.length}（待核 ${GRANTS.filter((g) => g.draft).length}） —— ` +
+  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length}（待核 ${TENURES.filter((t) => t.draft).length}） · 勳散 ${GRANTS.length}（待核 ${GRANTS.filter((g) => g.draft).length}） —— ` +
   (errors.length ? `${errors.length} 錯` : "無錯") + (warns.length ? `，${warns.length} 警告` : "")
 );
 if (errors.length) process.exit(1);

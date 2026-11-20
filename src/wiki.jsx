@@ -485,12 +485,14 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{t(tenureFac(x))}</span>}
                       {e ? e.title : tenureTitle(x)}
                       {x.kind !== "正授" && !e && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{x.kind}</span>}
-                      {x.draft && <span style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
+                      {x.draft && <span title={x.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
                       {(e ? e.how || e.end : x.how || x.end) && (
                         <div style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
                           {e ? [e.how, e.end].filter(Boolean).join("; ") : [x.how, x.end && `→ ${x.end}`].filter(Boolean).join("　")}
                         </div>
                       )}
+                      {/* 待核的任期把缘由（note）直接写出来，与编制图浮签一致；不靠悬停 */}
+                      {x.draft && x.note && !e && <div style={{ fontSize: 12, color: T.seal, lineHeight: 1.7 }}>{x.note}</div>}
                     </div>
                   </div>
                 );
