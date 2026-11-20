@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
-import { fc, CHARACTERS } from "./wiki-data";
+import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
-import { T } from "./theme";
+import { T, tone } from "./theme";
+
+const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
 import { characterTranslation } from "./i18n/characters.en";
 import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi } from "./i18n/echoes.en";
 

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CHARACTERS } from "./wiki-data";
 import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./posts-data";
 import { translateUI } from "./i18n/ui";
-import { T } from "./theme";
+import { T, tone } from "./theme";
 import { characterTranslation } from "./i18n/characters.en";
 
 /* ============================================================
@@ -75,7 +75,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
     /* 按首任先后分色，色随人走、不随排名 */
     const first = (w) => Math.min(...mine.filter(({ t }) => t.who === w).map(({ t }) => (t.y0 == null ? F.range[0] : pos(t.y0, t.m0))));
     movers.sort((a, b) => first(a) - first(b));
-    const map = Object.fromEntries(movers.map((w, i) => [w, MOVER_COLORS[i % MOVER_COLORS.length]]));
+    const map = Object.fromEntries(movers.map((w, i) => [w, tone(MOVER_COLORS[i % MOVER_COLORS.length])]));
     return (w) => map[w] || NEUTRAL;
   }, [mine, F.range]);
   const movers = useMemo(() => [...new Set(mine.map(({ t }) => t.who))].filter((w) => colorOf(w) !== NEUTRAL), [mine, colorOf]);
@@ -231,7 +231,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                       )}
                       {!thin && fitLabel && (
                         <text x={x1 + 5} y={cy + 4} fontFamily="HuiwenZhengKai" fontSize="11.5" pointerEvents="none"
-                          fill={solid && t.kind === "正授" ? "#15181D" : T.ink} fillOpacity={solid ? 0.95 : 0.85}>{fitLabel}</text>
+                          fill={solid && t.kind === "正授" ? T.onBar : T.ink} fillOpacity={solid ? 0.95 : 0.85}>{fitLabel}</text>
                       )}
                       {/* 感应区：细线与短带都放宽到整道高；细线尾挂了名字的，连名字一并算进去 */}
                       <rect x={x1 - 2} y={cy - 10} width={x2 - x1 + 4 + (tail ? textW(tail, 10.5) + 6 : 0)} height="20" fill="transparent" />

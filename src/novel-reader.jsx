@@ -1,8 +1,10 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from "react";
-import { serif, T, useNarrow } from "./theme";
+import { serif, T, tone, useSkin, useNarrow } from "./theme";
 import { NOVELS, FLAT, loadTexts } from "./novel";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
-import { fc, CHARACTERS } from "./wiki-data";
+import { fc as fcRaw, CHARACTERS } from "./wiki-data";
+
+const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
 
 /* ============================================================
    文庫 · 正文閱讀器
@@ -40,8 +42,8 @@ const readView = () => {
 };
 /* 素紙色板：宣紙暖白配深墨，僅正文紙面之用 */
 const PAPER = { bg: "#E9E1CF", ink: "#2E2A24", muted: "#6B6353", faint: "#8A8070", line: "#CFC5AE" };
-/* 設置浮卡條目樣式 */
-const rowLabel = { fontFamily: serif, fontSize: 11, color: T.faint, letterSpacing: "0.2em", minWidth: 34 };
+/* 設置浮卡條目樣式（取 T 之值，須於渲染期求值——換膚時 T 就地改值，頂層常量會留舊色） */
+const rowLabel = () => ({ fontFamily: serif, fontSize: 11, color: T.faint, letterSpacing: "0.2em", minWidth: 34 });
 const chipBtn = (active) => ({ fontFamily: serif, fontSize: 12, color: active ? T.ink : T.muted, background: active ? T.panelHi : "none", border: `1px solid ${active ? T.accent : T.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" });
 const stepBtn = (dis) => ({ fontFamily: serif, fontSize: 11.5, color: dis ? T.faint : T.ink, background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "2px 7px", cursor: dis ? "default" : "pointer", opacity: dis ? 0.5 : 1 });
 
@@ -50,12 +52,13 @@ const stepBtn = (dis) => ({ fontFamily: serif, fontSize: 11.5, color: dis ? T.fa
    不觸碰檢索高亮命中段與段落結構；命中處化為可點 span——默認同正文，
    hover／鍵盤聚焦／批注打開時現門派色細虛下劃線，點擊或 Enter/Space 開右側頁邊批注 */
 /* 各角色強調色：取首屬門派之 fc 色（高垣→凌雪閣凝血玄絳），經 --char-accent 注入 CSS */
-const TERM_ACCENT = Object.fromEntries(
+const TERM_ACCENT_RAW = Object.fromEntries(
   CHAR_TERMS.map(({ id }) => {
     const c = CHARACTERS.find((x) => x.id === id);
-    return [id, fc(c && c.belong[0])];
+    return [id, fcRaw(c && c.belong[0])];
   })
 );
+const termAccent = (id) => (TERM_ACCENT_RAW[id] ? tone(TERM_ACCENT_RAW[id]) : undefined); /* 隨膚調，故取用時求值 */
 function splitCharTerms(s, keyBase, onCharClick, activeKey) {
   const segs = scanCharTerms(s);
   if (!segs) return s;
@@ -64,7 +67,7 @@ function splitCharTerms(s, keyBase, onCharClick, activeKey) {
     const k = `${keyBase}@${g.at}`;
     return (
       <span key={k} className={`nvl-char${activeKey === k ? " nvl-char--open" : ""}`}
-        role="button" tabIndex={0} style={{ "--char-accent": TERM_ACCENT[g.id] }}
+        role="button" tabIndex={0} style={{ "--char-accent": termAccent(g.id) }}
         onClick={(e) => onCharClick(g.id, k, e.currentTarget)}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onCharClick(g.id, k, e.currentTarget); } }}>
         {g.term}
@@ -95,7 +98,7 @@ function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh
         if (p > at) seg.push(splitCharTerms(l.slice(at, p), `${i}:${at}`, onCharClick, activeCharKey));
         seg.push(
           <span key={p} ref={firstHit ? firstHitRef : undefined}
-            style={{ background: `${T.accent}55`, borderRadius: 2 }}>{l.slice(p, p + kl.length)}</span>
+            style={{ background: T.hit, borderRadius: 2 }}>{l.slice(p, p + kl.length)}</span>
         );
         firstHit = false;
         at = p + kl.length;
@@ -111,10 +114,10 @@ function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh
   return <div>{out}</div>;
 }
 
-const navBtn = {
+const navBtn = () => ({
   fontFamily: serif, fontSize: 12.5, color: T.muted, background: "none",
   border: `1px solid ${T.line}`, padding: "6px 14px", cursor: "pointer", maxWidth: "48%", textAlign: "left",
-};
+});
 
 /* 頁邊批注卡（原型）：fixed 錨定於被點角色名所在行，置正文欄右側批注區——書籍旁注之意。
    引導線沿名字下劃線高度延至正文右邊界，卡左緣同色小圓點續接對應。
@@ -182,7 +185,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
   }, [peek, onClose]);
 
   if (!c) return null;
-  const accent = TERM_ACCENT[peek.id] || T.accent;
+  const accent = termAccent(peek.id) || T.accent;
   /* 引導線／圓點：深底提白防沉沒；素紙上提白反致線淡，改門派原色微透 */
   const lineInk = noteInk(accent, paper ? 0 : 0.25, paper ? 0.7 : 0.5);
   /* 批注文案：人工編輯之 readerNote 優先、原樣不截斷（長度作者自控，卡有 maxHeight+內滾兜底）；
@@ -212,7 +215,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
           position: "fixed", zIndex: 30, width: Math.min(NOTE_W, window.innerWidth - 2 * NOTE_EDGE),
           left: pos ? pos.left : 0, top: pos ? pos.top : 0, visibility: pos ? "visible" : "hidden",
           maxHeight: "calc(100dvh - 24px)", overflowY: "auto",
-          background: T.panel, border: `1px solid ${T.line}`, boxShadow: "0 8px 28px rgba(0,0,0,0.4)",
+          background: T.panel, border: `1px solid ${T.line}`, boxShadow: T.xShadow,
           padding: "14px 16px 16px", animation: pos ? "nvl-note-in .18s ease-out" : "none",
         }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
@@ -273,7 +276,11 @@ export default function NovelReader({ path, onNav }) {
   const [view, setView] = useState(readView); /* 閱讀設置：{ fs, lh, theme } */
   const [viewOpen, setViewOpen] = useState(false); /* Aa 設置浮卡 */
   const viewRef = useRef(null); /* Aa 按鈕＋浮卡之行容器：點外關閉判此界 */
-  const paper = view.theme === "paper";
+  /* 全站素紙皮膚下，整頁本已是紙，閱讀設置的「底色」一項隱去、亦不另鋪紙面；
+     偏好仍存著，換回玄墨即照舊 */
+  const [skin] = useSkin();
+  const paperSkin = skin === "paper";
+  const paper = !paperSkin && view.theme === "paper";
   const pal = paper ? PAPER : T;
   useEffect(() => {
     try { localStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch { /* 寫入失敗：靜默 */ }
@@ -312,7 +319,7 @@ export default function NovelReader({ path, onNav }) {
     style: {
       ...base,
       transition: "transform .18s ease, box-shadow .18s ease, background .18s ease",
-      ...(tocHover === k ? { background: "rgba(255,255,255,0.035)", transform: "translateX(5px) translateY(-1px) scale(1.018)", boxShadow: "0 6px 18px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.035)", borderRadius: "4px" } : {}),
+      ...(tocHover === k ? { background: T.xWash, transform: "translateX(5px) translateY(-1px) scale(1.018)", boxShadow: T.xWashLift, borderRadius: "4px" } : {}),
     },
   });
 
@@ -518,11 +525,11 @@ export default function NovelReader({ path, onNav }) {
     <div className="toc-scroll" style={{ width: 216, flexShrink: 0, position: "sticky", top: 16, maxHeight: "calc(100vh - 32px)", overflowY: "auto", overflowX: "hidden", paddingRight: 12 }}>
       {/* 目錄縱向滾動條深色化：僅作用於 .toc-scroll，不及全站 */}
       <style>{`
-.toc-scroll{scrollbar-width:thin;scrollbar-color:#5B6470 #171B21}
+.toc-scroll{scrollbar-width:thin;scrollbar-color:${T.xScrollThumb} ${T.xScrollTrack}}
 .toc-scroll::-webkit-scrollbar{width:8px}
-.toc-scroll::-webkit-scrollbar-track{background:#171B21}
-.toc-scroll::-webkit-scrollbar-thumb{background:#5B6470;border-radius:4px}
-.toc-scroll::-webkit-scrollbar-thumb:hover{background:#788493}
+.toc-scroll::-webkit-scrollbar-track{background:${T.xScrollTrack}}
+.toc-scroll::-webkit-scrollbar-thumb{background:${T.xScrollThumb};border-radius:4px}
+.toc-scroll::-webkit-scrollbar-thumb:hover{background:${T.xScrollThumbHi}}
 `}</style>
       <div style={{ fontFamily: "HuiwenMingChao", fontSize: 10.5, letterSpacing: "0.4em", color: T.faint, margin: "0 0 10px 8px" }}>文庫目錄</div>
       <div style={{ position: "relative", marginBottom: 10 }}>
@@ -532,7 +539,7 @@ export default function NovelReader({ path, onNav }) {
           onCompositionEnd={(e) => { setIsComposing(false); setInputValue(e.currentTarget.value); setQ(e.currentTarget.value); }}
           placeholder="检索书目、篇章"
           style={{ display: "block", width: "100%", background: T.panel, border: `1px solid ${T.line}`, color: T.ink, fontSize: 12.5, fontFamily: "HuiwenZhengKai", padding: "5px 10px 5px 32px", outline: "none", borderRadius: "3px" }} />
-        <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: "#E7E2D6", fontSize: 11, fontFamily: "HuiwenZhengKai", borderRadius: "3px", pointerEvents: "none" }}>查</span>
+        <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily: "HuiwenZhengKai", borderRadius: "3px", pointerEvents: "none" }}>查</span>
       </div>
       {q.trim() !== "" ? <SearchResults /> : <Tree />}
     </div>
@@ -590,21 +597,21 @@ export default function NovelReader({ path, onNav }) {
               <div style={narrow ? undefined : { maxWidth: 1000 }}>
                 {/* 素紙：正文欄與翻頁按鈕包一張紙面（寬＝正文欄＋兩側內邊距，行寬不隨主題變）；玄墨下此層無樣式 */}
                 <div style={paper ? {
-                  background: PAPER.bg, boxShadow: "0 2px 20px rgba(0,0,0,0.4)",
+                  background: PAPER.bg, boxShadow: T.xShadowSheet,
                   padding: narrow ? "2px 16px 18px" : "2px 34px 24px",
                   ...(narrow ? null : { maxWidth: bodyMaxWidth + 68, marginLeft: "auto", marginRight: "auto" }),
                 } : null}>
                 <div ref={bodyColRef} style={{ maxWidth: bodyMaxWidth, paddingTop: 16, ...(narrow || paper ? null : { marginLeft: "auto", marginRight: "auto" }) }}>
-                  {/* Aa 閱讀設置：行容器兼點外關閉判界；浮卡恆深色（浮於紙面之上，不隨主題） */}
+                  {/* Aa 閱讀設置：行容器兼點外關閉判界；浮卡隨全站皮膚，不隨閱讀底色（浮於紙面之上） */}
                   <div ref={viewRef} style={{ display: "flex", justifyContent: "flex-end", position: "relative", marginBottom: 4 }}>
                     <button onClick={() => setViewOpen((o) => !o)} title="阅读设置"
                       style={{ fontSize: 12, fontFamily: serif, color: pal.faint, background: "none", border: `1px solid ${pal.line}`, borderRadius: 3, padding: "2px 9px", cursor: "pointer" }}>
                       Aa
                     </button>
                     {viewOpen && (
-                      <div style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 24, width: 236, background: T.panel, border: `1px solid ${T.line}`, boxShadow: "0 8px 28px rgba(0,0,0,0.45)", padding: "12px 14px 10px" }}>
+                      <div style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 24, width: 236, background: T.panel, border: `1px solid ${T.line}`, boxShadow: T.xShadow, padding: "12px 14px 10px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={rowLabel}>字号</span>
+                          <span style={rowLabel()}>字号</span>
                           <button onClick={() => setView((v) => ({ ...v, fs: Math.max(0, v.fs - 1) }))} disabled={view.fs === 0} style={stepBtn(view.fs === 0)}>A−</button>
                           <span style={{ fontSize: 9, letterSpacing: 3, color: T.muted, flex: 1, textAlign: "center" }}>
                             {FS_STEPS.map((_, i) => (i <= view.fs ? "●" : "○")).join("")}
@@ -612,17 +619,19 @@ export default function NovelReader({ path, onNav }) {
                           <button onClick={() => setView((v) => ({ ...v, fs: Math.min(FS_STEPS.length - 1, v.fs + 1) }))} disabled={view.fs === FS_STEPS.length - 1} style={stepBtn(view.fs === FS_STEPS.length - 1)}>A＋</button>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
-                          <span style={rowLabel}>行距</span>
+                          <span style={rowLabel()}>行距</span>
                           {LH_STEPS.map(([name], i) => (
                             <button key={name} onClick={() => setView((v) => ({ ...v, lh: i }))} style={chipBtn(view.lh === i)}>{name}</button>
                           ))}
                         </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
-                          <span style={rowLabel}>底色</span>
-                          {[["dark", "玄墨"], ["paper", "素纸"]].map(([k, name]) => (
-                            <button key={k} onClick={() => setView((v) => ({ ...v, theme: k }))} style={chipBtn(view.theme === k)}>{name}</button>
-                          ))}
-                        </div>
+                        {!paperSkin && (
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
+                            <span style={rowLabel()}>底色</span>
+                            {[["dark", "玄墨"], ["paper", "素纸"]].map(([k, name]) => (
+                              <button key={k} onClick={() => setView((v) => ({ ...v, theme: k }))} style={chipBtn(view.theme === k)}>{name}</button>
+                            ))}
+                          </div>
+                        )}
                         <div style={{ textAlign: "right", marginTop: 10 }}>
                           <button onClick={() => setView({ ...VIEW_DEFAULT })} style={{ fontSize: 11, fontFamily: serif, color: T.faint, background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline dotted" }}>恢复默认</button>
                         </div>
@@ -635,8 +644,8 @@ export default function NovelReader({ path, onNav }) {
                         fs={FS_STEPS[view.fs]} lh={LH_STEPS[view.lh][1]} pal={pal} />}
                 </div>
                 <div style={{ maxWidth: bodyMaxWidth, display: "flex", justifyContent: "space-between", gap: 12, borderTop: `1px solid ${pal.line}`, marginTop: 44, paddingTop: 14, ...(narrow || paper ? null : { marginLeft: "auto", marginRight: "auto" }) }}>
-                  {prevCh ? <button onClick={() => jump(prevCh.path)} style={paper ? { ...navBtn, color: PAPER.muted, border: `1px solid ${PAPER.line}` } : navBtn}>‹ {navLabel(prevCh)}</button> : <span />}
-                  {nextCh ? <button onClick={() => jump(nextCh.path)} style={paper ? { ...navBtn, color: PAPER.muted, border: `1px solid ${PAPER.line}` } : navBtn}>{navLabel(nextCh)} ›</button> : <span />}
+                  {prevCh ? <button onClick={() => jump(prevCh.path)} style={paper ? { ...navBtn(), color: PAPER.muted, border: `1px solid ${PAPER.line}` } : navBtn()}>‹ {navLabel(prevCh)}</button> : <span />}
+                  {nextCh ? <button onClick={() => jump(nextCh.path)} style={paper ? { ...navBtn(), color: PAPER.muted, border: `1px solid ${PAPER.line}` } : navBtn()}>{navLabel(nextCh)} ›</button> : <span />}
                 </div>
                 </div>
               </div>
@@ -644,7 +653,7 @@ export default function NovelReader({ path, onNav }) {
           )}
         </div>
       </div>
-      {peek && <MarginNote peek={peek} bodyColRef={bodyColRef} onClose={closePeek} paper={paper} />}
+      {peek && <MarginNote peek={peek} bodyColRef={bodyColRef} onClose={closePeek} paper={paper || paperSkin} />}
     </div>
   );
 }

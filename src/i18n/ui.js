@@ -3,6 +3,7 @@ const en = {
   人物檔案: 'Characters', 事件年表: 'Timeline', 山河輿圖: 'Map',
   行星關係圖: 'Orbital Relations', 群像網絡: 'Character Network', 余波: 'Aftershocks', 文庫: 'Library',
   卷首: 'Opening', 回到卷首: 'Return to opening',
+  語言: 'Language', 紙色: 'Theme', 玄墨: 'Ink', 素紙: 'Paper',
   生卒: 'Lifespan', 出身: 'Birthplace', 事件: 'Events', 字: 'Courtesy name',
   名字訓詁: 'Name and allusions', 檔案: 'Profile',
   官职身份: 'Position & background', 体貌特征: 'Appearance & health', 性格: 'Personality',
