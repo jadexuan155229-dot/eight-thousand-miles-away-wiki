@@ -13,7 +13,9 @@ function wantLanding() {
 
 function App() {
   const [landing, setLanding] = useState(wantLanding)
-  /* 定場覆於站內之上，站內照常掛載——鈐印離場即無縫露出，不另起加載 */
+  /* 換膚不重掛：Wiki 自行訂閱皮膚（useSkin），整棵重渲染而不重建，
+     篩選、檢索、輿圖動線、年表展開、閱讀位置一概不動（見 theme.js 換膚一節）。
+     定場（夜景燭照）不隨膚，恆為原樣 */
   return (
     <>
       <Wiki onOpenLanding={() => setLanding(true)} />

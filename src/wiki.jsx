@@ -1,6 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { fc, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
-import { serif, T, useNarrow, useCoarsePointer } from "./theme";
+import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
+import { serif, T, SKINS, tone, useSkin, useNarrow, useCoarsePointer } from "./theme";
+
+/* 門派色隨膚調（見 theme.js tone）：wiki-data 的 fc 是數據層、亦供 vite.config 在 Node 下讀，不宜引入皮膚狀態，故在此包一層 */
+const fc = (f) => tone(fcRaw(f));
 import { parseRoute, routeHash } from "./router";
 import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
@@ -36,8 +39,8 @@ const TYPE_GROUP = [
 ];
 function relColor(t) {
   const first = t.split("·")[0];
-  for (const [ks, c] of TYPE_GROUP) if (ks.includes(first)) return c;
-  return "#7FA980";
+  for (const [ks, c] of TYPE_GROUP) if (ks.includes(first)) return tone(c);
+  return tone("#7FA980");
 }
 function relActive(r, Y) {
   return (r.y0 == null || r.y0 <= Y) && (r.y1 == null || Y <= r.y1 || r.ph);
@@ -149,7 +152,7 @@ function Seal({ ch, size = 15, svg }) {
   return (
     <span className={SEAL_FONT_VARIANT === "b" ? "seal-stamp seal-stamp--li" : "seal-stamp"}
       data-size={sm ? "sm" : "lg"} style={{
-      ...box, color: "#E7E2D6", backgroundColor: T.seal,
+      ...box, color: T.onAccent, backgroundColor: T.seal,
     }} title="品评"><span className="seal-stamp-ch" style={{ fontSize: `${chScale}em` }}>{ch}</span></span>
   );
 }
@@ -197,7 +200,7 @@ function CharCard({ c, onOpen, locale }) {
       onClick={() => onOpen(c)}
       className={`cursor-pointer flex${tt ? " texture-test-sm" : ""}${translated ? " profile-en" : ""}`}
       lang={translated ? "en" : "zh"}
-      style={{ background: T.panel, border: `1px solid ${T.line}`, borderTop: `3px solid ${fc(main)}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", ...(tt ? ttVars(main) : null) }}
+      style={{ background: T.panel, borderTop: `3px solid ${fc(main)}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `1px solid ${T.line}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", ...(tt ? ttVars(main) : null) }}
       onMouseEnter={(e) => (e.currentTarget.style.background = T.panelHi)}
       onMouseLeave={(e) => (e.currentTarget.style.background = T.panel)}
     >
@@ -381,7 +384,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
   );
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center" style={{ background: "rgba(10,12,15,.72)", zIndex: 50, padding: 20 }} onClick={() => { setShowAll(false); onClose(); }}>
+    <div className="fixed inset-0 flex items-center justify-center" style={{ background: T.xBackdrop, zIndex: 50, padding: 20 }} onClick={() => { setShowAll(false); onClose(); }}>
       {/* 宣紙肌理試驗：範圍見上方 isTextureTest，樣式全在 index.css 同名段 */}
       <div className={`${tt ? "texture-test" : ""}${translated ? " profile-en" : ""}`} lang={translated ? "en" : "zh"} onClick={(e) => e.stopPropagation()} style={{ ...(tt ? ttVars(c.belong[0]) : null), background: T.panel, border: `1px solid ${T.line}`, maxWidth: 700, width: "100%", maxHeight: "86vh", position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column" }}>
         {factionMark && (
@@ -401,9 +404,9 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
         {/* 人物檔案彈窗縱向滾動條深色化：僅作用於 .char-modal-scroll，不及全站；
             thumb 取門派派生色（--profile-accent-soft/hover，自容器內聯變量注入），track 維持深灰透明 */}
         <style>{`
-.char-modal-scroll{scrollbar-width:thin;scrollbar-color:var(--profile-accent-soft) rgba(255,255,255,0.035)}
+.char-modal-scroll{scrollbar-width:thin;scrollbar-color:var(--profile-accent-soft) ${T.xScrollTrackSoft}}
 .char-modal-scroll::-webkit-scrollbar{width:8px}
-.char-modal-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,0.035)}
+.char-modal-scroll::-webkit-scrollbar-track{background:${T.xScrollTrackSoft}}
 .char-modal-scroll::-webkit-scrollbar-thumb{background:var(--profile-accent-soft);border-radius:4px}
 .char-modal-scroll::-webkit-scrollbar-thumb:hover{background:var(--profile-accent-hover)}
 .char-modal-scroll::-webkit-scrollbar-button{background:var(--profile-accent-soft)}/* 僅著色：不設尺寸，環境無箭頭時此規則自然無效 */
@@ -540,7 +543,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
         )}
 
         {c.highlight && c.highlight.length > 0 && (
-          <div style={{ marginTop: 24, border: `1px solid ${profileAccent}55`, borderLeft: `3px solid ${profileAccent}`, padding: "12px 16px" }}>
+          <div style={{ marginTop: 24, borderTop: `1px solid ${profileAccent}55`, borderRight: `1px solid ${profileAccent}55`, borderBottom: `1px solid ${profileAccent}55`, borderLeft: `3px solid ${profileAccent}`, padding: "12px 16px" }}>
             <SectionLabel>高光</SectionLabel>
             {c.highlight.map((h, i) => (
               <div key={i} style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.95 }}>{h}</div>
@@ -718,7 +721,7 @@ function FacBand({ segs, none, height = 4, maxWidth }) {
       {segs.map(([f, n]) => (
         <div key={f} style={{ flexGrow: n, flexBasis: 0, background: fc(f) }} title={`${f}：${n}`} />
       ))}
-      {none > 0 && <div style={{ flexGrow: none, flexBasis: 0, background: "#3A424D" }} title={`门派未标：${none}`} />}
+      {none > 0 && <div style={{ flexGrow: none, flexBasis: 0, background: T.neutral }} title={`门派未标：${none}`} />}
     </div>
   );
 }
@@ -743,10 +746,10 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
           </span>
         )}
         {e.seq && (
-          <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: "#E7E2D6", background: T.accent, padding: "0 6px", borderRadius: "3px", lineHeight: "16px" }}>{e.seq}</span>
+          <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.onAccent, background: T.accent, padding: "0 6px", borderRadius: "3px", lineHeight: "16px" }}>{e.seq}</span>
         )}
         {e.add && (
-          <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: "#C9A15C", border: "1px solid #C9A15C55", padding: "0 6px", borderRadius: "3px" }} title="採自人設文檔，尚未錄入 Notion 事件庫">增補</span>
+          <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: tone("#C9A15C"), border: `1px solid ${tone("#C9A15C")}55`, padding: "0 6px", borderRadius: "3px" }} title="採自人設文檔，尚未錄入 Notion 事件庫">增補</span>
         )}
         {shocks.map((shock) => (
           <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={`余波：${shock.title}——此事笼罩之人与其记忆方式`}
@@ -932,11 +935,11 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     <div className="toc-scroll" style={{ width: 180, flexShrink: 0, position: "sticky", top: 16, maxHeight: "calc(100vh - 32px)", overflowY: "auto", overflowX: "hidden", paddingRight: 12 }}>
       {/* 目錄縱向滾動條深色化：僅作用於 .toc-scroll，不及全站 */}
       <style>{`
-.toc-scroll{scrollbar-width:thin;scrollbar-color:#5B6470 #171B21}
+.toc-scroll{scrollbar-width:thin;scrollbar-color:${T.xScrollThumb} ${T.xScrollTrack}}
 .toc-scroll::-webkit-scrollbar{width:8px}
-.toc-scroll::-webkit-scrollbar-track{background:#171B21}
-.toc-scroll::-webkit-scrollbar-thumb{background:#5B6470;border-radius:4px}
-.toc-scroll::-webkit-scrollbar-thumb:hover{background:#788493}
+.toc-scroll::-webkit-scrollbar-track{background:${T.xScrollTrack}}
+.toc-scroll::-webkit-scrollbar-thumb{background:${T.xScrollThumb};border-radius:4px}
+.toc-scroll::-webkit-scrollbar-thumb:hover{background:${T.xScrollThumbHi}}
 `}</style>
       <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 10.5, letterSpacing: "0.4em", color: T.faint, marginBottom: 10 }}>分段目錄</div>
       {sections.map((s) => {
@@ -951,13 +954,13 @@ function Timeline({ onOpenChar, onOpenEcho }) {
             onMouseEnter={() => { if (!empty) setTocHover(s.key); }}
             onMouseLeave={() => setTocHover((h) => (h === s.key ? null : h))}
             style={{
-              display: "block", width: "100%", textAlign: "left", background: hov ? "rgba(255,255,255,0.045)" : "none",
+              display: "block", width: "100%", textAlign: "left", background: hov ? T.xWash : "none",
               border: "none", borderLeft: isActive ? `2px solid ${T.accent}` : `2px solid transparent`,
               padding: hov ? "11px 12px 12px 14px" : "7px 8px 8px 10px", /* hover 四向各擴 4px，負 margin 補償，不擠鄰項 */
               margin: hov ? "-4px" : 0,
               cursor: empty ? "default" : "pointer", opacity: empty ? 0.35 : 1,
               transform: hov ? "translateX(6px) translateY(-2px) scale(1.025)" : "none",
-              boxShadow: hov ? "0 8px 24px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.045)" : "none",
+              boxShadow: hov ? T.xWashLift : "none",
               borderRadius: hov ? "4px" : 0,
               transition: "transform .18s ease, box-shadow .18s ease, background .18s ease",
             }}>
@@ -989,7 +992,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
             onClick={() => jumpTo(s.key)}
             style={{
               flexShrink: 0, fontFamily: "JingHuaLaoSong", fontSize: 11.5,
-              color: isActive ? "#E7E2D6" : T.muted,
+              color: isActive ? T.onAccent : T.muted,
               background: isActive ? T.accent : "transparent",
               border: `1px solid ${isActive ? T.accent : T.line}`,
               padding: "2px 10px", cursor: empty ? "default" : "pointer", opacity: empty ? 0.35 : 1,
@@ -1717,7 +1720,7 @@ function Community({ onOpenChar }) {
       </div>
       <div className="flex flex-wrap" style={{ gap: 14, marginBottom: 4, justifyContent: "center" }}>
         {[["傳承", "#7FB0D8"], ["遺承", "#9B7EC8"], ["情愛", "#D88BA8"], ["恩義", "#C9A15C"], ["誼", "#7FA980"], ["親緣", "#B08968"], ["嫌隙", "#C8B45A"], ["殺伐", "#C05050"]].map(([l, cc]) => (
-          <span key={l} style={{ fontSize: 11, fontFamily: gUI, color: cc }}>— {l}</span>
+          <span key={l} style={{ fontSize: 11, fontFamily: gUI, color: tone(cc) }}>— {l}</span>
         ))}
         <span style={{ fontSize: 11, fontFamily: gUI, color: T.faint }}>虛線＝未遂／未說開／未見 · 硃砂點線＝歿後延續 · 虛環＝其人已歿</span>
       </div>
@@ -1790,7 +1793,7 @@ function Community({ onOpenChar }) {
 
 function Chip({ active, onClick, label, fontFamily = gUI }) {
   return (
-    <button onClick={onClick} style={{ fontSize: 12.5, fontFamily, color: active ? "#E7E2D6" : T.muted, background: active ? T.accent : "transparent", border: `1px solid ${active ? T.accent : T.line}`, padding: "3px 12px", borderRadius: "3px", cursor: "pointer" }}>
+    <button onClick={onClick} style={{ fontSize: 12.5, fontFamily, color: active ? T.onAccent : T.muted, background: active ? T.accent : "transparent", border: `1px solid ${active ? T.accent : T.line}`, padding: "3px 12px", borderRadius: "3px", cursor: "pointer" }}>
       {label}
     </button>
   );
@@ -1798,7 +1801,7 @@ function Chip({ active, onClick, label, fontFamily = gUI }) {
 
 /* 檢索框內「查」字小方標：純視覺標識，不可點——配合外層 position:relative 容器與 input 左側讓位 padding 使用 */
 const SearchTag = ({ fontFamily = gUI }) => (
-  <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: "#E7E2D6", fontSize: 11, fontFamily, borderRadius: "3px", pointerEvents: "none" }}>查</span>
+  <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily, borderRadius: "3px", pointerEvents: "none" }}>查</span>
 );
 
 const NOLOC_KEY = "__noloc__"; /* 無地點事件之內部鍵 */
@@ -1959,7 +1962,7 @@ function GeoMap({ onOpenChar }) {
         stays.forEach((s, i) => {
           (byLoc[s.loc] = byLoc[s.loc] || { x: s.x, y: s.y, visits: [] }).visits.push(`${i + 1}·${s.year ?? "起"}`);
         });
-        return { id, ti, color: TRACK_COLORS[ti % TRACK_COLORS.length], stays, locLabels: Object.entries(byLoc) };
+        return { id, ti, color: TRACK_COLORS[ti % TRACK_COLORS.length], stays, locLabels: Object.entries(byLoc) }; /* 原色：此 memo 不隨膚重算，取用處再 tone() */
       }),
     [trackSel, tmode, tyear]
   );
@@ -2001,11 +2004,11 @@ function GeoMap({ onOpenChar }) {
             })}
             {d.none > 0 && (() => {
               const a0 = (acc / segTotal) * 360;
-              return <path d={ringArc(c.x, c.y, r, a0, 360)} fill="none" stroke="#3A424D" strokeWidth={(isSel || isHov ? 4 : 3) / z} />;
+              return <path d={ringArc(c.x, c.y, r, a0, 360)} fill="none" stroke={T.neutral} strokeWidth={(isSel || isHov ? 4 : 3) / z} />;
             })()}
           </>
         ) : n > 0 ? (
-          <circle cx={c.x} cy={c.y} r={r} fill="none" stroke={segs[0] ? fc(segs[0][0]) : "#3A424D"} strokeWidth={(isSel || isHov ? 4 : 3) / z} />
+          <circle cx={c.x} cy={c.y} r={r} fill="none" stroke={segs[0] ? fc(segs[0][0]) : T.neutral} strokeWidth={(isSel || isHov ? 4 : 3) / z} />
         ) : null}
         {isSel && <circle cx={c.x} cy={c.y} r={r + 5 / z} fill="none" stroke={T.accent} strokeWidth={1 / z} strokeDasharray={`${3 / z} ${3 / z}`} />}
         {c.kind === "sect" ? (
@@ -2170,7 +2173,7 @@ function GeoMap({ onOpenChar }) {
           const ti = trackSel.indexOf(id);
           return (
             <button key={id} onClick={() => toggleTrack(id)}
-              style={{ fontSize: 12, fontFamily: "JingHuaLaoSong", padding: "2px 10px", cursor: "pointer", background: ti >= 0 ? T.panelHi : "none", color: ti >= 0 ? TRACK_COLORS[ti] : T.muted, border: `1px solid ${ti >= 0 ? TRACK_COLORS[ti] : T.line}`, borderRadius: "3px" }}>
+              style={{ fontSize: 12, fontFamily: "JingHuaLaoSong", padding: "2px 10px", cursor: "pointer", background: ti >= 0 ? T.panelHi : "none", color: ti >= 0 ? tone(TRACK_COLORS[ti]) : T.muted, border: `1px solid ${ti >= 0 ? tone(TRACK_COLORS[ti]) : T.line}`, borderRadius: "3px" }}>
               {byId[id].name}
             </button>
           );
@@ -2192,8 +2195,8 @@ function GeoMap({ onOpenChar }) {
             <path d={GEO_BASE.coast} fill="none" stroke={T.muted} strokeWidth={1.3} opacity={0.55} vectorEffect="non-scaling-stroke" />
             <path d={GEO_BASE.north} fill="none" stroke={T.faint} strokeWidth={1} strokeDasharray="6 5" opacity={0.6} vectorEffect="non-scaling-stroke" />
             <path d={GEO_BASE.tubo} fill="none" stroke={T.faint} strokeWidth={1} strokeDasharray="6 5" opacity={0.6} vectorEffect="non-scaling-stroke" />
-            <path d={GEO_BASE.huanghe} fill="none" stroke="#5B7A93" strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
-            <path d={GEO_BASE.changjiang} fill="none" stroke="#5B7A93" strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
+            <path d={GEO_BASE.huanghe} fill="none" stroke={T.river} strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
+            <path d={GEO_BASE.changjiang} fill="none" stroke={T.river} strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
             {GEO_BASE.labels.map((l) => (
               <text key={l.t} x={l.x} y={l.y} textAnchor="middle"
                 style={{ fontFamily: gUI, fontSize: 13, fill: T.faint, letterSpacing: "0.5em", opacity: 0.65 }}>{l.t}</text>
@@ -2205,6 +2208,7 @@ function GeoMap({ onOpenChar }) {
             {tracks.map((t) => {
               const sh = (t.ti - (tracks.length - 1) / 2) * 6 / view.k; /* 多線並比微錯位，免駐點疊死 */
               const P = (p) => [p.x + sh, p.y + sh * 0.6];
+              const tc = tone(t.color); /* 隨膚調色，於渲染期求值 */
               return (
                 <g key={t.id} style={{ cursor: "pointer" }} onClick={() => { if (movedRef.current > 5) return; onOpenChar(byId[t.id]); }}>
                   {t.stays.map((s, i) => {
@@ -2222,7 +2226,7 @@ function GeoMap({ onOpenChar }) {
                     return (
                       <g key={i}>
                         <path d={d} fill="none" stroke={T.bg} strokeWidth={(segHov ? 4.8 : 3.6) / view.k} opacity={0.7} />
-                        <path d={d} fill="none" stroke={t.color} strokeWidth={(segHov ? 2.8 : 1.7) / view.k}
+                        <path d={d} fill="none" stroke={tc} strokeWidth={(segHov ? 2.8 : 1.7) / view.k}
                           opacity={segHov ? 1 : hoverSeg ? 0.3 : 0.9}
                           strokeDasharray={s.gapBefore ? `${5 / view.k} ${4 / view.k}` : undefined} />
                         {/* 觸屏指腹粗於鼠尖，感應帶加寬一倍有餘 */}
@@ -2237,13 +2241,13 @@ function GeoMap({ onOpenChar }) {
                   })}
                   {t.stays.map((s, i) => {
                     const [x, y] = P(s);
-                    return <circle key={"n" + i} cx={x} cy={y} r={3.2 / view.k} fill={t.color} stroke={T.bg} strokeWidth={1 / view.k} />;
+                    return <circle key={"n" + i} cx={x} cy={y} r={3.2 / view.k} fill={tc} stroke={T.bg} strokeWidth={1 / view.k} />;
                   })}
                   {t.locLabels.map(([loc, g]) => {
                     const [x, y] = P(g);
                     return (
                       <text key={loc} x={x + 6 / view.k} y={y + (15 + t.ti * 11) / view.k}
-                        style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: t.color, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
+                        style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: tc, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
                         {g.visits.join("、")}
                       </text>
                     );
@@ -2252,7 +2256,7 @@ function GeoMap({ onOpenChar }) {
                     const [x, y] = P(t.stays[0]);
                     return (
                       <text x={x - 7 / view.k} y={y - 7 / view.k} textAnchor="end"
-                        style={{ fontFamily: gName, fontSize: 11.5 / view.k, fill: t.color, fontWeight: 700, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / view.k }}>
+                        style={{ fontFamily: gName, fontSize: 11.5 / view.k, fill: tc, fontWeight: 700, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / view.k }}>
                         {byId[t.id].name}（起）
                       </text>
                     );
@@ -2282,8 +2286,8 @@ function GeoMap({ onOpenChar }) {
             /* 觸屏改浮於指上方，免為指腹所掩 */
             const tf = [flip ? "translateX(-100%)" : "", coarse ? "translateY(-100%)" : ""].filter(Boolean).join(" ");
             return (
-              <div style={{ position: "absolute", left: hoverSeg.x + (flip ? -14 : 14), top: hoverSeg.y + (coarse ? -14 : 12), transform: tf || "none", maxWidth: 300, background: T.panelHi, border: `1px solid ${T.line}`, boxShadow: "0 4px 18px rgba(0,0,0,.45)", padding: "10px 13px", pointerEvents: "none", zIndex: 4 }}>
-                <div style={{ fontFamily: gUI, fontSize: 12.5, color: hoverSeg.color, marginBottom: 4 }}>
+              <div style={{ position: "absolute", left: hoverSeg.x + (flip ? -14 : 14), top: hoverSeg.y + (coarse ? -14 : 12), transform: tf || "none", maxWidth: 300, background: T.panelHi, border: `1px solid ${T.line}`, boxShadow: T.xShadowTip, padding: "10px 13px", pointerEvents: "none", zIndex: 4 }}>
+                <div style={{ fontFamily: gUI, fontSize: 12.5, color: tone(hoverSeg.color), marginBottom: 4 }}>
                   {hoverSeg.name} · {hoverSeg.prev.loc}（迄{hoverSeg.prev.toYear ?? "起"}）→ {hoverSeg.s.loc}（{hoverSeg.s.year ?? "起"}）
                 </div>
                 {hoverSeg.s.gapBefore && (
@@ -2328,8 +2332,87 @@ function GeoMap({ onOpenChar }) {
 }
 
 /* ---------------- 主應用 ---------------- */
+/* ---------------- 頁頭下拉（語言、紙色） ----------------
+   觸發鈕與「卷首」同尺寸同字（京華老宋 13、字距 0.2em），惟框色取 T.line、不著朱。
+   菜單為 menu + menuitemradio：當前項 aria-checked，左綴高亮小點。
+   鍵盤：觸發鈕上下箭頭鍵、Enter、Space 開並聚焦當前項；菜單內上下箭頭循環、Home/End 首末、
+   Enter/Space 選定、Esc 收起並回焦觸發鈕、Tab 收起放行。點菜單外即收。
+   選定後焦點回到觸發鈕。換紙色會整棵重掛站內（見 App.jsx），觸發鈕隨之重生——
+   故選定前記下 id，由「值已變」之後的那一次渲染（換語言是原鈕、換紙色是新鈕）接回焦點。 */
+let headerMenuRefocus = null;
+function HeaderMenu({ id, label, hint, options, value, onChange, locale }) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef(null), btnRef = useRef(null), itemRefs = useRef([]);
+  const en = locale === "en";
+  useEffect(() => {
+    if (headerMenuRefocus === id) { headerMenuRefocus = null; btnRef.current?.focus({ preventScroll: true }); }
+  }, [id, value]);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e) => { if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("touchstart", onDown, { passive: true });
+    const cur = Math.max(0, options.findIndex((o) => o.value === value));
+    itemRefs.current[cur]?.focus({ preventScroll: true }); /* 聚焦不捲頁：頁頭半出視口時展開，頁面不應跳回頂端 */
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("touchstart", onDown);
+    };
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps -- 只在開合時聚焦一次，選項與值變動不重跑
+  const close = (refocus) => { setOpen(false); if (refocus) btnRef.current?.focus({ preventScroll: true }); };
+  const pick = (v) => {
+    if (v === value) { close(true); return; }
+    headerMenuRefocus = id;
+    setOpen(false);
+    onChange(v);
+  };
+  const onMenuKey = (e) => {
+    const n = options.length;
+    const at = itemRefs.current.indexOf(document.activeElement);
+    const go = (i) => { e.preventDefault(); itemRefs.current[(i + n) % n]?.focus(); };
+    if (e.key === "ArrowDown") go(at + 1);
+    else if (e.key === "ArrowUp") go(at - 1);
+    else if (e.key === "Home") go(0);
+    else if (e.key === "End") go(n - 1);
+    else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(true); }
+    else if (e.key === "Tab") setOpen(false);
+  };
+  return (
+    <div ref={wrapRef} className="header-menu" style={{ "--hm-hover": T.panelHi, "--hm-focus": T.accent }}>
+      <button ref={btnRef} type="button" aria-haspopup="menu" aria-expanded={open} title={hint}
+        onClick={() => setOpen((o) => !o)}
+        onKeyDown={(e) => { if (e.key === "ArrowDown" && !open) { e.preventDefault(); setOpen(true); } }}
+        className="header-menu-trigger"
+        style={{ fontFamily: en ? undefined : "JingHuaLaoSong", color: open ? T.ink : T.muted, border: `1px solid ${open ? T.accent : T.line}` }}>
+        {label}
+        <svg width="8" height="5" viewBox="0 0 8 5" aria-hidden="true" style={{ marginLeft: 6, transform: open ? "rotate(180deg)" : "none", transition: "transform .15s" }}>
+          <path d="M.5.5 4 4 7.5.5" fill="none" stroke="currentColor" strokeWidth="1.1" />
+        </svg>
+      </button>
+      {open && (
+        <div role="menu" aria-label={label} onKeyDown={onMenuKey} className="header-menu-list"
+          style={{ background: T.panel, border: `1px solid ${T.line}`, boxShadow: T.xShadow }}>
+          {options.map((o, i) => {
+            const on = o.value === value;
+            return (
+              <button key={o.value} ref={(el) => (itemRefs.current[i] = el)} type="button" role="menuitemradio" aria-checked={on}
+                lang={o.lang} tabIndex={-1} onClick={() => pick(o.value)} className="header-menu-item"
+                style={{ fontFamily: o.lang === "en" || (en && !o.lang) ? undefined : "JingHuaLaoSong", color: on ? T.ink : T.muted }}>
+                <span aria-hidden="true" className="header-menu-dot" style={{ background: on ? T.accent : "transparent" }} />
+                {o.swatch && <span aria-hidden="true" className="header-menu-swatch" style={{ background: o.swatch, borderColor: T.line }} />}
+                {o.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Wiki({ onOpenLanding }) {
   const [locale, setLocale] = useLanguage();
+  const [skin, setSkin] = useSkin();
   const t = (key) => translateUI(locale, key);
   /* 路由：哈希為唯一事實源（見 router.js 體例）。寫入即改哈希，
      hashchange（含瀏覽器前進後退）回灌 state；nav 同步 setHash 一份，
@@ -2368,7 +2451,7 @@ export default function Wiki({ onOpenLanding }) {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: T.bg, color: T.ink, padding: "0 0 60px" }}>
+    <div className="site-root" style={{ minHeight: "100vh", backgroundColor: T.bg, color: T.ink, padding: "0 0 60px" }}>
       <header style={{ borderBottom: `1px solid ${T.line}`, padding: "34px 28px 22px", display: "flex", alignItems: "flex-end", gap: 20, flexWrap: "wrap" }}>
         <div>
           <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, letterSpacing: "0.5em", color: T.faint }}>七一五 — 八〇〇 · 開元三年至貞元十六年</div>
@@ -2390,14 +2473,13 @@ export default function Wiki({ onOpenLanding }) {
               {t("卷首")}
             </button>
           )}
-          <div className="language-switch" role="group" aria-label="语言 / Language">
-            {[["zh", "中文"], ["en", "EN"]].map(([value, label]) => (
-              <button key={value} type="button" lang={value} aria-pressed={locale === value}
-                onClick={() => setLocale(value)} style={{ color: locale === value ? T.ink : T.muted, borderColor: locale === value ? T.accent : T.line }}>
-                {label}
-              </button>
-            ))}
-          </div>
+          {/* 語言、紙色：各一枚下拉，與「卷首」並作三鈕（色板與換膚機制見 theme.js） */}
+          <HeaderMenu id="lang" label={t("語言")} hint="语言 / Language" locale={locale}
+            value={locale} onChange={setLocale}
+            options={[{ value: "zh", label: "中文", lang: "zh" }, { value: "en", label: "English", lang: "en" }]} />
+          <HeaderMenu id="skin" label={t("紙色")} locale={locale}
+            value={skin} onChange={setSkin}
+            options={[["night", "玄墨"], ["paper", "素紙"]].map(([value, label]) => ({ value, label: t(label), swatch: SKINS[value].bg }))} />
         </nav>
       </header>
 

@@ -901,19 +901,80 @@ body {
 
 /* Phase-one English: scope typography to navigation and the translated profile.
    Seals retain their original Chinese type and all faction layers remain intact. */
-.language-switch {
+/* 頁頭下拉（語言、紙色，wiki.jsx HeaderMenu）：結構在此，顏色由內聯 T 給。
+   觸發鈕尺寸同「卷首」；英文界面字族由 .nav-en button 一併接管 */
+.header-menu {
+  position: relative;
+  align-self: center;
+  margin-left: 6px;
+}
+.header-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.header-menu-trigger:focus-visible {
+  outline: 1px solid var(--hm-focus);
+  outline-offset: 2px;
+}
+.header-menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  min-width: 118px;
+  padding: 4px 0;
+  border-radius: 3px;
+  animation: header-menu-in .14s ease-out;
+}
+.header-menu-item {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-left: 10px;
-}
-.language-switch button {
+  gap: 8px;
+  width: 100%;
   background: none;
-  border: 1px solid;
-  border-radius: 3px;
-  padding: 5px 8px;
-  font: 13px Georgia, "Songti SC", serif;
+  border: 0;
+  padding: 7px 14px 7px 10px;
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  text-align: left;
   cursor: pointer;
+}
+.header-menu-item:hover,
+.header-menu-item:focus-visible {
+  background: var(--hm-hover);
+  outline: none;
+}
+.header-menu-item:focus-visible {
+  box-shadow: inset 2px 0 0 var(--hm-focus);
+}
+.header-menu-dot {
+  flex: 0 0 auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.header-menu-swatch {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border: 1px solid;
+  border-radius: 2px;
+}
+@keyframes header-menu-in {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-menu-list { animation: none; }
 }
 .nav-en button {
   font-family: Georgia, "Songti SC", serif !important;
@@ -1054,4 +1115,105 @@ body {
 .profile-en .seal-svg-shell,
 .profile-en .seal-svg-shell span {
   font-family: "HuiwenZhengKai" !important;
+}
+
+/* ══ 素紙皮膚 ══════════════════════════════════════════════════════════
+   全站換膚的 CSS 一側。色板與換膚機制在 theme.js（T 就地改值，<html data-skin> 隨之），
+   JSX 內聯諸色皆取自 T，自然隨膚；此處只管 index.css 自身寫死的暗底參數，
+   與頁面底紙肌理。凡此段規則一律以 html[data-skin="paper"] 圈定，玄墨下一條不生效——
+   故日後調玄墨不必顧及此段，作廢素紙時整段刪去即可。 */
+
+html[data-skin="paper"] body {
+  background-color: #F1E9DA; /* 同 T.bg：回彈滾動露出的底，免一閃白 */
+}
+html[data-skin="paper"] ::selection {
+  background: rgba(124, 141, 86, 0.32); /* 石綠 */
+  color: inherit;
+}
+
+/* 底紙：三層噪點皆零圖片（data:image/svg+xml），去色後以 multiply 壓在 T.bg 之上——
+   細顆粒（紙面毛糙）+ 長纖維（橫低豎高 baseFrequency，拉出近水平的簾紋）+ 大塊雲斑（泛黃不勻）。
+   根節點內聯用 backgroundColor 而非 background 簡寫，此處的 background-image 方不被蓋掉 */
+html[data-skin="paper"] .site-root {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23a)' opacity='0.09'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='b' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009 0.2' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='480' height='480' filter='url(%23b)' opacity='0.07'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.62  0 0 0 0 0.46  0 0 0 0 0.28  0 0 0 1.4 -0.55'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23c)' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 260px 260px, 480px 480px, 900px 900px;
+  background-blend-mode: multiply, multiply, multiply;
+}
+
+/* 門派底紋：玄墨下是暗底上的淺灰剪影，素紙下改作淡墨印痕。
+   走 mask 的諸派共用一色；圖片直出的四派（岑荃、藥宗、段氏、唐軍）另議，
+   故 :not() 排除之——否則此處的 background-color 會在其圖下鋪出一整塊方色 */
+html[data-skin="paper"] .faction-watermark:not(.faction-watermark--cenquan):not(.faction-watermark--yaozong):not(.faction-watermark--duanshi):not(.faction-watermark--tangjun) {
+  background-color: #6A4E36;
+  opacity: 0.06;
+}
+html[data-skin="paper"] .faction-watermark--cangyun {
+  background-color: #4C5966; /* 苍云仍守冷鐵色 */
+  opacity: 0.065;
+}
+/* 岑荃黑底圖：反相成白底，multiply 下白處自然透出（同玄墨下 screen 透黑之理） */
+html[data-skin="paper"] .faction-watermark--cenquan {
+  filter: grayscale(1) contrast(0.9) invert(1);
+  mix-blend-mode: multiply;
+  opacity: 0.09;
+}
+/* 藥宗、段氏：玄墨下以「亮」為顯，反相後亮者轉深，原定的層次主次不變 */
+html[data-skin="paper"] .faction-watermark--yaozong {
+  filter: url(#yaozong-tone) invert(1);
+  mix-blend-mode: multiply;
+  opacity: 0.1;
+}
+html[data-skin="paper"] .faction-watermark--duanshi {
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: multiply;
+  opacity: 0.1;
+}
+/* 唐軍滿幅彩繪：不反相，multiply 使淺處消融、線描留墨，如拓 */
+html[data-skin="paper"] .faction-watermark--tangjun {
+  filter: grayscale(1) contrast(0.9);
+  mix-blend-mode: multiply;
+  opacity: 0.1;
+}
+
+/* 卡面宣紙肌理：玄墨下 overlay 提亮暗卡，素紙下 overlay 幾近無痕，改 multiply 落墨 */
+html[data-skin="paper"] .texture-test {
+  --border: #D6C4A8; /* 同 T.line */
+}
+html[data-skin="paper"] .texture-test::before,
+html[data-skin="paper"] .texture-test-sm::before {
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+html[data-skin="paper"] .texture-test-sm::before {
+  opacity: 0.4;
+}
+/* 斑駁：左下原是壓暗的「重角」，紙上壓黑便是髒，改作泛黃的舊痕（駝色） */
+html[data-skin="paper"] .texture-test::after {
+  background-image:
+    radial-gradient(500px 300px at 82% 6%, var(--tt-stain, rgba(139, 64, 30, 0.06)), transparent 70%),
+    radial-gradient(380px 340px at 6% 98%, rgba(176, 128, 72, 0.13), transparent 72%);
+}
+html[data-skin="paper"] .texture-test-sm::after {
+  background-image:
+    linear-gradient(90deg, transparent 10px, rgba(188, 150, 116, 0.6) 10px, rgba(188, 150, 116, 0.6) 11px, transparent 11px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='120'%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.09 0.35' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23d)' opacity='0.55'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='80'%3E%3Cfilter id='e' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23e)' opacity='0.4'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, var(--tt-band-a, #5B2328), var(--tt-band-b, #42191D) 52%, var(--tt-band-c, #582227)),
+    radial-gradient(210px 130px at 82% 6%, var(--tt-stain, rgba(139, 64, 30, 0.06)), transparent 70%),
+    radial-gradient(160px 140px at 6% 98%, rgba(176, 128, 72, 0.11), transparent 72%);
+  background-size: 11px 100%, 11px 120px, 11px 80px, 11px 100%, auto, auto;
+  background-position: left top, left top, left top, left top, 0 0, 0 0;
+  background-repeat: no-repeat, repeat-y, repeat-y, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, overlay, soft-light, normal, normal, normal;
+}
+/* 金線：紙上原金色偏淡，改駝色並略加重 */
+html[data-skin="paper"] .texture-test .char-modal-scroll div[style*="border-bottom"]:not([style*="border-left"]) {
+  border-image: linear-gradient(90deg, rgba(188, 150, 116, 0.75), var(--border) 40%) 1;
+}
+html[data-skin="paper"] .texture-test .tt-rule,
+html[data-skin="paper"] .texture-test-sm .items-baseline {
+  border-image: linear-gradient(90deg, rgba(188, 150, 116, 0.85), rgba(188, 150, 116, 0.25) 40%, transparent 88%) 1;
 }

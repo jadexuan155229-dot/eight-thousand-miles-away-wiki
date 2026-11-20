@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
-import { fc, CHARACTERS } from "./wiki-data";
+import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
-import { T } from "./theme";
+import { T, tone } from "./theme";
+
+const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
 import { characterTranslation } from "./i18n/characters.en";
 import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi } from "./i18n/echoes.en";
 
@@ -321,7 +323,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         const tr = characterTranslation(locale, c.id);
         const band = shock.bands.find(([k]) => k === selected.band);
         return (
-          <section aria-live="polite" style={{ marginTop: 18, padding: "18px 22px", background: T.panel, border: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
+          <section aria-live="polite" style={{ marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
             <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
               {selected.draft && (
