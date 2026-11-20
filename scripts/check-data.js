@@ -230,6 +230,16 @@ GRANTS.forEach((g, i) => {
   if (!Array.isArray(g.src) || !g.src.length) warn(tag, "缺 src（依據）");
   checkSrc(tag, g.src, g.who, g.draft);
 });
+/* 下一段待核，上一段的「如何下」卻把那段情節寫成定論（如「出成都討崔旰」）：
+   同一人、上一段止點＝待核段起點，且 end 含待核段職銜的主幹（括號前）即報 */
+for (const d of TENURES.filter((t) => t.draft)) {
+  const core = (d.rank || "").split("（")[0];
+  if (core.length < 2) continue;
+  for (const p of TENURES) {
+    if (p === d || p.draft || p.who !== d.who || p.y1 !== d.y0 || (p.m1 ?? null) !== (d.m0 ?? null)) continue;
+    if ((p.end || "").includes(core)) warn(`TENURES ${p.who}·${p.post}`, `下一段（${d.post}）待核，本段「如何下」卻寫了「${core}」`);
+  }
+}
 for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length; j++) {
   const s1 = TENURES[i], s2 = TENURES[j];
   if (s1.post !== s2.post || s1.who !== s2.who) continue;

@@ -282,7 +282,7 @@ export const TENURES = [
   { post: "jn-pr", who: "chengduo", y0: 740, m0: 3, y1: 750, m1: null, kind: "正授", rank: "平戎城子将", how: "随章仇兼琼入安戎城，初立军功", end: "入牙前", src: ["740.3"], approx: ["y1"] },
   { post: "jn-yy", who: "chengduo", y0: 750, m0: null, y1: 755, m1: null, kind: "正授", rank: "剑南节度押衙", how: "入牙前统兵", end: "迁都虞候", src: ["751.4", "751.9", "752.2"], approx: ["y0", "y1"], note: "751.4 所部护鲜于仲通突围；751.9 不追逃兵；752.2 部下牵连通敌案" },
   { post: "jn-dj", who: "chengduo", y0: 754, m0: null, y1: 754, m1: 6, kind: "差遣", rank: "留守成都，点兵", how: "再征南诏，兵源仍靠强征", end: "李宓全军覆没，名册无一人回", src: ["754", "754.6"], note: "追唐青阳也在这一段" },
-  { post: "jn-yh", who: "chengduo", y0: 755, m0: null, y1: 765, m1: 10, kind: "正授", rank: "剑南都虞候", how: "掌军纪", end: "郭英乂死，出成都讨崔旰", src: ["762.7"], approx: ["y0"], note: "与剑南兵马使徐知道同在使府；762.7 徐知道反，自己营里已有人跟了他" },
+  { post: "jn-yh", who: "chengduo", y0: 755, m0: null, y1: 765, m1: 10, kind: "正授", rank: "剑南都虞候", how: "掌军纪", end: "郭英乂死；此后去向年表待定", src: ["762.7"], approx: ["y0"], note: "与剑南兵马使徐知道同在使府；762.7 徐知道反，自己营里已有人跟了他" },
   { post: "jn-pl", who: "chengduo", y0: 757, m0: 7, y1: 757, m1: 8, kind: "差遣", rank: "随军平郭千仞", how: "郭千仞之变", src: ["757.7"] },
   { post: "jn-tg", who: "chengduo", y0: 765, m0: 10, y1: 766, m1: null, kind: "差遣", rank: "讨崔旰（随柏茂琳诸将）", how: "站朝廷委任的节度使", end: "杜鸿渐入蜀，姑息崔旰", src: ["765.10"], note: "年表此条待定；月份待核", draft: true },
   { post: "jn-xz", who: "chengduo", y0: 766, m0: null, y1: 768, m1: null, kind: "无名目", rank: "闲置（带左武卫将军员外置衔）", how: "讨旰诸将各得安置，独他被闲置", src: ["766"], note: "年表此条待定；衔名可换", draft: true },
