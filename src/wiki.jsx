@@ -8,7 +8,7 @@ import { SEAL_SVG_FILE } from "./seals";
 import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
-import { tenuresOf, tenureSpan, tenureTitle } from "./posts-data";
+import { grantLabel, grantsOf, tenureFac, tenuresOf, tenureSpan, tenureTitle } from "./posts-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLanguage } from "./i18n/use-language";
@@ -466,10 +466,13 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
           </div>
         )}
 
-        {/* 任職履歷：自任職庫（posts-data.js）生成；跨職位者在編制圖上各有一色 */}
+        {/* 任職履歷：自任職庫（posts-data.js）生成；跨職位者在編制圖上各有一色。
+            一人任職跨兩個門派（如嵐川雲）時逐條標門派；勳、散另列於後，不上編制圖 */}
         {(() => {
           const ts = tenuresOf(c.id);
-          if (!ts.length) return null;
+          const gs = grantsOf(c.id);
+          if (!ts.length && !gs.length) return null;
+          const facs = [...new Set(ts.map(tenureFac))];
           return (
             <div style={{ marginTop: 24 }}>
               <SectionLabel>{t("任職履歷")}</SectionLabel>
@@ -479,6 +482,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                   <div key={i} style={{ display: "flex", gap: 14, padding: "6px 0", borderBottom: `1px solid ${T.line}44` }}>
                     <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{tenureSpan(x)}</div>
                     <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.85 }}>
+                      {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{t(tenureFac(x))}</span>}
                       {e ? e.title : tenureTitle(x)}
                       {x.kind !== "正授" && !e && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{x.kind}</span>}
                       {x.draft && <span style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
@@ -491,10 +495,28 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                   </div>
                 );
               })}
-              <button onClick={() => { setShowAll(false); onOpenPosts(); }}
-                style={{ marginTop: 8, fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "3px 12px", borderRadius: 3, cursor: "pointer" }}>
-                {t("在編制圖中看")} ›
-              </button>
+              {gs.length > 0 && (
+                <div style={{ marginTop: 10 }}>
+                  <div style={{ fontSize: 11.5, color: T.faint, fontFamily: "HuiwenZhengKai", marginBottom: 2 }}>{t("勳、散")}</div>
+                  {gs.map((g, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, padding: "3px 0" }}>
+                      <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? "（约）" : ""}</div>
+                      <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>
+                        {grantLabel(g)}
+                        {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 }}>
+                {facs.map((f) => (
+                  <button key={f} onClick={() => { setShowAll(false); onOpenPosts(f); }}
+                    style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "3px 12px", borderRadius: 3, cursor: "pointer" }}>
+                    {t("在編制圖中看")}{facs.length > 1 ? ` · ${t(f)}` : ""} ›
+                  </button>
+                ))}
+              </div>
             </div>
           );
         })()}
@@ -2390,7 +2412,7 @@ export default function Wiki({ onOpenLanding }) {
             ))}
           </div>
         )}
-        {tab === "posts" && <Posts locale={locale} onOpenChar={setOpenChar} />}
+        {tab === "posts" && <Posts locale={locale} onOpenChar={setOpenChar} fac={route.fac} onFac={(f) => nav({ fac: f })} />}
         {tab === "chars" && (
           <>
             <div className="flex flex-wrap items-center" style={{ gap: 8, marginBottom: 20 }}>
@@ -2430,7 +2452,7 @@ export default function Wiki({ onOpenLanding }) {
       <DetailPanel c={openChar} locale={locale} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
         onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
         onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })}
-        onOpenPosts={() => nav({ tab: "posts", char: null })} />
+        onOpenPosts={(f) => nav({ tab: "posts", fac: f || "苍云", char: null })} />
     </div>
   );
 }
