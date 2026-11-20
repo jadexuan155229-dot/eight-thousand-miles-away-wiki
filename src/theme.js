@@ -14,8 +14,12 @@ export const serif = '"Songti SC","Noto Serif SC","Noto Serif CJK SC","SimSun",s
        駝     #BC9674 → 分隔線、金線
    T 是活對象：換膚時就地改寫其值（Object.assign），故諸處 `${T.line}44`
    這類十六進位拼透明度的寫法照常可用，dimAccent 等解析 hex 的函數亦不受影響。
-   代價是：模塊頂層若把 T 的值抄進常量，換膚後便成舊值——
-   故凡取 T 之樣式一律寫在渲染期（或寫成函數），App 換膚時亦整棵重掛 Wiki 以清掉 useMemo 舊值。
+   換膚不重掛組件：Wiki 訂閱皮膚，整棵重渲染，篩選、輿圖、年表、閱讀位置等狀態原樣保留。
+   代價是兩條規矩——
+     一、模塊頂層不可把 T 的值（或 fc、tone 的結果）抄進常量，換膚後便成舊值；
+         取 T 之樣式一律寫在渲染期，或寫成函數（如文庫的 rowLabel、navBtn）；
+     二、useMemo／useState 裡不可緩存算好的顏色：存原色，取用時再 tone()
+         （如輿圖動線 tracks、編制圖 colorOf）。
    T 只放十六進位色（可拼透明度者）；整串 rgba、陰影之類另置 T 的 x 開頭諸鍵，不可再拼。 */
 const NIGHT = {
   bg: "#15181D", panel: "#1D2229", panelHi: "#232A33", line: "#2E3640",

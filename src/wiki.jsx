@@ -200,7 +200,7 @@ function CharCard({ c, onOpen, locale }) {
       onClick={() => onOpen(c)}
       className={`cursor-pointer flex${tt ? " texture-test-sm" : ""}${translated ? " profile-en" : ""}`}
       lang={translated ? "en" : "zh"}
-      style={{ background: T.panel, border: `1px solid ${T.line}`, borderTop: `3px solid ${fc(main)}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", ...(tt ? ttVars(main) : null) }}
+      style={{ background: T.panel, borderTop: `3px solid ${fc(main)}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `1px solid ${T.line}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", ...(tt ? ttVars(main) : null) }}
       onMouseEnter={(e) => (e.currentTarget.style.background = T.panelHi)}
       onMouseLeave={(e) => (e.currentTarget.style.background = T.panel)}
     >
@@ -543,7 +543,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
         )}
 
         {c.highlight && c.highlight.length > 0 && (
-          <div style={{ marginTop: 24, border: `1px solid ${profileAccent}55`, borderLeft: `3px solid ${profileAccent}`, padding: "12px 16px" }}>
+          <div style={{ marginTop: 24, borderTop: `1px solid ${profileAccent}55`, borderRight: `1px solid ${profileAccent}55`, borderBottom: `1px solid ${profileAccent}55`, borderLeft: `3px solid ${profileAccent}`, padding: "12px 16px" }}>
             <SectionLabel>高光</SectionLabel>
             {c.highlight.map((h, i) => (
               <div key={i} style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.95 }}>{h}</div>
@@ -1962,7 +1962,7 @@ function GeoMap({ onOpenChar }) {
         stays.forEach((s, i) => {
           (byLoc[s.loc] = byLoc[s.loc] || { x: s.x, y: s.y, visits: [] }).visits.push(`${i + 1}·${s.year ?? "起"}`);
         });
-        return { id, ti, color: tone(TRACK_COLORS[ti % TRACK_COLORS.length]), stays, locLabels: Object.entries(byLoc) };
+        return { id, ti, color: TRACK_COLORS[ti % TRACK_COLORS.length], stays, locLabels: Object.entries(byLoc) }; /* 原色：此 memo 不隨膚重算，取用處再 tone() */
       }),
     [trackSel, tmode, tyear]
   );
@@ -2208,6 +2208,7 @@ function GeoMap({ onOpenChar }) {
             {tracks.map((t) => {
               const sh = (t.ti - (tracks.length - 1) / 2) * 6 / view.k; /* 多線並比微錯位，免駐點疊死 */
               const P = (p) => [p.x + sh, p.y + sh * 0.6];
+              const tc = tone(t.color); /* 隨膚調色，於渲染期求值 */
               return (
                 <g key={t.id} style={{ cursor: "pointer" }} onClick={() => { if (movedRef.current > 5) return; onOpenChar(byId[t.id]); }}>
                   {t.stays.map((s, i) => {
@@ -2225,7 +2226,7 @@ function GeoMap({ onOpenChar }) {
                     return (
                       <g key={i}>
                         <path d={d} fill="none" stroke={T.bg} strokeWidth={(segHov ? 4.8 : 3.6) / view.k} opacity={0.7} />
-                        <path d={d} fill="none" stroke={t.color} strokeWidth={(segHov ? 2.8 : 1.7) / view.k}
+                        <path d={d} fill="none" stroke={tc} strokeWidth={(segHov ? 2.8 : 1.7) / view.k}
                           opacity={segHov ? 1 : hoverSeg ? 0.3 : 0.9}
                           strokeDasharray={s.gapBefore ? `${5 / view.k} ${4 / view.k}` : undefined} />
                         {/* 觸屏指腹粗於鼠尖，感應帶加寬一倍有餘 */}
@@ -2240,13 +2241,13 @@ function GeoMap({ onOpenChar }) {
                   })}
                   {t.stays.map((s, i) => {
                     const [x, y] = P(s);
-                    return <circle key={"n" + i} cx={x} cy={y} r={3.2 / view.k} fill={t.color} stroke={T.bg} strokeWidth={1 / view.k} />;
+                    return <circle key={"n" + i} cx={x} cy={y} r={3.2 / view.k} fill={tc} stroke={T.bg} strokeWidth={1 / view.k} />;
                   })}
                   {t.locLabels.map(([loc, g]) => {
                     const [x, y] = P(g);
                     return (
                       <text key={loc} x={x + 6 / view.k} y={y + (15 + t.ti * 11) / view.k}
-                        style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: t.color, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
+                        style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: tc, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
                         {g.visits.join("、")}
                       </text>
                     );
@@ -2255,7 +2256,7 @@ function GeoMap({ onOpenChar }) {
                     const [x, y] = P(t.stays[0]);
                     return (
                       <text x={x - 7 / view.k} y={y - 7 / view.k} textAnchor="end"
-                        style={{ fontFamily: gName, fontSize: 11.5 / view.k, fill: t.color, fontWeight: 700, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / view.k }}>
+                        style={{ fontFamily: gName, fontSize: 11.5 / view.k, fill: tc, fontWeight: 700, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / view.k }}>
                         {byId[t.id].name}（起）
                       </text>
                     );
@@ -2286,7 +2287,7 @@ function GeoMap({ onOpenChar }) {
             const tf = [flip ? "translateX(-100%)" : "", coarse ? "translateY(-100%)" : ""].filter(Boolean).join(" ");
             return (
               <div style={{ position: "absolute", left: hoverSeg.x + (flip ? -14 : 14), top: hoverSeg.y + (coarse ? -14 : 12), transform: tf || "none", maxWidth: 300, background: T.panelHi, border: `1px solid ${T.line}`, boxShadow: T.xShadowTip, padding: "10px 13px", pointerEvents: "none", zIndex: 4 }}>
-                <div style={{ fontFamily: gUI, fontSize: 12.5, color: hoverSeg.color, marginBottom: 4 }}>
+                <div style={{ fontFamily: gUI, fontSize: 12.5, color: tone(hoverSeg.color), marginBottom: 4 }}>
                   {hoverSeg.name} · {hoverSeg.prev.loc}（迄{hoverSeg.prev.toYear ?? "起"}）→ {hoverSeg.s.loc}（{hoverSeg.s.year ?? "起"}）
                 </div>
                 {hoverSeg.s.gapBefore && (
@@ -2344,7 +2345,7 @@ function HeaderMenu({ id, label, hint, options, value, onChange, locale }) {
   const wrapRef = useRef(null), btnRef = useRef(null), itemRefs = useRef([]);
   const en = locale === "en";
   useEffect(() => {
-    if (headerMenuRefocus === id) { headerMenuRefocus = null; btnRef.current?.focus(); }
+    if (headerMenuRefocus === id) { headerMenuRefocus = null; btnRef.current?.focus({ preventScroll: true }); }
   }, [id, value]);
   useEffect(() => {
     if (!open) return;
@@ -2352,13 +2353,13 @@ function HeaderMenu({ id, label, hint, options, value, onChange, locale }) {
     document.addEventListener("mousedown", onDown);
     document.addEventListener("touchstart", onDown, { passive: true });
     const cur = Math.max(0, options.findIndex((o) => o.value === value));
-    itemRefs.current[cur]?.focus();
+    itemRefs.current[cur]?.focus({ preventScroll: true }); /* 聚焦不捲頁：頁頭半出視口時展開，頁面不應跳回頂端 */
     return () => {
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("touchstart", onDown);
     };
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps -- 只在開合時聚焦一次，選項與值變動不重跑
-  const close = (refocus) => { setOpen(false); if (refocus) btnRef.current?.focus(); };
+  const close = (refocus) => { setOpen(false); if (refocus) btnRef.current?.focus({ preventScroll: true }); };
   const pick = (v) => {
     if (v === value) { close(true); return; }
     headerMenuRefocus = id;

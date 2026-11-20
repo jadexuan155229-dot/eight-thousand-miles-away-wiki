@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Wiki from './wiki.jsx'
 import Landing from './landing.jsx'
-import { useSkin } from './theme'
 
 /* 定場僅攔「裸址直達」：帶哈希深鏈（自分享而來）與同會話再訪皆直入站內 */
 function wantLanding() {
@@ -14,13 +13,12 @@ function wantLanding() {
 
 function App() {
   const [landing, setLanding] = useState(wantLanding)
-  /* 換膚：T 已就地改值，此處以 key 整棵重掛站內，清掉各視圖 useMemo 裡的舊色。
-     路由、所開檔案、閱讀位置皆在網址與 localStorage，重掛不丟；
-     僅篩選、檢索框這類臨時狀態歸零。定場（夜景燭照）不隨膚，恆為原樣 */
-  const [skin] = useSkin()
+  /* 換膚不重掛：Wiki 自行訂閱皮膚（useSkin），整棵重渲染而不重建，
+     篩選、檢索、輿圖動線、年表展開、閱讀位置一概不動（見 theme.js 換膚一節）。
+     定場（夜景燭照）不隨膚，恆為原樣 */
   return (
     <>
-      <Wiki key={skin} onOpenLanding={() => setLanding(true)} />
+      <Wiki onOpenLanding={() => setLanding(true)} />
       {landing && <Landing onEnter={() => setLanding(false)} />}
     </>
   )

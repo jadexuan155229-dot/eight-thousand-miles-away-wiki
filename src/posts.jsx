@@ -75,8 +75,9 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
     /* 按首任先后分色，色随人走、不随排名 */
     const first = (w) => Math.min(...mine.filter(({ t }) => t.who === w).map(({ t }) => (t.y0 == null ? F.range[0] : pos(t.y0, t.m0))));
     movers.sort((a, b) => first(a) - first(b));
-    const map = Object.fromEntries(movers.map((w, i) => [w, tone(MOVER_COLORS[i % MOVER_COLORS.length])]));
-    return (w) => map[w] || NEUTRAL;
+    const map = Object.fromEntries(movers.map((w, i) => [w, MOVER_COLORS[i % MOVER_COLORS.length]]));
+    /* map 存原色；tone() 在每次調用時求值，換膚不必重算此 memo */
+    return (w) => (map[w] ? tone(map[w]) : NEUTRAL);
   }, [mine, F.range]);
   const movers = useMemo(() => [...new Set(mine.map(({ t }) => t.who))].filter((w) => colorOf(w) !== NEUTRAL), [mine, colorOf]);
 
