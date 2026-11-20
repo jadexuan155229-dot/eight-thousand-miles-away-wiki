@@ -10,7 +10,7 @@
 import { fc, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS } from "../src/wiki-data.js";
 import { CHAR_TERMS } from "../src/novel/char-terms.js";
 import { SHOCKS, ECHOES } from "../src/echoes-data.js";
-import { POSTS, POST_FULL, TENURES } from "../src/posts-data.js";
+import { FACTIONS, GRANTS, POSTS, POST_FULL, TENURES } from "../src/posts-data.js";
 import { echoModesEn } from "../src/i18n/echoes.en.js";
 import { SEAL_SVG_FILE } from "../src/seals.js";
 import { missingFontChars } from "./font-chars.js";
@@ -166,11 +166,26 @@ for (const [name, c] of Object.entries(LOC_COORDS)) {
 
 /* ---------- 任職 ----------
    posts-data.js：人物、職位格、起止、依據裡寫的年表編號（如 757.10B）須存在；
-   同一職位格內同一人的任期不應重疊（重疊多半是止點漏改） */
+   同一職位格內同一人的任期不應重疊（重疊多半是止點漏改）；
+   職位格須標門派（FACTIONS）；勳散（GRANTS）同校人物、年月、依據 */
 const postIds = new Set(POSTS.map((p) => p.id));
-for (const p of POSTS) if (!POST_FULL[p.id]) err(`POSTS ${p.id}`, "POST_FULL 缺全稱");
-const KINDS_T = new Set(["正授", "署理", "代領", "代领", "兼領", "兼领", "停職", "停职", "暫任", "暂任", "差遣", "無名目", "无名目"]);
+const facIds = new Set(FACTIONS.map((f) => f.id));
+for (const p of POSTS) {
+  if (!POST_FULL[p.id]) err(`POSTS ${p.id}`, "POST_FULL 缺全稱");
+  if (!facIds.has(p.fac)) err(`POSTS ${p.id}`, `fac 不在 FACTIONS：${p.fac}`);
+}
+if (postIds.size !== POSTS.length) err("POSTS", "職位格 id 重複");
+const KINDS_T = new Set(["正授", "署理", "代領", "代领", "兼領", "兼领", "停職", "停职", "暫任", "暂任", "差遣", "無名目", "无名目", "充任"]);
 const evRef = /^(\d{3})\.(\d{1,2})([A-Z]\d?)?$|^(\d{3})$/;
+const checkSrc = (tag, src) => {
+  for (const ref of src || []) {
+    const m = ref.match(evRef);
+    if (!m) continue; /* 〈文稿〉與「卡」不校 */
+    const y = Number(m[1] || m[4]), mo = m[2] != null ? Number(m[2]) : null, q = m[3] || null;
+    const hit = EVENTS.some((e) => e.year === y && (mo == null || e.month === mo) && (q == null || e.seq === q));
+    if (!hit) err(tag, `依據 ${ref} 在年表中找不到（年月序號不符？）`);
+  }
+};
 TENURES.forEach((t, i) => {
   const tag = `TENURES[${i}] ${t.who}·${t.post}`;
   if (!charIds.has(t.who)) err(tag, `who 引用不存在的人物 id：${t.who}`);
@@ -184,13 +199,19 @@ TENURES.forEach((t, i) => {
   if (c && c.death != null && t.y0 != null && t.y0 > c.death) err(tag, `任期起於卒年 ${c.death} 之後`);
   if (c && c.birth != null && t.y0 != null && t.y0 - c.birth < 12) warn(tag, `任期起時年僅 ${t.y0 - c.birth}`);
   if (!Array.isArray(t.src) || !t.src.length) warn(tag, "缺 src（依據）");
-  for (const ref of t.src || []) {
-    const m = ref.match(evRef);
-    if (!m) continue; /* 〈文稿〉與「卡」不校 */
-    const y = Number(m[1] || m[4]), mo = m[2] != null ? Number(m[2]) : null, q = m[3] || null;
-    const hit = EVENTS.some((e) => e.year === y && (mo == null || e.month === mo) && (q == null || e.seq === q));
-    if (!hit) err(tag, `依據 ${ref} 在年表中找不到（年月序號不符？）`);
-  }
+  checkSrc(tag, t.src);
+});
+GRANTS.forEach((g, i) => {
+  const tag = `GRANTS[${i}] ${g.who}`;
+  if (!charIds.has(g.who)) err(tag, `who 引用不存在的人物 id：${g.who}`);
+  if (typeof g.y !== "number") err(tag, "缺授予年");
+  if (g.m != null && (g.m < 1 || g.m > 12)) err(tag, `月份非法：${g.m}`);
+  if (!g.xun && !g.san) err(tag, "勳、散皆空");
+  if (g.san && !g.pin) warn(tag, "散官缺品");
+  const c = CHARACTERS.find((x) => x.id === g.who);
+  if (c && c.death != null && g.y > c.death) err(tag, `授於卒年 ${c.death} 之後`);
+  if (!Array.isArray(g.src) || !g.src.length) warn(tag, "缺 src（依據）");
+  checkSrc(tag, g.src);
 });
 for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length; j++) {
   const s1 = TENURES[i], s2 = TENURES[j];
@@ -212,7 +233,7 @@ if (missingGlyphs.length) {
 for (const w of warns) console.log(`  ⚠ ${w}`);
 for (const e of errors) console.log(`  ✗ ${e}`);
 console.log(
-  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length} —— ` +
+  `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length} · 勳散 ${GRANTS.length} —— ` +
   (errors.length ? `${errors.length} 錯` : "無錯") + (warns.length ? `，${warns.length} 警告` : "")
 );
 if (errors.length) process.exit(1);

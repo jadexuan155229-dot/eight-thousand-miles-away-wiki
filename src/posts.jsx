@@ -1,15 +1,16 @@
 import { useMemo, useRef, useState } from "react";
 import { CHARACTERS } from "./wiki-data";
-import { POSTS, TENURES, tenureSpan, tenureTitle } from "./posts-data";
+import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./posts-data";
+import { translateUI } from "./i18n/ui";
 import { T } from "./theme";
 import { characterTranslation } from "./i18n/characters.en";
 
 /* ============================================================
-   編制 (posts.jsx) —— 苍云职位 × 年份的任期图
+   編制 (posts.jsx) —— 门派职位 × 年份的任期图（苍云、天策，顶上切换）
    一行一个职位格（单位 × 职位），按单位分组；一段任期一条色带。
    跨两个以上职位格的人各给一色，一眼看出谁从哪里走到哪里；
    只任一职的人用中性灰。实带＝正授、署理、暂任；虚线＝代领、兼领、
-   停职、无名目；细线＝出征差遣，不占编制。
+   停职、无名目、充任；细线＝出征差遣，不占编制。
    同一格内任期重叠（如武库）自动分道。悬停或聚焦出浮签并点亮此人
    各段任期；点选打开档案。
    数据见 posts-data.js（Notion「人山人海 · 任職」先改，此处随之）。
@@ -17,10 +18,8 @@ import { characterTranslation } from "./i18n/characters.en";
 
 const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
 
-const Y0 = 737, Y1 = 766; /* 横轴：薛直在任之末到闵方城身后 */
 const W = 1000, PLOT_L = 168, PLOT_R = 984, TOP = 44, ROW_H = 26, LANE_H = 20, GROUP_H = 26;
 const pos = (y, m) => y + (m != null ? (m - 1) / 12 : 0);
-const xOf = (p) => PLOT_L + ((p - Y0) / (Y1 - Y0)) * (PLOT_R - PLOT_L);
 const textW = (str, size) => [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? size : size * 0.56), 0);
 
 /* 跨职位格者着色；色取暗底上可辨、彼此不近的五种，余者中性 */
@@ -28,42 +27,51 @@ const MOVER_COLORS = ["#D29A4A", "#C8673E", "#5FA88A", "#8E84D6", "#7FA3C8", "#C
 const NEUTRAL = "#6E7885";
 const SOLID = new Set(["正授", "署理", "暂任"]);
 
-/* 年表上三个参照：一场败、一场乱、一个人 */
-const MARKS = [
-  { p: pos(745, 9), label: "雁门关之役" },
-  { p: pos(755, 11), label: "安史乱起" },
-  { p: pos(765, 1), label: "闵方城卒", left: true },
-];
+/* 门派说明。年轴范围与参照线在 posts-data.js 的 FACTIONS（苍云：一场败、一场乱、一个人） */
+const INTRO = {
+  苍云: ["苍云编制，依文稿〈重看人物、军队体系〉：伍、火、队、旅、团、营，破阵营辖三团。一行一个职位，一条一段任期。",
+    "Cangyun posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."],
+  天策: ["天策编制：府中诸将、府僚（天策上将府旧制）、营伍（参照折冲府）。一行一个职位，一条一段任期。目前录有程凯、岚川云、李庭深三人。",
+    "Tiance posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). For now: Cheng Kai, Lanchuan Yun and Li Tingshen. Content remains in Chinese."],
+};
 
-export default function Posts({ locale, onOpenChar }) {
+export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
   const en = locale === "en";
-  const [hover, setHover] = useState(null); /* { i, x, y }：悬停或聚焦的任期；x、y 相对外框 */
+  const t_ = (k) => translateUI(locale, k);
+  const [hover, setHover] = useState(null); /* { i, x, y }：悬停或聚焦的任期（i 为 TENURES 下标）；x、y 相对外框 */
   const wrapRef = useRef(null);
+  const F = FACTIONS.find((f) => f.id === fac) || FACTIONS[0];
+  const [Y0, Y1] = F.range;
+  const xOf = (p) => PLOT_L + ((p - Y0) / (Y1 - Y0)) * (PLOT_R - PLOT_L);
+  const marks = F.marks.map((m) => ({ ...m, p: pos(m.y, m.m) }));
+  /* 本门派的任期，带原下标 */
+  const mine = useMemo(() => TENURES.map((t, i) => ({ t, i })).filter(({ t }) => tenureFac(t) === F.id), [F.id]);
 
   const colorOf = useMemo(() => {
     const posts = {};
-    for (const t of TENURES) (posts[t.who] ??= new Set()).add(t.post);
+    for (const { t } of mine) (posts[t.who] ??= new Set()).add(t.post);
     const movers = Object.keys(posts).filter((w) => posts[w].size > 1);
     /* 按首任先后分色，色随人走、不随排名 */
-    const first = (w) => Math.min(...TENURES.filter((t) => t.who === w).map((t) => (t.y0 == null ? Y0 : pos(t.y0, t.m0))));
+    const first = (w) => Math.min(...mine.filter(({ t }) => t.who === w).map(({ t }) => (t.y0 == null ? F.range[0] : pos(t.y0, t.m0))));
     movers.sort((a, b) => first(a) - first(b));
     const map = Object.fromEntries(movers.map((w, i) => [w, MOVER_COLORS[i % MOVER_COLORS.length]]));
     return (w) => map[w] || NEUTRAL;
-  }, []);
-  const movers = useMemo(() => [...new Set(TENURES.map((t) => t.who))].filter((w) => colorOf(w) !== NEUTRAL), [colorOf]);
+  }, [mine, F.range]);
+  const movers = useMemo(() => [...new Set(mine.map(({ t }) => t.who))].filter((w) => colorOf(w) !== NEUTRAL), [mine, colorOf]);
 
   /* 版面：分组标题 + 每格若干道（任期重叠者分道） */
   const { layout, H } = useMemo(() => {
     const out = [];
     let y = TOP, lastGroup = null;
-    for (const p of POSTS) {
+    const [y0, y1] = F.range;
+    for (const p of POSTS.filter((q) => q.fac === F.id)) {
       if (p.group !== lastGroup) {
         out.push({ kind: "group", label: p.group, y });
         y += GROUP_H;
         lastGroup = p.group;
       }
-      const items = TENURES.map((t, i) => ({ t, i, a: t.y0 == null ? Y0 : pos(t.y0, t.m0), b: t.y1 == null ? Y1 : pos(t.y1, t.m1) }))
-        .filter((r) => r.t.post === p.id)
+      const items = mine.filter(({ t }) => t.post === p.id)
+        .map(({ t, i }) => ({ t, i, a: t.y0 == null ? y0 : pos(t.y0, t.m0), b: t.y1 == null ? y1 : pos(t.y1, t.m1) }))
         .sort((r, s) => r.a - s.a);
       const laneEnd = [];
       for (const r of items) {
@@ -78,7 +86,7 @@ export default function Posts({ locale, onOpenChar }) {
       y += h;
     }
     return { layout: out, H: y + 14 };
-  }, []);
+  }, [mine, F.id, F.range]);
 
   const hot = hover ? TENURES[hover.i].who : null;
   const ticks = [];
@@ -86,10 +94,17 @@ export default function Posts({ locale, onOpenChar }) {
 
   return (
     <div ref={wrapRef} style={{ position: "relative" }}>
+      {/* 门派切换 */}
+      <div role="group" aria-label={t_("門派")} style={{ display: "flex", gap: 6, marginBottom: 10 }}>
+        {FACTIONS.map((f) => (
+          <button key={f.id} type="button" aria-pressed={f.id === F.id} onClick={() => { setHover(null); onFac?.(f.id); }}
+            style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, padding: "2px 12px", background: f.id === F.id ? T.panelHi : "none", border: `1px solid ${f.id === F.id ? T.muted : T.line}`, borderRadius: 3, color: f.id === F.id ? T.ink : T.muted, cursor: "pointer" }}>
+            {t_(f.id)}
+          </button>
+        ))}
+      </div>
       <p style={{ fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.muted, lineHeight: 1.9, margin: "0 0 10px" }}>
-        {en
-          ? "Cangyun posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."
-          : "苍云编制，依文稿〈重看人物、军队体系〉：伍、火、队、旅、团、营，破阵营辖三团。一行一个职位，一条一段任期。"}
+        {INTRO[F.id][en ? 1 : 0]}
       </p>
       {/* 图例：跨职位者各一色；线型 */}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px 16px", fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, marginBottom: 10 }}>
@@ -102,13 +117,13 @@ export default function Posts({ locale, onOpenChar }) {
         ))}
         <span style={{ color: T.faint }}>|</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, background: NEUTRAL }} />{en ? "appointed" : "正授、署理"}</span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, border: `1px dashed ${T.muted}` }} />{en ? "acting / concurrent / no title" : "代领、兼领、停职、无名目"}</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, border: `1px dashed ${T.muted}` }} />{en ? "acting / concurrent / no title" : "代领、兼领、充任、停职、无名目"}</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 3, borderRadius: 2, background: T.muted }} />{en ? "campaign command" : "出征差遣"}</span>
       </div>
 
       <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="group"
-          aria-label={en ? "Cangyun posts, 737–766. Each tenure is a button that opens the profile." : "苍云编制任期图，737—766。每段任期是一个按钮，可打开档案"} onMouseLeave={() => setHover(null)}>
+          aria-label={en ? `${t_(F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}编制任期图，${Y0}—${Y1}。每段任期是一个按钮，可打开档案`} onMouseLeave={() => setHover(null)}>
           <defs>
             {/* 起点不明／在任至卷末：色带在左右缘渐隐 */}
             <linearGradient id="posts-fade-l" x1="0" x2="1"><stop offset="0" stopColor={T.panel} stopOpacity="1" /><stop offset="1" stopColor={T.panel} stopOpacity="0" /></linearGradient>
@@ -123,7 +138,7 @@ export default function Posts({ locale, onOpenChar }) {
               </g>
             );
           })}
-          {MARKS.map((m) => (
+          {marks.map((m) => (
             <g key={m.label} aria-hidden="true">
               <line x1={xOf(m.p)} x2={xOf(m.p)} y1={TOP - 6} y2={H - 10} stroke={T.accent} strokeOpacity="0.4" strokeWidth="1" strokeDasharray="3 4" />
               <text x={xOf(m.p) + (m.left ? -4 : 4)} y={TOP - 4} textAnchor={m.left ? "end" : "start"} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.accent} fillOpacity="0.75">{m.label}</text>
