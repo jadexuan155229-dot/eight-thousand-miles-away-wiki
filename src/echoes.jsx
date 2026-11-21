@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { T, tone } from "./theme";
@@ -65,9 +65,14 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
   /* 详情在图下：选中一行后回响只在图例之下展开，行多时整段落在首屏之外，初来者点了名字
      却以为什么都没发生。不替人滚动（逐行对照时每点一下都被拽走，反失其图），
      改为详情未入视野时于屏底浮一小签「↓ 某某 · 回响展开在图下」，点之平滑滚至、并移焦于详情；
-     详情露出 120px 以上即收，已滚过（在上方）者亦不出 */
+     详情露出 120px 以上即收，已滚过（在上方）者亦不出。
+     浮签只为目视、用鼠标者：键盘与读屏另有两路（review P2）——选中行左栏姓名下紧随一枚「回响详情 ↓」入口，
+     DOM 上即在该行之后，选中后 Tab 一下便到；选中时以一句话告知读屏「已在图下展开，Tab 至入口可直达」，
+     不再令整段详情 aria-live 通读。浮签遂退出键盘顺序（tabIndex -1、aria-hidden），免与入口重复 */
   const detailRef = useRef(null);
   const [detailBelow, setDetailBelow] = useState(false);
+  const [jumpFocus, setJumpFocus] = useState(false); /* 行内「回响详情」入口的键盘焦点环 */
+  const selName = selected ? characterTranslation(locale, selected.who)?.name || byId[selected.who].name : "";
   useEffect(() => {
     const el = detailRef.current;
     if (!el || typeof IntersectionObserver === "undefined") { setDetailBelow(false); return undefined; }
@@ -129,7 +134,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
     });
     return { labels, lanes: ends.length };
   })();
-  const rowH = (e) => ROW_H + (selected && selected.who === e.who && selLabels.lanes ? selLabels.lanes * LANE_H + 12 : 0);
+  /* 选中行至少展开一道：左栏姓名之下要放「回响详情 ↓」入口（标签自 PLOT_L-30 起排，左栏此处恒空） */
+  const rowH = (e) => ROW_H + (selected && selected.who === e.who ? Math.max(1, selLabels.lanes) * LANE_H + 12 : 0);
 
   /* 纵向排布：震源行 → 逝者行 → 各带（带题 + 本带诸行） */
   const layout = [];
@@ -246,7 +252,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             const fade = (p) => Math.max(0.16, 0.7 - (p - shockP) * 0.022);
             let prev = { x: shockX, p: shockP };
             return (
-              <g key={e.who} style={{ cursor: "pointer", outline: "none" }}
+              <Fragment key={e.who}>
+              <g style={{ cursor: "pointer", outline: "none" }}
                 role="button" tabIndex={0} aria-pressed={!!on} aria-label={`${tr?.name || c.name}：${modeText(locale, e.mode)}${e.draft ? `（${t("待核")}）` : ""}`}
                 onClick={() => onRoute({ shock: shock.id, who: on ? null : e.who })}
                 onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onRoute({ shock: shock.id, who: on ? null : e.who }); } }}
@@ -313,6 +320,25 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                     onMouseLeave={() => setHover((h) => (h && h.who === e.who && h.k === k ? null : h))} />
                 ))}
               </g>
+              {/* 选中行之后：「回响详情 ↓」入口（见 detailRef 一段）。画在整行感应层之上，点之不触发取消选中 */}
+              {on && (() => {
+                const jx = it.dead ? 34 : 20, jy = it.y + ROW_H + 6 + 9;
+                const label = locale === "en" ? "Echoes below" : "回响详情";
+                const jw = textW(label, 11.5) + 30;
+                return (
+                  <g role="button" tabIndex={0} style={{ cursor: "pointer", outline: "none" }}
+                    aria-label={locale === "en" ? `Jump to ${selName}'s echoes, below the chart` : `跳至${selName}的回响详情（在图下）`}
+                    onClick={goDetail}
+                    onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); goDetail(); } }}
+                    onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setJumpFocus(true); }}
+                    onBlur={() => setJumpFocus(false)}>
+                    <rect x={jx - 6} y={jy - 13} width={jw} height={18} rx="3" fill={T.panel} fillOpacity="0.01"
+                      stroke={jumpFocus ? T.accent : T.line} strokeOpacity={jumpFocus ? 1 : 0.9} strokeWidth={jumpFocus ? 1.5 : 1} />
+                    <text x={jx} y={jy} fontFamily="HuiwenZhengKai" fontSize="11.5" fill={T.accent}>{label} ↓</text>
+                  </g>
+                );
+              })()}
+              </Fragment>
             );
           })}
           {/* 悬停：同年同月的竖向引线 + 浮签 */}
@@ -355,7 +381,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         const tr = characterTranslation(locale, c.id);
         const band = shock.bands.find(([k]) => k === selected.band);
         return (
-          <section ref={detailRef} tabIndex={-1} aria-live="polite" style={{ outline: "none", scrollMarginTop: 16, marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
+          <section ref={detailRef} tabIndex={-1} aria-label={locale === "en" ? `${selName}: echoes` : `${selName}的回响`} style={{ outline: "none", scrollMarginTop: 16, marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
             <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
               {selected.draft && (
@@ -397,12 +423,19 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         );
       })()}
 
+      {/* 读屏：选中时一句话报其所在与直达之法（见 detailRef 一段） */}
+      <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
+        {selected ? (locale === "en"
+          ? `${selName}'s echoes are open below the chart. Press Tab to reach “Echoes below”.`
+          : `${selName}的回响已在图下展开；按 Tab 至「回响详情」可直达。`) : ""}
+      </span>
+
       {/* 详情在图下之浮签（见 detailRef 一段） */}
       {selected && detailBelow && (() => {
         const c = byId[selected.who];
         const name = characterTranslation(locale, c.id)?.name || c.name;
         return (
-          <button type="button" className="echo-detail-hint" onClick={goDetail}
+          <button type="button" className="echo-detail-hint" onClick={goDetail} tabIndex={-1} aria-hidden="true"
             style={{ position: "fixed", left: "50%", bottom: 22, transform: "translateX(-50%)", zIndex: 20, maxWidth: "calc(100vw - 32px)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
               fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, background: T.panel, border: `1px solid ${T.line}`, borderLeft: `3px solid ${fc(c.belong[0])}`,
               borderRadius: 18, padding: "7px 18px 7px 14px", boxShadow: T.xShadowTip, cursor: "pointer", letterSpacing: "0.04em" }}>
