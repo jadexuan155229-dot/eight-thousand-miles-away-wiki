@@ -941,8 +941,10 @@ function Timeline({ onOpenChar, onOpenEcho }) {
 
   /* 段首吸頂與否：吸頂時方鋪底色（素紙另鋪底紙紋，見 index.css .tl-sec-head），平時透明——
      舊時段首恆鋪 T.bg 純色，紙上純色疊在底紙紋理上，諸段首連成一整塊淺框。
-     判準：段首貼於吸頂線（top 差 1px 內），且其所在段已越線而上（段之外框 top 在線上方）；
-     收起之段整段即段首，過線時只是經過，不算吸頂 */
+     判準：其所在段已越線而上（段之外框 top 在線上方），段首下緣仍在線下（仍壓著段內之事），且此段展開
+     （外框高於段首）。不以「段首貼線」為準：滾至展開段末尾時，段首受外框底邊所推、逐步移出吸頂線，
+     其時仍蓋在末尾諸事之上，若即刻轉透明，字便疊在一起（review P2）。
+     收起之段整段即段首，過線時不壓任何內容，以「外框高於段首」排除之，免每過一段閃一抹影 */
   const [stuckKey, setStuckKey] = useState(null);
   useEffect(() => {
     const line = narrow ? 42 : 0;
@@ -953,7 +955,8 @@ function Timeline({ onOpenChar, onOpenEcho }) {
       for (const s of TIMELINE_SECTIONS) {
         const el = secRefs.current[s.key];
         if (!el || !el.parentElement) continue;
-        if (Math.abs(el.getBoundingClientRect().top - line) < 1 && el.parentElement.getBoundingClientRect().top < line - 1) k = s.key;
+        const r = el.getBoundingClientRect(), pr = el.parentElement.getBoundingClientRect();
+        if (pr.top < line - 1 && r.bottom > line && pr.height > r.height + 1) k = s.key;
       }
       setStuckKey(k);
     };
