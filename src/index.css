@@ -1246,3 +1246,23 @@ html[data-skin="paper"] .texture-test .tt-rule,
 html[data-skin="paper"] .texture-test-sm .items-baseline {
   border-image: linear-gradient(90deg, rgba(188, 150, 116, 0.85), rgba(188, 150, 116, 0.25) 40%, transparent 88%) 1;
 }
+
+/* 余波：「详情在图下」浮签（echoes.jsx detailRef）。自屏底轻升而入；减少动效时不动 */
+.echo-detail-hint {
+  animation: echo-hint-in 0.28s ease-out;
+}
+.echo-detail-hint:hover,
+.echo-detail-hint:focus-visible {
+  filter: brightness(1.06);
+}
+.echo-detail-hint:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+@keyframes echo-hint-in {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .echo-detail-hint { animation: none; }
+}

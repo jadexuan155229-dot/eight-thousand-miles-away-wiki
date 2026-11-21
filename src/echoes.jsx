@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { T, tone } from "./theme";
@@ -61,6 +61,27 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
   const dead = rows.filter((e) => e.band === "dead");
   const living = rows.filter((e) => e.band !== "dead");
   const selected = rows.find((e) => e.who === who) || null;
+
+  /* 详情在图下：选中一行后回响只在图例之下展开，行多时整段落在首屏之外，初来者点了名字
+     却以为什么都没发生。不替人滚动（逐行对照时每点一下都被拽走，反失其图），
+     改为详情未入视野时于屏底浮一小签「↓ 某某 · 回响展开在图下」，点之平滑滚至、并移焦于详情；
+     详情露出 120px 以上即收，已滚过（在上方）者亦不出 */
+  const detailRef = useRef(null);
+  const [detailBelow, setDetailBelow] = useState(false);
+  useEffect(() => {
+    const el = detailRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setDetailBelow(false); return undefined; }
+    const io = new IntersectionObserver(([en]) => setDetailBelow(!en.isIntersecting && en.boundingClientRect.top > 0), { rootMargin: "0px 0px -120px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [selected, shock.id]);
+  const goDetail = () => {
+    const el = detailRef.current;
+    if (!el) return;
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    el.focus({ preventScroll: true });
+  };
   const PRE = shock.pre ?? PRE_YEARS; /* 对开表（kind: "life"）铺开一生，不收前事栏 */
 
   /* 横轴：自最早的定年节点（或震源）到最晚者 */
@@ -314,6 +335,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         <span>◌ {t("無定年")}</span>
         {rows.some((e) => e.draft) && <span style={{ color: T.seal }}>{t("待核")}{locale === "en" ? ": not yet reviewed by the author" : "：作者尚未逐行核定"}</span>}
         <span>{locale === "en" ? "Hover a point to see what it is, and who else it reached that month." : "悬停一点：看它是什么事，以及同月还落在谁身上"}</span>
+        <span>{locale === "en" ? "Click a row: their echoes open below the chart ↓" : "点选一行：回响展开在图下 ↓"}</span>
       </div>
 
       {/* 选中一行：展开其回响 */}
@@ -323,7 +345,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         const tr = characterTranslation(locale, c.id);
         const band = shock.bands.find(([k]) => k === selected.band);
         return (
-          <section aria-live="polite" style={{ marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
+          <section ref={detailRef} tabIndex={-1} aria-live="polite" style={{ outline: "none", scrollMarginTop: 16, marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
             <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
               {selected.draft && (
@@ -356,6 +378,21 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
               </div>
             ))}
           </section>
+        );
+      })()}
+
+      {/* 详情在图下之浮签（见 detailRef 一段） */}
+      {selected && detailBelow && (() => {
+        const c = byId[selected.who];
+        const name = characterTranslation(locale, c.id)?.name || c.name;
+        return (
+          <button type="button" className="echo-detail-hint" onClick={goDetail}
+            style={{ position: "fixed", left: "50%", bottom: 22, transform: "translateX(-50%)", zIndex: 20, maxWidth: "calc(100vw - 32px)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+              fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, background: T.panel, border: `1px solid ${T.line}`, borderLeft: `3px solid ${fc(c.belong[0])}`,
+              borderRadius: 18, padding: "7px 18px 7px 14px", boxShadow: T.xShadowTip, cursor: "pointer", letterSpacing: "0.04em" }}>
+            <span style={{ color: T.accent, marginRight: 8 }}>↓</span>
+            {locale === "en" ? <>{name} — echoes open below</> : <>{name} · 回响展开在图下</>}
+          </button>
         );
       })()}
     </div>
