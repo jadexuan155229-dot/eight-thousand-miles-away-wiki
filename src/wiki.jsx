@@ -939,6 +939,31 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  /* 段首吸頂與否：吸頂時方鋪底色（素紙另鋪底紙紋，見 index.css .tl-sec-head），平時透明——
+     舊時段首恆鋪 T.bg 純色，紙上純色疊在底紙紋理上，諸段首連成一整塊淺框。
+     判準：段首貼於吸頂線（top 差 1px 內），且其所在段已越線而上（段之外框 top 在線上方）；
+     收起之段整段即段首，過線時只是經過，不算吸頂 */
+  const [stuckKey, setStuckKey] = useState(null);
+  useEffect(() => {
+    const line = narrow ? 42 : 0;
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      let k = null;
+      for (const s of TIMELINE_SECTIONS) {
+        const el = secRefs.current[s.key];
+        if (!el || !el.parentElement) continue;
+        if (Math.abs(el.getBoundingClientRect().top - line) < 1 && el.parentElement.getBoundingClientRect().top < line - 1) k = s.key;
+      }
+      setStuckKey(k);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    check();
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (raf) cancelAnimationFrame(raf); };
+  }, [narrow, expanded, searching]);
+
   const toggle = (key) =>
     setExpanded((prev) => {
       const next = new Set(prev);
@@ -1130,9 +1155,11 @@ function Timeline({ onOpenChar, onOpenEcho }) {
               <div key={s.key} style={{ marginBottom: open ? 10 : 0 }}>
                 <div
                   ref={(el) => { secRefs.current[s.key] = el; }}
+                  className="tl-sec-head" data-stuck={stuckKey === s.key ? "" : undefined}
                   onClick={() => !empty && toggle(s.key)}
                   style={{
-                    position: "sticky", top: narrow ? 42 : 0, zIndex: 3, background: T.bg,
+                    /* 吸頂時方鋪底（見 stuckKey）；用 backgroundColor 而非 background 簡寫，素紙之底紙紋（CSS background-image）方不被蓋掉 */
+                    position: "sticky", top: narrow ? 42 : 0, zIndex: 3, backgroundColor: stuckKey === s.key ? T.bg : "transparent",
                     borderBottom: `1px solid ${T.line}`, padding: "10px 0 9px",
                     cursor: empty ? "default" : "pointer", opacity: empty ? 0.35 : 1,
                     scrollMarginTop: narrow ? 46 : 4,
