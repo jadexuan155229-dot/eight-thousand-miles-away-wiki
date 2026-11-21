@@ -373,16 +373,18 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
   const anecdotes = c.anecdotes || [];
   const shownAnecdotes = showAll ? anecdotes : anecdotes.slice(0, 4);
   /* 檔案彈窗強調色：隨人物門派色動態派生（訓詁豎線、高光框、軼事圓點、滾動條）。
-     已啟用：天策、明教、霸刀、長歌、凌雪閣、萬花、七秀、純陽、丐幫、蓬萊、藏劍、唐門、五毒、
+     已啟用：天策、紅衣教、明教、霸刀、長歌、凌雪閣、萬花、七秀、純陽、丐幫、蓬萊、藏劍、唐門、五毒、
      少林、藥宗、衍天宗、萬靈、段氏、平民（判序從門派底紋 factionMark 之先後，雙屬者取先者；
      平民不入底紋鏈，殿於末位，俟其正屬門派啟用即自讓位）；
      奚人/狼牙、南詔亦不入底紋鏈，同置末段。id 特判（仿底紋鏈嵐川雲、盧秉毓之體例，悉依作者定色）：
      朗迪恩（西域·平民雙標籤）、魯雅從西域；程釗、程鐸從唐軍（程鋒、程宇乃天策·唐軍雙屬，
      今從天策，故唐軍不整體入鏈）；
+     紅衣教排在明教之前：其人（玛奈丽、歌莉）皆紅衣教·明教雙屬、以紅衣教為第一門派（作者 2026-11-21 定）；
      未啟用者維持全站橘紅與原滾動條紅棕，後續門派擴此判斷即可 */
   const profileFaction = ["langdien", "luya"].includes(c.id) ? "西域"
     : ["chengzhao", "chengduo"].includes(c.id) ? "唐军"
     : c.belong.includes("天策") ? "天策"
+    : c.belong.includes("红衣教") ? "红衣教"
     : c.belong.includes("明教") ? "明教"
     : c.belong.includes("霸刀") ? "霸刀"
     : c.belong.includes("长歌") ? "长歌"
@@ -413,10 +415,12 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
   const profileAccentHover = scrollFaction ? dimAccent(fc(scrollFaction), 0.35, 0.08, 0.82) : "rgba(158,91,86,0.82)";
   // 門派底紋：從屬蒼雲者顯示蒼雲紋（嵐川雲、盧秉毓雙屬他派，按設定除外），
   // 從屬天策、明教、霸刀、長歌、凌雪閣、萬花、七秀者顯示各自紋樣；
+  // 紅衣教排在明教前（玛奈丽、歌莉以紅衣教為第一門派，兼屬明教）；
   // 同一詳情卡僅取一種，其餘門派暫無底紋
   const factionMark = c.id === "cenquan" ? "cenquan"
     : c.belong.includes("苍云") && !["lanchuanyun", "lubingyu"].includes(c.id) ? "cangyun"
     : c.belong.includes("天策") ? "tiance"
+    : c.belong.includes("红衣教") ? "hongyijiao"
     : c.belong.includes("明教") ? "mingjiao"
     : c.belong.includes("霸刀") ? "badao"
     : c.belong.includes("长歌") ? "changge"
