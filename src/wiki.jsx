@@ -1374,9 +1374,18 @@ function FactionKey() {
 }
 
 /* 軌道星之徑：環已判三檔（≥6／3–5／1–2），徑則於檔內再別多寡，尺寸一通道舊本閒置。
-   開方而非按數——n 自一至二十，線性則巨細懸絕，一事者小不可辨。今得 17–23.9px。
-   橋星雙繫兩核、不入任一檔，故存中庸之徑；遠軌俱零共見，一律最小。 */
-const orbitR = (n) => 15 + Math.sqrt(n) * 2;
+   開方而非按數——n 自一至二十，線性則巨細懸絕，一事者小不可辨。
+   橋星雙繫兩核、不入任一檔，故存中庸之徑；遠軌俱零共見，一律最小。
+   圈徑三等（作者定）：雙核 40、次星 30、其餘諸星依共見數。次星為岚川云、陆晚月、陆羽鸣，徑不隨共見數；
+   所居之軌仍按共見數（軌道之義不變）。舊時圈徑全由共見數出，岚川云與兩核共見最多（27、26 事）
+   卻因身為橋星只得 20、排第十六，陆羽鸣與程凯僅共一事、排第四十九——圖上的主次與人物的分量對不上。
+   其餘諸星原式 15+2·sqrt(n)（17–25.4px），今同比收為 13.5+1.7·sqrt(n)（15.2–22.3px）、橋星 20 → 18：
+   次序一仍其舊，只讓出次星一檔，次星直徑遂大於其餘諸星之最大者三成半；
+   且全圖最緊處由 −4.3px（狄元恪、连朔相疊）轉為 +1.6px，中位星距 13 → 16px。 */
+const orbitR = (n) => 13.5 + Math.sqrt(n) * 1.7;
+const SECONDARY_IDS = new Set(["lanchuanyun", "luwanyue", "luyuming"]);
+const SEC_R = 30, BRIDGE_R = 18;
+const starR = (id, base) => (SECONDARY_IDS.has(id) ? SEC_R : base);
 /* 線寬同理開方：舊作 0.5+0.28n，一事得 0.78px 幾不可見、二十事得 6.1px 粗如短棒，
    八倍之差兩端俱失。今收於 1.7–5.5px，細者可辨、粗者不橫。 */
 const linkW = (n) => 0.6 + Math.sqrt(n) * 1.1;
@@ -1439,20 +1448,25 @@ function Planetary({ onOpenChar }) {
         const ms = members
           .filter((m) => ring.test(m.n))
           .sort((x, y) => (x.c.belong[0] || "").localeCompare(y.c.belong[0] || "") || y.n - x.n);
-        const span = Math.min(Math.PI * 2 * ring.maxSpan, (ms.length * GAP) / ring.r);
+        /* 次星圈大，於環上按其多出之徑多佔一份弧長；無次星之環，權皆為一，與舊法全同 */
+        const W = ms.map((m) => (SECONDARY_IDS.has(m.c.id) ? 1 + (2 * (SEC_R - orbitR(m.n))) / GAP : 1));
+        const tot = W.reduce((a, b) => a + b, 0);
+        const span = Math.min(Math.PI * 2 * ring.maxSpan, (tot * GAP) / ring.r);
         const start = outward - span / 2 + ri * 0.22;
+        let acc = 0;
         return {
           ...ring,
           nodes: ms.map((m, i) => {
-            const ang = start + ((i + 0.5) / ms.length) * span;
-            return { ...m, r: orbitR(m.n), x: CX[k] + ring.r * Math.cos(ang), y: CY + ring.r * Math.sin(ang), k };
+            const ang = start + ((acc + W[i] / 2) / tot) * span;
+            acc += W[i];
+            return { ...m, r: starR(m.c.id, orbitR(m.n)), x: CX[k] + ring.r * Math.cos(ang), y: CY + ring.r * Math.sin(ang), k, ringR: ring.r };
           }),
         };
       });
     });
     /* 橋星：居雙星連線中央，縱向錯落 */
     const bridge = shared.map((m, i) => ({
-      ...m, r: 20, x: PW / 2, y: CY + (i - (shared.length - 1) / 2) * 72,
+      ...m, r: starR(m.c.id, BRIDGE_R), x: PW / 2, y: CY + (i - (shared.length - 1) / 2) * 72,
     }));
     /* 遠軌：環抱全系之橢圓。人多而環促——與兩核俱無共見者常逾七十，
        舊法按等角平鋪，長軸兩端最近鄰僅二十九像素而圓徑四十，過半相疊。
@@ -1468,8 +1482,30 @@ function Planetary({ onOpenChar }) {
     const farNodes = sortedFar.map((c, i) => {
       const ang = farAng(2 * i);
       const d = nf % 2 === 1 && i === nf - 1 ? 0 : i % 2 ? LANE : -LANE;
-      return { c, r: FAR_R, x: PW / 2 + (FAR.rx + d) * Math.cos(ang), y: CY + (FAR.ry + d) * Math.sin(ang) };
+      return { c, r: starR(c.id, FAR_R), x: PW / 2 + (FAR.rx + d) * Math.cos(ang), y: CY + (FAR.ry + d) * Math.sin(ang) };
     });
+    /* 次星微調：環分三層、層距僅五十至六十，次星圈大，按序落位時常恰夾在內外兩環的鄰星之間
+       （陆晚月居中軌，初落 63°，內有程锋 61°、外有陆南信 68°，僅隔 4px）。
+       故令其在本環上左右各容半步（GAP/2 弧長），取與全圖諸星最寬之一角；
+       計入雙門派之外圈（r+4）與兩核之外環（47）。不寫死角度，人物增減後自會重求。 */
+    {
+      const all = [
+        ...rings.flatMap((s) => s.flatMap((ring) => ring.nodes)), ...bridge, ...farNodes,
+        ...CX.map((x) => ({ x, y: CY, r: 47, c: { belong: [] } })),
+      ];
+      const outerR = (n) => n.r + (n.c.belong.length > 1 ? 4 : 0);
+      for (const n of all.filter((q) => q.ringR && SECONDARY_IDS.has(q.c.id))) {
+        const a0 = Math.atan2(n.y - CY, n.x - CX[n.k]), half = GAP / 2 / n.ringR;
+        let best = null;
+        for (let t = -half; t <= half + 1e-9; t += half / 48) {
+          const x = CX[n.k] + n.ringR * Math.cos(a0 + t), y = CY + n.ringR * Math.sin(a0 + t);
+          let g = Infinity;
+          for (const q of all) if (q !== n) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - outerR(n) - outerR(q));
+          if (!best || g > best.g + 1e-9) best = { g, x, y };
+        }
+        n.x = best.x; n.y = best.y;
+      }
+    }
     /* 遠軌本已按門派排序、色塊天然成段，舊時軌線卻是通體一色的虛線，
        七十七枚散點遂只讀作噪。今於軌線上按段著門派之色，逾三人者更署其名，
        一環即分作二十四段——同色相鄰者為同門，不必逐一辨圈色。 */
@@ -1519,7 +1555,9 @@ function Planetary({ onOpenChar }) {
     const hi = hover === n.c.id;
     const soft = dim && !hi;
     const r0 = n.r + (hi ? (dim ? 4 : 3) : 0);
-    const fs = nodeFontSize(n.c.name.length, n.r, dim);
+    /* 次星：圈徑之外，線加粗、名加大加粗，與雙核同一筆意而低一等（雙核 16px 粗體、線 2.4） */
+    const sec = SECONDARY_IDS.has(n.c.id);
+    const fs = sec ? 13.5 : nodeFontSize(n.c.name.length, n.r, dim);
     return (
       <g key={n.c.id} style={{ cursor: "pointer" }}
         onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
@@ -1528,13 +1566,13 @@ function Planetary({ onOpenChar }) {
         onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); return; } onOpenChar(n.c); }}>
         {coarse && <circle cx={n.x} cy={n.y} r={30} fill="transparent" />}
         <circle cx={n.x} cy={n.y} r={r0} fill={soft ? T.bg : T.panel} stroke={fc(n.c.belong[0])}
-          strokeWidth={soft ? 1.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} />
+          strokeWidth={soft ? 1.2 : sec ? 2.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} />
         {n.c.belong.length > 1 && (
           <circle cx={n.x} cy={n.y} r={r0 + 4} fill="none" stroke={fc(n.c.belong[1])}
-            strokeWidth={0.8} opacity={soft ? 0.35 : 0.7} />
+            strokeWidth={sec ? 1 : 0.8} opacity={soft ? 0.35 : 0.7} />
         )}
-        <text x={n.x} y={n.y + 4} textAnchor="middle"
-          style={{ fontFamily: gName, fontSize: fs, fill: soft ? T.muted : T.ink }}>
+        <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle"
+          style={{ fontFamily: gName, fontSize: fs, fill: soft ? T.muted : T.ink, fontWeight: sec ? 700 : undefined }}>
           {n.c.name}
         </text>
         {/* 共見數改懸停始現：四十條同級灰字常駐，鋪成一層霧而已；
@@ -1656,7 +1694,8 @@ function Planetary({ onOpenChar }) {
       </svg>
       <div style={{ fontSize: 12, color: T.faint, textAlign: "center", marginTop: 4, fontFamily: gUI }}>
         雙星系統：閔方城（蒼雲線）與程凱（天策線）同格為核。軌道由《事件与年份》中與各核共見事件之計數自動生成，圈徑與線粗亦然（皆按開方），
-        環之弧長即其人數；懸停一人即見確數。與兩核共見皆不少於二事者為橋星，居雙星之間，雙繫於兩核，不入軌檔故存中庸之徑。
+        環之弧長即其人數；懸停一人即見確數。唯岚川云、陆晚月、陆羽鸣三人為次星，圈徑另定、介於雙核與其餘諸星之間，所居之軌仍按共見數。
+        與兩核共見皆不少於二事者為橋星，居雙星之間，雙繫於兩核，不入軌檔故存中庸之徑。
         遠軌之線按門派分段著色，逾三人者署名於軌外。
         {coarse ? "輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。" : "點選任一人開啟檔案。"}
       </div>
