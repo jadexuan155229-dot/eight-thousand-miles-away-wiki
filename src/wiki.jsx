@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
-import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer } from "./theme";
+import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, getSkin } from "./theme";
 
 /* 門派色隨膚調（見 theme.js tone）：wiki-data 的 fc 是數據層、亦供 vite.config 在 Node 下讀，不宜引入皮膚狀態，故在此包一層 */
 const fc = (f) => tone(fcRaw(f));
@@ -229,13 +229,21 @@ const isTextureTest = () => true;
    stain 斑駁右上那圈的暈色（大小兩卡皆用）：原取全站高亮橘紅 #B5442D，
      那本是通用強調色、非門派色，只是恰與天策相得；蒼雲一入範圍，冷鐵灰的卡上憑空一團暖紅，
      突兀可見。故一併改隨派色——天策仍暖，蒼雲轉冷，各如其分。
-     透明度自 0.06 提至 0.07：門派色多較 #B5442D 為暗，同透明度下浮色更淺，略補之 */
-const ttVars = (main) => ({
-  "--tt-band-a": dimAccent(fc(main), 0, 0.28, 1),
-  "--tt-band-b": dimAccent(fc(main), 0, 0.48, 1),
-  "--tt-band-c": dimAccent(fc(main), 0, 0.30, 1),
-  "--tt-stain": dimAccent(fc(main), 0, 0, 0.07),
-});
+     透明度自 0.06 提至 0.07：門派色多較 #B5442D 為暗，同透明度下浮色更淺，略補之
+   素紙另取一檔壓暗值 ×0.88 / ×0.70 / ×0.85：fc 在紙上已是為淺底壓深過的色（如纯阳中藍成深藏青），
+     再照玄墨乘 0.52 便近乎墨塊，綾邊上 overlay／soft-light 的噪紋（中間調上最顯、愈暗愈弱）幾不可見，
+     且深條直貼米白紙，比玄墨下沉重得多。少壓一截，紙上綾邊回到中間調，紋理與門派色俱見（作者 2026-11-21）。
+     須在渲染期取皮膚（getSkin），不可抄成模塊常量——換膚不重掛，整棵重渲染時此處隨之重算 */
+const BAND_DARK = { night: [0.28, 0.48, 0.30], paper: [0.12, 0.30, 0.15] };
+const ttVars = (main) => {
+  const [a, b, c] = BAND_DARK[getSkin()] || BAND_DARK.night;
+  return {
+    "--tt-band-a": dimAccent(fc(main), 0, a, 1),
+    "--tt-band-b": dimAccent(fc(main), 0, b, 1),
+    "--tt-band-c": dimAccent(fc(main), 0, c, 1),
+    "--tt-stain": dimAccent(fc(main), 0, 0, 0.07),
+  };
+};
 
 /* ---------------- 檔案卡 ---------------- */
 function CharCard({ c, onOpen, locale }) {

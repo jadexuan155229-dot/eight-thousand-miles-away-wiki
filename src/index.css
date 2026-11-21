@@ -1196,15 +1196,22 @@ html[data-skin="paper"] .texture-test::after {
     radial-gradient(500px 300px at 82% 6%, var(--tt-stain, rgba(139, 64, 30, 0.06)), transparent 70%),
     radial-gradient(380px 340px at 6% 98%, rgba(176, 128, 72, 0.13), transparent 72%);
 }
+/* 小卡綾邊（素紙）：
+   一、金線。玄墨下金線 (129,87,60) 比色條、卡面都亮，自成一道高光；紙上原用駝色 0.6，疊在深色條末列成 (145,102,86)，
+       明度恰落在深條與米白卡面 (244,239,228) 之間，看去只是邊緣的過渡、不成一線。
+       今改雙色描金：色條末列（10–11px）亮金 #E6C07A，與深條相形成一道高光；其外一列（11–12px）深金 #A97E3A，
+       與米白紙相形勾出輪廓——兩側各有對比，金線乃見。
+   二、綾紋。兩層噪點透明度 0.55 → 0.85、0.4 → 0.6；同時綾邊底色少壓一截（見 wiki.jsx ttVars 之 BAND_DARK），
+       回到中間調，overlay／soft-light 的紋理才顯得出來。玄墨不動。 */
 html[data-skin="paper"] .texture-test-sm::after {
   background-image:
-    linear-gradient(90deg, transparent 10px, rgba(188, 150, 116, 0.6) 10px, rgba(188, 150, 116, 0.6) 11px, transparent 11px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='120'%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.09 0.35' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23d)' opacity='0.55'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='80'%3E%3Cfilter id='e' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23e)' opacity='0.4'/%3E%3C/svg%3E"),
+    linear-gradient(90deg, transparent 10px, #E6C07A 10px, #E6C07A 11px, #A97E3A 11px, #A97E3A 12px, transparent 12px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='120'%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.09 0.35' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23d)' opacity='0.85'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='80'%3E%3Cfilter id='e' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23e)' opacity='0.6'/%3E%3C/svg%3E"),
     linear-gradient(180deg, var(--tt-band-a, #5B2328), var(--tt-band-b, #42191D) 52%, var(--tt-band-c, #582227)),
     radial-gradient(210px 130px at 82% 6%, var(--tt-stain, rgba(139, 64, 30, 0.06)), transparent 70%),
     radial-gradient(160px 140px at 6% 98%, rgba(176, 128, 72, 0.11), transparent 72%);
-  background-size: 11px 100%, 11px 120px, 11px 80px, 11px 100%, auto, auto;
+  background-size: 12px 100%, 11px 120px, 11px 80px, 11px 100%, auto, auto;
   background-position: left top, left top, left top, left top, 0 0, 0 0;
   background-repeat: no-repeat, repeat-y, repeat-y, no-repeat, no-repeat, no-repeat;
   background-blend-mode: normal, overlay, soft-light, normal, normal, normal;
