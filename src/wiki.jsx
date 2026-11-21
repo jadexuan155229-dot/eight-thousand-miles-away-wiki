@@ -68,7 +68,8 @@ const REL_KEY = [["傳承", "#7FB0D8"], ["遺承", "#9B7EC8"], ["情愛", "#D88B
 const KEY_RAW = { ...Object.fromEntries(REL_KEY), 未見: "#8B94A0" };
 const KEY_OF_RAW = Object.fromEntries(Object.entries(KEY_RAW).map(([l, c]) => [c, l]));
 const relKeyOf = (r) => KEY_OF_RAW[relRaw(r.t)];
-/* pick：{ active, onToggle }。給出時諸類作按鈕（行星圖窄屏用，與圖內圖例同一狀態），並添「僅同事」「未見」二項 */
+/* pick：{ active, onToggle, onClear }。給出時諸類作按鈕（行星圖窄屏用，與圖內圖例同一狀態），並添「僅同事」「未見」二項；
+   Enter／空格由按鈕原生處理，Esc 收起（與圖內圖例同，讀屏所報之文亦如此提示） */
 function RelKey({ note, style, pick }) {
   const items = REL_KEY.map(([l, cc]) => [l, tone(cc), "—", l]);
   if (pick) items.push(["僅同事", T.muted, "—", "僅同事"], ["未見", tone(KEY_RAW.未見), "- -", "未見／未說開"]);
@@ -78,6 +79,7 @@ function RelKey({ note, style, pick }) {
         pick ? (
           <button key={id} type="button" aria-pressed={pick.active === id} aria-label={`只亮此類：${label}`}
             onClick={() => pick.onToggle(id)}
+            onKeyDown={(ev) => { if (ev.key === "Escape") pick.onClear(); }}
             style={{ fontSize: 11, fontFamily: gUI, color: col, background: pick.active === id ? T.panelHi : "none", cursor: "pointer",
               border: `1px solid ${pick.active === id ? col : "transparent"}`, borderRadius: 3, padding: "3px 6px" }}>
             {mark} {label}
@@ -1944,7 +1946,7 @@ function Planetary({ onOpenChar }) {
         {coarse ? "輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。" : "點選任一人開啟檔案。"}
       </div>
       {/* 寬屏時線之圖例已入圖內左下；窄屏圖中字太小，圖下另列一份 */}
-      {narrow && <RelKey note="線粗＝共見事數" pick={{ active: keyPin, onToggle: toggleKey }} style={{ marginTop: 8 }} />}
+      {narrow && <RelKey note="線粗＝共見事數" pick={{ active: keyPin, onToggle: toggleKey, onClear: () => setKeyPin(null) }} style={{ marginTop: 8 }} />}
       <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
         {pinStats ? `已只亮「${KEY_LABEL[keyPin] || keyPin}」：${pinStats.nPairs} 對關係，涉 ${[...pinStats.lit].filter((id) => !CENTERS_META.some((m) => m.id === id)).length} 人（雙核不計）。再按一次或 Esc 收起。` : ""}
       </span>
