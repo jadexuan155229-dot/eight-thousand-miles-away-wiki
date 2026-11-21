@@ -1010,7 +1010,7 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "maneili", name: "玛奈丽", zi: "Māneli", belong: ["明教", "红衣教", "西域"], birth: 723, death: null,
+    id: "maneili", name: "玛奈丽", zi: "Māneli", belong: ["红衣教", "明教", "西域"], birth: 723, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "مانلی（Māneli）——现代波斯女名，因诗人尼玛·尤希吉（Nima Youshij）名诗《Māneli》而广为人知，诗中象征纯洁、美丽、自由的女性形象；人设取义「留在我身边」（برایم بمان）。",
     profile: F(
@@ -1019,7 +1019,7 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "geli", name: "歌莉", zi: "Golī", belong: ["明教", "红衣教"], birth: 752, death: null,
+    id: "geli", name: "歌莉", zi: "Golī", belong: ["红衣教", "明教"], birth: 752, death: null,
     birthplace: "长安城郊红衣教活动区域", pin: "", epithet: "", hao: "",
     gloss: "گلی（Golī）——gol（花）之昵称形，义近「如花的、玫瑰色」；rang-e gol，「花的颜色」，可指花色，亦可诗意地指美丽的色泽、春天的气息。",
     profile: F("玛奈丽之女。（生地依 Notion 档案库著录，详情待作者充实。）", "", "", "", "", "", "", ""),

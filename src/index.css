@@ -249,6 +249,21 @@ body {
   mask: url("/images/faction-marks/wudu-mark.webp") center / contain no-repeat;
   opacity: 0.08;
 }
+/* 紅衣教：作者所給圖樣（749×640，圓中六芒），圖案佔圖幅寬 76%、高 90%，留白遠少於他派（明教約 54%），
+   故不照抄 800px 框：方框內 contain 後圖案約佔框寬 0.76、縱向落在框高 0.116–0.884，
+   取 520px 框使圖案約 395px，與他派可見紋樣（400–430px）相當；right -40px 使圓之右緣近卡邊而不出。
+   矮視口：top 12% + max-height 88% 使圖案下緣落在卡高約 90%。
+   粗實筆畫比他派纖細紋樣更壓色，同透明度下顯得重，故透明度降一檔（0.08 → 0.065；素紙另見下方） */
+.faction-watermark--hongyijiao {
+  width: 520px;
+  max-height: 88%;
+  right: -40px;
+  top: 12%;
+  background-color: #847A74;
+  -webkit-mask: url("/images/faction-marks/hongyijiao-mark.webp") center / contain no-repeat;
+  mask: url("/images/faction-marks/hongyijiao-mark.webp") center / contain no-repeat;
+  opacity: 0.065;
+}
 /* 少林：灰度參數同前。書法「佛」字（寬約 49%、本體止於圖幅 82%），
    框格同唐門，top 12% + max-height 102% 使圖案下緣落在卡高約 96% 處 */
 .faction-watermark--shaolin {
@@ -1146,9 +1161,14 @@ html[data-skin="paper"] .site-root {
 /* 門派底紋：玄墨下是暗底上的淺灰剪影，素紙下改作淡墨印痕。
    走 mask 的諸派共用一色；圖片直出的四派（岑荃、藥宗、段氏、唐軍）另議，
    故 :not() 排除之——否則此處的 background-color 會在其圖下鋪出一整塊方色 */
-html[data-skin="paper"] .faction-watermark:not(.faction-watermark--cenquan):not(.faction-watermark--yaozong):not(.faction-watermark--duanshi):not(.faction-watermark--tangjun) {
+html[data-skin="paper"] .faction-watermark:not(.faction-watermark--cenquan):not(.faction-watermark--yaozong):not(.faction-watermark--duanshi):not(.faction-watermark--tangjun):not(.faction-watermark--hongyijiao) {
   background-color: #6A4E36;
   opacity: 0.06;
+}
+/* 紅衣教：色同他派，透明度降一檔（粗實筆畫，見玄墨段）；須自上條通用規則排除——彼帶四個 :not 而權重較高，此處單寫便蓋不過 */
+html[data-skin="paper"] .faction-watermark--hongyijiao {
+  background-color: #6A4E36;
+  opacity: 0.045;
 }
 html[data-skin="paper"] .faction-watermark--cangyun {
   background-color: #4C5966; /* 苍云仍守冷鐵色 */
