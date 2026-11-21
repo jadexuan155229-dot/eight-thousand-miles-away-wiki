@@ -39,10 +39,57 @@ const TYPE_GROUP = [
   [["未遂", "未说开", "未见"], "#8B94A0"],
   [["恩义", "知遇", "知契", "荐引", "救援", "收留", "照护", "代护", "调停", "受托", "医患", "同盟", "宽宥"], "#C9A15C"],
 ];
-function relColor(t) {
+function relRaw(t) {
   const first = t.split("·")[0];
-  for (const [ks, c] of TYPE_GROUP) if (ks.includes(first)) return tone(c);
-  return tone("#7FA980");
+  for (const [ks, c] of TYPE_GROUP) if (ks.includes(first)) return c;
+  return "#7FA980";
+}
+const relColor = (t) => tone(relRaw(t));
+/* 一對人物之間的關係條目可有數條（如程凯—岚川云：夫妻、未见；闵方城—连朔：授业、私情、杀伐）。
+   一線只容一色，取其「主關係」：虛線類（da：未见、未说开）唯無他條時取之；
+   持續而雙向者（無 d）先於單向一事（d:1）；同類取歷時最長（無止年者作最長），再同取首條。
+   懸停時諸條並列，主關係只定線色。 */
+const pairKey = (a, b) => (a < b ? a + "|" + b : b + "|" + a);
+const RELS_BY_PAIR = new Map();
+for (const r of RELATIONS) {
+  const k = pairKey(r.a, r.b);
+  if (!RELS_BY_PAIR.has(k)) RELS_BY_PAIR.set(k, []);
+  RELS_BY_PAIR.get(k).push(r);
+}
+const relSpan = (r) => (r.y1 ?? 9999) - (r.y0 ?? 0);
+function primaryRel(rs) {
+  if (!rs || !rs.length) return null;
+  const pool = rs.some((r) => !r.da) ? rs.filter((r) => !r.da) : rs;
+  return [...pool].sort((x, y) => (x.d ? 1 : 0) - (y.d ? 1 : 0) || relSpan(y) - relSpan(x))[0];
+}
+/* 關係色譜之圖例：群像網絡與行星關係圖共用（色取 TYPE_GROUP 之代表，隨膚調） */
+const REL_KEY = [["傳承", "#7FB0D8"], ["遺承", "#9B7EC8"], ["情愛", "#D88BA8"], ["恩義", "#C9A15C"], ["誼", "#7FA980"], ["親緣", "#B08968"], ["嫌隙", "#C8B45A"], ["殺伐", "#C05050"]];
+/* 行星圖例之同類亮起：按色反查一條關係屬圖例哪一類（未遂、未说开、未见一組不入 REL_KEY，另記為「未見」） */
+const KEY_RAW = { ...Object.fromEntries(REL_KEY), 未見: "#8B94A0" };
+const KEY_OF_RAW = Object.fromEntries(Object.entries(KEY_RAW).map(([l, c]) => [c, l]));
+const relKeyOf = (r) => KEY_OF_RAW[relRaw(r.t)];
+/* pick：{ active, onToggle, onClear }。給出時諸類作按鈕（行星圖窄屏用，與圖內圖例同一狀態），並添「僅同事」「未見」二項；
+   Enter／空格由按鈕原生處理，Esc 收起（與圖內圖例同，讀屏所報之文亦如此提示） */
+function RelKey({ note, style, pick }) {
+  const items = REL_KEY.map(([l, cc]) => [l, tone(cc), "—", l]);
+  if (pick) items.push(["僅同事", T.muted, "—", "僅同事"], ["未見", tone(KEY_RAW.未見), "- -", "未見／未說開"]);
+  return (
+    <div className="flex flex-wrap" style={{ gap: pick ? 6 : 14, marginBottom: 4, justifyContent: "center", ...style }}>
+      {items.map(([id, col, mark, label]) =>
+        pick ? (
+          <button key={id} type="button" aria-pressed={pick.active === id} aria-label={`只亮此類：${label}`}
+            onClick={() => pick.onToggle(id)}
+            onKeyDown={(ev) => { if (ev.key === "Escape") pick.onClear(); }}
+            style={{ fontSize: 11, fontFamily: gUI, color: col, background: pick.active === id ? T.panelHi : "none", cursor: "pointer",
+              border: `1px solid ${pick.active === id ? col : "transparent"}`, borderRadius: 3, padding: "3px 6px" }}>
+            {mark} {label}
+          </button>
+        ) : (
+          <span key={id} style={{ fontSize: 11, fontFamily: gUI, color: col }}>{mark} {label}</span>
+        ))}
+      {note && <span style={{ fontSize: 11, fontFamily: gUI, color: T.faint, alignSelf: "center" }}>{note}</span>}
+    </div>
+  );
 }
 function relActive(r, Y) {
   return (r.y0 == null || r.y0 <= Y) && (r.y1 == null || Y <= r.y1 || r.ph);
@@ -1417,6 +1464,15 @@ function Planetary({ onOpenChar }) {
   const [hover, setHover] = useState(null);
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(PW, PH);
   const coarse = useCoarsePointer();
+  const narrow = useNarrow();
+  /* 圖例同類亮起。keyPin：點選（滑鼠點、觸屏輕觸、鍵盤 Enter／空格）所定、常亮至再點或 Esc；
+     keyHover：滑鼠懸停圖例之預覽。實際所亮 keyHi = keyHover ?? keyPin；懸停一星時暫讓位於該星（移開即復）。
+     各值為 REL_KEY 之名，或「僅同事」「未見」。keyFocus：鍵盤焦點所在之項（畫焦點框）。 */
+  const [keyPin, setKeyPin] = useState(null);
+  const [keyHover, setKeyHover] = useState(null);
+  const [keyFocus, setKeyFocus] = useState(null);
+  const keyHi = hover ? null : keyHover ?? keyPin;
+  const toggleKey = (id) => { setHover(null); setKeyPin((p) => (p === id ? null : id)); };
   const CX = PCX, CY = PCY;
   const layout = useMemo(() => {
     const counts = CENTERS_META.map((m) => coCountsFor(m.id));
@@ -1570,10 +1626,84 @@ function Planetary({ onOpenChar }) {
   layout.bridge.forEach((n) => { pos[n.c.id] = { x: n.x, y: n.y }; });
   layout.farNodes.forEach((n) => { pos[n.c.id] = { x: n.x, y: n.y }; });
 
-  const centerIds = CENTERS_META.map((m) => m.id);
-  const chords = hover
-    ? RELATIONS.filter((r) => (r.a === hover || r.b === hover) && pos[r.a] && pos[r.b] && !centerIds.includes(r.a) && !centerIds.includes(r.b))
+  /* 核線（各星繫於其核之線）今按與該核之主關係著色；已由核線表出的一對，弦線不再重畫。
+     舊時弦線一概略去涉及兩核之關係，故懸停程锋竟不見其與程凯為何關係；今此類關係由核線承載，
+     而系內星與「另一核」之關係（不在核線上）改由弦線補出。 */
+  const spokeKeys = new Set([
+    ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.map((n) => pairKey(n.c.id, CENTERS_META[k].id)))),
+    ...layout.bridge.flatMap((n) => CENTERS_META.map((m) => pairKey(n.c.id, m.id))),
+  ]);
+  /* 弦線按「一對人」歸併：一對可有數條關係，舊法逐條各畫一弧，弧形全同、字疊於一點不可讀；
+     今一對一弧，色取主關係，字列諸條。 */
+  const chordPairs = hover
+    ? [...new Set(RELATIONS.filter((r) => (r.a === hover || r.b === hover) && pos[r.a] && pos[r.b] && !spokeKeys.has(pairKey(r.a, r.b)))
+      .map((r) => pairKey(r.a, r.b)))]
     : [];
+  /* 次星三角：岚川云—陆晚月（嫌隙、救援、挚友）、岚川云—陆羽鸣（杀伐、宽宥）、陆晚月—陆羽鸣（授业）。
+     陆晚月、陆羽鸣與兩核俱無直接關係，按共見數只落在程凯外側之軌，圈之大小若無此三角，便無從解釋。
+     故常駐淡畫；懸停其中一人時讓位於懸停弦線（同一對不重畫）。 */
+  const secIds = [...SECONDARY_IDS];
+  const secPairs = secIds.flatMap((a, i) => secIds.slice(i + 1).map((b) => pairKey(a, b)))
+    .filter((k) => RELS_BY_PAIR.has(k));
+  /* 核線一覽：[星, 第幾核, 共見數]。系內星繫本核，橋星兩核各一 */
+  const spokes = [
+    ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.map((n) => [n, k, n.n]))),
+    ...layout.bridge.flatMap((n) => [[n, 0, n.a], [n, 1, n.b]]),
+  ];
+  /* 圖例同類亮起：凡一對之間有此類關係者皆亮（不必是主關係——闵方城—连朔主為授业，指「殺伐」時亦亮，
+     且臨時染作殺伐之色）；核線以外的同類關係補畫弦線（不標字）；無此類關係之星淡去，雙核常明。
+     「未見」一項兼收 da（未遂、未说开、未见而作虛線者，如魏谦—阿会朗之杀伐）。 */
+  const matchKey = (key, r) => (key === "未見" ? !!r.da || relKeyOf(r) === "未見" : relKeyOf(r) === key);
+  /* 返回：不亮者 null；僅同事者 true；其餘返回所匹配諸條之主條（定虛實） */
+  const hitKey = (key, rs) => (key === "僅同事" ? !rs || null : (rs && primaryRel(rs.filter((r) => matchKey(key, r)))) || null);
+  const keySets = (key) => {
+    const chords = key === "僅同事" ? []
+      : [...new Set(RELATIONS.filter((r) => matchKey(key, r) && pos[r.a] && pos[r.b] && !spokeKeys.has(pairKey(r.a, r.b))).map((r) => pairKey(r.a, r.b)))];
+    const litSpokes = spokes.filter(([n, k]) => hitKey(key, RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id))));
+    return { chords, lit: new Set([...chords.flatMap((k) => k.split("|")), ...litSpokes.map(([n]) => n.c.id)]), nPairs: chords.length + litSpokes.length };
+  };
+  const keyCol = keyHi === "僅同事" ? T.muted : keyHi ? tone(KEY_RAW[keyHi]) : null;
+  const keyHit = (rs) => hitKey(keyHi, rs);
+  const keyNow = keyHi ? keySets(keyHi) : null;
+  const keyPairs = keyNow ? keyNow.chords : [];
+  const keyLit = keyNow ? keyNow.lit : null;
+  /* 讀屏：圖中所亮者無從目見，故於點選時以文字報其數（懸停預覽不報） */
+  const KEY_LABEL = { 未見: "未見／未說開" };
+  const pinStats = keyPin ? (keyPin === keyHi ? keyNow : keySets(keyPin)) : null;
+  /* 弦線之弧：舊法令控制點自全圖中心沿「中心→中點」方向外推 70——岚川云今居正中，
+     凡其一端的弦，中點方向與弦本身同線，外推之後仍是直線，看去與核線無別、且直穿程凯下方諸星。
+     今改為垂直於弦本身曲出，曲向（左右）與曲度（弦長之 12%–32%）六擇一：取弧上諸點離他星最遠者。
+     標籤亦不再定在弧之中點，而取弧中段（t 0.3–0.7）離他星最遠之一點，並畫在星圈之上。 */
+  const allStars = [
+    ...layout.rings.flatMap((s) => s.flatMap((ring) => ring.nodes)), ...layout.bridge, ...layout.farNodes,
+    ...CX.map((x) => ({ x, y: CY, r: 47, c: { id: "", belong: [] } })),
+  ];
+  const starGap = (x, y, skip) => {
+    let g = Infinity;
+    for (const q of allStars) if (!skip.includes(q.c.id)) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - q.r - (q.c.belong.length > 1 ? 4 : 0));
+    return g;
+  };
+  const chordPath = (a, b) => {
+    const p1 = pos[a], p2 = pos[b], skip = [a, b];
+    const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2, L = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
+    const nx = -(p2.y - p1.y) / L, ny = (p2.x - p1.x) / L;
+    const at = (cx, cy, t) => [(1 - t) * (1 - t) * p1.x + 2 * (1 - t) * t * cx + t * t * p2.x, (1 - t) * (1 - t) * p1.y + 2 * (1 - t) * t * cy + t * t * p2.y];
+    let best = null;
+    for (const sgn of [1, -1]) for (const k of [0.12, 0.22, 0.32]) {
+      const cx = mx + sgn * nx * k * L, cy = my + sgn * ny * k * L;
+      let g = Infinity;
+      for (let i = 1; i < 16; i++) { const [x, y] = at(cx, cy, i / 16); g = Math.min(g, starGap(x, y, skip)); }
+      if (!best || g > best.g + 0.5) best = { g, cx, cy };
+    }
+    let lab = null;
+    for (let i = 0; i <= 8; i++) {
+      const [x, y] = at(best.cx, best.cy, 0.3 + (0.4 * i) / 8), g = starGap(x, y, skip);
+      if (!lab || g > lab.g) lab = { g, x, y };
+    }
+    return { d: `M ${p1.x} ${p1.y} Q ${best.cx} ${best.cy} ${p2.x} ${p2.y}`, lx: lab.x, ly: lab.y };
+  };
+  const relLabel = (rs) => rs.map((r) => r.t).join("／");
+  const haloText = { paintOrder: "stroke", stroke: T.bg, strokeWidth: 3, strokeLinejoin: "round" };
 
   /* 星核與節點皆以渲染函數呼之（理同輿圖 renderSpot：內嵌元件逢懸停重繪即卸載重掛，吞去 click） */
   const renderStar = (k) => {
@@ -1604,11 +1734,11 @@ function Planetary({ onOpenChar }) {
     const sec = SECONDARY_IDS.has(n.c.id);
     const fs = sec ? 13.5 : nodeFontSize(n.c.name.length, n.r, dim);
     return (
-      <g key={n.c.id} style={{ cursor: "pointer" }}
+      <g key={n.c.id} style={{ cursor: "pointer" }} opacity={keyLit && !keyLit.has(n.c.id) ? 0.22 : 1}
         onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
         onMouseLeave={() => { if (!coarse) setHover(null); }}
         /* 觸屏無懸停：首觸牽出其關係弧，再觸方開檔案 */
-        onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); return; } onOpenChar(n.c); }}>
+        onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); setKeyPin(null); return; } onOpenChar(n.c); }}>
         {coarse && <circle cx={n.x} cy={n.y} r={30} fill="transparent" />}
         <circle cx={n.x} cy={n.y} r={r0} fill={soft ? T.bg : T.panel} stroke={fc(n.c.belong[0])}
           strokeWidth={soft ? 1.2 : sec ? 2.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} />
@@ -1639,9 +1769,9 @@ function Planetary({ onOpenChar }) {
         style={{ width: "100%", maxWidth: 1160, display: "block", margin: "0 auto", ...gestureStyle }}
         {...handlers}>
         <g transform={`translate(${view.tx} ${view.ty}) scale(${view.k})`}>
-        {/* 襯底：觸屏點空處即卸下所選人物，關係弦線隨之收起 */}
+        {/* 襯底：觸屏點空處即卸下所選人物（及圖例所指之類），關係弦線隨之收起 */}
         <rect x={-4000} y={-4000} width={9000} height={9000} fill="transparent"
-          onClick={() => { if (movedRef.current > 5) return; setHover(null); }} />
+          onClick={() => { if (movedRef.current > 5) return; setHover(null); setKeyPin(null); }} />
         {/* 遠軌：兩列星體分居軌線內外，線居中為準。線按門派分段著色，逾三人者署名。
             署名沿軌切向書寫，故無論名之長短，徑向只佔字高十許像素，不慮出幅。 */}
         {(() => {
@@ -1692,38 +1822,80 @@ function Planetary({ onOpenChar }) {
             </text>
           ))}
         </g>
-        {/* 系內星體連線 */}
-        {layout.rings.flatMap((sysRings, k) =>
-          sysRings.flatMap((ring) =>
-            ring.nodes.map((n) => (
-              <line key={n.c.id + "l"} x1={CX[k]} y1={CY} x2={n.x} y2={n.y}
-                stroke={hover === n.c.id ? T.accent : T.line}
-                strokeWidth={linkW(n.n)}
-                opacity={hover && hover !== n.c.id ? 0.25 : 0.85} />
-            ))
-          )
-        )}
-        {/* 橋星連線：分別繫於兩核 */}
-        {layout.bridge.map((n) => (
-          <g key={n.c.id + "bl"}>
-            <line x1={CX[0]} y1={CY} x2={n.x} y2={n.y} stroke={hover === n.c.id ? T.accent : T.line}
-              strokeWidth={linkW(n.a)} opacity={hover && hover !== n.c.id ? 0.25 : 0.85} />
-            <line x1={CX[1]} y1={CY} x2={n.x} y2={n.y} stroke={hover === n.c.id ? T.accent : T.line}
-              strokeWidth={linkW(n.b)} opacity={hover && hover !== n.c.id ? 0.25 : 0.85} />
-          </g>
-        ))}
-        {/* 懸停弦線：星體間之關係 */}
-        {chords.map((r, i) => {
-          const p1 = pos[r.a], p2 = pos[r.b];
-          const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
-          const dx = mx - PW / 2, dy = my - CY, dl = Math.sqrt(dx * dx + dy * dy) || 1;
-          const cx = mx + (dx / dl) * 70, cy = my + (dy / dl) * 70;
-          return (
-            <g key={"ch" + i}>
-              <path d={`M ${p1.x} ${p1.y} Q ${cx} ${cy} ${p2.x} ${p2.y}`} fill="none"
-                stroke={relColor(r.t)} strokeWidth={1.3} strokeDasharray={r.da ? "5 4" : "none"} opacity={0.9} />
-              <text x={cx} y={cy} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10, fill: relColor(r.t) }}>{r.t}</text>
+        {/* 圖例：線之義。與左上之軌道圖例上下相對——左上說環，左下說線。
+            關係色例舊在圖下、隔著一段說明，看圖時須上下翻找；今入圖內，同在縮放層中，隨圖平移。
+            此隅在遠軌橢圓之外，右鄰玛奈丽與「明教」署名（x 約 226 起），故全塊收在 x 215 以內。
+            窄屏時全圖縮至三成上下，此間字不可讀，故窄屏圖下仍留 RelKey（見下）。 */}
+        {/* 圖例諸項可指：懸停預覽、點選常亮（觸屏輕觸；鍵盤 Tab 至此、Enter／空格切換、Esc 收起），全圖只亮此類（見 keyPin）。
+            作 role=button 並報 aria-pressed，寫法同余波之譜線行。透明底塊補足字與色線間之空隙，兼作焦點框 */}
+        <g transform={`translate(28, ${PH - 94})`}>
+          <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>線色：兩人之關係</text>
+          <text x={96} y={0} style={{ fontFamily: gUI, fontSize: 9.5, fill: T.faint }}>{coarse ? "輕觸一類即亮" : "懸停即亮，點選常亮"}</text>
+          {[
+            ...REL_KEY.map(([l, cc], i) => [l, (i % 4) * 46, 18 + Math.floor(i / 4) * 15, 14, tone(cc), undefined, 44]),
+            ["僅同事", 0, 51, 14, T.line, undefined, 52],
+            ["未見", 62, 51, 16, tone(KEY_RAW.未見), "6 4", 86, "未見／未說開"],
+          ].map(([id, x, y, len, col, dash, w, label]) => (
+            <g key={id} style={{ cursor: "pointer", outline: "none" }} opacity={keyHi && keyHi !== id ? 0.35 : 1}
+              role="button" tabIndex={0} aria-pressed={keyPin === id} aria-label={`只亮此類：${label || id}`}
+              onMouseEnter={() => { if (!coarse) { setHover(null); setKeyHover(id); } }}
+              onMouseLeave={() => { if (!coarse) setKeyHover(null); }}
+              onClick={() => { if (movedRef.current > 5) return; toggleKey(id); }}
+              onKeyDown={(ev) => {
+                if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggleKey(id); }
+                else if (ev.key === "Escape") setKeyPin(null);
+              }}
+              onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setKeyFocus(id); }}
+              onBlur={() => setKeyFocus((f) => (f === id ? null : f))}>
+              <rect x={x - 3} y={y - 12} width={w} height={16} rx={2} fill={keyPin === id ? T.panelHi : "transparent"}
+                stroke={keyFocus === id ? T.accent : "none"} strokeWidth={1.2} />
+              <line x1={x} y1={y - 3.5} x2={x + len} y2={y - 3.5} stroke={id === "僅同事" && keyHi === id ? T.muted : col} strokeWidth={keyHi === id ? 3.4 : 2.4} strokeDasharray={dash} />
+              <text x={x + len + 4} y={y} style={{ fontFamily: gUI, fontSize: 10.5, fill: keyHi === id ? T.ink : T.faint }}>{label || id}</text>
             </g>
+          ))}
+          {[1, 6, 20].map((n, i) => (
+            <line key={n} x1={i * 13} y1={62.5} x2={i * 13 + 10} y2={62.5} stroke={T.muted} strokeWidth={linkW(n)} opacity={0.6} />
+          ))}
+          <text x={44} y={66} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>線粗＝與核共見事數</text>
+        </g>
+        {/* 核線：系內星與橋星繫於其核之線。粗細仍為共見數（開方），色為與該核之主關係（見 primaryRel）；
+            無關係條目、僅同事者仍作灰線。虛線類關係（未见、未说开）若為唯一者，核線作虛線。 */}
+        {spokes.map(([n, k, cnt]) => {
+          const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)), pr = primaryRel(rs);
+          const hi = hover === n.c.id;
+          let stroke = pr ? relColor(pr.t) : T.line, dash = pr && pr.da;
+          let op = hover && !hi ? 0.2 : hi ? 1 : pr ? 0.72 : 0.85;
+          if (keyHi) {
+            const m = keyHit(rs);
+            if (m) { stroke = keyCol; dash = m !== true && m.da; op = 1; } else op = 0.1;
+          }
+          return (
+            <line key={n.c.id + "l" + k} x1={CX[k]} y1={CY} x2={n.x} y2={n.y}
+              stroke={stroke} strokeWidth={linkW(cnt)} strokeDasharray={dash ? "6 4" : undefined} opacity={op} />
+          );
+        })}
+        {/* 次星三角：常駐淡畫，懸停其中一人時讓位於懸停弦線 */}
+        {secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => {
+          const [a, b] = key.split("|"), pr = primaryRel(RELS_BY_PAIR.get(key));
+          return (
+            <path key={"sec" + key} d={chordPath(a, b).d} fill="none" stroke={relColor(pr.t)} strokeWidth={1.4}
+              strokeDasharray={pr.da ? "5 4" : undefined} opacity={hover ? 0.15 : 0.6} />
+          );
+        })}
+        {/* 懸停弦線：星體間之關係，一對一弧 */}
+        {chordPairs.map((key) => {
+          const [a, b] = key.split("|"), pr = primaryRel(RELS_BY_PAIR.get(key));
+          return (
+            <path key={"ch" + key} d={chordPath(a, b).d} fill="none" stroke={relColor(pr.t)} strokeWidth={1.3}
+              strokeDasharray={pr.da ? "5 4" : "none"} opacity={0.9} />
+          );
+        })}
+        {/* 圖例同類亮起之弦線：核線以外的同類關係，不標字（多者至四十餘對，標字成霧）；色一律取所指之類 */}
+        {keyPairs.map((key) => {
+          const [a, b] = key.split("|"), m = keyHit(RELS_BY_PAIR.get(key));
+          return (
+            <path key={"kc" + key} d={chordPath(a, b).d} fill="none" stroke={keyCol} strokeWidth={1.4}
+              strokeDasharray={m.da ? "5 4" : undefined} opacity={0.85} />
           );
         })}
         {renderStar(0)}
@@ -1735,15 +1907,49 @@ function Planetary({ onOpenChar }) {
         )}
         {layout.bridge.map((n) => renderNode(n, `閔 ${n.a} · 程 ${n.b}`))}
         {layout.farNodes.map((n) => renderNode(n, null, true))}
+        {/* 弦線之字：畫在星圈之上（位置見 chordPath）。次星三角之字常駐，懸停他人時隨線淡去 */}
+        {[
+          ...secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => [key, hover ? 0.2 : 0.85, 9.5]),
+          ...chordPairs.map((key) => [key, 1, 10]),
+        ].map(([key, op, fs]) => {
+          const [a, b] = key.split("|"), rs = RELS_BY_PAIR.get(key), pr = primaryRel(rs);
+          const { lx, ly } = chordPath(a, b);
+          return (
+            <text key={"cl" + key} x={lx} y={ly + 3.5} textAnchor="middle"
+              style={{ fontFamily: gUI, fontSize: fs, fill: relColor(pr.t), opacity: op, ...haloText }}>{relLabel(rs)}</text>
+          );
+        })}
+        {/* 懸停一星：其核線上標出與該核之諸條關係（無則註「僅同事」）。標於兩圈之間的線段中點 */}
+        {hover && [
+          ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.filter((n) => n.c.id === hover).map((n) => [n, k]))),
+          ...layout.bridge.filter((n) => n.c.id === hover).flatMap((n) => [[n, 0], [n, 1]]),
+        ].map(([n, k]) => {
+          const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)) || [], pr = primaryRel(rs);
+          const dx = n.x - CX[k], dy = n.y - CY, dl = Math.hypot(dx, dy) || 1;
+          const f = (47 + (dl - 47 - n.r) / 2) / dl;
+          return (
+            <text key={"sl" + n.c.id + k} x={CX[k] + dx * f} y={CY + dy * f + 3.5} textAnchor="middle"
+              style={{ fontFamily: gUI, fontSize: 10.5, fill: pr ? relColor(pr.t) : T.muted, ...haloText }}>
+              {rs.length ? relLabel(rs) : "僅同事"}
+            </text>
+          );
+        })}
         </g>
       </svg>
       <div style={{ fontSize: 12, color: T.faint, textAlign: "center", marginTop: 4, fontFamily: gUI }}>
         雙星系統：閔方城（蒼雲線）與程凱（天策線）同格為核。軌道由《事件与年份》中與各核共見事件之計數自動生成，圈徑與線粗亦然（皆按開方），
-        環之弧長即其人數；懸停一人即見確數。唯岚川云、陆晚月、陆羽鸣三人為次星，圈徑另定、介於雙核與其餘諸星之間，所居之軌仍按共見數。
+        環之弧長即其人數；懸停一人即見確數。繫於核之線，色為其人與該核之關係（數條者取其主，懸停並列諸條），灰線為僅同事而無關係條目。
+        唯岚川云、陆晚月、陆羽鸣三人為次星，圈徑另定、介於雙核與其餘諸星之間，所居之軌仍按共見數；三人彼此之關係常駐淡畫。
         與兩核共見皆不少於二事者為橋星，雙繫於兩核，不入軌檔故存中庸之徑：共見不偏者居雙星之間，偏於一核者靠向該核一側（陈瑞和兩核各二事，依作者所定靠程凯）。
         遠軌之線按門派分段著色，逾三人者署名於軌外。
+        左下圖例可指：{coarse ? "輕觸一類，全圖只亮此類關係（再觸收起）" : "懸停一類預覽，點選或以鍵盤 Enter 常亮（再點或 Esc 收起），全圖只亮此類關係"}——核線中凡有此類者改染此色（不必是主關係），他人之間的同類關係補畫弦線，餘星淡去。
         {coarse ? "輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。" : "點選任一人開啟檔案。"}
       </div>
+      {/* 寬屏時線之圖例已入圖內左下；窄屏圖中字太小，圖下另列一份 */}
+      {narrow && <RelKey note="線粗＝共見事數" pick={{ active: keyPin, onToggle: toggleKey, onClear: () => setKeyPin(null) }} style={{ marginTop: 8 }} />}
+      <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
+        {pinStats ? `已只亮「${KEY_LABEL[keyPin] || keyPin}」：${pinStats.nPairs} 對關係，涉 ${[...pinStats.lit].filter((id) => !CENTERS_META.some((m) => m.id === id)).length} 人（雙核不計）。再按一次或 Esc 收起。` : ""}
+      </span>
       <FactionKey />
     </div>
   );
@@ -1804,12 +2010,7 @@ function Community({ onOpenChar }) {
           {Y}（{eraOf(Y)}）
         </span>
       </div>
-      <div className="flex flex-wrap" style={{ gap: 14, marginBottom: 4, justifyContent: "center" }}>
-        {[["傳承", "#7FB0D8"], ["遺承", "#9B7EC8"], ["情愛", "#D88BA8"], ["恩義", "#C9A15C"], ["誼", "#7FA980"], ["親緣", "#B08968"], ["嫌隙", "#C8B45A"], ["殺伐", "#C05050"]].map(([l, cc]) => (
-          <span key={l} style={{ fontSize: 11, fontFamily: gUI, color: tone(cc) }}>— {l}</span>
-        ))}
-        <span style={{ fontSize: 11, fontFamily: gUI, color: T.faint }}>虛線＝未遂／未說開／未見 · 硃砂點線＝歿後延續 · 虛環＝其人已歿</span>
-      </div>
+      <RelKey note="虛線＝未遂／未說開／未見 · 硃砂點線＝歿後延續 · 虛環＝其人已歿" />
       <div style={{ overflowX: "auto", position: "relative" }}>
         <ZoomBtns view={view} zoomBy={zoomBy} reset={reset} />
         <svg viewBox="0 0 1120 1050" ref={wheelElRef}
