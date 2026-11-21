@@ -75,6 +75,16 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
     io.observe(el);
     return () => io.disconnect();
   }, [selected, shock.id]);
+  /* 回到图上：自详情回到所选那一行（居中、移焦），便于接着点下一人对照；无选中行则回图顶 */
+  const chartRef = useRef(null);
+  const backToChart = () => {
+    const root = chartRef.current;
+    if (!root) return;
+    const row = root.querySelector('g[role="button"][aria-pressed="true"]');
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    (row || root).scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: row ? "center" : "start" });
+    row?.focus({ preventScroll: true });
+  };
   const goDetail = () => {
     const el = detailRef.current;
     if (!el) return;
@@ -181,7 +191,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         {shockGist(locale, shock)} <span style={{ color: T.faint }}>· {t("在場姿態")}：{shockAxis(locale, shock)}</span>
       </div>
 
-      <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
+      <div ref={chartRef} style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="img" onMouseLeave={() => setHover(null)}
           aria-label={`${shockTitle(locale, shock)} — ${shockAxis(locale, shock)}`}>
           {/* 年刻度 */}
@@ -377,6 +387,12 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 </div>
               </div>
             ))}
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 16 }}>
+              <button type="button" onClick={backToChart} style={{ fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" }}>
+                {/* 上箭头不在字体子集中（↓ 在）：以 ↓ 倒转代之，字形亦与浮签之箭头一致 */}
+                <span aria-hidden="true" style={{ display: "inline-block", transform: "rotate(180deg)", color: T.accent, marginRight: 6 }}>↓</span>{locale === "en" ? "Back to the chart" : "回到图上"}
+              </button>
+            </div>
           </section>
         );
       })()}
