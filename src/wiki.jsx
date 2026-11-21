@@ -1446,6 +1446,7 @@ function Planetary({ onOpenChar }) {
   const [hover, setHover] = useState(null);
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(PW, PH);
   const coarse = useCoarsePointer();
+  const narrow = useNarrow();
   const CX = PCX, CY = PCY;
   const layout = useMemo(() => {
     const counts = CENTERS_META.map((m) => coCountsFor(m.id));
@@ -1770,6 +1771,30 @@ function Planetary({ onOpenChar }) {
             </text>
           ))}
         </g>
+        {/* 圖例：線之義。與左上之軌道圖例上下相對——左上說環，左下說線。
+            關係色例舊在圖下、隔著一段說明，看圖時須上下翻找；今入圖內，同在縮放層中，隨圖平移。
+            此隅在遠軌橢圓之外，右鄰玛奈丽與「明教」署名（x 約 226 起），故全塊收在 x 215 以內。
+            窄屏時全圖縮至三成上下，此間字不可讀，故窄屏圖下仍留 RelKey（見下）。 */}
+        <g transform={`translate(28, ${PH - 94})`}>
+          <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>線色：兩人之關係</text>
+          {REL_KEY.map(([l, cc], i) => {
+            const x = (i % 4) * 46, y = 18 + Math.floor(i / 4) * 15;
+            return (
+              <g key={l}>
+                <line x1={x} y1={y - 3.5} x2={x + 14} y2={y - 3.5} stroke={tone(cc)} strokeWidth={2.4} />
+                <text x={x + 18} y={y} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>{l}</text>
+              </g>
+            );
+          })}
+          <line x1={0} y1={47.5} x2={14} y2={47.5} stroke={T.line} strokeWidth={2.4} />
+          <text x={18} y={51} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>僅同事</text>
+          <line x1={62} y1={47.5} x2={78} y2={47.5} stroke={tone("#8B94A0")} strokeWidth={2.4} strokeDasharray="6 4" />
+          <text x={82} y={51} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>未見／未說開</text>
+          {[1, 6, 20].map((n, i) => (
+            <line key={n} x1={i * 13} y1={62.5} x2={i * 13 + 10} y2={62.5} stroke={T.muted} strokeWidth={linkW(n)} opacity={0.6} />
+          ))}
+          <text x={44} y={66} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>線粗＝與核共見事數</text>
+        </g>
         {/* 核線：系內星與橋星繫於其核之線。粗細仍為共見數（開方），色為與該核之主關係（見 primaryRel）；
             無關係條目、僅同事者仍作灰線。虛線類關係（未见、未说开）若為唯一者，核線作虛線。 */}
         {[
@@ -1847,7 +1872,8 @@ function Planetary({ onOpenChar }) {
         遠軌之線按門派分段著色，逾三人者署名於軌外。
         {coarse ? "輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。" : "點選任一人開啟檔案。"}
       </div>
-      <RelKey note="灰線＝僅同事 · 虛線＝未見／未說開 · 線粗＝共見事數" style={{ marginTop: 8 }} />
+      {/* 寬屏時線之圖例已入圖內左下；窄屏圖中字太小，圖下另列一份 */}
+      {narrow && <RelKey note="灰線＝僅同事 · 虛線＝未見／未說開 · 線粗＝共見事數" style={{ marginTop: 8 }} />}
       <FactionKey />
     </div>
   );
