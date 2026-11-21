@@ -68,13 +68,24 @@ const REL_KEY = [["傳承", "#7FB0D8"], ["遺承", "#9B7EC8"], ["情愛", "#D88B
 const KEY_RAW = { ...Object.fromEntries(REL_KEY), 未見: "#8B94A0" };
 const KEY_OF_RAW = Object.fromEntries(Object.entries(KEY_RAW).map(([l, c]) => [c, l]));
 const relKeyOf = (r) => KEY_OF_RAW[relRaw(r.t)];
-function RelKey({ note, style }) {
+/* pick：{ active, onToggle }。給出時諸類作按鈕（行星圖窄屏用，與圖內圖例同一狀態），並添「僅同事」「未見」二項 */
+function RelKey({ note, style, pick }) {
+  const items = REL_KEY.map(([l, cc]) => [l, tone(cc), "—", l]);
+  if (pick) items.push(["僅同事", T.muted, "—", "僅同事"], ["未見", tone(KEY_RAW.未見), "- -", "未見／未說開"]);
   return (
-    <div className="flex flex-wrap" style={{ gap: 14, marginBottom: 4, justifyContent: "center", ...style }}>
-      {REL_KEY.map(([l, cc]) => (
-        <span key={l} style={{ fontSize: 11, fontFamily: gUI, color: tone(cc) }}>— {l}</span>
-      ))}
-      {note && <span style={{ fontSize: 11, fontFamily: gUI, color: T.faint }}>{note}</span>}
+    <div className="flex flex-wrap" style={{ gap: pick ? 6 : 14, marginBottom: 4, justifyContent: "center", ...style }}>
+      {items.map(([id, col, mark, label]) =>
+        pick ? (
+          <button key={id} type="button" aria-pressed={pick.active === id} aria-label={`只亮此類：${label}`}
+            onClick={() => pick.onToggle(id)}
+            style={{ fontSize: 11, fontFamily: gUI, color: col, background: pick.active === id ? T.panelHi : "none", cursor: "pointer",
+              border: `1px solid ${pick.active === id ? col : "transparent"}`, borderRadius: 3, padding: "3px 6px" }}>
+            {mark} {label}
+          </button>
+        ) : (
+          <span key={id} style={{ fontSize: 11, fontFamily: gUI, color: col }}>{mark} {label}</span>
+        ))}
+      {note && <span style={{ fontSize: 11, fontFamily: gUI, color: T.faint, alignSelf: "center" }}>{note}</span>}
     </div>
   );
 }
@@ -1452,8 +1463,14 @@ function Planetary({ onOpenChar }) {
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(PW, PH);
   const coarse = useCoarsePointer();
   const narrow = useNarrow();
-  /* keyHi：圖例中所指之一類（REL_KEY 之名，或「僅同事」「未見」）。與 hover 互斥：指圖例即卸下所懸停之星，反之亦然 */
-  const [keyHi, setKeyHi] = useState(null);
+  /* 圖例同類亮起。keyPin：點選（滑鼠點、觸屏輕觸、鍵盤 Enter／空格）所定、常亮至再點或 Esc；
+     keyHover：滑鼠懸停圖例之預覽。實際所亮 keyHi = keyHover ?? keyPin；懸停一星時暫讓位於該星（移開即復）。
+     各值為 REL_KEY 之名，或「僅同事」「未見」。keyFocus：鍵盤焦點所在之項（畫焦點框）。 */
+  const [keyPin, setKeyPin] = useState(null);
+  const [keyHover, setKeyHover] = useState(null);
+  const [keyFocus, setKeyFocus] = useState(null);
+  const keyHi = hover ? null : keyHover ?? keyPin;
+  const toggleKey = (id) => { setHover(null); setKeyPin((p) => (p === id ? null : id)); };
   const CX = PCX, CY = PCY;
   const layout = useMemo(() => {
     const counts = CENTERS_META.map((m) => coCountsFor(m.id));
@@ -1634,15 +1651,23 @@ function Planetary({ onOpenChar }) {
   /* 圖例同類亮起：凡一對之間有此類關係者皆亮（不必是主關係——闵方城—连朔主為授业，指「殺伐」時亦亮，
      且臨時染作殺伐之色）；核線以外的同類關係補畫弦線（不標字）；無此類關係之星淡去，雙核常明。
      「未見」一項兼收 da（未遂、未说开、未见而作虛線者，如魏谦—阿会朗之杀伐）。 */
-  const keyMatch = (r) => (keyHi === "未見" ? !!r.da || relKeyOf(r) === "未見" : relKeyOf(r) === keyHi);
-  const keyCol = keyHi === "僅同事" ? T.muted : keyHi ? tone(KEY_RAW[keyHi]) : null;
+  const matchKey = (key, r) => (key === "未見" ? !!r.da || relKeyOf(r) === "未見" : relKeyOf(r) === key);
   /* 返回：不亮者 null；僅同事者 true；其餘返回所匹配諸條之主條（定虛實） */
-  const keyHit = (rs) => (keyHi === "僅同事" ? !rs || null : (rs && primaryRel(rs.filter(keyMatch))) || null);
-  const keyPairs = keyHi && keyHi !== "僅同事"
-    ? [...new Set(RELATIONS.filter((r) => keyMatch(r) && pos[r.a] && pos[r.b] && !spokeKeys.has(pairKey(r.a, r.b))).map((r) => pairKey(r.a, r.b)))]
-    : [];
-  const keyLit = keyHi ? new Set([...keyPairs.flatMap((k) => k.split("|")),
-    ...spokes.filter(([n, k]) => keyHit(RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)))).map(([n]) => n.c.id)]) : null;
+  const hitKey = (key, rs) => (key === "僅同事" ? !rs || null : (rs && primaryRel(rs.filter((r) => matchKey(key, r)))) || null);
+  const keySets = (key) => {
+    const chords = key === "僅同事" ? []
+      : [...new Set(RELATIONS.filter((r) => matchKey(key, r) && pos[r.a] && pos[r.b] && !spokeKeys.has(pairKey(r.a, r.b))).map((r) => pairKey(r.a, r.b)))];
+    const litSpokes = spokes.filter(([n, k]) => hitKey(key, RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id))));
+    return { chords, lit: new Set([...chords.flatMap((k) => k.split("|")), ...litSpokes.map(([n]) => n.c.id)]), nPairs: chords.length + litSpokes.length };
+  };
+  const keyCol = keyHi === "僅同事" ? T.muted : keyHi ? tone(KEY_RAW[keyHi]) : null;
+  const keyHit = (rs) => hitKey(keyHi, rs);
+  const keyNow = keyHi ? keySets(keyHi) : null;
+  const keyPairs = keyNow ? keyNow.chords : [];
+  const keyLit = keyNow ? keyNow.lit : null;
+  /* 讀屏：圖中所亮者無從目見，故於點選時以文字報其數（懸停預覽不報） */
+  const KEY_LABEL = { 未見: "未見／未說開" };
+  const pinStats = keyPin ? (keyPin === keyHi ? keyNow : keySets(keyPin)) : null;
   /* 弦線之弧：舊法令控制點自全圖中心沿「中心→中點」方向外推 70——岚川云今居正中，
      凡其一端的弦，中點方向與弦本身同線，外推之後仍是直線，看去與核線無別、且直穿程凯下方諸星。
      今改為垂直於弦本身曲出，曲向（左右）與曲度（弦長之 12%–32%）六擇一：取弧上諸點離他星最遠者。
@@ -1711,7 +1736,7 @@ function Planetary({ onOpenChar }) {
         onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
         onMouseLeave={() => { if (!coarse) setHover(null); }}
         /* 觸屏無懸停：首觸牽出其關係弧，再觸方開檔案 */
-        onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); setKeyHi(null); return; } onOpenChar(n.c); }}>
+        onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); setKeyPin(null); return; } onOpenChar(n.c); }}>
         {coarse && <circle cx={n.x} cy={n.y} r={30} fill="transparent" />}
         <circle cx={n.x} cy={n.y} r={r0} fill={soft ? T.bg : T.panel} stroke={fc(n.c.belong[0])}
           strokeWidth={soft ? 1.2 : sec ? 2.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} />
@@ -1744,7 +1769,7 @@ function Planetary({ onOpenChar }) {
         <g transform={`translate(${view.tx} ${view.ty}) scale(${view.k})`}>
         {/* 襯底：觸屏點空處即卸下所選人物（及圖例所指之類），關係弦線隨之收起 */}
         <rect x={-4000} y={-4000} width={9000} height={9000} fill="transparent"
-          onClick={() => { if (movedRef.current > 5) return; setHover(null); setKeyHi(null); }} />
+          onClick={() => { if (movedRef.current > 5) return; setHover(null); setKeyPin(null); }} />
         {/* 遠軌：兩列星體分居軌線內外，線居中為準。線按門派分段著色，逾三人者署名。
             署名沿軌切向書寫，故無論名之長短，徑向只佔字高十許像素，不慮出幅。 */}
         {(() => {
@@ -1799,21 +1824,30 @@ function Planetary({ onOpenChar }) {
             關係色例舊在圖下、隔著一段說明，看圖時須上下翻找；今入圖內，同在縮放層中，隨圖平移。
             此隅在遠軌橢圓之外，右鄰玛奈丽與「明教」署名（x 約 226 起），故全塊收在 x 215 以內。
             窄屏時全圖縮至三成上下，此間字不可讀，故窄屏圖下仍留 RelKey（見下）。 */}
-        {/* 圖例諸項可指：懸停（觸屏輕觸，再觸收起）一類，全圖只亮此類（見 keyHi）。透明底塊補足字與色線間之空隙 */}
+        {/* 圖例諸項可指：懸停預覽、點選常亮（觸屏輕觸；鍵盤 Tab 至此、Enter／空格切換、Esc 收起），全圖只亮此類（見 keyPin）。
+            作 role=button 並報 aria-pressed，寫法同余波之譜線行。透明底塊補足字與色線間之空隙，兼作焦點框 */}
         <g transform={`translate(28, ${PH - 94})`}>
           <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>線色：兩人之關係</text>
-          <text x={96} y={0} style={{ fontFamily: gUI, fontSize: 9.5, fill: T.faint }}>{coarse ? "輕觸一類即亮" : "懸停一類即亮"}</text>
+          <text x={96} y={0} style={{ fontFamily: gUI, fontSize: 9.5, fill: T.faint }}>{coarse ? "輕觸一類即亮" : "懸停即亮，點選常亮"}</text>
           {[
             ...REL_KEY.map(([l, cc], i) => [l, (i % 4) * 46, 18 + Math.floor(i / 4) * 15, 14, tone(cc), undefined, 44]),
             ["僅同事", 0, 51, 14, T.line, undefined, 52],
             ["未見", 62, 51, 16, tone(KEY_RAW.未見), "6 4", 86, "未見／未說開"],
           ].map(([id, x, y, len, col, dash, w, label]) => (
-            <g key={id} style={{ cursor: "pointer" }} opacity={keyHi && keyHi !== id ? 0.35 : 1}
-              onMouseEnter={() => { if (!coarse) { setHover(null); setKeyHi(id); } }}
-              onMouseLeave={() => { if (!coarse) setKeyHi(null); }}
-              onClick={() => { if (movedRef.current > 5 || !coarse) return; setHover(null); setKeyHi(keyHi === id ? null : id); }}>
-              <rect x={x - 3} y={y - 12} width={w} height={16} fill="transparent" />
-              <line x1={x} y1={y - 3.5} x2={x + len} y2={y - 3.5} stroke={col} strokeWidth={keyHi === id ? 3.4 : 2.4} strokeDasharray={dash} />
+            <g key={id} style={{ cursor: "pointer", outline: "none" }} opacity={keyHi && keyHi !== id ? 0.35 : 1}
+              role="button" tabIndex={0} aria-pressed={keyPin === id} aria-label={`只亮此類：${label || id}`}
+              onMouseEnter={() => { if (!coarse) { setHover(null); setKeyHover(id); } }}
+              onMouseLeave={() => { if (!coarse) setKeyHover(null); }}
+              onClick={() => { if (movedRef.current > 5) return; toggleKey(id); }}
+              onKeyDown={(ev) => {
+                if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggleKey(id); }
+                else if (ev.key === "Escape") setKeyPin(null);
+              }}
+              onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setKeyFocus(id); }}
+              onBlur={() => setKeyFocus((f) => (f === id ? null : f))}>
+              <rect x={x - 3} y={y - 12} width={w} height={16} rx={2} fill={keyPin === id ? T.panelHi : "transparent"}
+                stroke={keyFocus === id ? T.accent : "none"} strokeWidth={1.2} />
+              <line x1={x} y1={y - 3.5} x2={x + len} y2={y - 3.5} stroke={id === "僅同事" && keyHi === id ? T.muted : col} strokeWidth={keyHi === id ? 3.4 : 2.4} strokeDasharray={dash} />
               <text x={x + len + 4} y={y} style={{ fontFamily: gUI, fontSize: 10.5, fill: keyHi === id ? T.ink : T.faint }}>{label || id}</text>
             </g>
           ))}
@@ -1906,11 +1940,14 @@ function Planetary({ onOpenChar }) {
         唯岚川云、陆晚月、陆羽鸣三人為次星，圈徑另定、介於雙核與其餘諸星之間，所居之軌仍按共見數；三人彼此之關係常駐淡畫。
         與兩核共見皆不少於二事者為橋星，雙繫於兩核，不入軌檔故存中庸之徑：共見不偏者居雙星之間，偏於一核者靠向該核一側（陈瑞和兩核各二事，依作者所定靠程凯）。
         遠軌之線按門派分段著色，逾三人者署名於軌外。
-        左下圖例可指：{coarse ? "輕觸" : "懸停"}一類，全圖只亮此類關係——核線中凡有此類者改染此色（不必是主關係），他人之間的同類關係補畫弦線，餘星淡去。
+        左下圖例可指：{coarse ? "輕觸一類，全圖只亮此類關係（再觸收起）" : "懸停一類預覽，點選或以鍵盤 Enter 常亮（再點或 Esc 收起），全圖只亮此類關係"}——核線中凡有此類者改染此色（不必是主關係），他人之間的同類關係補畫弦線，餘星淡去。
         {coarse ? "輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。" : "點選任一人開啟檔案。"}
       </div>
       {/* 寬屏時線之圖例已入圖內左下；窄屏圖中字太小，圖下另列一份 */}
-      {narrow && <RelKey note="灰線＝僅同事 · 虛線＝未見／未說開 · 線粗＝共見事數" style={{ marginTop: 8 }} />}
+      {narrow && <RelKey note="線粗＝共見事數" pick={{ active: keyPin, onToggle: toggleKey }} style={{ marginTop: 8 }} />}
+      <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
+        {pinStats ? `已只亮「${KEY_LABEL[keyPin] || keyPin}」：${pinStats.nPairs} 對關係，涉 ${[...pinStats.lit].filter((id) => !CENTERS_META.some((m) => m.id === id)).length} 人（雙核不計）。再按一次或 Esc 收起。` : ""}
+      </span>
       <FactionKey />
     </div>
   );
