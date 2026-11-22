@@ -21,7 +21,7 @@
 - 铁骨衣 **Iron-Bone Mantle**（首现、正式）；陌刀 **modao (long blade)**；环柄陌刀 **ring-pommel modao**；映雪湖 Snow-Mirror Lake；李牧祠 the Shrine of Li Mu；女卫营 the Women’s Guard Corps；破阵营 the Rank-Breaker Corps；上元节、正月十六 the Lantern Festival, the sixteenth day of the first month；关内 within the passes；马牧 the army’s horse herds。
 - 统帅 **the Commander**（Notion：叙述作 the Commander）；主帅作 **the commanding general**（避 Hucker 已占的 Commander-in-chief，方针 P2）。
 - 监军 **the Army Monitor**：Notion 该条仍为待核（你说 supervisor 译不出「监」），沿用此建议。
-- 岚川（指岚川云）作 **Arashikawa**，同英文名之姓。
+- 岚川（指岚川云）作 **Lanchuan**，同英文名之姓（原作 Arashikawa，作者 2026-11-22 改为中文读法，见岚川云译注）。
 
 ## 待审：措辞
 

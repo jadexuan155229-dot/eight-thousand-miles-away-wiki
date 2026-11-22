@@ -161,7 +161,7 @@ export const ranksEn = {
   '崤山工事（接程凯）': 'Mount Xiao fortifications (taking over from Cheng Kai)',
   潼关残军主将: 'Commander of the Tong Pass remnants',
   '太原轻骑（自组）': 'Taiyuan light horse (raised himself)',
-  '斥候（隶岚川云）': 'Scout (under Arashikawa Kumo)',
+  '斥候（隶岚川云）': 'Scout (under Lanchuan Yun)',
   '斥候首（留营）': 'Chief of Scouts (the camp left behind)',
   '斥候首（停职扣押）': 'Chief of Scouts (suspended and detained)',
   斥候首: 'Chief of Scouts',
