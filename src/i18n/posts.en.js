@@ -12,10 +12,10 @@
 // Commissioner and 都督 Area Commander (777), 护军 Military Protector (2775, sense 4: the merit title).
 // 校尉 Commandant (2456: Hucker uses Commandant for both 校尉 and 都尉, told apart by the prefix),
 // 侍医 Attending Physician (5255), 参军事 Administrator (6876), 医博士 Medical Erudite (726, 6182).
-// Searched and not in Hucker, so 自拟: 子将, 教练使, 兵曹参军事, 押衙 (Tang sense), 留后 (3790 has only
-// Capital Liaison Representative for T'ang and Deputy Commander for Sung; neither is the camp left behind). Not in Hucker, so
-// our own renderings on his pattern (自拟): 押衙 (7873 has only the Song sense, Lackey), 子将, and the
-// individual merit and prestige titles below. Hucker entry numbers are noted where they apply.
+// Searched and not in Hucker, so 自拟: 子将, 教练使, 兵曹参军事, 押衙 (7873 has only the Song sense,
+// Lackey), 留后 (3790 has only Capital Liaison Representative for T'ang and Deputy Commander for Sung;
+// neither is the camp left behind). Merit and prestige titles: each line of honoursEn below carries
+// its Hucker entry number, or says 自拟 / Notion where Hucker has no entry.
 // 2026-11-22 T0 working draft (docs/t0-review.md).
 
 /* 職位：label＝編制圖上的短名（對 POSTS[].label），full＝任期、檔案所用全稱（對 POST_FULL），
