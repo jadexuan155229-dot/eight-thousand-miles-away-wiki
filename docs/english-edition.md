@@ -34,26 +34,31 @@ T0 做完，所有图表页（舆图、行星、群像、编制、余波）在�
 4. 删了译文后 `npm run i18n:stamp -- --prune` 清掉无主的戳。
 5. 界面新增中文字串时，以 `t("中文")` 包起，并在 `ui.js` 补英文；`check-data` 会报站内在用而表中无的键。
 
-## 等作者拍板
+## 作者已定（2026-11-22）
 
-1. **英文读者是谁、来历怎么交代**：二十四个门派都来自剑三，中文读者心照不宣，英文读者完全没有这层语境。写成 "original fiction set in the world of JX3"，还是淡化游戏来源、只讲唐代？这决定 About 页与门派说明怎么写。`en/index.html` 的描述暂作中性的 "an author's archive for a work of fiction set in Tang China, 715–800"。
-2. **题名**：「人山人海 · 档案」暂留中文原题；卷首「八千里路」、印文「入卷」、副题「士兵、杀手和大夫」亦暂留中文，只把读屏标签与操作提示改作英文。英文题头上行暂作 "Eight Thousand Miles Away · 715–800 · Kaiyuan 3 to Zhenyuan 16"。
-3. **作者按的语域**：人物卡里有写给自己的话，在中文同人资料站里自然，直译成英文会变味。最尖锐的是闵方城卡「（东亚人种吐蕃类型）」，英译在英语学界读者眼里会像十九世纪的人种分类学；类似的还有「以现在的话来说是抑郁」「文物：宁夏固原……」。建议 T1/T2 把「档案正文」与「作者按」分开处理：改写、做成脚注（文物出处做脚注反是加分），或不译。
-4. **名字训诂**：91 人有训诂。建议 T1 照吕定仪的标准逐条做工作译文；T2 只给一句英文（名字含义 + 出处篇名），引文留中文。
-5. **T1 名单**：暂定六人（见 `tiers.js`），可增删。
+1. **来历两面都讲**：唐代背景与剑三来源都交代，可以充分、略长。已写成英文版独有的 About 页（`src/about.jsx`，`#/about`，只在英文导航里列出；页头英文版说明末尾另有入口）。`en/index.html` 的描述同步提到 JX Online 3。
+2. **题名**：「人山人海 · 档案」英文作 **Characters: Archive**（冒号同中文之点着朱；页面标题、预览元数据同步）。卷首亦译：「八千里路」作 **Eight Thousand Miles Away**（四词分四行，应中文四字一列），印文「入卷」作 **Enter**，副题「士兵、杀手和大夫」作 **The Soldier, the Assassin and the Physician**（仍竖排，拉丁字侧转）；卷首地图上的道名、城名改英文。
+3. **作者按不译**：写给自己的话、选角式备注（如「东亚人种吐蕃类型」）、「以现在的话来说」之类的现代注解、文物出处，英文一律不译。档案行内的，译时略去该句；整条轶事、高光属此类者，`characters.en.js` 该条写 `false`，英文界面即略去不显（不回落中文）。`false` 照样盖戳：中文改了，仍会提醒重看。
+4. **训诂**：T1 照吕定仪的标准逐条做工作译文；T2 只给一句英文（名字含义 + 出处篇名），引文留中文。
+5. **T1 名单**：六人如 `tiers.js`。
+
+**门派**：依 Notion「人山人海英译术语表 / 剑三门派总表」。专名拼音（凌雪阁的拼音作 Lingxuege），机构词意译；标签去掉冠词（行文中团体名加 the：the Tiance Command）。底图吐蕃作 Tibet，大漠作 The Gobi。
 
 ## 本轮工作稿（待审）
 
-下列英文都按已定体例（拼音、Hucker 官名、县作 county）起草，作者审定前视作工作稿。
+**门派**（`factions.en.js`）——来自 Notion 者不列；门派总表与术语主表都未收的，暂拟如下：
 
-**门派**（`factions.en.js`）：苍云 Cangyun · 天策 Tiance · 唐军 Tang army · 霸刀 Badao · 长歌 Changge · 万花 Wanhua · 药宗 Yaozong · 明教 Mingjiao · 红衣教 Hongyijiao · 唐门 Tangmen · 五毒 Wudu · 七秀 Qixiu · 丐帮 Gaibang · 少林 Shaolin · 藏剑 Cangjian · 凌雪阁 Lingxuege · 衍天宗 Yantianzong · 纯阳 Chunyang · 万灵 Wanling · 蓬莱 Penglai · 段氏 Duan · 南诏 Nanzhao · 奚人/狼牙 Xi / Langya · 羌 Qiang · 鲜卑 Xianbei · 柔然 Rouran · 靺鞨 Mohe · 苗疆 Miaojiang · 波斯 Persia · 西域 Western Regions · 平民 Commoners · 史实 Historical record
+- 唐军 Tang army · 红衣教 Hongyi Order（按「教 → Order」，同 the Wudu Order）· 靺鞨 Mohe · 苗疆 Miaojiang（若嫌生，可作 the Miao borderlands）· 波斯 Persia · 平民 Commoners · 史实 Historical record
 
-- 凌雪阁：此处按「拼音到底」作 Lingxuege；编制页天策说明里原有的英文作 "Lingxue"，二者须统一。
-- 西域、平民、史实、波斯：非门派专名，用通行英文。苗疆若嫌 Miaojiang 太生，可作 "the Miao borderlands"。
+**地名**（`places.en.js`）：Notion 地名表已定者照录（取图上短名：Yunzhou 而非 Yunzhou (Yunzhong Commandery)），共 25 个；卷首地图另需、地名表未收者暂拟：河北-范阳 Fanyang（地名表作 Youzhou (Fanyang Commandery)，图上取郡名，同中文标签）、邺城 Yecheng、睢阳 Suiyang、灵武 Lingwu。
 
-**底图标签**（`places.en.js`）：唐十道作拼音（Longyou、Guannei、Hedong、Hebei、Henan、Shannan、Jiannan、Huainan、Jiangnan、Lingnan、Anxi、Beiting）；吐蕃暂作 Tibet，大漠暂作 The Gobi——此二者是否也走拼音（Tubo、Damo）待定。
+**卷首副题**：「士兵、杀手和大夫」取单数加定冠词（The Soldier, the Assassin and the Physician），读作三种人；若原意是一群人，可作 Soldiers, Assassins and Physicians。
 
-**关系色谱类名**（行星、群像图例）：傳承 Teaching · 遺承 Legacy · 情愛 Love · 恩義 Obligation · 誼 Friendship · 親緣 Kinship · 嫌隙 Rift · 殺伐 Violence；僅同事 Shared events only；未見／未說開 Never met / left unsaid。这几个词承载作者的情感词汇，尤须过目。
+**About 页**（`src/about.jsx`）：全文为工作稿。两处请特别过目——
+- 「The work began from that image: the Cangyun fortress at the pass, under snow.」作品缘起于剑三苍云雪中关城这一画面，是否愿意公开写出；
+- 「A few figures also come from the game’s own lore, among them Xue Zhi」：以薛直为剑三原有人物（依 Notion 编制总表「设定集称雁门守军统帅」），其余皆作者原创——此说法是否准确。
+
+**关系色谱类名**（行星、群像图例）：傳承 Teaching · 遺承 Legacy · 情愛 Love · 恩義 Obligation · 誼 Friendship · 親緣 Kinship · 嫌隙 Rift · 殺伐 Violence；僅同事 Shared events only；未見／未說開 Never met / left unsaid。
 
 **任期类别**：署理 acting · 代领 deputizing · 兼领 concurrent · 停职 suspended · 暂任 interim · 差遣 commission · 无名目 no formal title · 充任 serving as。
 
@@ -67,7 +72,7 @@ T0 做完，所有图表页（舆图、行星、群像、编制、余波）在�
 
 - 124 个人名与字：以 pypinyin 出拼音初稿，作者只核多音字与羌、胡姓氏（荔非等）。
 - 14 个称号、10 个别号：作者口吻，逐个定。
-- 69 个地名：县作 county，道作 Circuit，郡作 Commandery（同吕定仪档案「Fengzhou (Jiuyuan Commandery), Guannei Circuit」之例）。
+- 其余 40 个地名：县作 county，道作 Circuit，郡作 Commandery（同吕定仪档案「Fengzhou (Jiuyuan Commandery), Guannei Circuit」之例）；Notion 地名表已有者先照录。
 - 75 种关系类型：作者逐个定。
 - 编制职名（`posts-data.js` 之 `POST_FULL`、各任期 `en` 栏）：Hucker。
 - 故事线名、卷名、「定场」「序」：作者定。

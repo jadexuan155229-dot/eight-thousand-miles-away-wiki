@@ -11,9 +11,10 @@
      #/novel/<線>/<章>[/<子章>]   文庫章節，同 FLAT 路徑
      #/echoes[/<震源id>[/<人物id>]]  余波頁：第二段＝震源，第三段＝選中之行（不開檔案彈窗，
                                      查看檔案走 #/chars/<人物id>）
+     #/about             英文版之 About 頁（中文導航不列；見 about.jsx）
    未知頁籤回落 chars；文庫路徑不編碼人物（入文庫即收檔案彈窗）。
    ============================================================ */
-export const TABS = ["chars", "posts", "timeline", "map", "network", "community", "echoes", "novel"];
+export const TABS = ["chars", "posts", "timeline", "map", "network", "community", "echoes", "novel", "about"];
 /* 編制圖門派 ↔ 哈希段。人物 id 不得與此重名（check-data 校驗） */
 export const POST_FAC_SLUG = { 苍云: "cangyun", 天策: "tiance", 唐军: "tangjun" };
 const SLUG_FAC = Object.fromEntries(Object.entries(POST_FAC_SLUG).map(([f, s]) => [s, f]));

@@ -7,7 +7,12 @@
 //   name, zi, hao, epithet, birthplace     strings
 //   gloss                                  { passages: [{ work, section, quote }], explanation } or a string
 //   profile                                { 官职身份: '…', … } keyed by the Chinese row label
-//   anecdotes, highlight                   arrays aligned with the Chinese by index; null = not yet
+//   anecdotes, highlight                   arrays aligned with the Chinese by index; null = not yet,
+//                                          false = deliberately left untranslated and hidden in English
+//
+// Author's notes (asides written for herself, casting notes, "in today's terms" glosses,
+// artefact references) are not translated (author, 2026-11-22). Inside a profile row, leave
+// the note out of the English; a whole anecdote that is such a note gets false.
 // Each translated field is stamped with a hash of its Chinese source (src/i18n/stamps.json,
 // npm run i18n:stamp). When the Chinese changes, check-data reports the English as stale.
 export const charactersEn = {

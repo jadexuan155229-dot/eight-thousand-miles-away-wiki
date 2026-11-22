@@ -29,10 +29,13 @@ export function profileRow(locale, c, label, zh) {
   const v = EN(locale) ? charactersEn[c.id]?.profile?.[label] : null;
   return has(v) ? [v, false] : [zh, EN(locale) && has(zh)];
 }
-/* 軼事、高光：按下標對齊中文；回 [[文字, 是否回落], …] */
+/* 軼事、高光：按下標對齊中文；回 [[文字, 是否回落], …]。
+   英译作 false＝有意不译（作者按、寫給自己的備忘之類，作者 2026-11-22 定）：英文界面略去此條，不回落中文 */
 export function listField(locale, c, key) {
   const en = EN(locale) ? charactersEn[c.id]?.[key] : null;
-  return (c[key] || []).map((zh, i) => (has(en?.[i]) ? [en[i], false] : [zh, EN(locale)]));
+  return (c[key] || [])
+    .map((zh, i) => (en?.[i] === false ? null : has(en?.[i]) ? [en[i], false] : [zh, EN(locale)]))
+    .filter(Boolean);
 }
 
 /* ---------- 門派、地名、關係類型 ---------- */

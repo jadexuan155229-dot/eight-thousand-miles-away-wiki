@@ -14,6 +14,7 @@ import { charactersEn } from "../src/i18n/characters.en.js";
 
 export const STAMP_FILE = new URL("../src/i18n/stamps.json", import.meta.url);
 export const hashOf = (zh) => createHash("sha1").update(typeof zh === "string" ? zh : JSON.stringify(zh ?? "")).digest("hex").slice(0, 10);
+/* false＝有意不譯（軼事、高光），亦算已處理，照樣蓋戳：中文改了仍須重看要不要譯 */
 const has = (v) => v != null && v !== "" && !(typeof v === "object" && !Array.isArray(v) && Object.keys(v).length === 0);
 
 const SCALAR = ["name", "zi", "hao", "epithet", "birthplace", "gloss"];

@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { GEO_BASE, LOC_COORDS } from "./wiki-data.js";
 import { serif, useCoarsePointer } from "./theme.js";
 import { useLocale, useT } from "./i18n/locale";
+import { placeName } from "./i18n/content";
 
 /* ---------------- 輿圖紋理 ---------------- */
 
@@ -32,6 +33,12 @@ const FEATURED = [
   ["睢阳", "small"], ["灵武", "small"],
 ];
 const SHOWN_NAME = { "太原府": "太原", "云州-云中": "云州" };
+
+/* 英文卷首：地图上的道名、城名改英文（地名表定名，见 i18n/places.en.js）。
+   畫布繪字在模組層函數裡，故以此旗標傳入；定場一次只掛一份，掛載時由組件設定。
+   畫布不走 DOM 字體加載，英文用系統襯線（與英文檔案卡同棧），免得字未載到便先畫了回退字 */
+let LANDING_EN = false;
+const LATIN = '"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif';
 
 function mulberry32(a) {
   return function () {
@@ -63,9 +70,10 @@ function inkRange(ctx, rnd, x0, y0, x1, y1, n) {
   }
 }
 
-let texCache = null;
+const texCache = { zh: null, en: null }; /* 紋理按語言各存一份：先中文入站、換英文再開定場時不得沿用中文道名 */
 function mapTexture() {
-  if (texCache) return texCache;
+  const lang = LANDING_EN ? "en" : "zh";
+  if (texCache[lang]) return texCache[lang];
   const W = 1000 + M * 2, H = 720 + M * 2;
   const cv = document.createElement("canvas");
   cv.width = W * S; cv.height = H * S;
@@ -119,9 +127,9 @@ function mapTexture() {
   inkRange(ctx, rnd, 538, 372, 652, 368, 10);
   /* 道名題注 */
   ctx.fillStyle = "rgba(112,122,136,0.55)";
-  ctx.font = `15px ${serif}`;
+  ctx.font = LANDING_EN ? `italic 14px ${LATIN}` : `15px ${serif}`;
   ctx.textAlign = "center"; ctx.textBaseline = "middle";
-  for (const L of GEO_BASE.labels) ctx.fillText(L.t, L.x, L.y);
+  for (const L of GEO_BASE.labels) ctx.fillText(LANDING_EN ? placeName("en", L.t.replace(/ /g, "")) : L.t, L.x, L.y);
   /* 城邑墨點與門派菱標（棋子另畫於弧面之上，此為底圖印痕） */
   for (const c of Object.values(LOC_COORDS)) {
     if (c.kind === "city") {
@@ -134,7 +142,7 @@ function mapTexture() {
       ctx.closePath(); ctx.stroke();
     }
   }
-  texCache = cv;
+  texCache[lang] = cv;
   return cv;
 }
 
@@ -407,8 +415,8 @@ function drawPass(ctx, x, y, s) {
 
 function pieceLabel(ctx, p, s) {
   const big = p.kind === "big" || p.kind === "capital";
-  const t = SHOWN_NAME[p.name] ?? p.name.split("-").pop();
-  ctx.font = `${big ? "600 13.5" : "11.5"}px ${serif}`;
+  const t = LANDING_EN ? placeName("en", p.name) : SHOWN_NAME[p.name] ?? p.name.split("-").pop();
+  ctx.font = `${big ? "600 13.5" : "11.5"}px ${LANDING_EN ? LATIN : serif}`;
   ctx.fillStyle = big ? "rgba(206,197,170,0.95)" : "rgba(152,162,174,0.85)";
   ctx.strokeStyle = "rgba(10,13,17,0.75)"; ctx.lineWidth = 3; ctx.lineJoin = "round";
   /* 棋子實寬之半再讓數像素，名號不疊壓牆體簷角 */
@@ -684,6 +692,7 @@ export default function Landing({ onEnter }) {
   const locale = useLocale();
   const t = useT();
   const en = locale === "en";
+  LANDING_EN = en; /* 先於畫布 effect，見上 */
   const wrapRef = useRef(null);
   const farRef = useRef(null);
   const mapRef = useRef(null);
@@ -872,7 +881,8 @@ export default function Landing({ onEnter }) {
   return (
     <div
       ref={wrapRef}
-      className={"cy-landing" + (leaving ? " cy-landing--leave" : "")}
+      className={"cy-landing" + (en ? " cy-landing--en" : "") + (leaving ? " cy-landing--leave" : "")}
+      lang={en ? "en" : "zh"}
       onTransitionEnd={(e) => { if (leavingRef.current && e.target === wrapRef.current) finish(); }}
       aria-label={t("入站定場：八千里路")}
     >
@@ -886,12 +896,13 @@ export default function Landing({ onEnter }) {
       <div ref={glowRef} className="cy-glow" aria-hidden="true" style={{ transform: "translate3d(-999px,-999px,0)" }} />
       <div className="cy-side">
         <div className="cy-titlecol">
-          <h1 className="cy-title" lang="zh">八千里路</h1>
+          {/* 英文題名四詞分四行，應中文四字一列；副題仍豎排（拉丁字側轉），印文作 Enter */}
+          <h1 className="cy-title">{en ? <>Eight<br />Thousand<br />Miles<br />Away</> : "八千里路"}</h1>
           <button type="button" className="cy-seal" onClick={enter} aria-label={t("入卷：進入檔案站")}>
-            <span lang="zh">入卷</span>
+            <span>{en ? "Enter" : "入卷"}</span>
           </button>
         </div>
-        <div className="cy-subtitle" lang="zh">士兵、殺手和大夫</div>
+        <div className="cy-subtitle">{en ? "The Soldier, the Assassin and the Physician" : "士兵、殺手和大夫"}</div>
       </div>
       <div className={"cy-hint" + (moved ? " cy-hint--off" : "")} lang={en ? "en" : undefined}>
         <span>{coarse ? t("拂過屏幕，燭照山河 · 鈐印入卷") : t("移燭照覽山河 · 鈐印入卷")}</span>

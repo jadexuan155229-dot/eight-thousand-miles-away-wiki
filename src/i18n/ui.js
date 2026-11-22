@@ -17,6 +17,8 @@ const en = {
   卷首: 'Opening', 回到卷首: 'Return to opening',
   語言: 'Language', 紙色: 'Theme', 玄墨: 'Ink', 素紙: 'Paper',
   關閉檔案: 'Close profile', 站內導航: 'Main navigation', 關閉: 'Close',
+  關於: 'About',
+  初來者请看: 'New here? Read about the work and its world →',
   檔案一覽: 'Profiles', 編制: 'Posts',
   門派: 'Faction', 全部: 'All', 待核: 'Draft',
   中文原文: 'Chinese original',

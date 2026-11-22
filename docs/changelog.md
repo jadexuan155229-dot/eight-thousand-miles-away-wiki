@@ -2,6 +2,17 @@
 
 ## 2026-11-22
 
+### 英文版：作者定名、卷首英文、About 页
+
+作者审过地基一轮，拍板五事（详见 [docs/english-edition.md](english-edition.md)「作者已定」）。
+
+- **门派**改依 Notion「剑三门派总表」：Cangyun Army、Tiance Command、Wanhua Valley、Lingxue Pavilion、Beggars' Guild 等；标签去冠词。族称、阵营依「术语主表」（Xi / Langya Army 等）。编制页英文说明同步。
+- **地名**：Notion 地名表已定者照录 25 个（Yanmen Pass、Tong Pass、Taiyuan、Changshan……），卷首另需者暂拟 4 个；吐蕃作 Tibet、大漠作 The Gobi。
+- **题名**：英文题头「人山人海 · 档案」作 Characters: Archive，页面标题、预览元数据同步。
+- **卷首英文**：题名 Eight Thousand Miles Away 四词分四行右对齐，印文 Enter，副题 The Soldier, the Assassin and the Physician 竖排侧转，地图道名、城名改英文（画布用系统衬线；纹理按语言各缓存一份）。中文卷首不变。
+- **About 页**（`#/about`，仅英文导航）：唐代背景、剑网三来源、各页读法、英文版体例；页头英文版说明末尾加入口。
+- **作者按不译**：轶事、高光英译写 `false` 即为有意不译，英文界面略去该条；照样盖戳。
+
 ### 英文版地基：网址定语言、逐字段回落、防过期
 
 作者要把整站做出一个能给英语世界看的英文版。此前英文只是原型：语言存在 localStorage、默认中文，链接发出去对方看到的是中文；档案卡按「此人有无译文」整卡切换，未译之人在英文界面下连标目也是中文；年表、舆图、行星、群像诸图未接语言。本轮只搭地基、不动内容，分级与待审事项见 [docs/english-edition.md](english-edition.md)。

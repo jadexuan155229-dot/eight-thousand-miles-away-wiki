@@ -14,7 +14,7 @@ const BASE = import.meta.env.BASE_URL; /* '/eight-thousand-miles-away-wiki/' */
 export const EN_PATH = `${BASE}en/`;
 const TITLE = {
   zh: '八千里路 · Eight Thousand Miles Away | 人山人海 · 档案',
-  en: 'Eight Thousand Miles Away | An archive of people and events, 715–800',
+  en: 'Eight Thousand Miles Away | Characters: Archive',
 };
 
 export function readLanguage() {

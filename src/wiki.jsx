@@ -13,6 +13,7 @@ import { SEAL_SVG_FILE } from "./seals";
 import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
+import About from "./about";
 import { grantLabel, grantsOf, tenureFac, tenuresOf, tenureSpan, tenureTitle } from "./posts-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
@@ -2932,14 +2933,15 @@ export default function Wiki({ onOpenLanding }) {
     <div className="site-root" style={{ minHeight: "100vh", backgroundColor: T.bg, color: T.ink, padding: "0 0 60px" }}>
       <header style={{ borderBottom: `1px solid ${T.line}`, padding: "34px 28px 22px", display: "flex", alignItems: "flex-end", gap: 20, flexWrap: "wrap" }}>
         <div>
-          {/* 題頭：英文界面上行改作英文站名與年代；「人山人海 · 檔案」之英译待作者定，暫留原題 */}
+          {/* 題頭：英文界面上行作英文站名與年代；「人山人海 · 檔案」英文作 Characters: Archive（作者 2026-11-22 定），冒號同中文之點著朱 */}
           <div lang={en ? "en" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, letterSpacing: en ? "0.12em" : "0.5em", color: T.faint }}>{en ? "Eight Thousand Miles Away · 715–800 · Kaiyuan 3 to Zhenyuan 16" : "七一五 — 八〇〇 · 開元三年至貞元十六年"}</div>
-          <h1 style={{ fontFamily: "HuiwenZhengKai", fontSize: 34, fontWeight: 700, margin: "6px 0 0", letterSpacing: "0.08em" }}>
-            人山人海 <span style={{ color: T.accent }}>·</span> 檔案
+          <h1 lang={en ? "en" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: en ? 32 : 34, fontWeight: 700, margin: "6px 0 0", letterSpacing: en ? "0.01em" : "0.08em" }}>
+            {en ? <>Characters<span style={{ color: T.accent }}>:</span> Archive</> : <>人山人海 <span style={{ color: T.accent }}>·</span> 檔案</>}
           </h1>
         </div>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
-          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"]].map(([k, label]) => (
+          {/* About 只在英文導航：向英文讀者交代唐代背景與剑三來源，中文讀者不需要 */}
+          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
             <button key={k} onClick={() => setTab(k)}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
@@ -2963,7 +2965,11 @@ export default function Wiki({ onOpenLanding }) {
       </header>
 
       {/* 英文版進度說明：數目由覆蓋層實算（i18n/content.js coverage），译一人、译一事，此處自動更新 */}
-      {en && <p className="translation-scope" lang="en" style={{ color: T.muted }}>{t("英文版說明", COVERAGE)}</p>}
+      {en && <p className="translation-scope" lang="en" style={{ color: T.muted }}>
+        {t("英文版說明", COVERAGE)}
+        {tab !== "about" && <>{" "}<button type="button" onClick={() => setTab("about")}
+          style={{ font: "inherit", color: T.accent, background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline", textDecorationColor: `${T.accent}66`, textUnderlineOffset: 3 }}>{t("初來者请看")}</button></>}
+      </p>}
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>
         {(tab === "chars" || tab === "posts") && (
           /* 人物檔案的兩個子視圖：檔案一覽／編制（任職圖） */
@@ -3010,6 +3016,7 @@ export default function Wiki({ onOpenLanding }) {
             onRoute={(p) => nav({ shock: p.shock, who: p.who })}
             onOpenProfile={(id) => nav({ tab: "chars", char: id })} />
         )}
+        {tab === "about" && <About onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} />}
         {tab === "novel" && <NovelReader path={route.novelPath} onNav={(p, replace) => nav({ novelPath: p }, replace)} />}
       </main>
 

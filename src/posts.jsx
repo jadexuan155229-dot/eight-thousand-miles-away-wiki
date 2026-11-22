@@ -31,9 +31,9 @@ const SOLID = new Set(["正授", "署理", "暂任"]);
 /* 门派说明。年轴范围与参照线在 posts-data.js 的 FACTIONS（苍云：一场败、一场乱、一个人） */
 const INTRO = {
   苍云: ["苍云编制，依文稿〈重看人物、军队体系〉：伍、火、队、旅、团、营，破阵营辖三团。一行一个职位，一条一段任期。",
-    "Cangyun posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."],
+    "Cangyun Army posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."],
   天策: ["天策编制：府中诸将、府僚（天策上将府旧制）、营伍（参照折冲府）。一行一个职位，一条一段任期。录有府中十人，另有万花、凌雪阁来府任职者四人列于末组；剑三原有的府中诸将不上图。",
-    "Tiance posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). Ten of the household’s own people, plus four from Wanhua and Lingxue who served there, in the last group; the game’s own senior officers are left off. Content remains in Chinese."],
+    "Tiance Command posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). Ten of the household’s own people, plus four from Wanhua Valley and Lingxue Pavilion who served there, in the last group; the game’s own senior officers are left off. Content remains in Chinese."],
   唐军: ["唐军编制：唐军不是一个营，按方镇分组——北庭、安西行营、剑南、河东与东都、朔方军、京西与北道、山南西道。职名文中多未写，推定的起止标「（约）」，推定的职名写在浮签备注里。边将所带的卫府武官之衔（果毅都尉、将军之类）写进职衔，不另立格。",
     "Tang army posts, grouped by command rather than by unit: Beiting, the Anxi field army, Jiannan, Hedong and the Eastern Capital, the Shuofang army, the western capital frontier, and Shannan West. Most titles are inferred; inferred dates are marked, and inferred titles are noted in the tooltip. Honorary guard titles (such as regimental vice-commandant) are folded into the rank text rather than given a row. Content remains in Chinese."],
 };
