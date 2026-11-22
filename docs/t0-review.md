@@ -15,9 +15,9 @@ T0 一轮：称号、别号、关系类型、地名、编制职名、勋散、�
 | 荔非承烈 | 白额当关 | The White-Browed Tiger Holds the Pass | 取 Notion 旧稿：当关作动词 |
 | 靳沉白 | 枯山隐士 | The Hermit of the Barren Mountain | Notion 旧稿作 Dry Mountain（呼应枯山水）；取 Barren |
 | 薛褚 | 铸室藏身 | Sheathed in the Armoury | 「韬」为剑衣；Notion 旧稿 Hidden in the Forge |
-| 邱鸿 | 纳骨燃灯 | Gathering Bones, Lighting Lamps | ❓ 待作者说明所指 |
-| 关岳 | 万山声揽 | Ten Thousand Mountains in One Voice | ❓ 两读：发号施令／揽众声（Notion 旧稿取后者：Gathering the Voices of Ten Thousand Mountains） |
-| 连朔 | 片羽钩心 | One Feather, a Hook in the Heart | ❓ 钩心：心计，还是勾住人心 |
+| 邱鸿 | 纳骨燃灯 | Enshrining Bones, Lighting Lamps | 已定意：佛教义。原拟「奉骨燃灯」，嫌动词方向太显而改「纳」；enshrine 取纳骨入龛之义，不指向谁 |
+| 关岳 | 万山声揽 | Gathering the Voices of Ten Thousand Mountains | 已定意：揽众声。取 Notion 旧稿 |
+| 连朔 | 片羽钩心 | One Feather, a Hook in the Heart | 作者：照现稿 |
 | 高垣 | 剖石怀青 | Split the Stone: Green Within | |
 | 高堑 | 苍苔地骨 | Moss on the Bones of the Earth | |
 | 宣杨 | 鹰鸟出山 | The Hawk Comes Down from the Mountain | |
@@ -78,8 +78,8 @@ T0 一轮：称号、别号、关系类型、地名、编制职名、勋散、�
 | 生逢 | Born to It | 大寺烈焰冲天 | The Great Temple Burns to the Sky |
 | 青岭 | Green Ridge | 她的遗迹 | What She Left Behind |
 | 登楼 | Climbing the Tower | 未到关前 | Before the Pass |
-| 种桃 | Planting Peaches | 负我蛾眉 | Failing These Moth-Brows ❓ |
+| 种桃 | Planting Peaches | 负我蛾眉 | Failing My Lady（蛾眉指女子，略如李庭泽对岑菡说的话；「负我蛾眉」即负了我的蛾眉，主语不出，英文亦不出） |
 | 郎心 | His Heart | 他年对坐炉边 | Someday, Facing Each Other by the Fire |
-| 思停 | Thought Stilled ❓ | 那里没有麋鹿 | There Are No Deer There |
+| 思停 | A Halting Thought（逆用《一代宗师》「宁在一思进，莫在一思停」，取所戒之半；halting 兼停步与迟疑，留住那层张力） | 那里没有麋鹿 | There Are No Deer There |
 
 卷：门墙 Within the Walls · 于林之下 Beneath the Trees（《邶风·击鼓》）。定场 Opening · 序 Prologue。英文目录不用【】，作「Born to It · The Great Temple Burns to the Sky」。

@@ -51,9 +51,9 @@ export const charactersEn = {
   lifei: { name: 'Lifei Chenglie', zi: 'Wugong', epithet: 'The White-Browed Tiger Holds the Pass' }, // 荔非承烈
   jinchenbai: { name: 'Jin Chenbai', zi: 'Lingyun', epithet: 'The Hermit of the Barren Mountain' }, // 靳沉白
   xuechu: { name: 'Xue Chu', zi: 'Jitao', epithet: 'Sheathed in the Armoury' }, // 薛褚
-  qiuhong: { name: 'Qiu Hong', zi: 'Xianlu', epithet: 'Gathering Bones, Lighting Lamps', hao: 'the Fair One of the North · Jade Blade-and-Shield' }, // 邱鸿
+  qiuhong: { name: 'Qiu Hong', zi: 'Xianlu', epithet: 'Enshrining Bones, Lighting Lamps', hao: 'the Fair One of the North · Jade Blade-and-Shield' }, // 邱鸿
   fanzhang: { name: 'Fan Zhang', zi: 'Dingshi' }, // 樊璋
-  guanyue: { name: 'Guan Yue', zi: 'Ziling', epithet: 'Ten Thousand Mountains in One Voice' }, // 关岳
+  guanyue: { name: 'Guan Yue', zi: 'Ziling', epithet: 'Gathering the Voices of Ten Thousand Mountains' }, // 关岳
   jinghuishi: { name: 'Jing Huishi', zi: 'Chunyi' }, // 景惠时
   guanshan: { name: 'Guan Shan', zi: 'Renshi' }, // 关山
   lianshuo: { name: 'Lian Shuo', zi: 'Zhihui', epithet: 'One Feather, a Hook in the Heart' }, // 连朔
