@@ -57,7 +57,7 @@ T0 做完，所有图表页（舆图、行星、群像、编制、余波）在�
 ## 第三轮已定（2026-11-22）：名号
 
 - 明教波斯人、苗人的原名不再写在「字」里，中文卡标 **本名**；程骞、程宇两样都有，保留「字」另标 **波斯语名**；唐煦、唐熙同。日本人物标 **日文读法**；春山遥入蓬莱后之汉名方遥标 **汉名**，字作「眠树」。数据结构与各人细目见 [names-draft.md](names-draft.md)「第三轮已定」。
-- 英文名：汉名本是音译者用本名（Rādīn），苗人用 RPA，日本人物用日语读法（Arashikawa Kumo，岚川云另列 Chinese reading: Lanchuan Yun），墨昆 Mokun，阿会朗 Ahui Lang，贺兰 He Lan，弘隽 Hongjuan。
+- 英文名：汉名本是音译者用本名（Rādīn），苗人用 RPA，日本人物用日语读法（Hayashi Kyōya、Haruyama Haruka），唯岚川云、岚川靖彦、阿辉用中文读法（Lanchuan Yun、Lanchuan Jingyan、Ahui），日文读法只在人物卡名号一行出（作者 2026-11-22 定，即 Notion 方针 P12），墨昆 Mokun，阿会朗 Ahui Lang，贺兰 He Lan，弘隽 Hongjuan。
 
 ## T0（2026-11-22）：工作稿已全部上线，待审
 

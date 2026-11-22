@@ -18,7 +18,7 @@
 
 ## 名号与专名
 
-- 英文名 Arashikawa Kumo，号 Qianhe (Chizuru, ‘a thousand cranes’)，另列 Chinese reading: Lanchuan Yun（第三轮所定；千鹤由字改号见上）。正文里「岚川」作 Arashikawa。
+- 英文名 **Lanchuan Yun**，号 Qianhe (Chizuru, ‘a thousand cranes’)；人物卡名号一行另出 Japanese reading: Arashikawa Kumo。正文里「岚川」作 Lanchuan，全站（他人轶事、行星图说明、编制）同。第三轮原以 Arashikawa Kumo 为英文名、另列 Chinese reading，作者审 T1 后改回（作者 2026-11-22 定，即 Notion 方针 P12：正文一律中文读法，日文读法只在人物卡名号一行出）。父岚川靖彦同理作 Lanchuan Jingyan。
 - 傲血战意 **Proud-Blood Battle Spirit**（Notion 💡 建议）；盾刀 shield-and-blade（P15）；雁北 north of Yanmen；晁衡（阿倍仲麻吕）Chao Heng (Abe no Nakamaro)；汉顺平侯 the Han Marquis of Shunping（不补赵云之名）；长歌门 the Changge School。
 - 勋散照编制英译：从五品下 rank 5b2、骑都尉 Commandant of Cavalry（Hucker 606）、归德郎将 Gentleman-General Who Has Turned to Virtue（Notion）。
 - 林叶矢在轶事九作 **Kyōya**（原文作「叶矢」，取名不取姓，英文同）。

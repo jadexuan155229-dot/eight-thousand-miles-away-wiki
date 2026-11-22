@@ -54,8 +54,10 @@ export function nameItems(c) {
 export const namesText = (c) => nameItems(c).map(([, v]) => v).join(" ");
 /* 英文：[標籤, 值, 是否回落中文]。
    字、汉名查覆蓋層（zi、names.汉名），無則回落；拉丁字母之名號原樣用。
-   名號之值即英文名者略去（苗人本名、日本人物日文读法已作英文名，免重出）。
-   覆蓋層另可有 alt：[[標籤, 值]]，只在英文出（岚川云之中文读法 Lanchuan Yun）。 */
+   名號之值即英文名者略去（苗人本名、林叶矢與春山遥之日文读法已作英文名，免重出）。
+   覆蓋層另可有 alt：[[標籤, 值]]，只在英文出（今無人用）。
+   岚川云、岚川靖彦、阿辉英文名用中文读法（Lanchuan Yun、Lanchuan Jingyan、Ahui），日文读法只在名號一行出
+   （Notion 方针 P12；作者 2026-11-22 重申：正文一律中文读法）。 */
 export function nameItemsEn(c) {
   const tr = charactersEn[c.id] || {};
   const same = (v) => has(tr.name) && v.toLowerCase() === tr.name.toLowerCase();

@@ -2,6 +2,8 @@
 
 范围限 `id=luyuming`、`id=luwanyue`（T1，2026-11-22 工作译文）。体例同 [闵方城](minfangcheng-translation-review.md)。两人档案中文多有空目（体貌、偶像、随身物件等），英文同样留空，不补写。
 
+**作者审定（2026-11-22）**：两人译文（含下文补稿五栏）全部通过，下列待审各条照现稿。唯一改动在岚川云英文名：全站改用中文读法 Lanchuan Yun，日文读法只在人物卡名号一行出（详见岚川云译注）；本册引文中「Arashikawa」已随改。
+
 ## 作者补稿（2026-11-22）：大光明寺那一夜
 
 据作者「陆羽鸣问题」一稿补入站点。年表 739.2–739.10 诸条与余波页「大光明寺·陆羽鸣之死」原已收此稿要点，此次补的是人物卡：
@@ -37,4 +39,4 @@
 6. 陆羽鸣轶事五「有一些超越的悟和经验」：a kind of insight and experience beyond the ordinary；「一度起了救度之念」：the thought came to him of saving her。「救度」有宗教意味（度人），英文 saving 兼及，未用 deliver 等更重的词，可再斟酌。
 7. 陆羽鸣轶事一「再上溯立国之初」以下照译萨珊开国史，不增删史实。
 8. 陆晚月轶事一「霜糖」：frost sugar。
-9. 陆晚月轶事二「见师父的萨珊玛瑙印石在她身上」：saw her master’s Sasanian agate seal on Arashikawa；「置宅其地」：where she had set up a house。
+9. 陆晚月轶事二「见师父的萨珊玛瑙印石在她身上」：saw her master’s Sasanian agate seal on Lanchuan；「置宅其地」：where she had set up a house。

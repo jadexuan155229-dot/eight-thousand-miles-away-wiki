@@ -30,8 +30,8 @@
 | 唐煦 / 唐熙 | Tang Xu / Tang Xi | 波斯语名 Dārā / Tiyām | Persian name: … |
 | 朗迪恩 鲁雅 玛奈丽 歌莉 | **本名**：Rādīn、Royā、Māneli、Golī | 本名 … | （本名即英文名，不重出） |
 | 苗人 10 人 | **苗文（RPA）**：Nof Langb Chib 等，见文末总表 | 本名 … | （同上） |
-| 岚川云（号 千鹤） | **Arashikawa Kumo** | 日文读法 Arashikawa Kumo；号「千鹤」 | Chinese reading: Lanchuan Yun；号 “Qianhe (Chizuru, ‘a thousand cranes’)”（2026-11-22 作者定：千鹤是号不是字） |
-| 岚川靖彦 | Arashikawa Yasuhiko（やすひこ） | 日文读法 Arashikawa Yasuhiko | — |
+| 岚川云（号 千鹤） | **Lanchuan Yun**（作者 2026-11-22 改定，原作 Arashikawa Kumo） | 日文读法 Arashikawa Kumo；号「千鹤」 | Japanese reading: Arashikawa Kumo；号 “Qianhe (Chizuru, ‘a thousand cranes’)”（2026-11-22 作者定：千鹤是号不是字） |
+| 岚川靖彦 | **Lanchuan Jingyan**（同上，原作 Arashikawa Yasuhiko） | 日文读法 Arashikawa Yasuhiko | Japanese reading: Arashikawa Yasuhiko |
 | 林叶矢 | Hayashi Kyōya（きょうや） | 日文读法 Hayashi Kyōya | — |
 | 春山遥 | Haruyama Haruka | 汉名 方遥 · 字 眠树 · 日文读法 Haruyama Haruka | Chinese name: Fang Yao · Courtesy name: Mianshu (Nemugi) |
 | 阿辉 | Ahui | 日文读法 Hikaru（岚川云之母所取汉名；岚川父女与他说日语时读ひかる） | Japanese reading: Hikaru |
@@ -50,7 +50,7 @@
 ## 尚未动的
 
 - 14 个称号、10 个别号：作者口吻，逐个定（下一轮）。
-- 岚川云在行星关系图英文说明里已改作 Arashikawa Kumo。
+- 岚川云在行星关系图英文说明里作 Lanchuan Yun（第三轮一度改作 Arashikawa Kumo，作者 2026-11-22 改回）。
 
 ## 已上线总表
 
