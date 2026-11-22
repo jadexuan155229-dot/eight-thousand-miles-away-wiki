@@ -11,7 +11,7 @@ T0 剩下的六类一并出工作稿上线，待作者审（[docs/t0-review.md](
 - **地名**：余下 40 个全出，69 个地点全有英文；唐境以外用通行英文名（Kucha、Tokharistan、Zaranj）。
 - **编制**：新增 `i18n/posts.en.js` 与查表 `i18n/posts-content.js`。苍云照 Notion 方针 P13、P6 与「苍云编制总表」（Rank-Breaker Corps、Commander of the First Regiment……），天策、唐军本轮拟；任期职名 132 条、勋散 13 条英文界面皆为英文，编制图的职位、分组、悬停说明、图顶标记同。吕定仪任期改依 P13 作 Commander of the Third Regiment。英文编制图左栏放宽。档案「任職履歷」的任期类别标签不再因有英译而隐去。
 - **文库**：故事线标签、题名、两卷、定场、序出稿；英文目录不用【】。
-- **作者查 Hucker 后改**：兵马使 Commander、都知兵马使 Supreme Commander（4684）、行军司马 Adjutant（1790）、都虞候 Inspector-in-chief、节度副使 Military Vice Commissioner 与都督 Area Commander（777）、护军 Military Protector（2775 义四，勋官）；勋官改依 Hucker 1728 之式作 Commandant of X（骑都尉 Commandant of Cavalry、云骑尉 Commandant of Fleet-as-clouds Cavalry 等）；「上」依总论上柱国 Supreme Pillar of State 作 Supreme（上护军、上轻车都尉）；押衙 Hucker 只有宋代义（Lackey），与唐不合，与子将、诸勋散名号同标自拟。
+- **作者查 Hucker 后改**：兵马使 Commander、都知兵马使 Supreme Commander（4684）、行军司马 Adjutant（1790）、都虞候 Inspector-in-chief、节度副使 Military Vice Commissioner 与都督 Area Commander（777）、护军 Military Protector（2775 义四，勋官）；勋官改依 Hucker 1728 之式作 Commandant of X（骑都尉 Commandant of Cavalry、云骑尉 Commandant of Fleet-as-clouds Cavalry 等）；作者交来 Hucker 全文后逐条查定：上护军 Senior Military Protector（4999）、上轻车都尉 Senior Commandant of Light Chariots（4988）、骁骑尉 Commandant of Courageous Guards（2381）、飞骑尉（1927）、武骑尉 Commandant of Militant Cavalry（7741）、云麾将军 General of the Cloud-like Flags（8276）、游击将军 Mobile Corps Commander（8037）、医博士 Medical Erudite；查无者标自拟；押衙 Hucker 只有宋代义（Lackey），与唐不合，与子将、诸勋散名号同标自拟。
 - **作者答疑后改**：纳骨燃灯取佛教义作 *Enshrining Bones, Lighting Lamps*；万山声揽取「揽众声」作 *Gathering the Voices of Ten Thousand Mountains*；负我蛾眉作 *Failing My Lady*；思停（逆用《一代宗师》「宁在一思进，莫在一思停」）作 *A Halting Thought*。
 - check-data 新增编制英译的缺译、孤儿检查；覆盖率「任期」改按职名计。
 

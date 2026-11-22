@@ -10,7 +10,10 @@
 // Checked against Hucker by the author (2026-11-22): 兵马使 Commander and 都知兵马使 Supreme Commander
 // (4684), 行军司马 Adjutant (1790, s.v. chün ssu-ma), 都虞候 Inspector-in-chief, 节度副使 Military Vice
 // Commissioner and 都督 Area Commander (777), 护军 Military Protector (2775, sense 4: the merit title).
-// 校尉 Commandant (2456: Hucker uses Commandant for both 校尉 and 都尉, told apart by the prefix). Not in Hucker, so
+// 校尉 Commandant (2456: Hucker uses Commandant for both 校尉 and 都尉, told apart by the prefix),
+// 侍医 Attending Physician (5255), 参军事 Administrator (6876), 医博士 Medical Erudite (726, 6182).
+// Searched and not in Hucker, so 自拟: 子将, 教练使, 兵曹参军事, 押衙 (Tang sense), 留后 (3790 has only
+// Capital Liaison Representative for T'ang and Deputy Commander for Sung; neither is the camp left behind). Not in Hucker, so
 // our own renderings on his pattern (自拟): 押衙 (7873 has only the Song sense, Lackey), 子将, and the
 // individual merit and prestige titles below. Hucker entry numbers are noted where they apply.
 // 2026-11-22 T0 working draft (docs/t0-review.md).
@@ -74,7 +77,7 @@ export const postsEn = {
   'sx-sx': { label: 'Trial training', full: 'Trial training at the Command' },
   'yg-sy': { label: 'Attending Physician', full: 'Attending Physician of the Tiance Command', hint: 'Serving at the Command from another sect: Wanhua Valley' },
   'yg-jy': { label: 'Army physician', full: 'Army physician', hint: 'Serving at the Command from another sect: Wanhua Valley' },
-  'yg-bs': { label: 'Erudite of Medicine', full: 'Erudite of Medicine of the Tiance Command', hint: 'Serving at the Command from another sect: Wanhua Valley' },
+  'yg-bs': { label: 'Medical Erudite', full: 'Medical Erudite of the Tiance Command', hint: 'Serving at the Command from another sect: Wanhua Valley' },
   'wq-jx': { label: 'Visiting instructor', full: 'Visiting instructor, Heavenly Slayer Corps', hint: 'Serving at the Command from another sect: the Lingxue Pavilion' },
 
   // 唐军
@@ -174,7 +177,7 @@ export const ranksEn = {
   '天策府侍医（万花）': 'Attending Physician of the Tiance Command (Wanhua Valley)',
   '留营军医（万花）': 'Army physician, the camp left behind (Wanhua Valley)',
   '军医（万花）': 'Army physician (Wanhua Valley)',
-  '天策府医博士（万花）': 'Erudite of Medicine of the Tiance Command (Wanhua Valley)',
+  '天策府医博士（万花）': 'Medical Erudite of the Tiance Command (Wanhua Valley)',
   随盖嘉运击突骑施: 'With Gai Jiayun against the Türgesh',
   随盖嘉运破碎叶: 'With Gai Jiayun at the taking of Suyab',
   '摄北庭都护府兵曹参军（经管庭州甲仗）': 'Acting Administrator of the Military Service Section, Beiting Protectorate (keeping the arms of Tingzhou)',
@@ -220,27 +223,26 @@ export const marksEn = {
   北庭分镇: 'Beiting separated', 乱平: 'Rebellion ends', 北庭陷: 'Beiting falls',
 };
 
-/* 勳、散、品、官（GRANTS）。勳官、武散官之具體名號 Hucker 未逐個立條（作者查），自拟，依其體例直译：
-   勳官作 Commandant of …／Military Protector（見下），武散官作 General of …／Commandant of …；
-   骑都尉、归德郎将、忠武将军照 Notion 术语主表 */
+/* 勳、散、品、官（GRANTS）。2026-11-22 以 Hucker 全文逐條查過（條目號注於行末）；查無者自拟，依其體例 */
 export const honoursEn = {
-  // 勳官 merit titles。Hucker 之式為「Commandant of X」：
-  //   轻车都尉 Commandant of Light Chariots、骑都尉 Commandant of Cavalry、云骑尉 Commandant of
-  //   Fleet-as-clouds Cavalry 見 1728（明代世爵條，名同唐勳官，Hucker 同名同译）；护军 2775 義四。
-  //   骁骑尉、飞骑尉、武骑尉依此式自拟。「上」作 Supreme：Hucker 唐代總論以勳官最高轉上柱国作
-  //   Supreme Pillar of State，同一序列從之（上将军 Generalissimo 另一序列，不類推）
-  上护军: 'Supreme Military Protector', // 上 依上柱国 Supreme Pillar of State
+  // 勳官 merit titles：Hucker 作「Commandant of X」，「上」作 Senior（唯最高一轉上柱国作 Supreme Pillar of State）
+  上护军: 'Senior Military Protector', // Hucker 4999
   护军: 'Military Protector', // Hucker 2775 義四
-  上轻车都尉: 'Supreme Commandant of Light Chariots', // 轻车都尉 Hucker 1728；上 依上柱国
-  骑都尉: 'Commandant of Cavalry', // Hucker 1728（Notion 原暫作 Cavalry Commandant）
-  骁骑尉: 'Commandant of Valiant Cavalry', // 自拟，依 1728 式
-  飞骑尉: 'Commandant of Flying Cavalry', // 自拟，依 1728 式
-  云骑尉: 'Commandant of Fleet-as-clouds Cavalry', // Hucker 1728
-  武骑尉: 'Commandant of Martial Cavalry', // 自拟，依 1728 式
+  上轻车都尉: 'Senior Commandant of Light Chariots', // Hucker 4988
+  骑都尉: 'Commandant of Cavalry', // Hucker 606（Notion 原暫作 Cavalry Commandant）
+  骁骑尉: 'Commandant of Courageous Guards', // Hucker 2381 原文如此（其法文作 cavalerie courageuse）
+  飞骑尉: 'Commandant of Flying Cavalry', // Hucker 1927
+  云骑尉: 'Commandant of Fleet-as-clouds Cavalry', // Hucker 8272
+  武骑尉: 'Commandant of Militant Cavalry', // Hucker 7741
   // 武散官 prestige titles
-  云麾将军: 'General of the Cloud Banner', 忠武将军: 'General of Loyal Valour', 壮武将军: 'General of Robust Valour',
-  游击将军: 'General of Roving Attack', 归德郎将: 'Gentleman-General Who Has Turned to Virtue',
-  振威校尉: 'Commandant of Stirring Might', 致果副尉: 'Vice Commandant of Resolute Daring', 翊麾校尉: 'Commandant Assisting the Standard',
+  云麾将军: 'General of the Cloud-like Flags', // Hucker 8276
+  游击将军: 'Mobile Corps Commander', // Hucker 8037：唐宋武散官，從五品下（5b2）
+  忠武将军: 'General of Loyal Valour', // Hucker 未收；Notion 术语主表
+  壮武将军: 'General of Robust Valour', // Hucker 未收，自拟
+  归德郎将: 'Gentleman-General Who Has Turned to Virtue', // Hucker 未收；Notion 术语主表
+  振威校尉: 'Commandant of Stirring Might', // Hucker 未收，自拟（校尉 Commandant 依 2456）
+  致果副尉: 'Vice Commandant of Resolute Daring', // Hucker 未收，自拟
+  翊麾校尉: 'Commandant Assisting the Standard', // Hucker 未收，自拟
   // 品 (P3；Hucker 唐代總論：正 a、从 b，上 1、下 2，如 5a2 正五品下)
   正四品上: 'rank 4a1', 正四品下: 'rank 4a2', 从三品: 'rank 3b', 从五品下: 'rank 5b2', 从六品上: 'rank 6b1',
   正七品下: 'rank 7a2', 从七品上: 'rank 7b1',
