@@ -54,9 +54,7 @@ T0 做完，所有图表页（舆图、行星、群像、编制、余波）在�
 
 **卷首副题**：「士兵、杀手和大夫」取单数加定冠词（The Soldier, the Assassin and the Physician），读作三种人；若原意是一群人，可作 Soldiers, Assassins and Physicians。
 
-**About 页**（`src/about.jsx`）：全文为工作稿。两处请特别过目——
-- 「The work began from that image: the Cangyun fortress at the pass, under snow.」作品缘起于剑三苍云雪中关城这一画面，是否愿意公开写出；
-- 「A few figures also come from the game’s own lore, among them Xue Zhi」：以薛直为剑三原有人物（依 Notion 编制总表「设定集称雁门守军统帅」），其余皆作者原创——此说法是否准确。
+**About 页**（`src/about.jsx`）：作者已确认（2026-11-22）作品缘起于剑三苍云雪中关城一句照写，薛直为剑三原有人物、其余皆作者原创之说准确。全文其余措辞仍是工作稿。
 
 **关系色谱类名**（行星、群像图例）：傳承 Teaching · 遺承 Legacy · 情愛 Love · 恩義 Obligation · 誼 Friendship · 親緣 Kinship · 嫌隙 Rift · 殺伐 Violence；僅同事 Shared events only；未見／未說開 Never met / left unsaid。
 
