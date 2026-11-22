@@ -30,7 +30,7 @@
 | 唐煦 / 唐熙 | Tang Xu / Tang Xi | 波斯语名 Dārā / Tiyām | Persian name: … |
 | 朗迪恩 鲁雅 玛奈丽 歌莉 | **本名**：Rādīn、Royā、Māneli、Golī | 本名 … | （本名即英文名，不重出） |
 | 苗人 10 人 | **苗文（RPA）**：Nof Langb Chib 等，见文末总表 | 本名 … | （同上） |
-| 岚川云（字 千鹤） | **Arashikawa Kumo** | 字 千鹤 · 日文读法 Arashikawa Kumo | Courtesy name: Qianhe · Chinese reading: Lanchuan Yun |
+| 岚川云（号 千鹤） | **Arashikawa Kumo** | 日文读法 Arashikawa Kumo；号「千鹤」 | Chinese reading: Lanchuan Yun；号 “Qianhe (Chizuru, ‘a thousand cranes’)”（2026-11-22 作者定：千鹤是号不是字） |
 | 岚川靖彦 | Arashikawa Yasuhiko（やすひこ） | 日文读法 Arashikawa Yasuhiko | — |
 | 林叶矢 | Hayashi Kyōya（きょうや） | 日文读法 Hayashi Kyōya | — |
 | 春山遥 | Haruyama Haruka | 汉名 方遥 · 字 眠树 · 日文读法 Haruyama Haruka | Chinese name: Fang Yao · Courtesy name: Mianshu (Nemugi) |

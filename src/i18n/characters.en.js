@@ -280,14 +280,14 @@ export const charactersEn = {
   niuwo: { name: 'Hniub Vos' }, // 纽沃
   caiyao: { name: 'Ncaik Ya' }, // 彩瑶
   // 岚川云：T1 工作译文（2026-11-22），译注与待审见 docs/lanchuanyun-translation-review.md。
-  // 不译：训诂后半「（另一说……两说并存，俟作者定。）」（待定之按）。
+  // 作者审后（2026-11-22）：「千鹤」改为号（非字），训诂中文重写（先天策府赐号之义，后日本女名、与云相应），英文照之。
   // 作者审后（2026-11-22）：删轶事「晕血」一条（中英俱删）；高光第一条作者按改为英文说明其人物定位。
   lanchuanyun: {
     name: 'Arashikawa Kumo',
-    zi: 'Qianhe (Chizuru, ‘a thousand cranes’)',
+    hao: 'Qianhe (Chizuru, ‘a thousand cranes’)',
     alt: [['中文读法', 'Lanchuan Yun']],
     birthplace: 'Nara, Japan; grew up in Chang’an',
-    gloss: 'Her given name means “cloud”, so the crane (he 鹤) answers it; and Chizuru, “a thousand cranes”, is also a Japanese woman’s name, hence the choice.',
+    gloss: 'Qianhe was a name bestowed on her by the Tiance Command, taken from the phrase “a thousand rivers, swift on the wing; a crane’s eye over the nine wilds”: a figure for her lightness and agility, and for a scout’s eye that sees a thousand li. By coincidence, Qianhe also reads like a Japanese woman’s name, Chizuru, “a thousand cranes”, and the crane answers the cloud (yun 云) of her given name.',
     profile: {
       官职身份: 'In the Tiance Command she held the title of Battalion Commander, in charge of the scouts (made Chief of Scouts in 747, training the scouts newly admitted to the Command), responsible for selecting and training men and for part of the intelligence work; married Cheng Kai in 752. In the ninth month of 757 she went into self-imposed exile in the north with the Cangyun Army, where, on Min Fangcheng’s report to the Commander, she served as an instructor in the Rank-Breaker Corps. In 762 she returned to the Command at rank 5b2, Commandant of Cavalry and Gentleman-General Who Has Turned to Virtue.',
       体貌特征: 'Her features could be called delicate, but her voice is low and flat, even a little artless, and the contrast when she opens her mouth is striking.',

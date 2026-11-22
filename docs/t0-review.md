@@ -37,7 +37,7 @@ T0 一轮：称号、别号、关系类型、地名、编制职名、勋散、�
 | 高垣 | 刑官 | the Inquisitor（退一步可作 the Magistrate of Punishments） |
 | 宣杨 | 怀青（承师号） | Huaiqing (her master's name) |
 
-另：岚川云的字照 Notion 方针 P12 补日语读法与字义：**Qianhe (Chizuru, 'a thousand cranes')**。P12 原定正文用拼音 Lanchuan，第三轮已改为英文名 Arashikawa Kumo，以第三轮为准。
+另：岚川云之「千鹤」照 Notion 方针 P12 补日语读法与字义：**Qianhe (Chizuru, ‘a thousand cranes’)**。（T1 作者审定：千鹤是**号**，不是字，数据与卡片已改；训诂亦改为先天策府赐号之义、后日本女名。）P12 原定正文用拼音 Lanchuan，第三轮已改为英文名 Arashikawa Kumo，以第三轮为准。
 
 ## 二、关系类型（75）
 

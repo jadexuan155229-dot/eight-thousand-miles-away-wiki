@@ -2924,9 +2924,10 @@ export default function Wiki({ onOpenLanding }) {
         c.name.includes(q) ||
         namesText(c).includes(q) ||
         (c.epithet || "").includes(q) ||
+        (c.hao || "").includes(q) ||
         (c.pin || "").includes(q) ||
         (c.birthplace || "").includes(q) ||
-        enHit(tr?.name) || enHit(tr?.zi) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
+        enHit(tr?.name) || enHit(tr?.zi) || enHit(tr?.hao) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
         (en && nameItemsEn(c).some(([, v]) => enHit(v))));
     }
   );

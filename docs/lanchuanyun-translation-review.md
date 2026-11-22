@@ -9,20 +9,19 @@
 - **删轶事「晕血」一条**（原第五条），中英文俱删。其后各条序号前移一位，下文所引轶事序号仍是删前的。
 - **高光第一条**（作者按「属于观察者／见证者角色……原则上不设高光点」）：由不译改为英文说明其人物定位：In the story she is an observer and a witness: her character comes through in conversation and in her dealings with others, so in principle she is given no highlights of her own.
 
-## 不译
-
-- 训诂后半「（另一说：『千鹤』为天策府赐号，取义『千川振迅，鹤目九野』……两说并存，俟作者定。）」：这是待定之按，英文只译已定的前半（以鹤应云、千鹤为日本女名）。你若定了取「赐号」说，或两说都要，告诉我即补。
+- **「千鹤」是号，不是字**：数据由 `zi` 改 `hao`，卡片随之（中文名号行只余日文读法，号「千鹤」另出；英文作号 “Qianhe (Chizuru, ‘a thousand cranes’)”）。站内检索顺带兼查别号（中英文），千鹤、知节殿、佛爷皆可检得其人。
+- **训诂中文重写**（原文前后次序反了，「另一说」实为本说）：「千鹤」为天策府赐号，取义「千川振迅，鹤目九野」，喻其轻捷矫健与斥候眼目千里之能。又巧合的是，「千鹤」也似日本女名，又与「云」字相应。英文照之：Qianhe was a name bestowed on her by the Tiance Command, taken from the phrase “a thousand rivers, swift on the wing; a crane’s eye over the nine wilds”: a figure for her lightness and agility, and for a scout’s eye that sees a thousand li. By coincidence, Qianhe also reads like a Japanese woman’s name, Chizuru, “a thousand cranes”, and the crane answers the cloud (yun 云) of her given name.
 
 ## 名号与专名
 
-- 英文名 Arashikawa Kumo，字 Qianhe (Chizuru, ‘a thousand cranes’)，另列 Chinese reading: Lanchuan Yun（第三轮所定）。正文里「岚川」作 Arashikawa。
+- 英文名 Arashikawa Kumo，号 Qianhe (Chizuru, ‘a thousand cranes’)，另列 Chinese reading: Lanchuan Yun（第三轮所定；千鹤由字改号见上）。正文里「岚川」作 Arashikawa。
 - 傲血战意 **Proud-Blood Battle Spirit**（Notion 💡 建议）；盾刀 shield-and-blade（P15）；雁北 north of Yanmen；晁衡（阿倍仲麻吕）Chao Heng (Abe no Nakamaro)；汉顺平侯 the Han Marquis of Shunping（不补赵云之名）；长歌门 the Changge School。
 - 勋散照编制英译：从五品下 rank 5b2、骑都尉 Commandant of Cavalry（Hucker 606）、归德郎将 Gentleman-General Who Has Turned to Virtue（Notion）。
 - 林叶矢在轶事九作 **Kyōya**（原文作「叶矢」，取名不取姓，英文同）。
 
 ## 待审：措辞
 
-1. 训诂：Her given name means “cloud”, so the crane (he 鹤) answers it; and Chizuru, “a thousand cranes”, is also a Japanese woman’s name, hence the choice.
+1. ~~训诂旧译~~：已按作者重写，见上。
 2. 官职身份「天策府称旅帅，辖斥候」：held the title of Battalion Commander, in charge of the scouts；「757年九月自我流放北上苍云」：went into self-imposed exile in the north with the Cangyun Army。
 3. 体貌「嗓音低平，乃至有点憨」：low and flat, even a little artless。「憨」的可爱意味英文难全，artless 取其不加修饰。
 4. 性格「属中立善良，有一些自由主义的意思」：she is neutral good, with something of a liberal streak。中立善良是阵营九宫格的说法，英文 neutral good 同样通行，照搬。
