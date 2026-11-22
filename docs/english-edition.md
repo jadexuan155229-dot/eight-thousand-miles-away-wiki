@@ -44,31 +44,19 @@ T0 做完，所有图表页（舆图、行星、群像、编制、余波）在�
 
 **门派**：依 Notion「人山人海英译术语表 / 剑三门派总表」。专名拼音（凌雪阁的拼音作 Lingxuege），机构词意译；标签去掉冠词（行文中团体名加 the：the Tiance Command）。底图吐蕃作 Tibet，大漠作 The Gobi。
 
-## 本轮工作稿（待审）
+## 第二轮已定（2026-11-22）
 
-**门派**（`factions.en.js`）——来自 Notion 者不列；门派总表与术语主表都未收的，暂拟如下：
-
-- 唐军 Tang army · 红衣教 Hongyi Order（按「教 → Order」，同 the Wudu Order）· 靺鞨 Mohe · 苗疆 Miaojiang（若嫌生，可作 the Miao borderlands）· 波斯 Persia · 平民 Commoners · 史实 Historical record
-
-**地名**（`places.en.js`）：Notion 地名表已定者照录（取图上短名：Yunzhou 而非 Yunzhou (Yunzhong Commandery)），共 25 个；卷首地图另需、地名表未收者暂拟：河北-范阳 Fanyang（地名表作 Youzhou (Fanyang Commandery)，图上取郡名，同中文标签）、邺城 Yecheng、睢阳 Suiyang、灵武 Lingwu。
-
-**卷首副题**：「士兵、杀手和大夫」取单数加定冠词（The Soldier, the Assassin and the Physician），读作三种人；若原意是一群人，可作 Soldiers, Assassins and Physicians。
-
-**About 页**（`src/about.jsx`）：作者已确认（2026-11-22）作品缘起于剑三苍云雪中关城一句照写，薛直为剑三原有人物、其余皆作者原创之说准确。全文其余措辞仍是工作稿。
-
-**关系色谱类名**（行星、群像图例）：傳承 Teaching · 遺承 Legacy · 情愛 Love · 恩義 Obligation · 誼 Friendship · 親緣 Kinship · 嫌隙 Rift · 殺伐 Violence；僅同事 Shared events only；未見／未說開 Never met / left unsaid。
-
-**任期类别**：署理 acting · 代领 deputizing · 兼领 concurrent · 停职 suspended · 暂任 interim · 差遣 commission · 无名目 no formal title · 充任 serving as。
-
-**年月体例**：唐历为阴历，月份从汉学通例作序数（"10th month"），不换作公历月名；年号作 "Tianbao 14"；年中改元注 "Zhide from the 7th month"。
-
-**图幅说明文字**（`ui.js` 末节）：行星关系图、群像网络、山河舆图三段说明的英文工作稿，人名暂用中文原名之拼音。
-
-**其余界面字串**：`ui.js` 全表，约两百条，皆为功能性文字。
+- **门派标签**（两张 Notion 表都未收者）：唐军 Tang army · 红衣教 Hongyi Order · 靺鞨 Mohe · 苗疆 **Miao borderlands**（地域标签，不受门派拼音方针所限）· 波斯 Persia · 平民 Commoners · 史实 Historical record。
+- **地名**：地名表未收者一律拼音（范阳 Fanyang、邺城 Yecheng、睢阳 Suiyang、灵武 Lingwu）。
+- **卷首副题**：单数，*The Soldier, the Assassin and the Physician*。
+- **关系色谱类名**：傳承 Teaching · 遺承 Legacy · 情愛 Love · 恩義 **Grace & duty** · 誼 Friendship · 親緣 Kinship · 嫌隙 Rift · 殺伐 **Bloodshed**；僅同事 Shared events only；未見／未說開 Never met / left unsaid。
+- **任期类别**：署理 acting · 代领 deputizing · 兼领 concurrent · 停职 suspended · 暂任 interim · 差遣 commission · 无名目 no formal title · 充任 serving as。
+- **年月体例**：月份作序数（10th month）；年号作 Tianbao 14；年中改元注 Zhide from the 7th month。
+- **图幅说明文字**、**About 页**：照现稿。作品缘起于剑三苍云雪中关城、薛直为剑三原有人物两处，作者另行确认。
 
 ## 下一步（T0）
 
-- 124 个人名与字：以 pypinyin 出拼音初稿，作者只核多音字与羌、胡姓氏（荔非等）。
+- 124 个人名与字：拼音初稿已出，99 人上线（读音与作者所取 id 逐一核过）；波斯、苗、日本人物及少数单名待作者定，见 [names-draft.md](names-draft.md)。
 - 14 个称号、10 个别号：作者口吻，逐个定。
 - 其余 40 个地名：县作 county，道作 Circuit，郡作 Commandery（同吕定仪档案「Fengzhou (Jiuyuan Commandery), Guannei Circuit」之例）；Notion 地名表已有者先照录。
 - 75 种关系类型：作者逐个定。

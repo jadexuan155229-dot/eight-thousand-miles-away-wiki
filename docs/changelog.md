@@ -2,6 +2,11 @@
 
 ## 2026-11-22
 
+### 英文版：人名拼音初稿；第二轮定名
+
+- **人名**：124 人出拼音初稿（pypinyin 按词取音，姓前名后、名连写，吕作 Lü，复姓连写），读音与作者手取的 id 逐一比对，不合者从 id（齐晟 Qi Sheng、叶泊秋 Ye Boqiu）。99 人上线、其中 67 人连表字；波斯本名的标法、苗人用苗文还是拼音、5 位日本人物的读法、几个单名与一个表字待作者定，见 [docs/names-draft.md](names-draft.md)。
+- **第二轮定名**：苗疆作 Miao borderlands；地名表未收者一律拼音；卷首副题用单数；关系色谱恩義 Grace & duty、殺伐 Bloodshed；其余工作稿照现稿。
+
 ### 英文版：作者定名、卷首英文、About 页
 
 作者审过地基一轮，拍板五事（详见 [docs/english-edition.md](english-edition.md)「作者已定」）。

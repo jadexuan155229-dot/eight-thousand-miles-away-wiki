@@ -5,7 +5,7 @@
    英文值可為函數 (vars) => 字串，處理單複數。
    改中文鍵時須同改此表之鍵——check-data 會報「站內用而表中無」與「表中有而站內不用」。
    例外：「說明文字」一節是圖幅下的長段說明，中文原段仍寫在 JSX 裡（中文界面一字不動），
-   此處用短鍵（行星說明、群像說明……）只存英文。說明文字的英文是工作稿，待作者審定。
+   此處用短鍵（行星說明、群像說明……）只存英文。說明文字的英文作者已審（2026-11-22）。
    余波頁另有一套（i18n/echoes.en.js 的 echoUiEn），不在此表。
    ============================================================ */
 const pl = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
@@ -47,7 +47,7 @@ const en = {
   '繫年事件（依 年·月·序號）': 'Dated events (by year · month · sequence)',
   '事件庫中暫無此人繫年條目。': 'No dated events for this character yet.',
   '見於文庫（本名計數）': 'Library appearances (name counts)',
-  /* 任期類別（posts-data.js TENURES[].kind）：Hucker 體例之工作译名，待作者審 */
+  /* 任期類別（posts-data.js TENURES[].kind）：Hucker 體例，作者 2026-11-22 定 */
   正授: 'substantive', 署理: 'acting', 代领: 'deputizing', 兼领: 'concurrent', 停职: 'suspended',
   暂任: 'interim', 差遣: 'commission', 无名目: 'no formal title', 充任: 'serving as',
 
@@ -71,9 +71,9 @@ const en = {
   /* ---------- 圖幅通用 ---------- */
   門派色例: 'Faction colours', '{n} 色': ({ n }) => `(${n})`,
   放大: 'Zoom in', 縮小: 'Zoom out', 復位: 'Reset zoom',
-  /* 關係色譜之類名（wiki.jsx REL_KEY）：工作译名，待作者審 */
-  傳承: 'Teaching', 遺承: 'Legacy', 情愛: 'Love', 恩義: 'Obligation', 誼: 'Friendship',
-  親緣: 'Kinship', 嫌隙: 'Rift', 殺伐: 'Violence',
+  /* 關係色譜之類名（wiki.jsx REL_KEY）：作者 2026-11-22 定 */
+  傳承: 'Teaching', 遺承: 'Legacy', 情愛: 'Love', 恩義: 'Grace & duty', 誼: 'Friendship',
+  親緣: 'Kinship', 嫌隙: 'Rift', 殺伐: 'Bloodshed',
   僅同事: 'Shared events only', 未見: 'Never met', '未見／未說開': 'Never met / left unsaid',
   '只亮此類：{label}': 'Highlight only: {label}',
 
@@ -136,7 +136,7 @@ const en = {
   '移燭照覽山河 · 鈐印入卷': 'Move the candle to light the land · press the seal to enter',
   '拂過屏幕，燭照山河 · 鈐印入卷': 'Swipe to light the land · tap the seal to enter',
 
-  /* ---------- 說明文字（工作稿，待作者審；中文原段在 JSX 內） ---------- */
+  /* ---------- 說明文字（作者已審 2026-11-22；中文原段在 JSX 內） ---------- */
   行星說明: 'A binary system: Min Fangcheng (the Cangyun line) and Cheng Kai (the Tiance line) share the centre as equals. The orbits are generated from the number of events each person shares with each centre in the chronology, and so are circle sizes and line weights (all by square root); the length of a ring’s arc shows how many people sit on it. Hover over anyone to see the exact count. A line to a centre is coloured by that person’s relationship with the centre (where there are several, the main one; hover to see them all); a grey line means shared events with no recorded relationship. Lan Chuanyun, Lu Wanyue and Lu Yuming alone are secondary stars: their circles are sized between the two centres and everyone else, while their orbits still follow shared events, and the relationships among the three are always drawn faintly. Anyone who shares at least two events with each centre is a bridge star, tied to both and given a middle size: a balanced one sits between the two centres, and one leaning toward a centre sits on its side (Chen Ruihe shares two events with each and, by the author’s choice, sits on Cheng Kai’s side). The far orbit is coloured by faction, and named where more than three people of a faction sit together.',
   '左下圖例可指：': 'The legend at lower left is interactive:',
   '懸停一類預覽，點選或以鍵盤 Enter 常亮（再點或 Esc 收起），全圖只亮此類關係': 'hover over a type to preview it, click it or press Enter to pin it (click again or press Esc to clear), and the chart shows only that kind of relationship',

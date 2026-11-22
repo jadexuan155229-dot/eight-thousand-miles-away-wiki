@@ -7,8 +7,8 @@
 // In running prose group names take "the" (the Tiance Command, the Tang Clan); place-style
 // names do not (Wanhua Valley, Chunyang Palace). These are labels, so the article is dropped.
 // Pinyin alone, where it is needed, is the full syllable string: 凌雪阁 → Lingxuege.
-// Non-sect tags: ethnonyms and polities from the 术语主表 (T046–T056), the rest are drafts
-// marked below.
+// Non-sect tags: ethnonyms and polities from the 术语主表 (T046–T056); the rest settled by
+// the author on 2026-11-22.
 export const factionsEn = {
   // 剑三门派总表（Notion）
   苍云: 'Cangyun Army',
@@ -37,11 +37,11 @@ export const factionsEn = {
   柔然: 'Rouran',
   南诏: 'Nanzhao',
   西域: 'Western Regions',
-  // 工作稿：门派总表与术语主表未收
+  // 门派总表与术语主表未收，作者 2026-11-22 定
   唐军: 'Tang army',
   红衣教: 'Hongyi Order', // 按「教 → Order」（同 the Wudu Order）
   靺鞨: 'Mohe',
-  苗疆: 'Miaojiang',
+  苗疆: 'Miao borderlands', // 地域标签，非门派，不受拼音方针所限（作者 2026-11-22 定）
   波斯: 'Persia',
   平民: 'Commoners',
   史实: 'Historical record',
