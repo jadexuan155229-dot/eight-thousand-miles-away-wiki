@@ -110,7 +110,7 @@ export function useSkin() {
    二、壓完仍不足 3:1 者再降明度補足（3:1 為字色底線）。
    三、少數色手定，見 PAPER_TONE。
    輸出仍為六位 hex，可照常拼透明度、可交 dimAccent 解析。 */
-const PAPER_TONE = {
+export const PAPER_TONE = {
   /* 藏劍、萬靈：暗底上兩色本就只隔一層色相（銀杏柠黃 vs 琥珀鸷金），明度相近，
      壓縮之後仍嫌太近；且紙上守 3:1 的最飽和黃只得一種發綠的暗黃，「金」意全失。
      故手定：藏劍取暖金、放寬到 2.6:1（黃色系在淺底上本出不了高對比，以色相換辨識）；
@@ -287,3 +287,16 @@ export function useCoarsePointer() {
   }, []);
   return coarse;
 }
+
+/* 門派色 → 次級用色：向通道均值靠攏（灰化）再整體壓暗，輸出 rgba。
+   grayT 灰化比、darkT 壓暗比、alpha 透明度；供檔案彈窗滾動條 thumb、小卡綾邊（ttVars）等派生。
+   自 wiki.jsx 移來：門派色卡腳本（scripts/swatch-cards.js）同用一份 */
+export function dimAccent(hex, grayT, darkT, alpha) {
+  const ch = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const avg = (ch[0] + ch[1] + ch[2]) / 3;
+  const [r, g, b] = ch.map((v) => Math.round((v + (avg - v) * grayT) * (1 - darkT)));
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+/* 小卡綾邊三檔壓暗值（--tt-band-a/b/c），按皮膚取；緣由見 wiki.jsx ttVars 上方注 */
+export const BAND_DARK = { night: [0.28, 0.48, 0.30], paper: [0.12, 0.30, 0.15] };
