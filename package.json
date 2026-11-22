@@ -9,6 +9,7 @@
     "lint": "oxlint && node scripts/check-data.js",
     "check-data": "node scripts/check-data.js",
     "fonts": "node scripts/font-chars.js && python3 scripts/subset-fonts.py",
+    "swatches": "node scripts/swatch-cards.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.71.0",
+    "playwright-core": "^1.65.1",
     "vite": "^8.1.1"
   }
 }

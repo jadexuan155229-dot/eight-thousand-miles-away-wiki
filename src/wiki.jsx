@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
-import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, getSkin } from "./theme";
+import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, getSkin, dimAccent, BAND_DARK } from "./theme";
 
 /* 門派色隨膚調（見 theme.js tone）：wiki-data 的 fc 是數據層、亦供 vite.config 在 Node 下讀，不宜引入皮膚狀態，故在此包一層 */
 const fc = (f) => tone(fcRaw(f));
@@ -233,8 +233,8 @@ const isTextureTest = () => true;
    素紙另取一檔壓暗值 ×0.88 / ×0.70 / ×0.85：fc 在紙上已是為淺底壓深過的色（如纯阳中藍成深藏青），
      再照玄墨乘 0.52 便近乎墨塊，綾邊上 overlay／soft-light 的噪紋（中間調上最顯、愈暗愈弱）幾不可見，
      且深條直貼米白紙，比玄墨下沉重得多。少壓一截，紙上綾邊回到中間調，紋理與門派色俱見（作者 2026-11-21）。
-     須在渲染期取皮膚（getSkin），不可抄成模塊常量——換膚不重掛，整棵重渲染時此處隨之重算 */
-const BAND_DARK = { night: [0.28, 0.48, 0.30], paper: [0.12, 0.30, 0.15] };
+     須在渲染期取皮膚（getSkin），不可抄成模塊常量——換膚不重掛，整棵重渲染時此處隨之重算。
+   BAND_DARK 與 dimAccent 定義在 theme.js：門派色卡腳本（scripts/swatch-cards.js）亦用，免抄兩份 */
 const ttVars = (main) => {
   const [a, b, c] = BAND_DARK[getSkin()] || BAND_DARK.night;
   return {
@@ -313,14 +313,6 @@ function CharCard({ c, onOpen, locale }) {
 }
 
 /* ---------------- 詳情面板 ---------------- */
-/* 門派色 → 滾動條次級用色：向通道均值靠攏（灰化）再整體壓暗，輸出 rgba。
-   grayT 灰化比、darkT 壓暗比、alpha 透明度；供檔案彈窗 thumb / thumb:hover 派生 */
-function dimAccent(hex, grayT, darkT, alpha) {
-  const ch = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
-  const avg = (ch[0] + ch[1] + ch[2]) / 3;
-  const [r, g, b] = ch.map((v) => Math.round((v + (avg - v) * grayT) * (1 - darkT)));
-  return `rgba(${r},${g},${b},${alpha})`;
-}
 
 function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPosts, locale }) {
   const translated = characterTranslation(locale, c?.id);

@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+# 门派色卡（npm run swatches 的输出，图大，不入库）
+swatches
 *.local
 
 # 手工 zip 备份（git 接管版本历史后不再入库）
