@@ -4,6 +4,7 @@
 
 ### 英文版 T1：主角梯队档案
 
+- **作者审程凯后改**：轶事六「四十六岁」改四十七岁（中文亦改，年表 770.12 同句一并改）；轶事九「金乌」作者按由不译改为英文简述其隐喻（金乌闻坠、子阳之阳、为弓箭射落）。
 - **作者审闵方城后改**（中文亦改）：轶事一「是文中所述士兵中身量最高者」一句挪给荔非承烈（体貌特征末），闵方城此条改作「高峻，结实……」。英文：偶像加注 the late former Commander of the Cangyun Army；耳环文物出处改为加注照译（此后文物出处一律加注）；轶事六点明 He is drawn to men。
 - 闵方城、程凯、岚川云、陆晚月、陆羽鸣五人：档案八目、名字训诂、轶事 41 条、高光出工作译文，连同吕定仪，T1 六人档案俱全；站上首次有英译轶事。
 - 体例：作者口吻保留；含蓄处同样含蓄；不补写事实；典故自译；专名照 Notion（Iron-Bone Mantle、ring-pommel modao、Ironclad Discipline、Proud-Blood Battle Spirit、Army Monitor、the Great Bright Temple……）。

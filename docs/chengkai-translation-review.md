@@ -2,9 +2,14 @@
 
 范围仅限 `id=chengkai`（T1，2026-11-22 工作译文）。体例同 [闵方城](minfangcheng-translation-review.md)、[吕定仪](lvdingyi-translation-review.md)。
 
-## 不译
+## 作者审定（2026-11-22）
 
-- 轶事第九条（数据序号 8）「（按：作者隐喻——万灵有增益技能「金乌闻坠」……三足金乌……）」：作者按，写 `false`，英文界面略去。
+其余各条通过。改动：
+
+- **轶事六**：「四十六岁」改**四十七岁**，中英文俱改（at forty-seven）；年表 770.12「程凯病故」一条同句，一并改。
+- **轶事九**（作者按「金乌」一条）：原写 `false` 不译；改为英文简述，不照中文全译，只交代三层：金乌闻坠之意（三足金乌即日、后羿所射）；名字子阳之「阳」与其热烈性格皆系于日；被弓箭射落之意，并点明这是作者的隐喻：
+  An author’s metaphor. Wanling Manor has a strengthening skill called “Golden Crow Falling” (jinwu wenzhui 金乌闻坠). The golden crow is the three-legged bird that lives in the sun and stands for the sun itself, and it was the golden crows that the archer Yi shot down from the sky. Cheng Kai’s courtesy name, Ziyang, holds yang 阳, the sun, and his nature burns as hot. It is as if in some earlier life he had been one of those crows brought down by Yi’s arrows: and so he bears a name of the sun, and spends his whole life entangled with the bow.
+  技能名「金乌闻坠」暂作 Golden Crow Falling，「闻」字未译出；如万灵心法表另有定名，照改。
 
 ## 专名
 
