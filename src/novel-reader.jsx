@@ -4,7 +4,7 @@ import { NOVELS, FLAT, loadTexts } from "./novel";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { useLocale, useT } from "./i18n/locale";
-import { charName, hasEnName, facName, novelTitle, nameItems, hasCourtesyLine } from "./i18n/content";
+import { charEn, charName, hasEnName, facName, novelTitle, nameItems, hasCourtesyLine } from "./i18n/content";
 import { CourtesyLine } from "./i18n/names";
 
 const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
@@ -229,7 +229,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
           <span style={{ fontFamily: "HuiwenMingChao", fontSize: 17, fontWeight: 700, color: T.ink }}>{c.name}</span>
           {hasEnName(locale, c) && <span lang="en" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: T.muted }}>{charName(locale, c)}</span>}
           {nameItems(c).length > 0 && hasCourtesyLine(locale, c) && <span style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.muted }}><CourtesyLine c={c} /></span>}
-          {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>「{c.hao}」</span>}
+          {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>{charEn(locale, c.id)?.hao ? `“${charEn(locale, c.id).hao}”` : `「${c.hao}」`}</span>}
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
           {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
@@ -255,6 +255,8 @@ export default function NovelReader({ path, onNav }) {
   const t = useT();
   const en = locale === "en";
   const nt = (zh) => novelTitle(locale, zh);
+  /* 故事線標籤：中文作【生逢】，英文不用方頭括號，作「Born to It · 」 */
+  const bt = (tag) => (locale === "en" ? `${nt(tag)} · ` : `【${nt(tag)}】`);
   /* 正文懶加載：進入文庫（本組件掛載）方動態拉入 texts.js 獨立塊，不佔首屏主包。
      texts=null 為載入中；載入後為 { file: 正文 } 映射。各處取正文一律經 textOf。 */
   const [texts, setTexts] = useState(null);
@@ -446,7 +448,7 @@ export default function NovelReader({ path, onNav }) {
   const bodyMaxWidth = 714;
   /* 跨線翻頁帶線名，入卷帶卷名 */
   const navLabel = (f) =>
-    `${!cur || f.novel.id !== cur.novel.id ? `【${nt(f.novel.tag)}】` : ""}${f.group ? `${nt(f.group.title)} · ` : ""}${nt(f.ch.title)}`;
+    `${!cur || f.novel.id !== cur.novel.id ? bt(f.novel.tag) : ""}${f.group ? `${nt(f.group.title)} · ` : ""}${nt(f.ch.title)}`;
 
   const Leaf = ({ nv, group, ch }) => {
     const path = group ? `${nv.id}/${group.id}/${ch.id}` : `${nv.id}/${ch.id}`;
@@ -480,7 +482,7 @@ export default function NovelReader({ path, onNav }) {
             <button onClick={() => toggle(nv.id)}
               {...hoverable(nv.id, { display: "block", width: "100%", textAlign: "left", background: "none", border: "none", padding: "7px 8px 5px", cursor: "pointer" })}>
               <span style={{ color: T.accent, fontSize: 11, width: 15, display: "inline-block" }}>{open ? "▾" : "▸"}</span>
-              <span style={{ fontFamily: "HuiwenMingChao", fontSize: 14.5, color: open ? T.ink : T.muted }}>【{nt(nv.tag)}】</span>
+              <span style={{ fontFamily: "HuiwenMingChao", fontSize: 14.5, color: open ? T.ink : T.muted }}>{bt(nv.tag)}</span>
               <span style={{ fontFamily: "HuiwenMingChao", fontSize: 13.5, color: open ? T.muted : T.faint }}>{nt(nv.title)}</span>
             </button>
             {open && kids.map((ch) => {
@@ -521,7 +523,7 @@ export default function NovelReader({ path, onNav }) {
             padding: "6px 8px 7px 10px", cursor: "pointer",
           })}>
           <div style={{ fontFamily: "HuiwenMingChao", fontSize: 10.5, color: T.faint }}>
-            【{nt(f.novel.tag)}】{f.group ? ` ${nt(f.group.title)}` : ""}{n > 1 ? t(" · 命中 {n} 处", { n }) : ""}
+            {bt(f.novel.tag)}{f.group ? ` ${nt(f.group.title)}` : ""}{n > 1 ? t(" · 命中 {n} 处", { n }) : ""}
           </div>
           <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12.5, color: T.ink, lineHeight: 1.6, marginTop: 1 }}>{nt(f.ch.title)}</div>
           {snip && (
@@ -566,7 +568,7 @@ export default function NovelReader({ path, onNav }) {
         style={{ display: "flex", alignItems: "baseline", gap: 8, width: "100%", background: "none", border: "none", padding: "10px 4px", cursor: "pointer", textAlign: "left" }}>
         <span style={{ color: T.accent, fontSize: 11 }}>{tocOpen ? "▾" : "▸"}</span>
         <span style={{ fontFamily: "HuiwenMingChao", fontSize: 13.5, color: T.ink }}>
-          {cur ? `【${nt(cur.novel.tag)}】${cur.group ? `${nt(cur.group.title)} · ` : ""}${nt(cur.ch.title)}` : t("文庫目錄")}
+          {cur ? `${bt(cur.novel.tag)}${cur.group ? `${nt(cur.group.title)} · ` : ""}${nt(cur.ch.title)}` : t("文庫目錄")}
         </span>
       </button>
       {tocOpen && <div style={{ paddingBottom: 10, maxHeight: "60vh", overflowY: "auto" }}><Tree /></div>}
@@ -596,7 +598,7 @@ export default function NovelReader({ path, onNav }) {
           ) : (
             <div>
               <div style={{ maxWidth: bodyMaxWidth }}>
-                <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 11, letterSpacing: en ? "0.12em" : "0.4em", color: T.faint }}>【{nt(cur.novel.tag)}】{nt(cur.novel.title)}</div>
+                <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 11, letterSpacing: en ? "0.12em" : "0.4em", color: T.faint }}>{bt(cur.novel.tag)}{nt(cur.novel.title)}</div>
                 <h2 style={{ fontFamily: "JingHuaLaoSong", fontSize: 26, fontWeight: 700, color: T.ink, margin: "10px 0 0", letterSpacing: "0.06em" }}>
                   {cur.group ? `${nt(cur.group.title)} · ` : ""}{nt(cur.ch.title)}
                 </h2>

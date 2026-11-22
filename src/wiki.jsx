@@ -14,7 +14,8 @@ import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
 import About from "./about";
-import { grantLabel, grantsOf, tenureFac, tenuresOf, tenureSpan, tenureTitle } from "./posts-data";
+import { grantsOf, tenureFac, tenuresOf, tenureSpan } from "./posts-data";
+import { tenureTitleTx, grantTx } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLocale, useSetLocale, useT } from "./i18n/locale";
@@ -598,16 +599,17 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             <div style={{ marginTop: 24 }}>
               <SectionLabel>{t("任職履歷")}</SectionLabel>
               {ts.map((x, i) => {
-                /* 任期英译存於 posts-data.js 各條 en 欄（title / how / end）；無則職銜、上下文回落中文 */
+                /* 職銜英译查 i18n/posts.en.js（見 posts-content.js）；上下文（how / end）存於 posts-data.js 各條 en 欄，無則回落中文 */
                 const e = en && x.en;
                 const zh = en && !e;
+                const [title, titleZh] = tenureTitleTx(locale, x);
                 return (
                   <div key={i} style={{ display: "flex", gap: 14, padding: "6px 0", borderBottom: `1px solid ${T.line}44` }}>
                     <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{tenureSpanFor(locale, x)}</div>
                     <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.85 }}>
                       {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{facName(locale, tenureFac(x))}</span>}
-                      {e ? e.title : <Zh>{tenureTitle(x)}</Zh>}
-                      {x.kind !== "正授" && !e && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{t(x.kind)}</span>}
+                      {titleZh ? <Zh>{title}</Zh> : title}
+                      {x.kind !== "正授" && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{t(x.kind)}</span>}
                       {x.draft && <span title={x.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       {(e ? e.how || e.end : x.how || x.end) && (
                         <div className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
@@ -627,7 +629,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                     <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, padding: "3px 0" }}>
                       <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? t("（约）") : ""}</div>
                       <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>
-                        <Zh>{grantLabel(g)}</Zh>
+                        {(([txt, z]) => (z ? <Zh>{txt}</Zh> : txt))(grantTx(locale, g))}
                         {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       </div>
                     </div>

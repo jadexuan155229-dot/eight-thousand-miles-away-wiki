@@ -4,6 +4,7 @@ import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./
 import { T, tone } from "./theme";
 import { useLocale, useT } from "./i18n/locale";
 import { charName, facName } from "./i18n/content";
+import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx } from "./i18n/posts-content";
 
 /* ============================================================
    編制 (posts.jsx) —— 门派职位 × 年份的任期图（苍云、天策、唐军，顶上切换）
@@ -65,7 +66,9 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
   const [tipFac, setTipFac] = useState(F.id);
   if (tipFac !== F.id) { setTipFac(F.id); setHov(null); setFoc(null); }
   const [Y0, Y1] = F.range;
-  const xOf = (p) => PLOT_L + ((p - Y0) / (Y1 - Y0)) * (PLOT_R - PLOT_L);
+  /* 英文職名長於中文（Deputy Military Commissioner），左欄放寬 */
+  const plotL = en ? 222 : PLOT_L;
+  const xOf = (p) => plotL + ((p - Y0) / (Y1 - Y0)) * (PLOT_R - plotL);
   const marks = F.marks.map((m) => ({ ...m, p: pos(m.y, m.m) }));
   /* 本门派的任期，带原下标 */
   const mine = useMemo(() => TENURES.map((t, i) => ({ t, i })).filter(({ t }) => tenureFac(t) === F.id), [F.id]);
@@ -166,7 +169,7 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
           {marks.map((m) => (
             <g key={m.label} aria-hidden="true">
               <line x1={xOf(m.p)} x2={xOf(m.p)} y1={TOP - 6} y2={H - 10} stroke={T.accent} strokeOpacity="0.4" strokeWidth="1" strokeDasharray="3 4" />
-              <text x={xOf(m.p) + (m.left ? -4 : 4)} y={TOP - 4} textAnchor={m.left ? "end" : "start"} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.accent} fillOpacity="0.75">{m.label}</text>
+              <text x={xOf(m.p) + (m.left ? -4 : 4)} y={TOP - 4} textAnchor={m.left ? "end" : "start"} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.accent} fillOpacity="0.75">{markTx(locale, m.label)[0]}</text>
             </g>
           ))}
 
@@ -174,7 +177,7 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
             if (it.kind === "group") {
               return (
                 <g key={`g${k}`} aria-hidden="true">
-                  <text x="16" y={it.y + 18} fontFamily="JingHuaLaoSong" fontSize="13.5" letterSpacing="1" fill={T.ink}>{it.label}</text>
+                  <text x="16" y={it.y + 18} fontFamily="JingHuaLaoSong" fontSize="13.5" letterSpacing={en ? 0.3 : 1} fill={T.ink}>{groupTx(locale, it.label)[0]}</text>
                   <line x1="16" x2={PLOT_R} y1={it.y + 24} y2={it.y + 24} stroke={T.line} strokeOpacity="0.6" strokeWidth="1" />
                 </g>
               );
@@ -182,10 +185,10 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
             const { post, items, y } = it;
             return (
               /* 读屏：一个职位格是一组，组名「单位 · 职位」；格内每段任期是一个按钮 */
-              <g key={post.id} role="group" aria-label={`${post.group} · ${post.label}`}>
-                <text aria-hidden="true" x="30" y={y + ROW_H / 2 + 4} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={T.muted}>
-                  {post.label}
-                  {post.hint && <title>{post.hint}</title>}
+              <g key={post.id} role="group" aria-label={`${groupTx(locale, post.group)[0]} · ${postLabelTx(locale, post)[0]}`}>
+                <text aria-hidden="true" x="30" y={y + ROW_H / 2 + 4} fontFamily="HuiwenZhengKai" fontSize={en ? 12 : 12.5} fill={T.muted}>
+                  {postLabelTx(locale, post)[0]}
+                  {post.hint && <title>{postHintTx(locale, post)[0]}</title>}
                 </text>
                 {items.map(({ t, i, a, b, lane }, k) => {
                   const col = colorOf(t.who);
@@ -194,7 +197,8 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
                   const dim = hot && hot !== t.who;
                   const on = hot === t.who;
                   const name = charName(locale, byId[t.who]);
-                  const label = t.rank && !t.rank.startsWith(post.label) ? `${name} · ${t.rank}` : name;
+                  /* 自寫職名與職位格名不同者，名後綴之（英文綴其英译） */
+                  const label = t.rank && !t.rank.startsWith(post.label) ? `${name} · ${en ? tenureTitleTx(locale, t)[0] : t.rank}` : name;
                   const fitLabel = textW(label, 11.5) + 10 < x2 - x1 ? label : textW(name, 11.5) + 10 < x2 - x1 ? name : "";
                   const place = (e) => {
                     const box = e.currentTarget.ownerSVGElement.getBoundingClientRect();
@@ -211,7 +215,7 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
                   const tail = thin && textW(name, 10.5) + 10 < room ? name : "";
                   return (
                     <g key={i} opacity={dim ? 0.32 : 1} tabIndex={0} role="button" style={{ cursor: "pointer", outline: "none" }}
-                      aria-label={en ? `${name}, ${tenureTitle(t)}, ${spanOf(t)}, ${t_(t.kind)}${t.draft ? `, ${t_("待核")}` : ""}` : `${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
+                      aria-label={en ? `${name}, ${tenureTitleTx(locale, t)[0]}, ${spanOf(t)}, ${t_(t.kind)}${t.draft ? `, ${t_("待核")}` : ""}` : `${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
                       aria-describedby={hover && hover.i === i ? "posts-tip" : undefined}
                       onMouseEnter={(e) => setHov(place(e))} onFocus={(e) => setFoc(place(e))} onBlur={() => setFoc(null)} onClick={open}
                       /* 鼠标离开这一段只收鼠标那一份（且只收自己的，免得盖掉刚移入的下一段）；键盘焦点若还在，浮签退回焦点那段 */
@@ -254,9 +258,9 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
         return (
           <div id="posts-tip" role="tooltip" style={{ position: "absolute", left: hover.x, top: hover.y, width: 300, boxSizing: "border-box", pointerEvents: "none",
             background: T.panelHi, border: `1px solid ${colorOf(t.who)}88`, borderRadius: 3, padding: "8px 12px", fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.ink, lineHeight: 1.75, zIndex: 5 }}>
-            {/* 英文界面：標目、任期類別英文；職銜與上下文、備注暫回落中文（T0 官職表定後接 posts-data 之 en 欄） */}
+            {/* 英文界面：標目、職銜、任期類別英文（職銜查 i18n/posts.en.js）；上下文、備注暫回落中文 */}
             <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14 }}>
-              {charName(locale, c)}<span lang={en && !t.en ? "zh" : undefined} style={{ color: T.muted, marginLeft: 8 }}>{en && t.en ? t.en.title : tenureTitle(t)}</span>
+              {charName(locale, c)}<span lang={tenureTitleTx(locale, t)[1] ? "zh" : undefined} style={{ color: T.muted, marginLeft: 8 }}>{tenureTitleTx(locale, t)[0]}</span>
             </div>
             <div style={{ color: T.accent, fontSize: 12 }}>{spanOf(t)}<span style={{ color: T.faint, marginLeft: 8 }}>{t_(t.kind)}</span>
               {t.draft && <span style={{ color: T.seal, marginLeft: 8 }}>{t_("待核")}</span>}</div>

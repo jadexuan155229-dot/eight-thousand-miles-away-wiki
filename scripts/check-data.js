@@ -25,6 +25,7 @@ import { eventsEn } from "../src/i18n/events.en.js";
 import { novelEn } from "../src/i18n/novel.en.js";
 import { TIER1 } from "../src/i18n/tiers.js";
 import { NAME_LABELS, ALT_LABELS } from "../src/i18n/name-labels.js";
+import { postsEn, groupsEn, ranksEn, marksEn, honoursEn } from "../src/i18n/posts.en.js";
 import { NOVELS } from "../src/novel/index.js";
 import { translatedFields, readStamps, hashOf } from "./i18n-fields.js";
 
@@ -307,6 +308,26 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
     for (const k of Object.keys(x.names || {})) if (k !== "汉名") err(`英譯 ${id}.names`, `只譯汉名；「${k}」為拉丁字名號，原樣用即可`);
   }
 
+  /* 編制（i18n/posts.en.js）：缺譯報警告（英文界面回落中文），孤兒報警告（中文鍵已改） */
+  for (const p of POSTS) {
+    const e = postsEn[p.id];
+    if (!e) { warn(`英譯 編制 ${p.id}`, `職位「${p.label}」尚無英譯`); continue; }
+    if (!e.label || !e.full) warn(`英譯 編制 ${p.id}`, "缺 label 或 full");
+    if (p.hint && !e.hint) warn(`英譯 編制 ${p.id}`, "中文有懸停說明（hint），英文缺");
+  }
+  for (const k of Object.keys(postsEn)) if (!POSTS.some((p) => p.id === k)) warn(`英譯 編制 ${k}`, "posts-data.js 已無此職位");
+  const groups = new Set(POSTS.map((p) => p.group));
+  for (const g of groups) if (!groupsEn[g]) warn(`英譯 編制分組「${g}」`, "尚無英譯");
+  for (const k of Object.keys(groupsEn)) if (!groups.has(k)) warn(`英譯 編制分組「${k}」`, "posts-data.js 已無此分組");
+  const rankSet = new Set(TENURES.filter((t) => t.rank).map((t) => t.rank));
+  for (const r of rankSet) if (!ranksEn[r]) warn(`英譯 職名「${r}」`, "任期自寫職名尚無英譯——英文界面回落中文");
+  for (const k of Object.keys(ranksEn)) if (!rankSet.has(k)) warn(`英譯 職名「${k}」`, "任期中已無此職名（中文改過？）");
+  const markSet = new Set(FACTIONS.flatMap((f) => f.marks.map((m) => m.label)));
+  for (const m of markSet) if (!marksEn[m]) warn(`英譯 編制標記「${m}」`, "尚無英譯");
+  const honourSet = new Set(GRANTS.flatMap((g) => [g.guan, g.xun, g.san, g.pin].filter(Boolean)));
+  for (const h of honourSet) if (!honoursEn[h]) warn(`英譯 勳散「${h}」`, "尚無英譯——該條英文回落中文");
+  for (const k of Object.keys(honoursEn)) if (!honourSet.has(k)) warn(`英譯 勳散「${k}」`, "GRANTS 中已無此項");
+
   /* 界面字串：靜態掃 t("…")（余波頁另用 echoes.en.js，不在此列）；動態鍵（t(label) 之類）以「源碼中出現此字串」為用 */
   const SRC_DIR = new URL("../src/", import.meta.url);
   const srcText = ["wiki.jsx", "posts.jsx", "novel-reader.jsx", "landing.jsx", "i18n/names.jsx", "i18n/content.js", "i18n/name-labels.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
@@ -325,7 +346,8 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   const anecTotal = CHARACTERS.reduce((n, c) => n + (c.anecdotes || []).length, 0);
   const anecDone = fields.filter((f) => /\.anecdotes\.\d+$/.test(f.key)).length;
   const locDone = Object.keys(LOC_COORDS).filter((l) => placesEn[l]).length;
-  const tenDone = TENURES.filter((x) => x.en).length;
+  /* 任期：職銜有英譯者（自有 en.title，或自寫職名／職位全稱已譯） */
+  const tenDone = TENURES.filter((x) => x.en?.title || (x.rank ? ranksEn[x.rank] : postsEn[x.post]?.full)).length;
   const pct = (a, b) => `${a}/${b}`;
   coverageLine = `英譯覆蓋：界面 ${pct([...used].filter((k) => uiSet.has(k)).length, used.size)} · 人名 ${pct(trd.filter(([, x]) => x.name).length, CHARACTERS.length)} · 檔案 ${pct(trd.filter(([, x]) => hasProfile(x)).length, CHARACTERS.length)}（T1 ${t1}/${TIER1.length}） · 軼事 ${pct(anecDone, anecTotal)} · 年表 ${pct(EVENTS.filter((e) => eventsEn[e.title]).length, EVENTS.length)} · 地名 ${pct(locDone, Object.keys(LOC_COORDS).length)} · 門派 ${pct([...facs].filter((f) => factionsEn[f]).length, facs.size)} · 關係類型 ${pct([...relTypes].filter((k) => relationsEn[k]).length, relTypes.size)} · 任期 ${pct(tenDone, TENURES.length)}`;
 }
