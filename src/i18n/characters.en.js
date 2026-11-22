@@ -172,9 +172,52 @@ export const charactersEn = {
   wbk: { name: 'Wang Bukong', hao: 'the buddha' }, // 王不空
   litingshen: { name: 'Li Tingshen', zi: 'Hongjuan' }, // 李庭深
   luweilou: { name: 'Lu Weilou' }, // 陆危楼
-  luyuming: { name: 'Lu Yuming' }, // 陆羽鸣
+  // 陆羽鸣：T1 工作译文（2026-11-22），译注与待审见 docs/luyuming-translation-review.md。
+  // 不译：训诂末句「739年大光明寺事变中『身死』实为失踪，故卒年不著，从 Notion 库。」（数据按语）。
+  luyuming: {
+    name: 'Lu Yuming',
+    birthplace: 'The Western Regions (of the exiled Sasanian royal house of Persia)',
+    gloss: 'رخ (Rukh): Persian for “face, countenance”, used in poetry for a beautiful face. It is also the white-feathered roc of myth, said to be enormous, white-plumed, feeding on elephants and of matchless strength, perhaps going back to the divine bird of ancient Persia, the Simurgh; the chess word “rook” comes from it too.',
+    profile: {
+      官职身份: 'One of the senior brothers in charge under the “Shadow Moon” banner, master of the arts of assassination; Lu Wanyue’s master. He came to grief in the Great Bright Temple Incident of 739. Both Lu Wanyue and Arashikawa Kumo believed Gao Qian had killed him on the spot; in fact he survived, and remained in the Central Plains for sixteen years, until in 756 he and Lu Wanyue met again at the house outside Chang’an.',
+      体貌特征: '',
+      性格: 'Noble and languid, a little careless and a little haughty; he does not like to be bound by form, but on what matters he is especially serious and thoughtful. Young and precocious, with a faith of perfect sincerity, he could debate scripture and doctrine with the elders of the order, yet when it came to putting things into practice he was still rather green. Where the order’s future and the next generation were concerned he had a sense of mission and duty, and at such times he was a hot-blooded young man.',
+      偶像: '',
+      武学: 'The “Shadow Moon” arts of assassination.',
+      随身物件: '',
+      喜好: 'Playing hide-and-seek with Lu Wanyue: hiding in the fork of a tree, masking his breath, lying up there at ease with his mind empty, watching the little girl tiptoe round and round below, looking for him.',
+      专擅: 'He speaks Chinese very precisely and beautifully: he once caught hold of a merchant from Chang’an and learned from him, until he sounded hardly different from the official speech. The order’s people spoke Chinese rather stiffly, so Lu Wanyue found her master’s way of speaking a little odd, and only understood years later, when she truly came to Chang’an in the Central Plains.',
+    },
+    anecdotes: [
+      'Family origins: descended from the exiled Sasanian royal house of Persia. In the second year of Yonghui (651) the Arabs invaded and the Sasanian state survived in name only. The Persian king Peroz twice sent envoys to the Tang asking for help, in vain (654); in the Longshuo era the Tang set up the Persian Area Command at Zaranj (661) and made Peroz its Area Commander (663); in the first year of Shangyuan (674), hard pressed by the Arabs, Peroz came to Chang’an, and the royal kin, nobles and clergy either went with him or were scattered across the Western Regions. Among the royal kin who followed the king and travelled between Chang’an and the Western Regions were his grandfathers’ and fathers’ generations, who had long been on good terms with Lu Weilou, both within the Zoroastrian faith and in trade. Further back, at the founding of the state: Ardashir I, who revived Persia and founded the Sasanian dynasty (the second Persian empire), came of a hereditary line of Zoroastrian priests. His grandfather Sasan was a priest of the temple of Anahita, and the dynasty took its name from him; his father Pabag was lord of the city of Istakhr; and before he rose in arms he had served Artabanus V, the last Parthian king, as governor of Fars (from about 208).',
+      'Told to be Lu Wanyue’s master, he glanced at her lazily and said: this small? But when he actually taught her the martial arts he was exacting, with very high standards, and when his pupil fell short he would grow anxious: never angry, but you could feel the edge of it, his patience slowly draining away. When Lu Nanxin saw this he would tease him: forgotten now who said she was too small? And his way of saying sorry was to go over, crouch down and pat her head. Lu Wanyue always remembers the feel of it.',
+      'Hiding in the tree during their games, he would look up to the west, towards where he came from, and his face would turn a little melancholy. Persia had fallen; he had never seen it in its glory, and knew only that his people had met with disaster and taken shelter in the land of the Tang. So he admired the Tang empire itself, its strength and its peace; and his elders often spoke of Chang’an, so he longed for it too.',
+      'The order thought his generation still too young and had not sent them to Chang’an, but he asked to go. Before the Great Bright Temple Incident, the planning and troop movements of the Tiance Command, Shaolin and the Lingxue Pavilion were kept deeply secret, yet he still found signs of them around a post-station inn, and even worked his way to the place where the Tiance generals were meeting. But by then it was too late. Arashikawa’s hearing was extremely sharp; knowing she was no match for him, she kept up the chase regardless, and with the Lingxue Pavilion as a second safeguard, he came to grief.',
+      'He had a kind of insight and experience beyond the ordinary. In his last glance, for no reason he knew, he saw something of Lu Wanyue in Arashikawa’s face: for a moment he thought of what his little pupil would be like when she grew up, perhaps with just that look, sharp and refusing to give in. He read both Arashikawa’s hatred and her hesitation, and with that distant likeness, for a moment the thought came to him of saving her.',
+    ],
+  },
   lunanxin: { name: 'Lu Nanxin' }, // 陆南信
-  luwanyue: { name: 'Lu Wanyue', hao: 'Little Moon' }, // 陆晚月
+  // 陆晚月：T1 工作译文（2026-11-22），译注与待审见 docs/luyuming-translation-review.md（与陆羽鸣同册）。
+  luwanyue: {
+    name: 'Lu Wanyue',
+    hao: 'Little Moon',
+    birthplace: 'Kucha Garrison, Anxi Grand Protectorate',
+    gloss: 'مهتاب (Mahtāb): “moonlight”, from māh (moon) and tāb (radiance, shining); in Persian literature it often describes clear, soft moonlight.',
+    profile: {
+      官职身份: 'A follower of the Mingjiao’s “Shadow Moon” branch; she became a young assassin in 740, and from 742 served in the assassins’ squad led by Lu Yin. She came from a family of Hu merchants, private traders working the route between Kucha and the Yumen Pass in pearls and jade, spices, brocades and horses; the daughter of Rādīn and Royā. She later became the partner of Tang Zhe of the Tang Clan, and they had twins, Tang Xi and Tang Xu.',
+      体貌特征: '',
+      性格: '',
+      偶像: '',
+      武学: 'Mingjiao martial arts. She joined the order in 736 and was taught by Lu Yuming.',
+      随身物件: '',
+      喜好: '',
+      专擅: '',
+    },
+    anecdotes: [
+      'She always remembers the feel of her master crouching down to pat her head; Lu Nanxin was always feeding her frost sugar. The order’s people spoke Chinese rather stiffly, and so her master’s precise, lovely way of speaking it seemed a little odd to her; only years later, in Chang’an, did she understand.',
+      'In 741 she first met Arashikawa Kumo in a lone fortress town in the Western Regions. In 742 they met again at Longmen, where she saw her master’s Sasanian agate seal on Arashikawa; the two fought fiercely, and afterwards, talking, learned some clues about the night her master died. In 745 they met again while investigating the Hongyi Order’s Devil’s City at Longmen. In 756, when Tong Pass fell, she rescued Arashikawa Kumo from Tong Pass and took her to the outskirts of Chang’an, where she had set up a house, and there she found her master again, who had remained in the Central Plains for sixteen years.',
+    ],
+  },
   luling: { name: 'Lu Ling' }, // 陆灵
   luyin: { name: 'Lu Yin' }, // 陆隐
   luxiao: { name: 'Lu Xiao' }, // 陆晓

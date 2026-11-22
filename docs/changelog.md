@@ -2,6 +2,13 @@
 
 ## 2026-11-22
 
+### 英文版 T1：主角梯队档案
+
+- 闵方城、程凯、岚川云、陆晚月、陆羽鸣五人：档案八目、名字训诂、轶事 41 条、高光出工作译文，连同吕定仪，T1 六人档案俱全；站上首次有英译轶事。
+- 体例：作者口吻保留；含蓄处同样含蓄；不补写事实；典故自译；专名照 Notion（Iron-Bone Mantle、ring-pommel modao、Ironclad Discipline、Proud-Blood Battle Spirit、Army Monitor、the Great Bright Temple……）。
+- 不译：选角注（东亚人种吐蕃类型）、文物出处、现代注解（以现在的话来说是抑郁）、作者按（程凯金乌一条、岚川云高光按语，写 false）、待定之按（岚川云训诂另一说）、数据按语（陆羽鸣卒年说明）。
+- 每人一份译注与待审清单（`docs/*-translation-review.md`）。英文覆盖：档案 6/124、轶事 41/244。
+
 ### 英文版 T0：称号、别号、关系、地名、编制、文库题名
 
 T0 剩下的六类一并出工作稿上线，待作者审（[docs/t0-review.md](t0-review.md)）。
