@@ -2,10 +2,16 @@
 
 范围仅限 `id=lanchuanyun`（T1，2026-11-22 工作译文）。体例同 [闵方城](minfangcheng-translation-review.md)。
 
+## 作者审定（2026-11-22）
+
+其余各条通过。改动：
+
+- **删轶事「晕血」一条**（原第五条），中英文俱删。其后各条序号前移一位，下文所引轶事序号仍是删前的。
+- **高光第一条**（作者按「属于观察者／见证者角色……原则上不设高光点」）：由不译改为英文说明其人物定位：In the story she is an observer and a witness: her character comes through in conversation and in her dealings with others, so in principle she is given no highlights of her own.
+
 ## 不译
 
 - 训诂后半「（另一说：『千鹤』为天策府赐号，取义『千川振迅，鹤目九野』……两说并存，俟作者定。）」：这是待定之按，英文只译已定的前半（以鹤应云、千鹤为日本女名）。你若定了取「赐号」说，或两说都要，告诉我即补。
-- 高光第一条「（属于故事中的观察者／见证者角色……原则上不设高光点。）」：作者按，写 `false` 略去。
 
 ## 名号与专名
 
@@ -29,7 +35,7 @@
 11. 轶事一「少失怙恃」：she lost her parents young；「负气含恨」：in anger and grievance。
 12. 轶事二「不和不汉」：neither wholly Japanese nor wholly Han（「和」即日本）；「扶危忠臣之后」：the descendant of loyal men who stood by the state in its peril。
 13. 轶事五「输出没有回应」：whatever one gives her meets no answer（网络口语，取其意）。
-14. 轶事四「暴露疗法」：forced herself through it by facing it again and again。不用 exposure therapy 这个现代术语，取其做法。
+14. ~~轶事四「暴露疗法」~~：此条已删。
 15. 轶事六「程凯『牺牲』」：Cheng Kai “died”，照原文加引号。
 16. 轶事九「收养叶矢在府中」：took in Kyōya at the Command。
 17. 高光四「入阵如若无人」：went into the ranks as though there were no one there。

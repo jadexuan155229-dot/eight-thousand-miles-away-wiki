@@ -280,7 +280,8 @@ export const charactersEn = {
   niuwo: { name: 'Hniub Vos' }, // 纽沃
   caiyao: { name: 'Ncaik Ya' }, // 彩瑶
   // 岚川云：T1 工作译文（2026-11-22），译注与待审见 docs/lanchuanyun-translation-review.md。
-  // 不译：训诂后半「（另一说……两说并存，俟作者定。）」（待定之按）；高光第一条（作者按：原则上不设高光点），写 false。
+  // 不译：训诂后半「（另一说……两说并存，俟作者定。）」（待定之按）。
+  // 作者审后（2026-11-22）：删轶事「晕血」一条（中英俱删）；高光第一条作者按改为英文说明其人物定位。
   lanchuanyun: {
     name: 'Arashikawa Kumo',
     zi: 'Qianhe (Chizuru, ‘a thousand cranes’)',
@@ -302,14 +303,13 @@ export const charactersEn = {
       'Her father, Arashikawa Yasuhiko, was a Japanese student sent to the Tang, a fellow student of Chao Heng (Abe no Nakamaro), and the family were friends with Chao Heng; he died of illness in Chang’an in 747. Her mother, Zhao Yingzhen, whose family lived in Changshan Commandery and descended from the Han Marquis of Shunping, died in the ninth month of 736 when Mingjiao followers stirred up trouble in the streets of Chang’an. Her maternal grandfather, Zhao Tingzhi, had also come from the Tiance Command; early in 756, when Changshan fell in the war, the old man dug out his old armour, put it on to protect the townspeople, and died in the fighting. The armour was later recovered by Cen Han, Du Zheng and others of the Changge School (of Li Tingze’s circle) and left in the keeping of the Cangyun Army; in the winter of 757 Arashikawa Kumo received it at Cangyun from Min Fangcheng. Arashikawa is of mixed blood, neither wholly Japanese nor wholly Han, and her sense of who she is has always been somewhat confused; only then did she come to know herself as the descendant of loyal men who stood by the state in its peril, and to know all the more that the Tiance Command was where she belonged, that her first choice had not been wrong.',
       'She is a skilled fighter and very sure of her abilities, at her best in violent clashes, yet she never clashes with anyone. Outside training she does not compete with others at all. She never goes to the army’s ring bouts: too noisy.',
       'She is easily embarrassed, and afraid of losing face or showing that she does not know. When she was young, at a hunt in the hills, Cheng Kai rode up to point out that her upper body leaned too far when she shot from the saddle, and she was embarrassed about it for a long time. On the drill ground she often watched Cheng Kai’s trick archery of every kind, silently and on the sly, but would never practise in front of him herself.',
-      'She cannot stand the sight of blood: a knot left by what she went through as a girl, she cannot watch another person’s wound bleed heavily. When she first entered the Command the problem came out in training, and so as not to be laughed at she gritted her teeth and forced herself through it by facing it again and again, whatever it cost her. Cheng Kai saw, and it wrung his heart.',
       'A lone wolf, or selfish, if you like: she thinks of herself first. At the Command she was trained from the start as a scout or assassin, and the training was brutal. Once she had come into her own she was often sent out to spy or to work undercover, and won merit many times, but seldom at the front, so the army never heard her name. As a girl she saw her family and her brother leave her one after another, and so grew into someone who keeps to herself, all the more as time went on; it is easy to feel that whatever one gives her meets no answer. Things were often rough going between her and Cheng Kai, and in truth she herself was the biggest stumbling block.',
       'She takes things too far, and does not spare herself either. After the Tiance Command fell and Cheng Kai “died”, she would rather go north of Yanmen alone than ever again turn towards Luoyang, and so lost five or six years for nothing.',
       'She says little but listens and understands well; she keeps her distance and sees things clearly, but takes no interest in other people’s business, does not listen to gossip, and passes no judgments. That is why she and Min Fangcheng could become friends.',
       'She does not seek to have heirs, but the pain of losing a child at that time did, in the end, become a regret. It was with this in mind, too, that she later took in Kyōya at the Command.',
     ],
     highlight: [
-      false,
+      'In the story she is an observer and a witness: her character comes through in conversation and in her dealings with others, so in principle she is given no highlights of her own.',
       'Her view of the feud between the Tiance Command and the Mingjiao.',
       'Investigating the theft of army horses, pregnant and heedless of herself, she got clear when set upon by many and even took one of them alive for questioning; from this the Langya intelligence network at Tong Pass was traced.',
       'Fighting with the Cangyun Army in the Battle of Luoyang, seeing a comrade gravely wounded, she threw aside the Cangyun shield-and-blade, took a long spear from an enemy’s hands, and went into the ranks as though there were no one there.',
