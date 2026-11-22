@@ -227,10 +227,11 @@ export const honoursEn = {
   // 勳官 merit titles。Hucker 之式為「Commandant of X」：
   //   轻车都尉 Commandant of Light Chariots、骑都尉 Commandant of Cavalry、云骑尉 Commandant of
   //   Fleet-as-clouds Cavalry 見 1728（明代世爵條，名同唐勳官，Hucker 同名同译）；护军 2775 義四。
-  //   骁骑尉、飞骑尉、武骑尉依此式自拟；「上」待 shang hu-chün 條定，暫作 Senior
-  上护军: 'Senior Military Protector', // 待查 shang hu-chün
+  //   骁骑尉、飞骑尉、武骑尉依此式自拟。「上」作 Supreme：Hucker 唐代總論以勳官最高轉上柱国作
+  //   Supreme Pillar of State，同一序列從之（上将军 Generalissimo 另一序列，不類推）
+  上护军: 'Supreme Military Protector', // 上 依上柱国 Supreme Pillar of State
   护军: 'Military Protector', // Hucker 2775 義四
-  上轻车都尉: 'Senior Commandant of Light Chariots', // 轻车都尉 Hucker 1728；上 待查
+  上轻车都尉: 'Supreme Commandant of Light Chariots', // 轻车都尉 Hucker 1728；上 依上柱国
   骑都尉: 'Commandant of Cavalry', // Hucker 1728（Notion 原暫作 Cavalry Commandant）
   骁骑尉: 'Commandant of Valiant Cavalry', // 自拟，依 1728 式
   飞骑尉: 'Commandant of Flying Cavalry', // 自拟，依 1728 式
@@ -240,7 +241,7 @@ export const honoursEn = {
   云麾将军: 'General of the Cloud Banner', 忠武将军: 'General of Loyal Valour', 壮武将军: 'General of Robust Valour',
   游击将军: 'General of Roving Attack', 归德郎将: 'Gentleman-General Who Has Turned to Virtue',
   振威校尉: 'Commandant of Stirring Might', 致果副尉: 'Vice Commandant of Resolute Daring', 翊麾校尉: 'Commandant Assisting the Standard',
-  // 品 (P3)
+  // 品 (P3；Hucker 唐代總論：正 a、从 b，上 1、下 2，如 5a2 正五品下)
   正四品上: 'rank 4a1', 正四品下: 'rank 4a2', 从三品: 'rank 3b', 从五品下: 'rank 5b2', 从六品上: 'rank 6b1',
   正七品下: 'rank 7a2', 从七品上: 'rank 7b1',
   // 官
