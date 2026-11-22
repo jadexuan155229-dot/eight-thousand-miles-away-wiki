@@ -219,14 +219,21 @@ export const marksEn = {
 };
 
 /* 勳、散、品、官（GRANTS）。勳官、武散官之具體名號 Hucker 未逐個立條（作者查），自拟，依其體例直译：
-   勳官作 … Commandant／Military Protector（护军照 Hucker 2775 义四），武散官作 General of …／Commandant of …；
+   勳官作 Commandant of …／Military Protector（見下），武散官作 General of …／Commandant of …；
    骑都尉、归德郎将、忠武将军照 Notion 术语主表 */
 export const honoursEn = {
-  // 勳官 merit titles
-  上护军: 'Senior Military Protector', // 待查 Hucker shang hu-chün 条（2775 有互见）
-  护军: 'Military Protector', // Hucker 2775 义四：唐至明之勳官，視三品下（3b）
-  上轻车都尉: 'Senior Light Chariot Commandant', 骑都尉: 'Cavalry Commandant', 骁骑尉: 'Valiant Cavalry Commandant',
-  飞骑尉: 'Flying Cavalry Commandant', 云骑尉: 'Cloud Cavalry Commandant', 武骑尉: 'Martial Cavalry Commandant',
+  // 勳官 merit titles。Hucker 之式為「Commandant of X」：
+  //   轻车都尉 Commandant of Light Chariots、骑都尉 Commandant of Cavalry、云骑尉 Commandant of
+  //   Fleet-as-clouds Cavalry 見 1728（明代世爵條，名同唐勳官，Hucker 同名同译）；护军 2775 義四。
+  //   骁骑尉、飞骑尉、武骑尉依此式自拟；「上」待 shang hu-chün 條定，暫作 Senior
+  上护军: 'Senior Military Protector', // 待查 shang hu-chün
+  护军: 'Military Protector', // Hucker 2775 義四
+  上轻车都尉: 'Senior Commandant of Light Chariots', // 轻车都尉 Hucker 1728；上 待查
+  骑都尉: 'Commandant of Cavalry', // Hucker 1728（Notion 原暫作 Cavalry Commandant）
+  骁骑尉: 'Commandant of Valiant Cavalry', // 自拟，依 1728 式
+  飞骑尉: 'Commandant of Flying Cavalry', // 自拟，依 1728 式
+  云骑尉: 'Commandant of Fleet-as-clouds Cavalry', // Hucker 1728
+  武骑尉: 'Commandant of Martial Cavalry', // 自拟，依 1728 式
   // 武散官 prestige titles
   云麾将军: 'General of the Cloud Banner', 忠武将军: 'General of Loyal Valour', 壮武将军: 'General of Robust Valour',
   游击将军: 'General of Roving Attack', 归德郎将: 'Gentleman-General Who Has Turned to Virtue',
