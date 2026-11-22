@@ -8,7 +8,8 @@
 //   P2   Hucker for real Tang offices; invented posts avoid words Hucker has taken.
 //   P3   ranks in Hucker notation in card fields: 从五品下 → rank 5b2.
 // Checked against Hucker by the author (2026-11-22): 兵马使 Commander and 都知兵马使 Supreme Commander
-// (4684), 行军司马 Adjutant (1790, s.v. chün ssu-ma), 都虞候 Inspector-in-chief. Not in Hucker, so
+// (4684), 行军司马 Adjutant (1790, s.v. chün ssu-ma), 都虞候 Inspector-in-chief, 节度副使 Military Vice
+// Commissioner and 都督 Area Commander (777), 护军 Military Protector (2775, sense 4: the merit title). Not in Hucker, so
 // our own renderings on his pattern (自拟): 押衙 (7873 has only the Song sense, Lackey), 子将, and the
 // individual merit and prestige titles below. Hucker entry numbers are noted where they apply.
 // 2026-11-22 T0 working draft (docs/t0-review.md).
@@ -75,7 +76,7 @@ export const postsEn = {
   'wq-jx': { label: 'Visiting instructor', full: 'Visiting instructor, Heavenly Slayer Corps', hint: 'Serving at the Command from another sect: the Lingxue Pavilion' },
 
   // 唐军
-  'bt-fs': { label: 'Deputy Military Commissioner', full: 'Deputy Military Commissioner of Yixi and Beiting', hint: 'In 741 Beiting and the Four Garrisons of Anxi were separated again' },
+  'bt-fs': { label: 'Military Vice Commissioner', full: 'Military Vice Commissioner of Yixi and Beiting', hint: 'In 741 Beiting and the Four Garrisons of Anxi were separated again' },
   'bt-dz': { label: 'Supreme Commander', full: 'Supreme Commander, Beiting', hint: 'The general commanding all the circuit’s armies under the Military Commissioner' }, // Hucker 4684
   'bt-bm': { label: 'Commander', full: 'Commander, Beiting' }, // Hucker 4684
   'bt-zj': { label: 'Sub-commander', full: 'Sub-commander, Beiting' },
@@ -218,11 +219,12 @@ export const marksEn = {
 };
 
 /* 勳、散、品、官（GRANTS）。勳官、武散官之具體名號 Hucker 未逐個立條（作者查），自拟，依其體例直译：
-   勳官作 … Commandant／Army Protector，武散官作 General of …／Commandant of …；
+   勳官作 … Commandant／Military Protector（护军照 Hucker 2775 义四），武散官作 General of …／Commandant of …；
    骑都尉、归德郎将、忠武将军照 Notion 术语主表 */
 export const honoursEn = {
   // 勳官 merit titles
-  上护军: 'Senior Army Protector', 护军: 'Army Protector',
+  上护军: 'Senior Military Protector', // 待查 Hucker shang hu-chün 条（2775 有互见）
+  护军: 'Military Protector', // Hucker 2775 义四：唐至明之勳官，視三品下（3b）
   上轻车都尉: 'Senior Light Chariot Commandant', 骑都尉: 'Cavalry Commandant', 骁骑尉: 'Valiant Cavalry Commandant',
   飞骑尉: 'Flying Cavalry Commandant', 云骑尉: 'Cloud Cavalry Commandant', 武骑尉: 'Martial Cavalry Commandant',
   // 武散官 prestige titles
@@ -233,5 +235,5 @@ export const honoursEn = {
   正四品上: 'rank 4a1', 正四品下: 'rank 4a2', 从三品: 'rank 3b', 从五品下: 'rank 5b2', 从六品上: 'rank 6b1',
   正七品下: 'rank 7a2', 从七品上: 'rank 7b1',
   // 官
-  凉州都督: 'Area Commander-in-chief of Liangzhou',
+  凉州都督: 'Area Commander of Liangzhou', // Hucker 777：都督 Area Commander
 };
