@@ -13,12 +13,15 @@ import { SEAL_SVG_FILE } from "./seals";
 import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
+import About from "./about";
 import { grantLabel, grantsOf, tenureFac, tenuresOf, tenureSpan, tenureTitle } from "./posts-data";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
-import { useLanguage } from "./i18n/use-language";
-import { translateUI, eventCountText, libraryCountText } from "./i18n/ui";
-import { characterTranslation } from "./i18n/characters.en";
+import { useLocale, useSetLocale, useT } from "./i18n/locale";
+import { eventCountText, libraryCountText } from "./i18n/ui";
+import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage, nameItems, nameItemsEn, namesText, hasCourtesyLine } from "./i18n/content";
+import { Zh, Tx } from "./i18n/zh";
+import { CourtesyLine } from "./i18n/names";
 
 /* ============================================================
    八千里路 · 人山人海 檔案 — 可視化站點原型 v4
@@ -71,13 +74,14 @@ const relKeyOf = (r) => KEY_OF_RAW[relRaw(r.t)];
 /* pick：{ active, onToggle, onClear }。給出時諸類作按鈕（行星圖窄屏用，與圖內圖例同一狀態），並添「僅同事」「未見」二項；
    Enter／空格由按鈕原生處理，Esc 收起（與圖內圖例同，讀屏所報之文亦如此提示） */
 function RelKey({ note, style, pick }) {
-  const items = REL_KEY.map(([l, cc]) => [l, tone(cc), "—", l]);
-  if (pick) items.push(["僅同事", T.muted, "—", "僅同事"], ["未見", tone(KEY_RAW.未見), "- -", "未見／未說開"]);
+  const t = useT();
+  const items = REL_KEY.map(([l, cc]) => [l, tone(cc), "—", t(l)]);
+  if (pick) items.push(["僅同事", T.muted, "—", t("僅同事")], ["未見", tone(KEY_RAW.未見), "- -", t("未見／未說開")]);
   return (
     <div className="flex flex-wrap" style={{ gap: pick ? 6 : 14, marginBottom: 4, justifyContent: "center", ...style }}>
       {items.map(([id, col, mark, label]) =>
         pick ? (
-          <button key={id} type="button" aria-pressed={pick.active === id} aria-label={`只亮此類：${label}`}
+          <button key={id} type="button" aria-pressed={pick.active === id} aria-label={t("只亮此類：{label}", { label })}
             onClick={() => pick.onToggle(id)}
             onKeyDown={(ev) => { if (ev.key === "Escape") pick.onClear(); }}
             style={{ fontSize: 11, fontFamily: gUI, color: col, background: pick.active === id ? T.panelHi : "none", cursor: "pointer",
@@ -103,6 +107,8 @@ const CENTERS_META = [
   { id: "chengkai", tag: "天策線" },
 ];
 const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
+/* 英译覆蓋數：覆蓋層為靜態模組，算一次即可（頁頭英文版說明用） */
+const COVERAGE = coverage(CHARACTERS, EVENTS);
 const sortEvents = (a, b) =>
   a.year - b.year || (a.month ?? 0) - (b.month ?? 0) || (a.seq ?? "").localeCompare(b.seq ?? "");
 
@@ -134,11 +140,15 @@ function eraOf(y) {
 }
 /* 年中改元者附注 */
 const ERA_NOTES = { 756: "七月改元至德", 758: "二月改元乾元", 760: "闰四月改元上元", 762: "四月改元宝应", 763: "七月改元广德" };
+const ERA_NOTES_EN = { 756: "Zhide from the 7th month", 758: "Qianyuan from the 2nd month", 760: "Shangyuan from the intercalary 4th month", 762: "Baoying from the 4th month", 763: "Guangde from the 7th month" };
 
 /* English display derives its era and ordinal from the same chronology as Chinese. */
 function englishEraOf(y) {
-  const era = eraOf(y);
-  const match = era.match(/^(.+?)(元|[一二三四五六七八九十]+)年$/);
+  return eraZhToEn(eraOf(y));
+}
+/* 「天宝十五年」→ "Tianbao 15"：年號表與 eraOf 同源；年中改元之分軌（ERA_SWITCH）亦經此轉 */
+function eraZhToEn(era) {
+  const match = (era || "").match(/^(.+?)(元|[一二三四五六七八九十]+)年$/);
   if (!match) return "?";
   const names = {
     永徽: "Yonghui", 龙朔: "Longshuo", 上元: "Shangyuan", 仪凤: "Yifeng",
@@ -157,6 +167,19 @@ function lifespan(c) {
   const d = c.death != null ? `${c.death}（${eraOf(c.death)}）` : "";
   return `${b} — ${d}`;
 }
+/* 英文生卒：公元年與年號分兩段（小卡分行、詳情卡並排）；卒年空則如中文留空，不寫問號 */
+const lifespanYearsEn = (c) => `${c.birth ?? "?"}–${c.death ?? ""}`;
+const lifespanEraEn = (c) => (c.death != null ? `${c.birth != null ? englishEraOf(c.birth) : "?"} – ${englishEraOf(c.death)}` : englishEraOf(c.birth));
+function lifespanFor(locale, c) {
+  if (locale !== "en") return lifespan(c);
+  if (c.birth == null && c.death == null) return "Dates not yet recorded";
+  return `${lifespanYearsEn(c)} (${lifespanEraEn(c)})`;
+}
+/* 任期起止：英文界面下「（约）」作 approx.、長橫作連接號 */
+const tenureSpanFor = (locale, x) => (locale === "en" ? tenureSpan(x).replace(/（约）/g, " (approx.)").replace("—", "–") : tenureSpan(x));
+/* 英文月份：唐历為陰历，從漢学通例作序數（the tenth month），不換作公历月名 */
+const ORD = ["", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
+const monthEn = (m) => `${ORD[m]} month`;
 function coCountsFor(centerId) {
   const n = {};
   for (const e of EVENTS) {
@@ -177,6 +200,7 @@ const SEAL_DENSE_CH = new Set(["峭", "霸", "敏", "逸", "健"]);
 const SEAL_SVG_SCALE = { sm: 1.15, lg: 1.2 };
 const SEAL_SVG_NUDGE_Y = 1;
 function Seal({ ch, size = 15, svg }) {
+  const t = useT();
   if (!ch) return null;
   const sm = size < 18;
   /* 小印字縮一成（繁複字再縮 5%）、橫向補回內邊距，外框尺寸不變；豎向由外層行高撐住 */
@@ -191,7 +215,7 @@ function Seal({ ch, size = 15, svg }) {
      不套 .seal-stamp 的紅底／肌理／缺口；img 絕對定位鋪滿，縮放不參與排版 */
   if (svg) {
     return (
-      <span className="seal-svg-shell" style={box} title="品评">
+      <span className="seal-svg-shell" style={box} title={t("品评")}>
         <span style={{ fontSize: `${chScale}em`, visibility: "hidden" }}>{ch}</span>
         <img className="seal-svg" src={`${import.meta.env.BASE_URL}images/seals/${svg}`} alt=""
           style={{ transform: `translateY(${SEAL_SVG_NUDGE_Y}px) scale(${sm ? SEAL_SVG_SCALE.sm : SEAL_SVG_SCALE.lg})` }} />
@@ -202,7 +226,7 @@ function Seal({ ch, size = 15, svg }) {
     <span className={SEAL_FONT_VARIANT === "b" ? "seal-stamp seal-stamp--li" : "seal-stamp"}
       data-size={sm ? "sm" : "lg"} style={{
       ...box, color: T.onAccent, backgroundColor: T.seal,
-    }} title="品评"><span className="seal-stamp-ch" style={{ fontSize: `${chScale}em` }}>{ch}</span></span>
+    }} title={t("品评")}><span className="seal-stamp-ch" style={{ fontSize: `${chScale}em` }}>{ch}</span></span>
   );
 }
 
@@ -246,24 +270,38 @@ const ttVars = (main) => {
 };
 
 /* ---------------- 檔案卡 ---------------- */
-function CharCard({ c, onOpen, locale }) {
-  const translated = characterTranslation(locale, c.id);
-  const t = (key) => translateUI(translated ? 'en' : 'zh', key);
+/* 英文界面：標目、生卒（由年號表推出，人人可得）、門派隨界面為英文；
+   姓名、表字、出身、稱號等逐字段查译文，無則回落中文並標 zh-src（見 i18n/content.js）。
+   舊時以「此人有無译文」整卡切換，未译之人在英文界面下連標目也是中文 */
+function NameLine({ c, locale }) {
+  return hasEnName(locale, c)
+    ? <>{charName(locale, c)} <span className="profile-hanzi" lang="zh">{c.name}</span></>
+    : <Zh>{c.name}</Zh>;
+}
+/* 名號一行：字、本名、波斯语名、日文读法、汉名，見 i18n/names.jsx */
+function CourtesyText({ c }) {
+  return <CourtesyLine c={c} />;
+}
+function CharCard({ c, onOpen }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
+  const tr = charEn(locale, c.id);
   const main = c.belong[0];
   const evCount = EVENTS.filter((e) => e.chars.includes(c.id)).length;
   const tt = isTextureTest(c);
   return (
     <div
       onClick={() => onOpen(c)}
-      className={`cursor-pointer flex${tt ? " texture-test-sm" : ""}${translated ? " profile-en" : ""}`}
-      lang={translated ? "en" : "zh"}
+      className={`cursor-pointer flex${tt ? " texture-test-sm" : ""}${en ? " profile-en" : ""}`}
+      lang={en ? "en" : "zh"}
       style={{ background: T.panel, borderTop: `3px solid ${fc(main)}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `1px solid ${T.line}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", ...(tt ? ttVars(main) : null) }}
       onMouseEnter={(e) => (e.currentTarget.style.background = T.panelHi)}
       onMouseLeave={(e) => (e.currentTarget.style.background = T.panel)}
     >
       {!tt && (
         <div style={{ writingMode: "vertical-rl", fontFamily: "HuiwenZhengKai", fontSize: 12, letterSpacing: "0.35em", color: T.faint, borderRight: `1px solid ${T.line}`, paddingRight: 8, minHeight: 88 }}>
-          {c.zi ? (translated ? `${t("字")}: ${translated.zi}` : `字 ${c.zi}`) : "字号待补"}
+          <CourtesyText c={c} />
         </div>
       )}
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -271,12 +309,13 @@ function CharCard({ c, onOpen, locale }) {
             使印章距姓名約 14 + 字號寬 + 20 ≈ 77px——與原版「姓名 + 繫年N事 + 印」
             所形成的間距（約 75px）相當。原版諸卡欄距 10 不變 */}
         <div className="flex items-baseline flex-wrap profile-heading" style={{ gap: tt ? 14 : 10 }}>
-          <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 22, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}>{translated ? <>{translated.name} <span className="profile-hanzi" lang="zh">{c.name}</span></> : c.name}</span>
-          {tt && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: c.zi ? T.muted : T.faint, marginRight: 6 }}>{c.zi ? (translated ? `${t("字")}: ${translated.zi}` : `字 ${c.zi}`) : "字号待补"}</span>}
-          {!tt && evCount > 0 && <span style={{ fontSize: 11, color: T.faint }}>繫年 {evCount} 事</span>}
+          <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 22, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}><NameLine c={c} locale={locale} /></span>
+          {tt && hasCourtesyLine(locale, c) && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: nameItems(c).length ? T.muted : T.faint, marginRight: 6 }}><CourtesyText c={c} /></span>}
+          {!tt && evCount > 0 && <span style={{ fontSize: 11, color: T.faint }}>{eventCountText(locale, evCount)}</span>}
           <Seal ch={c.pin} size={15} svg={SEAL_SVG_FILE[c.id]} />
         </div>
-        {translated && <div className="profile-epithet" style={{ color: T.muted, fontSize: 12, margin: "6px 0" }}><span lang="zh">{c.epithet}</span><em>{translated.epithet}</em></div>}
+        {/* 稱號英译（解釋性副標題）：小卡只在有译文時並出原文與英文，未译者小卡不出稱號（同中文小卡） */}
+        {tr?.epithet && <div className="profile-epithet" style={{ color: T.muted, fontSize: 12, margin: "6px 0" }}><span lang="zh">{c.epithet}</span><em>{tr.epithet}</em></div>}
         {tt ? (
           /* 金線下改為標目分行：生卒／出身／事件各佔一行，仿詳情卡「檔案」區的標目體例
              （左標目定寬、右值自適應），惟字級與行距按小卡收緊。
@@ -285,10 +324,10 @@ function CharCard({ c, onOpen, locale }) {
           /* 行距按壓緊後的定值：行內距 1、行高 1.5——三行合約 62px，
              較初版（行內距 2、行高 1.65）省下 12px */
           <div style={{ marginTop: 1 }}>
-            {[["生卒", translated ? <>
-              <span className="profile-lifespan-years">{c.birth ?? "?"}–{c.death ?? "?"}</span>
-              <span className="profile-lifespan-era">{englishEraOf(c.birth)} – {englishEraOf(c.death)}</span>
-            </> : lifespan(c)], ["出身", translated?.birthplace ?? c.birthplace], ["事件", evCount > 0 ? eventCountText(translated ? "en" : "zh", evCount) : ""]].map(([k, v]) => (
+            {[["生卒", en ? (c.birth == null && c.death == null ? lifespanFor(locale, c) : <>
+              <span className="profile-lifespan-years">{lifespanYearsEn(c)}</span>
+              <span className="profile-lifespan-era">{lifespanEraEn(c)}</span>
+            </>) : lifespan(c)], ["出身", c.birthplace ? <Tx key="bp" v={charField(locale, c, "birthplace")} /> : ""], ["事件", evCount > 0 ? eventCountText(locale, evCount) : ""]].map(([k, v]) => (
               <div key={k} style={{ display: "flex", gap: 10, padding: "1px 0" }}>
                 <div className="profile-label" style={{ minWidth: 34, fontFamily: "HuiwenZhengKai", fontSize: 11, letterSpacing: "0.12em", color: T.faint, paddingTop: 1 }}>{t(k)}</div>
                 <div style={{ flex: 1, minWidth: 0, fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: v ? T.muted : T.faint, lineHeight: 1.5 }}>{v || ""}</div>
@@ -297,26 +336,49 @@ function CharCard({ c, onOpen, locale }) {
           </div>
         ) : (
           <div style={{ fontSize: 12, color: T.muted, marginTop: 4 }}>
-            {lifespan(c)}
-            {c.birthplace && <><span style={{ margin: "0 8px", color: T.faint }}>·</span>{c.birthplace}</>}
+            {lifespanFor(locale, c)}
+            {c.birthplace && <><span style={{ margin: "0 8px", color: T.faint }}>·</span><Tx v={charField(locale, c, "birthplace")} /></>}
           </div>
         )}
         {/* 門派籤：試驗卡於標目三行之下另起一行，留白略寬於行距即可分出層次（14 → 9，壓緊） */}
-        <div className="flex flex-wrap" style={{ gap: 6, marginTop: tt ? 9 : 10 }}>
-          {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
-            <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}55`, padding: "1px 7px", borderRadius: "3px" }}>{f}</span>
-          ))}
-        </div>
+        <FacTags belong={c.belong} style={{ marginTop: tt ? 9 : 10 }} />
       </div>
     </div>
   );
 }
 
+/* 門派籤：大小兩卡共用；英文界面下門派名查 factions.en.js */
+function FacTags({ belong, style }) {
+  const locale = useLocale();
+  const t = useT();
+  return (
+    <div className="flex flex-wrap" style={{ gap: 6, ...style }}>
+      {(belong.length ? belong : [null]).map((f) => (
+        <span key={f ?? "none"} style={{ fontSize: 11, color: fcText(f ?? "门派待补"), border: `1px solid ${fc(f ?? "门派待补")}55`, padding: "1px 7px", borderRadius: "3px" }}>{f ? facName(locale, f) : t("门派待补")}</span>
+      ))}
+    </div>
+  );
+}
+
+/* 人名籤（關係、同事、年表涉事人物）：英文界面有英文名則用之，懸停見漢字；無則回落中文 */
+function ChipName({ c }) {
+  const locale = useLocale();
+  return hasEnName(locale, c) ? <span title={c.name}>{charName(locale, c)}</span> : <Zh>{c.name}</Zh>;
+}
+
+/* 英文界面下某區塊整段回落中文時，於區塊標題旁注一小籤 */
+function ZhNote() {
+  const t = useT();
+  return <span className="zh-note" title={t("未译註")} style={{ marginLeft: 8, fontSize: 10.5, letterSpacing: 0, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>{t("中文原文")}</span>;
+}
+
 /* ---------------- 詳情面板 ---------------- */
 
-function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPosts, locale }) {
-  const translated = characterTranslation(locale, c?.id);
-  const t = (key) => translateUI(translated ? 'en' : 'zh', key);
+function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPosts }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
+  const tr = c ? charEn(locale, c.id) : null;
   const [showAll, setShowAll] = useState(false);
   /* Esc 關閉：與文庫批注卡對齊；hook 須居早退之前，開啟時方掛監聽 */
   useEffect(() => {
@@ -339,13 +401,13 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
       if (n === 0) continue;
       const key = f.group ? `${f.novel.id}/${f.group.id}` : f.novel.id;
       if (!byKey[key]) {
-        byKey[key] = { key, label: f.group ? `${f.novel.tag}·${f.group.title}` : f.novel.tag, chapters: [] };
+        byKey[key] = { key, label: f.group ? `${novelTitle(locale, f.novel.tag)}·${novelTitle(locale, f.group.title)}` : novelTitle(locale, f.novel.tag), chapters: [] };
         groups.push(byKey[key]);
       }
       byKey[key].chapters.push({ f, n });
     }
     return groups;
-  }, [c]);
+  }, [c, locale]);
   /* 塊展開態：可多開，默認全收；換人自動全收 */
   const [openGroups, setOpenGroups] = useState(() => new Set());
   useEffect(() => { setOpenGroups(new Set()); }, [c]);
@@ -362,8 +424,9 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
   const co = {};
   for (const e of related) for (const id of e.chars) if (id !== c.id) co[id] = (co[id] || 0) + 1;
   const coList = Object.entries(co).sort((a, b) => b[1] - a[1]);
-  const anecdotes = c.anecdotes || [];
+  const anecdotes = listField(locale, c, "anecdotes");
   const shownAnecdotes = showAll ? anecdotes : anecdotes.slice(0, 4);
+  const highlights = listField(locale, c, "highlight");
   /* 檔案彈窗強調色：隨人物門派色動態派生（訓詁豎線、高光框、軼事圓點、滾動條）。
      已啟用：天策、紅衣教、明教、霸刀、長歌、凌雪閣、萬花、七秀、純陽、丐幫、蓬萊、藏劍、唐門、五毒、
      少林、藥宗、衍天宗、萬靈、段氏、平民（判序從門派底紋 factionMark 之先後，雙屬者取先者；
@@ -432,14 +495,16 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
     : c.belong.includes("段氏") ? "duanshi"
     : c.belong.includes("唐军") ? "tangjun" : null;
 
-  const SectionLabel = ({ children }) => (
-    <div style={{ fontSize: 12, letterSpacing: "0.3em", color: T.faint, marginBottom: 8 }}>{children}</div>
+  const SectionLabel = ({ children, zh }) => (
+    <div style={{ fontSize: 12, letterSpacing: "0.3em", color: T.faint, marginBottom: 8 }}>{children}{zh && <ZhNote />}</div>
   );
+  /* 一節之內諸條皆回落中文 → 節題旁注「中文原文」；部分已译則不注（各條自帶 lang） */
+  const allZh = (rows) => en && rows.length > 0 && rows.every(([, zh]) => zh);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center" style={{ background: T.xBackdrop, zIndex: 50, padding: 20 }} onClick={() => { setShowAll(false); onClose(); }}>
       {/* 宣紙肌理試驗：範圍見上方 isTextureTest，樣式全在 index.css 同名段 */}
-      <div className={`${tt ? "texture-test" : ""}${translated ? " profile-en" : ""}`} lang={translated ? "en" : "zh"} onClick={(e) => e.stopPropagation()} style={{ ...(tt ? ttVars(c.belong[0]) : null), background: T.panel, border: `1px solid ${T.line}`, maxWidth: 700, width: "100%", maxHeight: "86vh", position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column" }}>
+      <div className={`${tt ? "texture-test" : ""}${en ? " profile-en" : ""}`} lang={en ? "en" : "zh"} onClick={(e) => e.stopPropagation()} style={{ ...(tt ? ttVars(c.belong[0]) : null), background: T.panel, border: `1px solid ${T.line}`, maxWidth: 700, width: "100%", maxHeight: "86vh", position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column" }}>
         {factionMark && (
           <div className={`faction-watermark faction-watermark--${factionMark}`} aria-hidden="true">
             {/* 藥宗自定義灰度：feColorMatrix 藍通道負權重，使黃（低藍）亮於白（高藍），
@@ -477,50 +542,50 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             金線漸變由 index.css 的「檔案行線」規則一併罩到它身上，不必在此重複一道；
             兩線相距僅三十餘像素，並出則刺目。馬翊、程凱等無稱號者，此線正補其位 */}
         <div className={`flex items-baseline flex-wrap profile-heading${tt && !c.epithet ? " tt-rule" : ""}`} style={{ gap: tt ? 14 : 12, paddingRight: 70 }}>
-          <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 30, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}>{translated ? <>{translated.name} <span className="profile-hanzi" lang="zh">{c.name}</span></> : c.name}</span>
-          {c.zi && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 15, color: T.muted, marginLeft: tt ? 6 : 0 }}>{translated ? `${t("字")}: ${translated.zi}` : `字 ${c.zi}`}</span>}
-          {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, color: T.faint }}>「{c.hao}」</span>}
+          <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 30, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}><NameLine c={c} locale={locale} /></span>
+          {nameItems(c).length > 0 && hasCourtesyLine(locale, c) && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 15, color: T.muted, marginLeft: tt ? 6 : 0 }}><CourtesyText c={c} /></span>}
+          {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, color: T.faint }}>{tr?.hao ? `“${tr.hao}”` : <Zh>「{c.hao}」</Zh>}</span>}
         </div>
         {c.epithet && (
-          <div className={translated ? "profile-epithet" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 16, color: T.ink, letterSpacing: "0.5em", marginTop: 10, paddingBottom: 10, borderBottom: `1px solid ${T.line}`, display: "inline-block", paddingRight: 24 }}>
-            {translated ? <><span lang="zh">{c.epithet}</span><em>{translated.epithet}</em></> : c.epithet}
+          /* 稱號：英文界面下有译文則原文與英文副標題並出；未译則只出原文（zh-src，字族不被覆寫） */
+          <div className={tr?.epithet ? "profile-epithet" : en ? "zh-src" : undefined} lang={en && !tr?.epithet ? "zh" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 16, color: T.ink, letterSpacing: "0.5em", marginTop: 10, paddingBottom: 10, borderBottom: `1px solid ${T.line}`, display: "inline-block", paddingRight: 24 }}>
+            {tr?.epithet ? <><span lang="zh">{c.epithet}</span><em>{tr.epithet}</em></> : c.epithet}
           </div>
         )}
         <div style={{ fontSize: 13, color: T.muted, marginTop: 10 }}>
-          {lifespan(c)} {c.birthplace && `· ${translated?.birthplace ?? c.birthplace}`}
+          {lifespanFor(locale, c)} {c.birthplace && <>· <Tx v={charField(locale, c, "birthplace")} /></>}
         </div>
-        <div className="flex flex-wrap" style={{ gap: 6, marginTop: 8 }}>
-          {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
-            <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}55`, padding: "1px 7px", borderRadius: "3px" }}>{f}</span>
-          ))}
-        </div>
+        <FacTags belong={c.belong} style={{ marginTop: 8 }} />
 
         {c.gloss && (
           /* 有門派底紋的人物：訓詁塊半透明底（alpha 0.58），讓底層紋樣連續透出；其餘人物維持不透明 */
           <div style={{ marginTop: 22, borderLeft: `2px solid ${profileAccent}`, background: factionMark ? `${T.panelHi}94` : T.panelHi, padding: "12px 16px" }}>
-            <SectionLabel>{t("名字訓詁")}</SectionLabel>
+            <SectionLabel zh={en && !tr?.gloss}>{t("名字訓詁")}</SectionLabel>
             <div className="profile-prose profile-gloss" style={{ fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.muted, lineHeight: 2.05 }}>
-              {translated ? <>
-                {translated.gloss.passages.map(({ work, section, quote }) => (
+              {tr?.gloss ? (typeof tr.gloss === "string" ? tr.gloss : <>
+                {tr.gloss.passages.map(({ work, section, quote }) => (
                   <p key={work}><cite>{work}</cite>, {section}: {quote}</p>
                 ))}
-                <p className="profile-gloss-explanation">{translated.gloss.explanation}</p>
-              </> : c.gloss}
+                <p className="profile-gloss-explanation">{tr.gloss.explanation}</p>
+              </>) : <Zh>{c.gloss}</Zh>}
             </div>
           </div>
         )}
 
-        {c.profile && (
-          <div style={{ marginTop: 24 }}>
-            <SectionLabel>{t("檔案")}</SectionLabel>
-            {c.profile.map(([k, v]) => (
-              <div key={k} style={{ display: "flex", gap: 14, padding: "7px 0", borderBottom: `1px solid ${T.line}44` }}>
-                <div className="profile-label" style={{ minWidth: 68, fontSize: 12, letterSpacing: "0.12em", color: T.faint, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{t(k)}</div>
-                <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 14, color: v ? T.ink : T.faint, lineHeight: 1.9, minHeight: 20 }}>{translated?.profile[k] ?? v ?? ""}</div>
-              </div>
-            ))}
-          </div>
-        )}
+        {c.profile && (() => {
+          const rows = c.profile.map(([k, v]) => [k, ...profileRow(locale, c, k, v)]);
+          return (
+            <div style={{ marginTop: 24 }}>
+              <SectionLabel zh={allZh(rows.filter(([, v]) => v).map(([, v, zh]) => [v, zh]))}>{t("檔案")}</SectionLabel>
+              {rows.map(([k, v, zh]) => (
+                <div key={k} style={{ display: "flex", gap: 14, padding: "7px 0", borderBottom: `1px solid ${T.line}44` }}>
+                  <div className="profile-label" style={{ minWidth: 68, fontSize: 12, letterSpacing: "0.12em", color: T.faint, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{t(k)}</div>
+                  <div className={`profile-prose${zh ? " zh-src" : ""}`} lang={zh ? "zh" : undefined} style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 14, color: v ? T.ink : T.faint, lineHeight: 1.9, minHeight: 20 }}>{v ?? ""}</div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
 
         {/* 任職履歷：自任職庫（posts-data.js）生成；跨職位者在編制圖上各有一色。
             一人任職跨兩個門派（如嵐川雲）時逐條標門派；勳、散另列於後，不上編制圖 */}
@@ -533,22 +598,24 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             <div style={{ marginTop: 24 }}>
               <SectionLabel>{t("任職履歷")}</SectionLabel>
               {ts.map((x, i) => {
-                const e = translated && x.en;
+                /* 任期英译存於 posts-data.js 各條 en 欄（title / how / end）；無則職銜、上下文回落中文 */
+                const e = en && x.en;
+                const zh = en && !e;
                 return (
                   <div key={i} style={{ display: "flex", gap: 14, padding: "6px 0", borderBottom: `1px solid ${T.line}44` }}>
-                    <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{tenureSpan(x)}</div>
+                    <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai", paddingTop: 3 }}>{tenureSpanFor(locale, x)}</div>
                     <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.85 }}>
-                      {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{t(tenureFac(x))}</span>}
-                      {e ? e.title : tenureTitle(x)}
-                      {x.kind !== "正授" && !e && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{x.kind}</span>}
-                      {x.draft && <span title={x.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
+                      {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{facName(locale, tenureFac(x))}</span>}
+                      {e ? e.title : <Zh>{tenureTitle(x)}</Zh>}
+                      {x.kind !== "正授" && !e && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{t(x.kind)}</span>}
+                      {x.draft && <span title={x.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       {(e ? e.how || e.end : x.how || x.end) && (
-                        <div style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
+                        <div className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
                           {e ? [e.how, e.end].filter(Boolean).join("; ") : [x.how, x.end && `→ ${x.end}`].filter(Boolean).join("　")}
                         </div>
                       )}
                       {/* 待核的任期把缘由（note）直接写出来，与编制图浮签一致；不靠悬停 */}
-                      {x.draft && x.note && !e && <div style={{ fontSize: 12, color: T.seal, lineHeight: 1.7 }}>{x.note}</div>}
+                      {x.draft && x.note && !e && <div className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontSize: 12, color: T.seal, lineHeight: 1.7 }}>{x.note}</div>}
                     </div>
                   </div>
                 );
@@ -558,10 +625,10 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                   <div style={{ fontSize: 11.5, color: T.faint, fontFamily: "HuiwenZhengKai", marginBottom: 2 }}>{t("勳、散")}</div>
                   {gs.map((g, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, padding: "3px 0" }}>
-                      <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? "（约）" : ""}</div>
+                      <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? t("（约）") : ""}</div>
                       <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>
-                        {grantLabel(g)}
-                        {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>待核</span>}
+                        <Zh>{grantLabel(g)}</Zh>
+                        {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       </div>
                     </div>
                   ))}
@@ -571,7 +638,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                 {facs.map((f) => (
                   <button key={f} onClick={() => { setShowAll(false); onOpenPosts(f); }}
                     style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "3px 12px", borderRadius: 3, cursor: "pointer" }}>
-                    {t("在編制圖中看")}{facs.length > 1 ? ` · ${t(f)}` : ""} ›
+                    {t("在編制圖中看")}{facs.length > 1 ? ` · ${facName(locale, f)}` : ""} ›
                   </button>
                 ))}
               </div>
@@ -581,25 +648,25 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
 
         {anecdotes.length > 0 && (
           <div style={{ marginTop: 24 }}>
-            <SectionLabel>個人軼事</SectionLabel>
-            {shownAnecdotes.map((a, i) => (
-              <p key={i} style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.95, margin: "0 0 12px" }}>
+            <SectionLabel zh={allZh(anecdotes)}>{t("個人軼事")}</SectionLabel>
+            {shownAnecdotes.map(([a, zh], i) => (
+              <p key={i} className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.95, margin: "0 0 12px" }}>
                 <span style={{ color: profileAccent, marginRight: 8 }}>・</span>{a}
               </p>
             ))}
             {anecdotes.length > 4 && (
               <button onClick={() => setShowAll(!showAll)} style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "4px 14px", cursor: "pointer" }}>
-                {showAll ? "收起" : `展開其餘 ${anecdotes.length - 4} 條`}
+                {showAll ? t("收起") : t("展開其餘 {n} 條", { n: anecdotes.length - 4 })}
               </button>
             )}
           </div>
         )}
 
-        {c.highlight && c.highlight.length > 0 && (
+        {highlights.length > 0 && (
           <div style={{ marginTop: 24, borderTop: `1px solid ${profileAccent}55`, borderRight: `1px solid ${profileAccent}55`, borderBottom: `1px solid ${profileAccent}55`, borderLeft: `3px solid ${profileAccent}`, padding: "12px 16px" }}>
-            <SectionLabel>高光</SectionLabel>
-            {c.highlight.map((h, i) => (
-              <div key={i} style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.95 }}>{h}</div>
+            <SectionLabel zh={allZh(highlights)}>{t("高光")}</SectionLabel>
+            {highlights.map(([h, zh], i) => (
+              <div key={i} className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.95 }}>{h}</div>
             ))}
           </div>
         )}
@@ -610,16 +677,17 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
           return (
             <div style={{ marginTop: 24 }}>
               <SectionLabel>{t("關係（自關係庫）")}</SectionLabel>
-              <div className="flex flex-wrap" lang="zh" style={{ gap: 8 }}>
+              <div className="flex flex-wrap" style={{ gap: 8 }}>
                 {rels.map((r, i) => {
                   const o = byId[r.a === c.id ? r.b : r.a];
+                  const relEn = relName(locale, r.t);
                   return (
                     <button key={i} onClick={() => { setShowAll(false); onOpenChar(o); }}
                       style={{ fontSize: 12.5, fontFamily: "HuiwenZhengKai", color: T.ink, background: T.panelHi, border: `1px ${r.da ? "dashed" : "solid"} ${relColor(r.t)}88`, padding: "4px 10px", borderRadius: "3px", cursor: "pointer", textAlign: "left" }}>
-                      {o.name}
-                      <span style={{ color: relColor(r.t), marginLeft: 8, fontSize: 11 }}>{r.t}</span>
+                      <ChipName c={o} />
+                      <span style={{ color: relColor(r.t), marginLeft: 8, fontSize: 11 }}>{en && /[\u4e00-\u9fff]/.test(relEn) ? <Zh>{relEn}</Zh> : relEn}</span>
                       <span style={{ color: T.faint, marginLeft: 6, fontSize: 10.5 }}>
-                        {r.y0 ?? "？"}{r.y1 != null && r.y1 !== r.y0 ? `—${r.y1}` : ""}{r.ph ? " · 殁后" : ""}
+                        {r.y0 ?? "？"}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("殁后")}` : ""}
                       </span>
                     </button>
                   );
@@ -632,10 +700,10 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
         {coList.length > 0 && (
           <div style={{ marginTop: 24 }}>
             <SectionLabel>{t("同事人物（共見事件計數）")}</SectionLabel>
-            <div className="flex flex-wrap" lang="zh" style={{ gap: 8 }}>
+            <div className="flex flex-wrap" style={{ gap: 8 }}>
               {coList.map(([id, n]) => (
                 <button key={id} onClick={() => { setShowAll(false); onOpenChar(byId[id]); }} style={{ fontSize: 13, fontFamily: "HuiwenZhengKai", color: T.ink, background: T.panelHi, border: `1px solid ${T.line}`, padding: "4px 10px", borderRadius: "3px", cursor: "pointer" }}>
-                  {byId[id].name}<span style={{ color: T.muted, marginLeft: 8, fontSize: 11 }}>{n}</span>
+                  <ChipName c={byId[id]} /><span style={{ color: T.muted, marginLeft: 8, fontSize: 11 }}>{n}</span>
                 </button>
               ))}
             </div>
@@ -648,17 +716,17 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
           if (!mine.length) return null;
           return (
             <div style={{ marginTop: 24 }}>
-              <SectionLabel>{translated ? "Events that bear on them" : "所系之事"}</SectionLabel>
+              <SectionLabel>{t("所系之事")}</SectionLabel>
               <div className="flex flex-wrap" style={{ gap: 8 }}>
                 {mine.map((x) => {
                   const sh = SHOCKS.find((q) => q.id === x.shock);
                   return (
                     <button key={x.shock} onClick={() => { setShowAll(false); onOpenEcho(x.shock, c.id); }}
                       style={{ textAlign: "left", fontFamily: "HuiwenZhengKai", background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "6px 12px", cursor: "pointer" }}>
-                      <div style={{ fontSize: 11, color: T.faint }}>{sh.year}.{sh.month} · {shockTitle(translated ? "en" : "zh", sh)}</div>
+                      <div style={{ fontSize: 11, color: T.faint }}>{sh.year}.{sh.month} · {shockTitle(locale, sh)}</div>
                       <div style={{ fontSize: 14, color: T.ink, marginTop: 2 }}>
-                        {modeText(translated ? "en" : "zh", x.mode)}
-                        {x.draft && <span title={translated ? "Drafted, not yet reviewed line by line by the author." : "起草待核：作者尚未逐行核定"} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{translated ? "Draft" : "待核"}</span>}
+                        {modeText(locale, x.mode)}
+                        {x.draft && <span title={t("起草待核：作者尚未逐行核定")} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       </div>
                     </button>
                   );
@@ -670,30 +738,32 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
 
         {related.length > 0 ? (
           <div style={{ marginTop: 24 }}>
-            <SectionLabel>{t("繫年事件（依 年·月·序號）")}</SectionLabel>
+            <SectionLabel zh={allZh(related.map((e) => [null, eventTitle(locale, e) === e.title]))}>{t("繫年事件（依 年·月·序號）")}</SectionLabel>
             {(() => {
               let ly = null;
               return related.map((e, i) => {
                 const firstOfYear = e.year !== ly;
                 ly = e.year;
+                const title = eventTitle(locale, e);
+                const zh = en && title === e.title;
                 return (
                   <div key={i} style={{ display: "flex", gap: 14, marginTop: 10 }}>
                     <div style={{ minWidth: 78 }}>
                       <div style={{ fontFamily: "HuiwenZhengKai", color: T.accent, fontSize: 13 }}>
-                        {e.year}{e.month != null && `·${e.month}月`}{e.seq && ` ${e.seq}`}
+                        {e.year}{e.month != null && (en ? `.${e.month}` : `·${e.month}月`)}{e.seq && ` ${e.seq}`}
                       </div>
                       {firstOfYear && (
-                        <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 10.5, color: T.faint, marginTop: 1 }}>{eraOf(e.year)}</div>
+                        <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 10.5, color: T.faint, marginTop: 1 }}>{en ? englishEraOf(e.year) : eraOf(e.year)}</div>
                       )}
                     </div>
-                    <div lang="zh" style={{ fontSize: 13, color: T.ink, lineHeight: 1.75, fontFamily: "HuiwenZhengKai" }}>{e.title}</div>
+                    <div className={zh ? "zh-src" : undefined} lang={zh || !en ? "zh" : "en"} style={{ fontSize: 13, color: T.ink, lineHeight: 1.75, fontFamily: "HuiwenZhengKai" }}>{title}</div>
                   </div>
                 );
               });
             })()}
           </div>
         ) : (
-          <div style={{ marginTop: 24, fontSize: 13, color: T.faint, fontFamily: "HuiwenZhengKai" }}>事件庫中暫無此人繫年條目。</div>
+          <div style={{ marginTop: 24, fontSize: 13, color: T.faint, fontFamily: "HuiwenZhengKai" }}>{t("事件庫中暫無此人繫年條目。")}</div>
         )}
 
         {mentionGroups.length > 0 && (
@@ -706,15 +776,15 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                   <button onClick={() => toggleGroup(g.key)}
                     style={{ display: "block", textAlign: "left", fontSize: 12.5, fontFamily: "HuiwenZhengKai", color: T.ink, background: T.panelHi, border: `1px solid ${T.line}`, padding: "4px 10px", borderRadius: "3px", cursor: "pointer" }}>
                     <span style={{ color: T.accent, fontSize: 10, marginRight: 6 }}>{open ? "▾" : "▸"}</span>
-                    【{g.label}】
-                    <span style={{ color: T.muted, marginLeft: 8, fontSize: 11 }}>{libraryCountText(translated ? "en" : "zh", g.chapters.length, "chapters")}</span>
+                    {en && /[\u4e00-\u9fff]/.test(g.label) ? <Zh>【{g.label}】</Zh> : en ? g.label : `【${g.label}】`}
+                    <span style={{ color: T.muted, marginLeft: 8, fontSize: 11 }}>{libraryCountText(locale, g.chapters.length, "chapters")}</span>
                   </button>
                   {open && (
                     <div className="flex flex-wrap" style={{ gap: 8, margin: "8px 0 10px 22px" }}>
                       {g.chapters.map(({ f, n }) => (
                         <button key={f.path} onClick={() => { setShowAll(false); onOpenNovel(f.path); }}
                           style={{ fontSize: 12.5, fontFamily: "HuiwenZhengKai", color: T.ink, background: T.panelHi, border: `1px solid ${T.line}`, padding: "4px 10px", borderRadius: "3px", cursor: "pointer" }}>
-                          {f.ch.title}<span style={{ color: T.muted, marginLeft: 8, fontSize: 11 }}>{libraryCountText(translated ? "en" : "zh", n, "mentions")}</span>
+                          {(() => { const ct = novelTitle(locale, f.ch.title); return en && ct === f.ch.title ? <Zh>{ct}</Zh> : ct; })()}<span style={{ color: T.muted, marginLeft: 8, fontSize: 11 }}>{libraryCountText(locale, n, "mentions")}</span>
                         </button>
                       ))}
                     </div>
@@ -736,19 +806,19 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
    日後調整段界，改 from / to / label 即可，歸桶、計數、色帶自動跟隨。
    歸桶規則：取第一個 year <= to 的段；早於首段者入首段，晚於末段者入末段。 */
 const TIMELINE_SECTIONS = [
-  { key: "s00", from: 651, to: 706, label: "永徽—神龙" },
-  { key: "s01", from: 707, to: 736, label: "景龙—开元二十四年" },
-  { key: "s02", from: 737, to: 744, label: "开元二十五年—天宝三年" },
-  { key: "s03", from: 745, to: 751, label: "天宝四年—十年" },
-  { key: "s04", from: 752, to: 754, label: "天宝十一年—十三年" },
-  { key: "s05", from: 755, to: 755, label: "天宝十四年" },
-  { key: "s06", from: 756, to: 756, label: "天宝十五年—至德元年", byMonth: true },
-  { key: "s07", from: 757, to: 757, label: "至德二年", byMonth: true },
-  { key: "s08", from: 758, to: 759, label: "乾元元年—二年" },
-  { key: "s09", from: 760, to: 761, label: "上元元年—二年" },
-  { key: "s10", from: 762, to: 763, label: "宝应元年—二年" },
-  { key: "s11", from: 764, to: 765, label: "广德二年—永泰元年" },
-  { key: "s12", from: 766, to: 800, label: "大历—贞元" },
+  { key: "s00", from: 651, to: 706, label: "永徽—神龙", en: "Yonghui – Shenlong" },
+  { key: "s01", from: 707, to: 736, label: "景龙—开元二十四年", en: "Jinglong – Kaiyuan 24" },
+  { key: "s02", from: 737, to: 744, label: "开元二十五年—天宝三年", en: "Kaiyuan 25 – Tianbao 3" },
+  { key: "s03", from: 745, to: 751, label: "天宝四年—十年", en: "Tianbao 4–10" },
+  { key: "s04", from: 752, to: 754, label: "天宝十一年—十三年", en: "Tianbao 11–13" },
+  { key: "s05", from: 755, to: 755, label: "天宝十四年", en: "Tianbao 14" },
+  { key: "s06", from: 756, to: 756, label: "天宝十五年—至德元年", en: "Tianbao 15 – Zhide 1", byMonth: true },
+  { key: "s07", from: 757, to: 757, label: "至德二年", en: "Zhide 2", byMonth: true },
+  { key: "s08", from: 758, to: 759, label: "乾元元年—二年", en: "Qianyuan 1–2" },
+  { key: "s09", from: 760, to: 761, label: "上元元年—二年", en: "Shangyuan 1–2" },
+  { key: "s10", from: 762, to: 763, label: "宝应元年—二年", en: "Baoying 1–2" },
+  { key: "s11", from: 764, to: 765, label: "广德二年—永泰元年", en: "Guangde 2 – Yongtai 1" },
+  { key: "s12", from: 766, to: 800, label: "大历—贞元", en: "Dali – Zhenyuan" },
 ];
 const CN_DIG = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
 const cnCount = (n) => {
@@ -758,6 +828,9 @@ const cnCount = (n) => {
   return String(n);
 };
 const secYears = (s) => (s.from === s.to ? String(s.from) : `${s.from}–${s.to}`);
+const secLabel = (locale, s) => (locale === "en" ? s.en : s.label);
+/* 「若干事」：中文用漢字數目，英文用阿拉伯數字並分單複數（ui.js「{n}事」） */
+const evCount = (locale, t, n) => t("{n}事", { n: locale === "en" ? n : cnCount(n) });
 /* 年中改元者，月份標籤分軌（byMonth 僅施於單年段；756 七月改元至德） */
 const ERA_SWITCH = { 756: { at: 7, before: "天宝十五年", after: "至德元年" } };
 const eraOfYM = (y, m) => {
@@ -768,21 +841,28 @@ const eraOfYM = (y, m) => {
 
 /* 門派色帶：段內各門派事件占比壓成一根橫向色帶；未標門派以中性深灰收尾 */
 function FacBand({ segs, none, height = 4, maxWidth }) {
+  const locale = useLocale();
+  const t = useT();
   if (segs.length === 0 && none === 0) return null;
   return (
     <div style={{ display: "flex", height, maxWidth: maxWidth || "100%", overflow: "hidden", opacity: 0.9 }}>
       {segs.map(([f, n]) => (
-        <div key={f} style={{ flexGrow: n, flexBasis: 0, background: fc(f) }} title={`${f}：${n}`} />
+        <div key={f} style={{ flexGrow: n, flexBasis: 0, background: fc(f) }} title={`${facName(locale, f)}${locale === "en" ? ": " : "："}${n}`} />
       ))}
-      {none > 0 && <div style={{ flexGrow: none, flexBasis: 0, background: T.neutral }} title={`门派未标：${none}`} />}
+      {none > 0 && <div style={{ flexGrow: none, flexBasis: 0, background: T.neutral }} title={t("门派未标：{n}", { n: none })} />}
     </div>
   );
 }
 
 /* 事件行：年表主列表単條，供平鋪與月組兩種佈局共用 */
 function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
   /* 震源锚事件：年表行上留一个淡淡的入口，通向余波页；未传 onOpenEcho 的视图（舆图）不出 */
   const shocks = onOpenEcho ? SHOCKS.filter((s) => s.ev.year === e.year && s.ev.month === e.month && e.title.includes(s.ev.has)) : []; /* 一事可为多个震源之锚 */
+  const title = eventTitle(locale, e);
+  const titleZh = en && title === e.title;
   return (
     <div style={{ position: "relative", padding: "0 0 24px 26px", fontFamily: "HuiwenZhengKai" }}>
       <div style={{ position: "absolute", left: -5, top: 7, width: 9, height: 9, background: showYear ? T.accent : T.faint, transform: "rotate(45deg)" }} />
@@ -791,37 +871,39 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
       )}
       <div className="flex items-baseline flex-wrap" style={{ gap: 8 }}>
         <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, minWidth: 52 }}>
-          {e.month != null ? `${e.month} 月` : "月份未标"}
+          {e.month != null ? (en ? monthEn(e.month) : `${e.month} 月`) : t("月份未标")}
         </span>
         {showYear && (
           <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted }}>
-            （{eraOf(e.year)}{e.month != null ? ` ${CN_MONTH[e.month]}` : ""}{ERA_NOTES[e.year] ? `；${ERA_NOTES[e.year]}` : ""}）
+            {en
+              ? `(${englishEraOf(e.year)}${ERA_NOTES_EN[e.year] ? `; ${ERA_NOTES_EN[e.year]}` : ""})`
+              : `（${eraOf(e.year)}${e.month != null ? ` ${CN_MONTH[e.month]}` : ""}${ERA_NOTES[e.year] ? `；${ERA_NOTES[e.year]}` : ""}）`}
           </span>
         )}
         {e.seq && (
           <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.onAccent, background: T.accent, padding: "0 6px", borderRadius: "3px", lineHeight: "16px" }}>{e.seq}</span>
         )}
         {e.add && (
-          <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: tone("#C9A15C"), border: `1px solid ${tone("#C9A15C")}55`, padding: "0 6px", borderRadius: "3px" }} title="採自人設文檔，尚未錄入 Notion 事件庫">增補</span>
+          <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: tone("#C9A15C"), border: `1px solid ${tone("#C9A15C")}55`, padding: "0 6px", borderRadius: "3px" }} title={t("採自人設文檔，尚未錄入 Notion 事件庫")}>{t("增補")}</span>
         )}
         {shocks.map((shock) => (
-          <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={`余波：${shock.title}——此事笼罩之人与其记忆方式`}
-            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.seal, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>余波{shocks.length > 1 ? `·${shock.title.split("·").pop()}` : ""} ›</button>
+          <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={t("余波：{title}——此事笼罩之人与其记忆方式", { title: shockTitle(locale, shock) })}
+            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.seal, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>{t("余波")}{shocks.length > 1 ? (en ? `: ${shockTitle(locale, shock).split(": ").pop()}` : `·${shock.title.split("·").pop()}`) : ""} ›</button>
         ))}
-        {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>门派未标</span>}
+        {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>{t("门派未标")}</span>}
         {e.fac.map((f) => (
-          <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}44`, padding: "0 6px", borderRadius: "3px" }}>{f}</span>
+          <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}44`, padding: "0 6px", borderRadius: "3px" }}>{facName(locale, f)}</span>
         ))}
         {e.loc.map((l) => (
-          <span key={l} style={{ fontSize: 11, color: T.faint }}>{l}</span>
+          <span key={l} style={{ fontSize: 11, color: T.faint }}>{en && placeName(locale, l) === l ? <Zh>{l}</Zh> : placeName(locale, l)}</span>
         ))}
       </div>
-      <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 15, color: T.ink, lineHeight: 1.8, marginTop: 5, maxWidth: 660 }}>{e.title}</div>
+      <div className={titleZh ? "zh-src" : undefined} lang={titleZh || !en ? "zh" : "en"} style={{ fontFamily: "HuiwenZhengKai", fontSize: 15, color: T.ink, lineHeight: 1.8, marginTop: 5, maxWidth: 660 }}>{title}</div>
       {e.chars.length > 0 && (
         <div className="flex flex-wrap" style={{ gap: 6, marginTop: 7 }}>
           {e.chars.map((id) => (
             <button key={id} onClick={() => onOpenChar(byId[id])} style={{ fontSize: 11.5, fontFamily: "HuiwenZhengKai", color: fcText(byId[id].belong[0]), border: `1px solid ${fc(byId[id].belong[0])}44`, background: "none", padding: "1px 8px", borderRadius: "3px", cursor: "pointer" }}>
-              {byId[id].name}
+              <ChipName c={byId[id]} />
             </button>
           ))}
         </div>
@@ -831,6 +913,9 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
 }
 
 function Timeline({ onOpenChar, onOpenEcho }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
   const NONE_FAC = "__none__"; /* 「门派未标」一級標籤之內部鍵 */
   const ETH_GROUP = "__ethnic__"; /* 【族属/地属】傘形標籤之內部鍵 */
   const [fsel, setFsel] = useState("all"); /* 一級：門派及同級標籤 */
@@ -883,14 +968,18 @@ function Timeline({ onOpenChar, onOpenEcho }) {
   /* 篩選 → 排序 → 歸桶；目錄計數與色帶隨篩選實時重算 */
   const sections = useMemo(() => {
     const kw = q.trim();
+    /* 英文界面：中文原文照查，另查英文译名、译題、年號（不分大小寫） */
+    const kwl = kw.toLowerCase();
+    const enHit = (str) => en && !!str && str.toLowerCase().includes(kwl);
     const hit = (e) =>
       kw === "" ||
       e.title.includes(kw) ||
       (e.seq || "").includes(kw) ||
-      e.loc.some((l) => l.includes(kw)) ||
-      e.fac.some((f) => f.includes(kw)) ||
+      e.loc.some((l) => l.includes(kw) || enHit(placeName(locale, l))) ||
+      e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
       eraOfYM(e.year, e.month).includes(kw) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || (byId[id].zi || "").includes(kw));
+      enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
+      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" || /* 已選人物則取其完整編年 */
       fsel === "all" ||
@@ -914,7 +1003,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
       }
       return { ...b, none, segs: Object.entries(tally).sort((x, y) => y[1] - x[1]) };
     });
-  }, [who, fsel, q, facList]);
+  }, [who, fsel, q, facList, en, locale]);
 
   /* scroll-spy：主列表滾至何段，目錄對應條目高亮 */
   useEffect(() => {
@@ -1022,7 +1111,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
 .toc-scroll::-webkit-scrollbar-thumb{background:${T.xScrollThumb};border-radius:4px}
 .toc-scroll::-webkit-scrollbar-thumb:hover{background:${T.xScrollThumbHi}}
 `}</style>
-      <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 10.5, letterSpacing: "0.4em", color: T.faint, marginBottom: 10 }}>分段目錄</div>
+      <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 10.5, letterSpacing: en ? "0.12em" : "0.4em", color: T.faint, marginBottom: 10 }}>{t("分段目錄")}</div>
       {sections.map((s) => {
         const empty = s.evs.length === 0;
         const isActive = active === s.key;
@@ -1045,17 +1134,17 @@ function Timeline({ onOpenChar, onOpenEcho }) {
               borderRadius: hov ? "4px" : 0,
               transition: "transform .18s ease, box-shadow .18s ease, background .18s ease",
             }}>
-            <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 12.5, color: isActive ? T.ink : T.muted, lineHeight: 1.5 }}>{s.label}</div>
+            <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 12.5, color: isActive ? T.ink : T.muted, lineHeight: 1.5 }}>{secLabel(locale, s)}</div>
             <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 10.5, color: T.faint, margin: "2px 0 5px" }}>
-              {secYears(s)} · {cnCount(s.evs.length)}事
+              {secYears(s)} · {evCount(locale, t, s.evs.length)}
             </div>
             <FacBand segs={s.segs} none={s.none} />
           </button>
         );
       })}
       <div className="flex" style={{ gap: 6, marginTop: 12, paddingLeft: 10 }}>
-        <button onClick={expandAll} style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>全部展開</button>
-        <button onClick={collapseAll} style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>全部收起</button>
+        <button onClick={expandAll} style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>{t("全部展開")}</button>
+        <button onClick={collapseAll} style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>{t("全部收起")}</button>
       </div>
     </div>
   );
@@ -1078,12 +1167,12 @@ function Timeline({ onOpenChar, onOpenEcho }) {
               border: `1px solid ${isActive ? T.accent : T.line}`,
               padding: "2px 10px", cursor: empty ? "default" : "pointer", opacity: empty ? 0.35 : 1,
             }}>
-            {secYears(s)} · {cnCount(s.evs.length)}事
+            {secYears(s)} · {evCount(locale, t, s.evs.length)}
           </button>
         );
       })}
-      <button onClick={expandAll} style={{ flexShrink: 0, fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>全展</button>
-      <button onClick={collapseAll} style={{ flexShrink: 0, fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>全收</button>
+      <button onClick={expandAll} style={{ flexShrink: 0, fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>{t("全展")}</button>
+      <button onClick={collapseAll} style={{ flexShrink: 0, fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 8px", cursor: "pointer" }}>{t("全收")}</button>
     </div>
   );
 
@@ -1094,40 +1183,40 @@ function Timeline({ onOpenChar, onOpenEcho }) {
         {!narrow && <Toc />}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: fsel === "all" ? 18 : 10 }}>
-            <Chip active={fsel === "all"} onClick={() => { setFsel("all"); setWho("all"); }} label="全部" fontFamily="JingHuaLaoSong" />
+            <Chip active={fsel === "all"} onClick={() => { setFsel("all"); setWho("all"); }} label={t("全部")} fontFamily="JingHuaLaoSong" />
             {facList.main.map(({ f, n }) => (
-              <Chip key={f} active={fsel === f} onClick={() => { setFsel(f); setWho("all"); }} label={`${f} ${n}`} fontFamily="JingHuaLaoSong" />
+              <Chip key={f} active={fsel === f} onClick={() => { setFsel(f); setWho("all"); }} label={`${facName(locale, f)} ${n}`} fontFamily="JingHuaLaoSong" />
             ))}
             {facList.ethnic.length > 0 && (
               <Chip
                 active={fsel === ETH_GROUP || isEthnic(fsel)}
                 onClick={() => { setFsel(ETH_GROUP); setWho("all"); }}
-                label={`族属/地属 ${facList.ethnicUnion}`} fontFamily="JingHuaLaoSong" />
+                label={t("族属/地属 {n}", { n: facList.ethnicUnion })} fontFamily="JingHuaLaoSong" />
             )}
             {facList.none > 0 && (
-              <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(NONE_FAC); setWho("all"); }} label={`门派未标 ${facList.none}`} fontFamily="JingHuaLaoSong" />
+              <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(NONE_FAC); setWho("all"); }} label={t("门派未标 {n}", { n: facList.none })} fontFamily="JingHuaLaoSong" />
             )}
           </div>
           {(fsel === ETH_GROUP || isEthnic(fsel)) && (
             <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: isEthnic(fsel) ? 10 : 18, paddingLeft: 4, borderLeft: `2px solid ${T.line}` }}>
-              <span style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.faint, margin: "0 4px" }}>族属/地属 · 标签</span>
+              <span style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.faint, margin: "0 4px" }}>{t("族属/地属 · 标签")}</span>
               {facList.ethnic.map(({ f, n }) => (
                 <Chip key={f} active={fsel === f}
                   onClick={() => { setFsel((prev) => (prev === f ? ETH_GROUP : f)); setWho("all"); }}
-                  label={`${f} ${n}`} fontFamily="JingHuaLaoSong" />
+                  label={`${facName(locale, f)} ${n}`} fontFamily="JingHuaLaoSong" />
               ))}
             </div>
           )}
           {fsel !== "all" && fsel !== ETH_GROUP && (
             <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 18, paddingLeft: 4, borderLeft: `2px solid ${T.line}` }}>
               <span style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.faint, margin: "0 4px" }}>
-                {fsel === NONE_FAC ? "未标事件 · 人物" : `${fsel} · 人物`}
+                {fsel === NONE_FAC ? t("未标事件 · 人物") : t("{f} · 人物", { f: facName(locale, fsel) })}
               </span>
               {subPersons.map((id) => (
-                <Chip key={id} active={who === id} onClick={() => setWho((prev) => (prev === id ? "all" : id))} label={byId[id].name} fontFamily="JingHuaLaoSong" />
+                <Chip key={id} active={who === id} onClick={() => setWho((prev) => (prev === id ? "all" : id))} label={charName(locale, byId[id])} fontFamily="JingHuaLaoSong" />
               ))}
               {subPersons.length === 0 && (
-                <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>此標籤下無入事人物檔案</span>
+                <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("此標籤下無入事人物檔案")}</span>
               )}
             </div>
           )}
@@ -1135,13 +1224,13 @@ function Timeline({ onOpenChar, onOpenEcho }) {
           <div style={{ marginBottom: 10 }}><FactionKey /></div>
           <div style={{ marginBottom: 18 }}>
             <span style={{ position: "relative", display: "inline-block" }}>
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="檢索事名、人物、地點、門派、紀年"
+              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("檢索事名、人物、地點、門派、紀年")}
                 style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 13, fontFamily: "HuiwenZhengKai", padding: "6px 12px 6px 34px", outline: "none", minWidth: 300 }} />
               <SearchTag fontFamily="HuiwenZhengKai" />
             </span>
           </div>
           {sections.every((s) => s.evs.length === 0) && (
-            <div style={{ color: T.faint, fontFamily: serif, padding: 40, textAlign: "center" }}>無合於此檢索之事。</div>
+            <div style={{ color: T.faint, fontFamily: serif, padding: 40, textAlign: "center" }}>{t("無合於此檢索之事。")}</div>
           )}
           {sections.map((s) => {
             const empty = s.evs.length === 0;
@@ -1161,15 +1250,15 @@ function Timeline({ onOpenChar, onOpenEcho }) {
                   }}>
                   <div className="flex items-baseline flex-wrap" style={{ gap: 10 }}>
                     <span style={{ color: T.accent, fontSize: 12, width: 13, display: "inline-block" }}>{open ? "▾" : "▸"}</span>
-                    <span style={{ fontFamily: "HuiwenMingChao", fontSize: 15.5, color: T.ink }}>{s.label}</span>
+                    <span style={{ fontFamily: "HuiwenMingChao", fontSize: 15.5, color: T.ink }}>{secLabel(locale, s)}</span>
                     <span style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.muted }}>
-                      {secYears(s)} · {empty ? "無事" : `${cnCount(s.evs.length)}事`}
+                      {secYears(s)} · {empty ? t("無事") : evCount(locale, t, s.evs.length)}
                     </span>
                     {s.byMonth && open && !searching && (
                       <button
                         onClick={(ev) => { ev.stopPropagation(); toggleAllMonths(s); }}
                         style={{ marginLeft: "auto", fontSize: 11, fontFamily: "HuiwenMingChao", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "1px 8px", cursor: "pointer" }}>
-                        {monthKeysOf(s).every((k) => expandedMonths.has(k)) ? "收起諸月" : "展開諸月"}
+                        {monthKeysOf(s).every((k) => expandedMonths.has(k)) ? t("收起諸月") : t("展開諸月")}
                       </button>
                     )}
                   </div>
@@ -1198,7 +1287,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
                       return groups.map((g) => {
                         const gk = `${s.key}:${g.m}`;
                         const gOpen = searching || expandedMonths.has(gk);
-                        const mLabel = g.m === -1 ? "月份未標" : CN_MONTH[g.m];
+                        const mLabel = g.m === -1 ? t("月份未標") : en ? monthEn(g.m) : CN_MONTH[g.m];
                         return (
                           <div key={gk}>
                             <div
@@ -1208,9 +1297,9 @@ function Timeline({ onOpenChar, onOpenEcho }) {
                               <span style={{ color: T.accent, fontSize: 11, marginRight: 8 }}>{gOpen ? "▾" : "▸"}</span>
                               <span style={{ fontFamily: "HuiwenMingChao", fontSize: 13.5, color: gOpen ? T.ink : T.muted }}>{mLabel}</span>
                               {g.m !== -1 && (
-                                <span style={{ fontFamily: "HuiwenMingChao", fontSize: 11.5, color: T.faint, marginLeft: 8 }}>{eraOfYM(s.from, g.m)}{mLabel}</span>
+                                <span style={{ fontFamily: "HuiwenMingChao", fontSize: 11.5, color: T.faint, marginLeft: 8 }}>{en ? eraZhToEn(eraOfYM(s.from, g.m)) : `${eraOfYM(s.from, g.m)}${mLabel}`}</span>
                               )}
-                              <span style={{ fontFamily: "HuiwenMingChao", fontSize: 11.5, color: T.faint, marginLeft: 10 }}>{cnCount(g.evs.length)}事</span>
+                              <span style={{ fontFamily: "HuiwenMingChao", fontSize: 11.5, color: T.faint, marginLeft: 10 }}>{evCount(locale, t, g.evs.length)}</span>
                             </div>
                             {gOpen && g.evs.map((e, i) => row(e, `${gk}-${i}`))}
                           </div>
@@ -1385,11 +1474,14 @@ function usePanZoom(w, h) {
 
 /* 縮放三鈕：放大／縮小／復位，三幅圖共用 */
 function ZoomBtns({ view, zoomBy, reset }) {
+  const locale = useLocale();
+  const tr = useT();
+  /* 復位鈕中文作「回」字；英文界面作「1×」（回到原始倍率），免一枚漢字當圖示 */
   return (
     <div style={{ position: "absolute", top: 10, right: 10, display: "flex", flexDirection: "column", gap: 6, zIndex: 3, alignItems: "center" }}>
-      {[["＋", () => zoomBy(1.3), "放大"], ["－", () => zoomBy(1 / 1.3), "縮小"], ["回", reset, "復位"]].map(([t, fn, tt]) => (
-        <button key={tt} title={tt} onClick={fn}
-          style={{ width: 30, height: 30, fontFamily: gUI, fontSize: 14, color: T.ink, background: T.panelHi, border: `1px solid ${T.line}`, borderRadius: "3px", cursor: "pointer", padding: 0, opacity: tt !== "放大" && view.k === 1 ? 0.45 : 1 }}>
+      {[["＋", () => zoomBy(1.3), "放大"], ["－", () => zoomBy(1 / 1.3), "縮小"], [locale === "en" ? "1×" : "回", reset, "復位"]].map(([t, fn, tt]) => (
+        <button key={tt} title={tr(tt)} aria-label={tr(tt)} onClick={fn}
+          style={{ width: 30, height: 30, fontFamily: gUI, fontSize: locale === "en" && tt === "復位" ? 11 : 14, color: T.ink, background: T.panelHi, border: `1px solid ${T.line}`, borderRadius: "3px", cursor: "pointer", padding: 0, opacity: tt !== "放大" && view.k === 1 ? 0.45 : 1 }}>
           {t}
         </button>
       ))}
@@ -1432,12 +1524,14 @@ const FACTION_KEY_LIST = (() => {
   return Object.entries(n).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 })();
 function FactionKey() {
+  const locale = useLocale();
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <div style={{ marginTop: 8 }}>
       <button onClick={() => setOpen(!open)}
         style={{ fontSize: 11.5, fontFamily: gUI, color: open ? T.ink : T.muted, background: "none", border: `1px solid ${open ? T.accent : T.line}`, padding: "2px 10px", borderRadius: "3px", cursor: "pointer" }}>
-        門派色例 {open ? "收起" : `${FACTION_KEY_LIST.length} 色`}
+        {t("門派色例")} {open ? t("收起") : t("{n} 色", { n: FACTION_KEY_LIST.length })}
       </button>
       {open && (
         <div className="flex flex-wrap" style={{ gap: "7px 15px", marginTop: 8 }}>
@@ -1445,7 +1539,7 @@ function FactionKey() {
             <span key={f} className="flex items-center" style={{ gap: 5, fontSize: 11.5, fontFamily: gUI, color: T.muted }}>
               {/* 作圈而非實心塊：與圖中星體之描邊同其形，一望即知所指 */}
               <span style={{ width: 10, height: 10, borderRadius: "50%", background: T.panel, border: `1.6px solid ${fc(f)}`, flex: "0 0 auto" }} />
-              {f}<span style={{ color: T.faint }}>{n}</span>
+              {f === "门派未标" ? t(f) : facName(locale, f)}<span style={{ color: T.faint }}>{n}</span>
             </span>
           ))}
         </div>
@@ -1495,6 +1589,9 @@ function nodeFontSize(len, r, dim) {
    餘者出自三環與雙星間距同比略縮。W/H 立為常量，viewBox 與手勢層共讀，免二處失步。 */
 const PW = 1200, PH = 760, PCX = [360, 840], PCY = PH / 2, FAR_R = 14;
 function Planetary({ onOpenChar }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
   const [hover, setHover] = useState(null);
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(PW, PH);
   const coarse = useCoarsePointer();
@@ -1736,7 +1833,7 @@ function Planetary({ onOpenChar }) {
     }
     return { d: `M ${p1.x} ${p1.y} Q ${best.cx} ${best.cy} ${p2.x} ${p2.y}`, lx: lab.x, ly: lab.y };
   };
-  const relLabel = (rs) => rs.map((r) => r.t).join("／");
+  const relLabel = (rs) => rs.map((r) => relName(locale, r.t)).join(en ? " / " : "／");
   const haloText = { paintOrder: "stroke", stroke: T.bg, strokeWidth: 3, strokeLinejoin: "round" };
 
   /* 星核與節點皆以渲染函數呼之（理同輿圖 renderSpot：內嵌元件逢懸停重繪即卸載重掛，吞去 click） */
@@ -1744,15 +1841,18 @@ function Planetary({ onOpenChar }) {
     const c = byId[CENTERS_META[k].id];
     return (
       <g key={"star" + k} style={{ cursor: "pointer" }} onClick={() => { if (movedRef.current > 5) return; onOpenChar(c); }}>
+        <title>{hasEnName(locale, c) ? `${charName(locale, c)} ${c.name}` : c.name}</title>
         <text x={CX[k]} y={CY - 66} textAnchor="middle"
-          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: "0.45em" }}>
-          {CENTERS_META[k].tag}
+          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: en ? "0.12em" : "0.45em" }}>
+          {t(CENTERS_META[k].tag)}
         </text>
         <circle cx={CX[k]} cy={CY} r={40} fill={T.panel} stroke={T.accent} strokeWidth={2.4} />
         <circle cx={CX[k]} cy={CY} r={47} fill="none" stroke={T.accent} strokeWidth={0.7} opacity={0.5} />
         <text x={CX[k]} y={CY - 7} textAnchor="middle" style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
-        <text x={CX[k]} y={CY + 10} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} — {c.death}</text>
-        <text x={CX[k]} y={CY + 24} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 8.5, fill: T.faint }}>{eraOf(c.birth)} — {eraOf(c.death)}</text>
+        <text x={CX[k]} y={CY + 10} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
+        <text x={CX[k]} y={CY + 24} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 7.5 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} – ${englishEraOf(c.death)}` : `${eraOf(c.birth)} — ${eraOf(c.death)}`}</text>
+        {/* 英文名：雙核圈大，名下另起一行；其餘星圈小，英文名只入懸停（見 renderNode） */}
+        {hasEnName(locale, c) && <text x={CX[k]} y={CY + 62} textAnchor="middle" style={{ fontFamily: gName, fontSize: 12, fill: T.muted }}>{charName(locale, c)}</text>}
       </g>
     );
   };
@@ -1773,6 +1873,7 @@ function Planetary({ onOpenChar }) {
         onMouseLeave={() => { if (!coarse) setHover(null); }}
         /* 觸屏無懸停：首觸牽出其關係弧，再觸方開檔案 */
         onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); setKeyPin(null); return; } onOpenChar(n.c); }}>
+        <title>{hasEnName(locale, n.c) ? `${charName(locale, n.c)} ${n.c.name}` : n.c.name}</title>
         {coarse && <circle cx={n.x} cy={n.y} r={30} fill="transparent" />}
         <circle cx={n.x} cy={n.y} r={r0} fill={soft ? T.bg : T.panel} stroke={fc(n.c.belong[0])}
           strokeWidth={soft ? 1.2 : sec ? 2.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} />
@@ -1786,10 +1887,10 @@ function Planetary({ onOpenChar }) {
         </text>
         {/* 共見數改懸停始現：四十條同級灰字常駐，鋪成一層霧而已；
             其量今由徑與線寬並載，欲知確數者懸停（觸屏首觸）即得。 */}
-        {countLabel && hi && (
+        {(countLabel || hasEnName(locale, n.c)) && hi && (
           <text x={n.x} y={n.y + r0 + 15} textAnchor="middle"
             style={{ fontFamily: gUI, fontSize: 10.5, fill: T.accent }}>
-            {countLabel}
+            {[hasEnName(locale, n.c) && charName(locale, n.c), countLabel].filter(Boolean).join(" · ")}
           </text>
         )}
       </g>
@@ -1830,7 +1931,7 @@ function Planetary({ onOpenChar }) {
                   <text x={lx} y={ly} textAnchor="middle" dominantBaseline="central"
                     transform={`rotate(${rot.toFixed(2)} ${lx.toFixed(1)} ${ly.toFixed(1)})`}
                     style={{ fontFamily: gUI, fontSize: 9.5, fill: fcText(run.f), opacity: 0.75, letterSpacing: "0.08em" }}>
-                    {run.f || "無門派"}
+                    {run.f ? facName(locale, run.f) : t("無門派")}
                   </text>
                 )}
               </g>
@@ -1849,10 +1950,10 @@ function Planetary({ onOpenChar }) {
             又正壓十二點鐘方向之星體；今並歸幅左之空處，環上不再有壓字。
             此隅在遠軌橢圓之外，四環由內而外以縮進示之。 */}
         <g transform="translate(28, 40)">
-          <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>虛線諸環：與本系之核共見事數</text>
+          <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>{t("虛線諸環：與本系之核共見事數")}</text>
           {[...layout.RINGS.map((r) => [r.label, r.note]), ["遠軌", "與兩核俱無共見（作淡圓點）"]].map(([nm, note], i) => (
             <text key={nm} x={i * 8} y={20 + i * 15} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>
-              {nm}　{note}
+              {t(nm)}{en ? "  " : "　"}{t(note)}
             </text>
           ))}
         </g>
@@ -1862,16 +1963,22 @@ function Planetary({ onOpenChar }) {
             窄屏時全圖縮至三成上下，此間字不可讀，故窄屏圖下仍留 RelKey（見下）。 */}
         {/* 圖例諸項可指：懸停預覽、點選常亮（觸屏輕觸；鍵盤 Tab 至此、Enter／空格切換、Esc 收起），全圖只亮此類（見 keyPin）。
             作 role=button 並報 aria-pressed，寫法同余波之譜線行。透明底塊補足字與色線間之空隙，兼作焦點框 */}
-        <g transform={`translate(28, ${PH - 94})`}>
-          <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>線色：兩人之關係</text>
-          <text x={96} y={0} style={{ fontFamily: gUI, fontSize: 9.5, fill: T.faint }}>{coarse ? "輕觸一類即亮" : "懸停即亮，點選常亮"}</text>
-          {[
+        {/* 英文版：類名長於二字，改作三欄三行，整塊上移六像素（玛奈丽在其上方，仍有餘隙）；
+            寬仍收在 x 215 以內。提示語不入圖——圖下說明已有，題字旁放不下 */}
+        <g transform={`translate(28, ${en ? PH - 100 : PH - 94})`}>
+          <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>{t("線色：兩人之關係")}</text>
+          {!en && <text x={96} y={0} style={{ fontFamily: gUI, fontSize: 9.5, fill: T.faint }}>{coarse ? t("輕觸一類即亮") : t("懸停即亮，點選常亮")}</text>}
+          {(en ? [
+            ...REL_KEY.map(([l, cc], i) => [l, (i % 3) * 76, 18 + Math.floor(i / 3) * 15, 14, tone(cc), undefined, 72]),
+            ["僅同事", 0, 63, 14, T.line, undefined, 112],
+            ["未見", 0, 78, 16, tone(KEY_RAW.未見), "6 4", 140, "未見／未說開"],
+          ] : [
             ...REL_KEY.map(([l, cc], i) => [l, (i % 4) * 46, 18 + Math.floor(i / 4) * 15, 14, tone(cc), undefined, 44]),
             ["僅同事", 0, 51, 14, T.line, undefined, 52],
             ["未見", 62, 51, 16, tone(KEY_RAW.未見), "6 4", 86, "未見／未說開"],
-          ].map(([id, x, y, len, col, dash, w, label]) => (
+          ]).map(([id, x, y, len, col, dash, w, label]) => (
             <g key={id} style={{ cursor: "pointer", outline: "none" }} opacity={keyHi && keyHi !== id ? 0.35 : 1}
-              role="button" tabIndex={0} aria-pressed={keyPin === id} aria-label={`只亮此類：${label || id}`}
+              role="button" tabIndex={0} aria-pressed={keyPin === id} aria-label={t("只亮此類：{label}", { label: t(label || id) })}
               onMouseEnter={() => { if (!coarse) { setHover(null); setKeyHover(id); } }}
               onMouseLeave={() => { if (!coarse) setKeyHover(null); }}
               onClick={() => { if (movedRef.current > 5) return; toggleKey(id); }}
@@ -1884,13 +1991,13 @@ function Planetary({ onOpenChar }) {
               <rect x={x - 3} y={y - 12} width={w} height={16} rx={2} fill={keyPin === id ? T.panelHi : "transparent"}
                 stroke={keyFocus === id ? T.accent : "none"} strokeWidth={1.2} />
               <line x1={x} y1={y - 3.5} x2={x + len} y2={y - 3.5} stroke={id === "僅同事" && keyHi === id ? T.muted : col} strokeWidth={keyHi === id ? 3.4 : 2.4} strokeDasharray={dash} />
-              <text x={x + len + 4} y={y} style={{ fontFamily: gUI, fontSize: 10.5, fill: keyHi === id ? T.ink : T.faint }}>{label || id}</text>
+              <text x={x + len + 4} y={y} style={{ fontFamily: gUI, fontSize: 10.5, fill: keyHi === id ? T.ink : T.faint }}>{t(label || id)}</text>
             </g>
           ))}
           {[1, 6, 20].map((n, i) => (
-            <line key={n} x1={i * 13} y1={62.5} x2={i * 13 + 10} y2={62.5} stroke={T.muted} strokeWidth={linkW(n)} opacity={0.6} />
+            <line key={n} x1={i * 13} y1={en ? 89.5 : 62.5} x2={i * 13 + 10} y2={en ? 89.5 : 62.5} stroke={T.muted} strokeWidth={linkW(n)} opacity={0.6} />
           ))}
-          <text x={44} y={66} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>線粗＝與核共見事數</text>
+          <text x={44} y={en ? 93 : 66} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>{t("線粗＝與核共見事數")}</text>
         </g>
         {/* 核線：系內星與橋星繫於其核之線。粗細仍為共見數（開方），色為與該核之主關係（見 primaryRel）；
             無關係條目、僅同事者仍作灰線。虛線類關係（未见、未说开）若為唯一者，核線作虛線。 */}
@@ -1936,10 +2043,10 @@ function Planetary({ onOpenChar }) {
         {renderStar(1)}
         {layout.rings.flatMap((sysRings) =>
           sysRings.flatMap((ring) =>
-            ring.nodes.map((n) => renderNode(n, `共 ${n.n} 事`))
+            ring.nodes.map((n) => renderNode(n, t("共 {n} 事", { n: n.n })))
           )
         )}
-        {layout.bridge.map((n) => renderNode(n, `閔 ${n.a} · 程 ${n.b}`))}
+        {layout.bridge.map((n) => renderNode(n, t("閔 {a} · 程 {b}", { a: n.a, b: n.b })))}
         {layout.farNodes.map((n) => renderNode(n, null, true))}
         {/* 弦線之字：畫在星圈之上（位置見 chordPath）。次星三角之字常駐，懸停他人時隨線淡去 */}
         {[
@@ -1964,12 +2071,19 @@ function Planetary({ onOpenChar }) {
           return (
             <text key={"sl" + n.c.id + k} x={CX[k] + dx * f} y={CY + dy * f + 3.5} textAnchor="middle"
               style={{ fontFamily: gUI, fontSize: 10.5, fill: pr ? relColor(pr.t) : T.muted, ...haloText }}>
-              {rs.length ? relLabel(rs) : "僅同事"}
+              {rs.length ? relLabel(rs) : t("僅同事")}
             </text>
           );
         })}
         </g>
       </svg>
+      {en ? (
+        /* 說明文字英文工作稿（待作者審）：同中文分段，人名暫用中文原名之拼音 */
+        <div lang="en" style={{ fontSize: 12.5, color: T.faint, textAlign: "center", marginTop: 4, fontFamily: gUI, lineHeight: 1.6 }}>
+          {t("行星說明")} {t("左下圖例可指：")} {coarse ? t("輕觸一類，全圖只亮此類關係（再觸收起）") : t("懸停一類預覽，點選或以鍵盤 Enter 常亮（再點或 Esc 收起），全圖只亮此類關係")}{t("——核線中凡有此類者改染此色（不必是主關係），他人之間的同類關係補畫弦線，餘星淡去。")}
+          {" "}{coarse ? t("輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。") : t("點選任一人開啟檔案。")}
+        </div>
+      ) : (
       <div style={{ fontSize: 12, color: T.faint, textAlign: "center", marginTop: 4, fontFamily: gUI }}>
         雙星系統：閔方城（蒼雲線）與程凱（天策線）同格為核。軌道由《事件与年份》中與各核共見事件之計數自動生成，圈徑與線粗亦然（皆按開方），
         環之弧長即其人數；懸停一人即見確數。繫於核之線，色為其人與該核之關係（數條者取其主，懸停並列諸條），灰線為僅同事而無關係條目。
@@ -1979,10 +2093,11 @@ function Planetary({ onOpenChar }) {
         左下圖例可指：{coarse ? "輕觸一類，全圖只亮此類關係（再觸收起）" : "懸停一類預覽，點選或以鍵盤 Enter 常亮（再點或 Esc 收起），全圖只亮此類關係"}——核線中凡有此類者改染此色（不必是主關係），他人之間的同類關係補畫弦線，餘星淡去。
         {coarse ? "輕觸一人牽出其關係弦線，再觸方開檔案；放大後可雙指捏合、單指平移。" : "點選任一人開啟檔案。"}
       </div>
+      )}
       {/* 寬屏時線之圖例已入圖內左下；窄屏圖中字太小，圖下另列一份 */}
-      {narrow && <RelKey note="線粗＝共見事數" pick={{ active: keyPin, onToggle: toggleKey, onClear: () => setKeyPin(null) }} style={{ marginTop: 8 }} />}
+      {narrow && <RelKey note={t("線粗＝共見事數")} pick={{ active: keyPin, onToggle: toggleKey, onClear: () => setKeyPin(null) }} style={{ marginTop: 8 }} />}
       <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
-        {pinStats ? `已只亮「${KEY_LABEL[keyPin] || keyPin}」：${pinStats.nPairs} 對關係，涉 ${[...pinStats.lit].filter((id) => !CENTERS_META.some((m) => m.id === id)).length} 人（雙核不計）。再按一次或 Esc 收起。` : ""}
+        {pinStats ? t("已只亮「{label}」：{pairs} 對關係，涉 {people} 人（雙核不計）。再按一次或 Esc 收起。", { label: t(KEY_LABEL[keyPin] || keyPin), pairs: pinStats.nPairs, people: [...pinStats.lit].filter((id) => !CENTERS_META.some((m) => m.id === id)).length }) : ""}
       </span>
       <FactionKey />
     </div>
@@ -1992,6 +2107,9 @@ function Planetary({ onOpenChar }) {
 /* ---------------- 群像網絡：門派聚類 · 時間滑桿 ---------------- */
 const PHASES = [["壹 · 前史", 744], ["貳 · 亂前", 750], ["叁 · 亂中", 756], ["肆 · 主線", 762]];
 function Community({ onOpenChar }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
   const [Y, setY] = useState(765);
   const [hover, setHover] = useState(null);
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(1120, 1050);
@@ -2036,15 +2154,15 @@ function Community({ onOpenChar }) {
     <div>
       <div className="flex flex-wrap items-center" style={{ gap: 8, marginBottom: 6 }}>
         {PHASES.map(([label, y]) => (
-          <Chip key={label} active={Y === y} onClick={() => setY(y)} label={label} />
+          <Chip key={label} active={Y === y} onClick={() => setY(y)} label={t(label)} />
         ))}
         <input type="range" min={730} max={765} value={Y} onChange={(e) => setY(+e.target.value)}
           style={{ flex: 1, minWidth: 180, accentColor: T.accent }} />
         <span style={{ fontFamily: gUI, fontSize: 16, color: T.accent, minWidth: 170, textAlign: "right" }}>
-          {Y}（{eraOf(Y)}）
+          {en ? `${Y} (${englishEraOf(Y)})` : `${Y}（${eraOf(Y)}）`}
         </span>
       </div>
-      <RelKey note="虛線＝未遂／未說開／未見 · 硃砂點線＝歿後延續 · 虛環＝其人已歿" />
+      <RelKey note={t("虛線＝未遂／未說開／未見 · 硃砂點線＝歿後延續 · 虛環＝其人已歿")} />
       <div style={{ overflowX: "auto", position: "relative" }}>
         <ZoomBtns view={view} zoomBy={zoomBy} reset={reset} />
         <svg viewBox="0 0 1120 1050" ref={wheelElRef}
@@ -2056,8 +2174,8 @@ function Community({ onOpenChar }) {
             onClick={() => { if (movedRef.current > 5) return; setHover(null); }} />
           {centers.map((g) => (
             <text key={g.f} x={g.gx} y={g.gy - g.cr - 10} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: 13, fill: fcText(g.f), letterSpacing: "0.3em", opacity: 0.8 }}>
-              {g.f}
+              style={{ fontFamily: gUI, fontSize: en ? 12 : 13, fill: fcText(g.f), letterSpacing: en ? "0.04em" : "0.3em", opacity: 0.8 }}>
+              {g.f === "其他" ? t(g.f) : facName(locale, g.f)}
             </text>
           ))}
           {active.map((r, i) => {
@@ -2075,7 +2193,7 @@ function Community({ onOpenChar }) {
                 {hi && (
                   <text x={(p1.x + p2.x) / 2} y={(p1.y + p2.y) / 2 - 4} textAnchor="middle"
                     style={{ fontFamily: gUI, fontSize: 10.5, fill: posth ? T.accent : relColor(r.t) }}>
-                    {r.t}{posth ? "（歿後）" : ""}
+                    {relName(locale, r.t)}{posth ? t("（歿後）") : ""}
                   </text>
                 )}
               </g>
@@ -2092,6 +2210,7 @@ function Community({ onOpenChar }) {
                 /* 觸屏無懸停：首觸顯其關係諸邊，再觸方開檔案 */
                 onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); return; } onOpenChar(n.c); }}>
                 {/* 觸屏加大點選域：節點在窄屏上實徑僅數像素，另置一透明圓承接手指 */}
+                <title>{hasEnName(locale, n.c) ? `${charName(locale, n.c)} ${n.c.name}` : n.c.name}</title>
                 {coarse && <circle cx={n.x} cy={n.y} r={26} fill="transparent" />}
                 <circle cx={n.x} cy={n.y} r={hi ? 19 : 15.5} fill={T.panel}
                   stroke={fc(n.f)} strokeWidth={hi ? 2 : 1.3} strokeDasharray={dead ? "3 3" : "none"} />
@@ -2099,15 +2218,23 @@ function Community({ onOpenChar }) {
                   style={{ fontFamily: gName, fontSize: n.c.name.length > 3 ? 8 : n.c.name.length > 2 ? 9.5 : 11, fill: T.ink }}>
                   {n.c.name}
                 </text>
+                {/* 英文名不入小圈（圈徑十五像素），懸停時標於圈下 */}
+                {hi && hasEnName(locale, n.c) && (
+                  <text x={n.x} y={n.y + 33} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.accent, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 }}>{charName(locale, n.c)}</text>
+                )}
               </g>
             );
           })}
           </g>
         </svg>
       </div>
+      {en ? (
+        <div lang="en" style={{ fontSize: 12.5, color: T.faint, textAlign: "center", marginTop: 4, fontFamily: gUI, lineHeight: 1.6 }}>{t("群像說明")}</div>
+      ) : (
       <div style={{ fontSize: 12, color: T.faint, textAlign: "center", marginTop: 4, fontFamily: gUI }}>
         諸邊依《人物关系》庫著錄，並自《东都天策府组人设》《西域组·大漠沙如雪》等諸人設文本增補——按門派聚類；拖動滑桿觀關係之生滅——邊之顯隱依起讫，硃砂點線為歿後之延續。兩核（閔方城、程凱）在此降格為普通節點：中心性不再被預設，而由網絡自證。
       </div>
+      )}
     </div>
   );
 }
@@ -2139,6 +2266,11 @@ function ringArc(cx, cy, r, a0, a1) {
 
 /* ---------------- 山河輿圖 ---------------- */
 function GeoMap({ onOpenChar }) {
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
+  /* 地名：英文界面查 places.en.js，無則原樣（SVG 中不包 Zh） */
+  const pn = (l) => placeName(locale, l);
   const NONE_FAC = "__none__";
   const ETH_GROUP = "__ethnic__";
   const [fsel, setFsel] = useState("all");
@@ -2197,14 +2329,17 @@ function GeoMap({ onOpenChar }) {
   /* 篩選謂詞與年表同構：門派兩級（含族屬傘）、人物、檢索 */
   const shown = useMemo(() => {
     const kw = q.trim();
+    const kwl = kw.toLowerCase();
+    const enHit = (str) => en && !!str && str.toLowerCase().includes(kwl);
     const hit = (e) =>
       kw === "" ||
       e.title.includes(kw) ||
       (e.seq || "").includes(kw) ||
-      e.loc.some((l) => l.includes(kw)) ||
-      e.fac.some((f) => f.includes(kw)) ||
+      e.loc.some((l) => l.includes(kw) || enHit(placeName(locale, l))) ||
+      e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
       eraOfYM(e.year, e.month).includes(kw) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || (byId[id].zi || "").includes(kw));
+      enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
+      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" ||
       fsel === "all" ||
@@ -2214,7 +2349,7 @@ function GeoMap({ onOpenChar }) {
         ? facList.ethnic.some(({ f }) => e.fac.includes(f) || e.chars.some((id) => byId[id].belong.includes(f)))
         : e.fac.includes(fsel) || e.chars.some((id) => byId[id].belong.includes(fsel)));
     return EVENTS.filter((e) => (who === "all" || e.chars.includes(who)) && byFaction(e) && hit(e) && inTime(e)).sort(sortEvents);
-  }, [who, fsel, q, facList, tmode, tyear]);
+  }, [who, fsel, q, facList, tmode, tyear, en, locale]);
 
   /* 聚合：每地一點，計數、門派色分佈隨篩選重算；一事多地各計一次（與檢索「地點命中」同理） */
   const spots = useMemo(() => {
@@ -2276,7 +2411,7 @@ function GeoMap({ onOpenChar }) {
           const last = stays[stays.length - 1];
           if (last && last.loc === l) { last.toYear = e.year ?? last.toYear; pendingGap = false; continue; } /* 並駐延展迄年 */
           stays.push({ loc: l, x: c.x, y: c.y, year: e.year ?? null, toYear: e.year ?? null, gapBefore: pendingGap,
-            ev: e.supp ? { year: e.year, month: e.month ?? null, title: `〔輿圖補點〕${e.note}` } : e }); /* ev＝到達首見之事（或補點注記），此段之文獻出處 */
+            ev: e.supp ? { year: e.year, month: e.month ?? null, title: `〔輿圖補點〕${e.note}`, supp: true, note: e.note } : e }); /* ev＝到達首見之事（或補點注記），此段之文獻出處 */
           pendingGap = false;
         }
         const byLoc = {};
@@ -2343,7 +2478,7 @@ function GeoMap({ onOpenChar }) {
           return (
             <text x={c.x + off[0]} y={c.y + off[1]} textAnchor={c.la === "e" ? "start" : c.la === "w" ? "end" : "middle"}
               style={{ fontFamily: gUI, fontSize: (isSel || isHov ? 12.5 : 11) / z, fill: isSel || isHov ? T.ink : T.muted, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / z }}>
-              {name}{n > 0 ? ` ${n}` : ""}
+              {pn(name)}{n > 0 ? ` ${n}` : ""}
             </text>
           );
         })()}
@@ -2378,7 +2513,7 @@ function GeoMap({ onOpenChar }) {
     return (
       <g>
         <text x={b.x} y={b.y - 14} textAnchor={anchor} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint, letterSpacing: "0.3em" }}>
-          {dir === "西" ? "◁ 絕域之西" : "絕域之東 ▷"}
+          {dir === "西" ? `◁ ${t("絕域之西")}` : `${t("絕域之東")} ▷`}
         </text>
         {names.map((nm, i) => {
           const n = spots.m[nm]?.n || 0;
@@ -2394,7 +2529,7 @@ function GeoMap({ onOpenChar }) {
                 fill={isSel ? T.panelHi : "none"} stroke={isSel || isHov ? T.accent : T.line} strokeWidth={1} />
               <text x={dir === "西" ? b.x + 6 : b.x - 6} y={y} textAnchor={anchor}
                 style={{ fontFamily: gUI, fontSize: 11, fill: seg ? fc(seg[0]) : T.muted }}>
-                {nm}{n > 0 ? ` ${n}` : ""}
+                {pn(nm)}{n > 0 ? ` ${n}` : ""}
               </text>
             </g>
           );
@@ -2404,77 +2539,78 @@ function GeoMap({ onOpenChar }) {
   };
 
   const selCoord = sel && sel !== NOLOC_KEY ? LOC_COORDS[sel] : null;
+  const startMark = t("（起）");
 
   return (
     <div>
       {/* 一級：門派及同級標籤 */}
       <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 8 }}>
-        <Chip active={fsel === "all"} onClick={() => { setFsel("all"); setWho("all"); }} label={`全部 ${EVENTS.length}`} fontFamily="JingHuaLaoSong" />
+        <Chip active={fsel === "all"} onClick={() => { setFsel("all"); setWho("all"); }} label={`${t("全部")} ${EVENTS.length}`} fontFamily="JingHuaLaoSong" />
         {facList.main.map(({ f, n }) => (
-          <Chip key={f} active={fsel === f} onClick={() => { setFsel(fsel === f ? "all" : f); setWho("all"); }} label={`${f} ${n}`} fontFamily="JingHuaLaoSong" />
+          <Chip key={f} active={fsel === f} onClick={() => { setFsel(fsel === f ? "all" : f); setWho("all"); }} label={`${facName(locale, f)} ${n}`} fontFamily="JingHuaLaoSong" />
         ))}
         {facList.ethnic.length > 0 && (
           <Chip active={fsel === ETH_GROUP || facList.ethnic.some((x) => x.f === fsel)}
-            onClick={() => { setFsel(fsel === ETH_GROUP ? "all" : ETH_GROUP); setWho("all"); }} label="【族属/地属】" fontFamily="JingHuaLaoSong" />
+            onClick={() => { setFsel(fsel === ETH_GROUP ? "all" : ETH_GROUP); setWho("all"); }} label={t("【族属/地属】")} fontFamily="JingHuaLaoSong" />
         )}
         {facList.none > 0 && (
-          <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(fsel === NONE_FAC ? "all" : NONE_FAC); setWho("all"); }} label={`门派未标 ${facList.none}`} fontFamily="JingHuaLaoSong" />
+          <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(fsel === NONE_FAC ? "all" : NONE_FAC); setWho("all"); }} label={t("门派未标 {n}", { n: facList.none })} fontFamily="JingHuaLaoSong" />
         )}
       </div>
       {/* 族屬傘形展開之次級標籤 */}
       {fsel === ETH_GROUP && (
         <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 8 }}>
           {facList.ethnic.map(({ f, n }) => (
-            <Chip key={f} active={false} onClick={() => { setFsel(f); setWho("all"); }} label={`${f} ${n}`} fontFamily="JingHuaLaoSong" />
+            <Chip key={f} active={false} onClick={() => { setFsel(f); setWho("all"); }} label={`${facName(locale, f)} ${n}`} fontFamily="JingHuaLaoSong" />
           ))}
         </div>
       )}
       {facList.ethnic.some((x) => x.f === fsel) && (
         <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 8 }}>
-          <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>【族属/地属】·</span>
-          <Chip active={true} onClick={() => setFsel(ETH_GROUP)} label={fsel} fontFamily="JingHuaLaoSong" />
+          <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("【族属/地属】")} ·</span>
+          <Chip active={true} onClick={() => setFsel(ETH_GROUP)} label={facName(locale, fsel)} fontFamily="JingHuaLaoSong" />
         </div>
       )}
       {/* 二級：人物 */}
       {fsel !== "all" && subPersons.length > 0 && (
         <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 8 }}>
-          <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>屬下之人 ·</span>
-          <Chip active={who === "all"} onClick={() => setWho("all")} label="不限" fontFamily="JingHuaLaoSong" />
+          <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("屬下之人 ·")}</span>
+          <Chip active={who === "all"} onClick={() => setWho("all")} label={t("不限")} fontFamily="JingHuaLaoSong" />
           {subPersons.map((id) => (
-            <Chip key={id} active={who === id} onClick={() => setWho(who === id ? "all" : id)} label={byId[id].name} fontFamily="JingHuaLaoSong" />
+            <Chip key={id} active={who === id} onClick={() => setWho(who === id ? "all" : id)} label={charName(locale, byId[id])} fontFamily="JingHuaLaoSong" />
           ))}
         </div>
       )}
       <div style={{ marginBottom: 8 }}>
         <span style={{ position: "relative", display: "inline-block" }}>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="檢索事名、人物、地點、門派、年號"
-            style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 12.5, fontFamily: "HuiwenZhengKai", padding: "5px 10px 5px 32px", outline: "none", minWidth: 200 }} />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("檢索事名、人物、地點、門派、年號")}
+            style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 12.5, fontFamily: "HuiwenZhengKai", padding: "5px 10px 5px 32px", outline: "none", minWidth: en ? 320 : 200 }} />
           <SearchTag fontFamily="HuiwenZhengKai" />
         </span>
       </div>
       <div className="flex items-center" style={{ gap: 12, marginBottom: 6 }}>
-        <span style={{ fontSize: 12, fontFamily: "JingHuaLaoSong", color: T.muted }}>計入 {shown.length} 事 · {Object.keys(spots.m).length} 地</span>
-        <Chip active={allLabels} onClick={() => setAllLabels(!allLabels)} label="地名全顯" fontFamily="JingHuaLaoSong" />
+        <span style={{ fontSize: 12, fontFamily: "JingHuaLaoSong", color: T.muted }}>{t("計入 {n} 事 · {m} 地", { n: shown.length, m: Object.keys(spots.m).length })}</span>
+        <Chip active={allLabels} onClick={() => setAllLabels(!allLabels)} label={t("地名全顯")} fontFamily="JingHuaLaoSong" />
         {spots.noloc > 0 && (
           <button onClick={() => setSel(sel === NOLOC_KEY ? null : NOLOC_KEY)}
             style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: sel === NOLOC_KEY ? T.ink : T.faint, background: "none", border: `1px dashed ${sel === NOLOC_KEY ? T.accent : T.faint}`, padding: "2px 10px", borderRadius: "3px", cursor: "pointer" }}>
-            無地點 {spots.noloc} 事
+            {t("無地點 {n} 事", { n: spots.noloc })}
           </button>
         )}
       </div>
       {/* 時間滑桿：全程／累積至／僅當年 */}
       <div className="flex flex-wrap items-center" style={{ gap: 8, marginBottom: 8 }}>
-        <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>時間 ·</span>
-        <Chip active={tmode === "all"} onClick={() => setTmode("all")} label="全程" fontFamily="JingHuaLaoSong" />
-        <Chip active={tmode === "cum"} onClick={() => setTmode("cum")} label="累積至" fontFamily="JingHuaLaoSong" />
-        <Chip active={tmode === "year"} onClick={() => setTmode("year")} label="僅當年" fontFamily="JingHuaLaoSong" />
+        <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("時間 ·")}</span>
+        <Chip active={tmode === "all"} onClick={() => setTmode("all")} label={t("全程")} fontFamily="JingHuaLaoSong" />
+        <Chip active={tmode === "cum"} onClick={() => setTmode("cum")} label={t("累積至")} fontFamily="JingHuaLaoSong" />
+        <Chip active={tmode === "year"} onClick={() => setTmode("year")} label={t("僅當年")} fontFamily="JingHuaLaoSong" />
         {tmode !== "all" && (
           <>
             <input type="range" min={YR.min} max={YR.max} value={tyear} onChange={(e) => setTyear(+e.target.value)}
               style={{ width: 280, accentColor: T.accent, verticalAlign: "middle" }} />
             <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: T.ink }}>
               {tyear}
-              <span style={{ fontSize: 12, color: T.muted }}>{eraOf(tyear) ? `（${eraOf(tyear)}）` : ""}</span>
+              <span style={{ fontSize: 12, color: T.muted }}>{eraOf(tyear) ? (en ? ` (${englishEraOf(tyear)})` : `（${eraOf(tyear)}）`) : ""}</span>
             </span>
           </>
         )}
@@ -2483,11 +2619,11 @@ function GeoMap({ onOpenChar }) {
       <div style={{ marginBottom: 4 }}><FactionKey /></div>
       {/* 動線選人行：點選即顯，至多三人並比 */}
       <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 8 }}>
-        <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>動線（點選即顯，至多三人）·</span>
+        <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("動線（點選即顯，至多三人）·")}</span>
         {trackSel.length > 0 && (
           <button onClick={() => setTrackSel([])}
             style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.muted, background: "none", border: `1px solid ${T.line}`, padding: "2px 10px", cursor: "pointer" }}>
-            清空
+            {t("清空")}
           </button>
         )}
         {trackables.map((id) => {
@@ -2495,7 +2631,7 @@ function GeoMap({ onOpenChar }) {
           return (
             <button key={id} onClick={() => toggleTrack(id)}
               style={{ fontSize: 12, fontFamily: "JingHuaLaoSong", padding: "2px 10px", cursor: "pointer", background: ti >= 0 ? T.panelHi : "none", color: ti >= 0 ? tone(TRACK_COLORS[ti]) : T.muted, border: `1px solid ${ti >= 0 ? tone(TRACK_COLORS[ti]) : T.line}`, borderRadius: "3px" }}>
-              {byId[id].name}
+              {charName(locale, byId[id])}
             </button>
           );
         })}
@@ -2520,13 +2656,14 @@ function GeoMap({ onOpenChar }) {
             <path d={GEO_BASE.changjiang} fill="none" stroke={T.river} strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
             {GEO_BASE.labels.map((l) => (
               <text key={l.t} x={l.x} y={l.y} textAnchor="middle"
-                style={{ fontFamily: gUI, fontSize: 13, fill: T.faint, letterSpacing: "0.5em", opacity: 0.65 }}>{l.t}</text>
+                style={{ fontFamily: gUI, fontSize: en ? 12 : 13, fill: T.faint, letterSpacing: en ? "0.12em" : "0.5em", opacity: 0.65 }}>{en ? pn(l.t.replace(/ /g, "")) : l.t}</text>
             ))}
             {/* 泛稱面先繪（襯底），點位後繪 */}
             {Object.keys(LOC_COORDS).filter((nm) => LOC_COORDS[nm].kind === "region").map((nm) => renderSpot(nm))}
             {Object.keys(LOC_COORDS).filter((nm) => LOC_COORDS[nm].kind === "city" || LOC_COORDS[nm].kind === "sect").map((nm) => renderSpot(nm))}
             {/* 第二期：人物動線 —— 弧線僅表先後曾在，非循此路行；虛線段居間有無地點之事 */}
-            {tracks.map((t) => {
+            {tracks.map((trk) => {
+              const t = trk; /* 此處 t 為動線（舊名照留，免改下文諸處）；译字改用 startMark */
               const sh = (t.ti - (tracks.length - 1) / 2) * 6 / view.k; /* 多線並比微錯位，免駐點疊死 */
               const P = (p) => [p.x + sh, p.y + sh * 0.6];
               const tc = tone(t.color); /* 隨膚調色，於渲染期求值 */
@@ -2542,7 +2679,7 @@ function GeoMap({ onOpenChar }) {
                     const segHov = hoverSeg && hoverSeg.ti === t.ti && hoverSeg.i === i;
                     const onSegMove = (ev2) => {
                       const box = ev2.currentTarget.ownerSVGElement.parentElement.getBoundingClientRect();
-                      setHoverSeg({ ti: t.ti, i, x: ev2.clientX - box.left, y: ev2.clientY - box.top, w: box.width, color: t.color, name: byId[t.id].name, prev: t.stays[i - 1], s });
+                      setHoverSeg({ ti: t.ti, i, x: ev2.clientX - box.left, y: ev2.clientY - box.top, w: box.width, color: t.color, name: charName(locale, byId[t.id]), prev: t.stays[i - 1], s });
                     };
                     return (
                       <g key={i}>
@@ -2569,7 +2706,7 @@ function GeoMap({ onOpenChar }) {
                     return (
                       <text key={loc} x={x + 6 / view.k} y={y + (15 + t.ti * 11) / view.k}
                         style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: tc, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
-                        {g.visits.join("、")}
+                        {en ? g.visits.join(", ").replace(/起/g, t("起")) : g.visits.join("、")}
                       </text>
                     );
                   })}
@@ -2578,7 +2715,7 @@ function GeoMap({ onOpenChar }) {
                     return (
                       <text x={x - 7 / view.k} y={y - 7 / view.k} textAnchor="end"
                         style={{ fontFamily: gName, fontSize: 11.5 / view.k, fill: tc, fontWeight: 700, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / view.k }}>
-                        {byId[t.id].name}（起）
+                        {charName(locale, byId[t.id])}{startMark}
                       </text>
                     );
                   })()}
@@ -2591,34 +2728,46 @@ function GeoMap({ onOpenChar }) {
             {renderOffBox("西")}
             {renderOffBox("東")}
             {/* 圖例 */}
-            <g transform="translate(34, 620)">
-              <circle cx={6} cy={0} r={3.2} fill={T.ink} /><text x={16} y={4} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>實名城邑</text>
-              <rect x={2} y={20} width={8} height={8} transform="rotate(45 6 24)" fill={T.panelHi} stroke={T.muted} strokeWidth={1} /><text x={16} y={28} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>門派駐地／自設地</text>
-              <ellipse cx={6} cy={48} rx={9} ry={5} fill={T.faint} opacity={0.25} stroke={T.line} strokeDasharray="2 3" /><text x={16} y={52} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>區域泛稱（事件計入面心）</text>
-              <text x={0} y={76} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>環徑按事件數開方縮放；一地多門派以門派色分段。</text>
-              <text x={0} y={92} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>底圖為示意手繪，方位可據、比例不稱。動線由事件推導、兼採作者訂正之補點，</text>
-              <text x={0} y={108} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>僅表先後曾在、非循此路行；虛線段居間有無地點之事；駐點注「序·年」。</text>
+            {/* 圖例末行基線須在 viewBox 高 720 之內：舊置 620，末行落在 728，被裁去半行有餘，今中文上移至 604。
+                英文句長，多出兩行，置 572 */}
+            <g transform={`translate(34, ${en ? 572 : 604})`}>
+              <circle cx={6} cy={0} r={3.2} fill={T.ink} /><text x={16} y={4} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{t("實名城邑")}</text>
+              <rect x={2} y={20} width={8} height={8} transform="rotate(45 6 24)" fill={T.panelHi} stroke={T.muted} strokeWidth={1} /><text x={16} y={28} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{t("門派駐地／自設地")}</text>
+              <ellipse cx={6} cy={48} rx={9} ry={5} fill={T.faint} opacity={0.25} stroke={T.line} strokeDasharray="2 3" /><text x={16} y={52} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{t("區域泛稱（事件計入面心）")}</text>
+              {(en ? ["輿圖圖例一", "輿圖圖例二", "輿圖圖例三", "輿圖圖例四", "輿圖圖例五"] : [
+                "環徑按事件數開方縮放；一地多門派以門派色分段。",
+                "底圖為示意手繪，方位可據、比例不稱。動線由事件推導、兼採作者訂正之補點，",
+                "僅表先後曾在、非循此路行；虛線段居間有無地點之事；駐點注「序·年」。",
+              ]).map((line, i) => (
+                <text key={i} x={0} y={76 + i * 16} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>{en ? t(line) : line}</text>
+              ))}
             </g>
           </svg>
           {/* 動線悬浮框：繫此段之事——到達之首見；標題逾百字截斷，全文由側欄承接 */}
           {hoverSeg && (() => {
             const flip = hoverSeg.x > hoverSeg.w * 0.55;
-            const ttl = hoverSeg.s.ev.title;
+            const ev = hoverSeg.s.ev;
+            const ttl = ev.supp ? `${t("〔輿圖補點〕")}${ev.note}` : eventTitle(locale, ev);
+            const cap = en && ttl !== ev.title ? 220 : 100; /* 英文同等篇幅字元多，截斷放寬 */
             /* 觸屏改浮於指上方，免為指腹所掩 */
             const tf = [flip ? "translateX(-100%)" : "", coarse ? "translateY(-100%)" : ""].filter(Boolean).join(" ");
             return (
               <div style={{ position: "absolute", left: hoverSeg.x + (flip ? -14 : 14), top: hoverSeg.y + (coarse ? -14 : 12), transform: tf || "none", maxWidth: 300, background: T.panelHi, border: `1px solid ${T.line}`, boxShadow: T.xShadowTip, padding: "10px 13px", pointerEvents: "none", zIndex: 4 }}>
                 <div style={{ fontFamily: gUI, fontSize: 12.5, color: tone(hoverSeg.color), marginBottom: 4 }}>
-                  {hoverSeg.name} · {hoverSeg.prev.loc}（迄{hoverSeg.prev.toYear ?? "起"}）→ {hoverSeg.s.loc}（{hoverSeg.s.year ?? "起"}）
+                  {en
+                    ? `${hoverSeg.name} · ${pn(hoverSeg.prev.loc)} (until ${hoverSeg.prev.toYear ?? t("起")}) → ${pn(hoverSeg.s.loc)} (${hoverSeg.s.year ?? t("起")})`
+                    : `${hoverSeg.name} · ${hoverSeg.prev.loc}（迄${hoverSeg.prev.toYear ?? "起"}）→ ${hoverSeg.s.loc}（${hoverSeg.s.year ?? "起"}）`}
                 </div>
                 {hoverSeg.s.gapBefore && (
-                  <div style={{ fontFamily: gUI, fontSize: 11, color: T.faint, marginBottom: 4 }}>其間有無地點之事，故弧作虛線。</div>
+                  <div style={{ fontFamily: gUI, fontSize: 11, color: T.faint, marginBottom: 4 }}>{t("其間有無地點之事，故弧作虛線。")}</div>
                 )}
                 <div style={{ fontFamily: gUI, fontSize: 12.5, color: T.ink, lineHeight: 1.75 }}>
-                  <span style={{ color: T.muted, fontSize: 11.5 }}>（{eraOf(hoverSeg.s.ev.year)}{hoverSeg.s.ev.month != null ? ` ${CN_MONTH[hoverSeg.s.ev.month]}` : ""}）</span>
-                  {ttl.length > 100 ? ttl.slice(0, 100) + "……" : ttl}
+                  <span style={{ color: T.muted, fontSize: 11.5 }}>{en
+                    ? `(${englishEraOf(ev.year)}${ev.month != null ? `, ${monthEn(ev.month)}` : ""}) `
+                    : `（${eraOf(ev.year)}${ev.month != null ? ` ${CN_MONTH[ev.month]}` : ""}）`}</span>
+                  <span lang={en && ttl === ev.title ? "zh" : undefined}>{ttl.length > cap ? ttl.slice(0, cap) + (en ? "…" : "……") : ttl}</span>
                 </div>
-                <div style={{ fontFamily: gUI, fontSize: 10.5, color: T.faint, marginTop: 5 }}>繫此段者為到達之首見，未必為位移之因；全文點駐地開側欄。</div>
+                <div style={{ fontFamily: gUI, fontSize: 10.5, color: T.faint, marginTop: 5 }}>{t("繫此段者為到達之首見，未必為位移之因；全文點駐地開側欄。")}</div>
               </div>
             );
           })()}
@@ -2628,13 +2777,13 @@ function GeoMap({ onOpenChar }) {
           <div style={{ flex: narrow ? "1 1 auto" : "0 0 360px", width: narrow ? "100%" : 360, maxHeight: narrow ? "none" : 640, overflowY: "auto", border: `1px solid ${T.line}`, background: T.panel, padding: "14px 16px 6px 20px" }}>
             <div className="flex items-baseline" style={{ gap: 10, marginBottom: 4 }}>
               <span style={{ fontFamily: gUI, fontSize: 17, color: T.ink, fontWeight: 700 }}>
-                {sel === NOLOC_KEY ? "無地點之事" : sel}
+                {sel === NOLOC_KEY ? t("無地點之事") : en && pn(sel) === sel ? <Zh>{sel}</Zh> : pn(sel)}
               </span>
-              <span style={{ fontFamily: gUI, fontSize: 12, color: T.muted }}>{selEvents.length} 事</span>
-              <button onClick={() => setSel(null)} style={{ marginLeft: "auto", background: "none", border: "none", color: T.faint, fontSize: 16, cursor: "pointer" }}>×</button>
+              <span style={{ fontFamily: gUI, fontSize: 12, color: T.muted }}>{t("{n} 事", { n: selEvents.length })}</span>
+              <button onClick={() => setSel(null)} aria-label={t("關閉")} style={{ marginLeft: "auto", background: "none", border: "none", color: T.faint, fontSize: 16, cursor: "pointer" }}>×</button>
             </div>
             {selCoord && selCoord.note && (
-              <div style={{ fontFamily: gUI, fontSize: 11.5, color: T.faint, marginBottom: 8 }}>按：{selCoord.note}。</div>
+              <div style={{ fontFamily: gUI, fontSize: 11.5, color: T.faint, marginBottom: 8 }}>{en ? <>{t("按：")}<Zh>{selCoord.note}</Zh></> : `按：${selCoord.note}。`}</div>
             )}
             <div style={{ borderTop: `1px solid ${T.line}`, paddingTop: 14, marginLeft: 40 }}>
               {selEvents.map((e, i) => {
@@ -2642,7 +2791,7 @@ function GeoMap({ onOpenChar }) {
                 return <EvRow key={i} e={e} showYear={showYear} onOpenChar={onOpenChar} />;
               })}
               {selEvents.length === 0 && (
-                <div style={{ fontFamily: gUI, fontSize: 12.5, color: T.faint, padding: "10px 0 20px" }}>當前篩選下此地無事。</div>
+                <div style={{ fontFamily: gUI, fontSize: 12.5, color: T.faint, padding: "10px 0 20px" }}>{t("當前篩選下此地無事。")}</div>
               )}
             </div>
           </div>
@@ -2732,9 +2881,11 @@ function HeaderMenu({ id, label, hint, options, value, onChange, locale }) {
 }
 
 export default function Wiki({ onOpenLanding }) {
-  const [locale, setLocale] = useLanguage();
+  const locale = useLocale();
+  const setLocale = useSetLocale();
+  const en = locale === "en";
   const [skin, setSkin] = useSkin();
-  const t = (key) => translateUI(locale, key);
+  const t = useT();
   /* 路由：哈希為唯一事實源（見 router.js 體例）。寫入即改哈希，
      hashchange（含瀏覽器前進後退）回灌 state；nav 同步 setHash 一份，
      免事件異步間隙內連續導航取到舊值——事件再至時值相同，React 自行免渲染 */
@@ -2760,28 +2911,37 @@ export default function Wiki({ onOpenLanding }) {
   const [q, setQ] = useState("");
 
   const factions = ["全部", ...new Set(CHARACTERS.flatMap((c) => c.belong))];
+  /* 英文界面：另查英文名、表字、稱號、出身（不分大小寫）；中文照查 */
+  const ql = q.toLowerCase();
+  const enHit = (str) => en && !!str && str.toLowerCase().includes(ql);
   const shown = CHARACTERS.filter(
-    (c) =>
-      (faction === "全部" || c.belong.includes(faction)) &&
+    (c) => {
+      const tr = charEn(locale, c.id);
+      return (faction === "全部" || c.belong.includes(faction)) &&
       (q === "" ||
         c.name.includes(q) ||
-        (c.zi || "").includes(q) ||
+        namesText(c).includes(q) ||
         (c.epithet || "").includes(q) ||
         (c.pin || "").includes(q) ||
-        (c.birthplace || "").includes(q))
+        (c.birthplace || "").includes(q) ||
+        enHit(tr?.name) || enHit(tr?.zi) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
+        (en && nameItemsEn(c).some(([, v]) => enHit(v))));
+    }
   );
 
   return (
     <div className="site-root" style={{ minHeight: "100vh", backgroundColor: T.bg, color: T.ink, padding: "0 0 60px" }}>
       <header style={{ borderBottom: `1px solid ${T.line}`, padding: "34px 28px 22px", display: "flex", alignItems: "flex-end", gap: 20, flexWrap: "wrap" }}>
         <div>
-          <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, letterSpacing: "0.5em", color: T.faint }}>七一五 — 八〇〇 · 開元三年至貞元十六年</div>
-          <h1 style={{ fontFamily: "HuiwenZhengKai", fontSize: 34, fontWeight: 700, margin: "6px 0 0", letterSpacing: "0.08em" }}>
-            人山人海 <span style={{ color: T.accent }}>·</span> 檔案
+          {/* 題頭：英文界面上行作英文站名與年代；「人山人海 · 檔案」英文作 Characters: Archive（作者 2026-11-22 定），冒號同中文之點著朱 */}
+          <div lang={en ? "en" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, letterSpacing: en ? "0.12em" : "0.5em", color: T.faint }}>{en ? "Eight Thousand Miles Away · 715–800 · Kaiyuan 3 to Zhenyuan 16" : "七一五 — 八〇〇 · 開元三年至貞元十六年"}</div>
+          <h1 lang={en ? "en" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: en ? 32 : 34, fontWeight: 700, margin: "6px 0 0", letterSpacing: en ? "0.01em" : "0.08em" }}>
+            {en ? <>Characters<span style={{ color: T.accent }}>:</span> Archive</> : <>人山人海 <span style={{ color: T.accent }}>·</span> 檔案</>}
           </h1>
         </div>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
-          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"]].map(([k, label]) => (
+          {/* About 只在英文導航：向英文讀者交代唐代背景與剑三來源，中文讀者不需要 */}
+          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
             <button key={k} onClick={() => setTab(k)}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
@@ -2804,7 +2964,12 @@ export default function Wiki({ onOpenLanding }) {
         </nav>
       </header>
 
-      {locale === "en" && <p className="translation-scope" lang="en" style={{ color: T.muted }}>{t("英文試驗範圍")}</p>}
+      {/* 英文版進度說明：數目由覆蓋層實算（i18n/content.js coverage），译一人、译一事，此處自動更新 */}
+      {en && <p className="translation-scope" lang="en" style={{ color: T.muted }}>
+        {t("英文版說明", COVERAGE)}
+        {tab !== "about" && <>{" "}<button type="button" onClick={() => setTab("about")}
+          style={{ font: "inherit", color: T.accent, background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline", textDecorationColor: `${T.accent}66`, textUnderlineOffset: 3 }}>{t("初來者请看")}</button></>}
+      </p>}
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>
         {(tab === "chars" || tab === "posts") && (
           /* 人物檔案的兩個子視圖：檔案一覽／編制（任職圖） */
@@ -2817,28 +2982,28 @@ export default function Wiki({ onOpenLanding }) {
             ))}
           </div>
         )}
-        {tab === "posts" && <Posts locale={locale} onOpenChar={setOpenChar} fac={route.fac} onFac={(f) => nav({ fac: f })} />}
+        {tab === "posts" && <Posts onOpenChar={setOpenChar} fac={route.fac} onFac={(f) => nav({ fac: f })} />}
         {tab === "chars" && (
           <>
             <div className="flex flex-wrap items-center" style={{ gap: 8, marginBottom: 20 }}>
               {factions.map((f) => (
-                <Chip key={f} active={faction === f} onClick={() => setFaction(f)} label={f} fontFamily="JingHuaLaoSong" />
+                <Chip key={f} active={faction === f} onClick={() => setFaction(f)} label={f === "全部" ? t(f) : facName(locale, f)} fontFamily="JingHuaLaoSong" />
               ))}
             </div>
             <div style={{ marginBottom: 20 }}>
               <span style={{ position: "relative", display: "inline-block" }}>
-                <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="檢索姓名、表字、概覽、品評"
-                  style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 13, fontFamily: "HuiwenZhengKai", padding: "6px 12px 6px 34px", outline: "none", minWidth: 220 }} />
+                <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("檢索姓名、表字、概覽、品評")}
+                  style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 13, fontFamily: "HuiwenZhengKai", padding: "6px 12px 6px 34px", outline: "none", minWidth: en ? 360 : 220 }} />
                 <SearchTag fontFamily="HuiwenZhengKai" />
               </span>
             </div>
             <div className="char-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", columnGap: 14 }}>
               {shown.map((c) => (
-                <CharCard key={c.id} c={c} onOpen={setOpenChar} locale={locale} />
+                <CharCard key={c.id} c={c} onOpen={setOpenChar} />
               ))}
             </div>
             {shown.length === 0 && (
-              <div style={{ color: T.faint, fontFamily: serif, padding: 40, textAlign: "center" }}>無合於此檢索之檔案。</div>
+              <div style={{ color: T.faint, fontFamily: serif, padding: 40, textAlign: "center" }}>{t("無合於此檢索之檔案。")}</div>
             )}
           </>
         )}
@@ -2851,10 +3016,11 @@ export default function Wiki({ onOpenLanding }) {
             onRoute={(p) => nav({ shock: p.shock, who: p.who })}
             onOpenProfile={(id) => nav({ tab: "chars", char: id })} />
         )}
+        {tab === "about" && <About onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} />}
         {tab === "novel" && <NovelReader path={route.novelPath} onNav={(p, replace) => nav({ novelPath: p }, replace)} />}
       </main>
 
-      <DetailPanel c={openChar} locale={locale} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
+      <DetailPanel c={openChar} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
         onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
         onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })}
         onOpenPosts={(f) => nav({ tab: "posts", fac: f || "苍云", char: null })} />

@@ -16,6 +16,46 @@
   font-display: swap;
 }
 
+/* 英文襯線（自托管，OFL，見 assets/fonts/Literata-OFL.txt）：只帶拉丁字，約五十 KB。
+   作英文字族棧中系統字之後、Georgia／Times 之前的保底——Mac 仍見 Iowan、Palatino、Baskerville，
+   Windows 仍見 Palatino Linotype，安卓與 Linux 等無此諸體者落到這裡，不再掉到 Times。
+   英文界面下另以同檔覆寫三枚中文字體的拉丁字（見 i18n/latin-faces.js）。
+   瀏覽器只在頁面真用到這些字時才下載，中文界面不載。 */
+@font-face {
+  font-family: "Literata EN";
+  src: url("./assets/fonts/Literata-latin-wght-normal.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Literata EN";
+  src: url("./assets/fonts/Literata-latin-wght-italic.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* 拉丁擴展（長音符之名 Rādīn、Kyōya） */
+@font-face {
+  font-family: "Literata EN";
+  src: url("./assets/fonts/Literata-latin-ext-wght-normal.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-0130, U+0132-0151, U+0154-02AF, U+1E00-1EFF;
+}
+@font-face {
+  font-family: "Literata EN";
+  src: url("./assets/fonts/Literata-latin-ext-wght-italic.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-0130, U+0132-0151, U+0154-02AF, U+1E00-1EFF;
+}
+
 body {
   margin: 0;
 }
@@ -864,6 +904,38 @@ body {
   display: inline-block;
   animation: cy-breathe 3.6s ease-in-out infinite;
 }
+/* 英文卷首：題名橫排四行、右對齊，仍居右側一列；副題豎排側轉；印文橫排。
+   字族沿用汇文正楷／明朝之名，英文界面下其拉丁字由 i18n/latin-faces.js 覆寫為 Iowan／Literata */
+.cy-landing--en .cy-titlecol {
+  align-items: flex-end;
+  gap: 3.2vh;
+}
+.cy-landing--en .cy-title {
+  writing-mode: horizontal-tb;
+  text-align: right;
+  font-size: clamp(34px, 7.4vh, 68px);
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+}
+.cy-landing--en .cy-subtitle {
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  margin-top: 0.4em;
+}
+.cy-landing--en .cy-seal > span {
+  writing-mode: horizontal-tb;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 640px) {
+  .cy-landing--en .cy-title { font-size: clamp(28px, 5.6vh, 46px); }
+  .cy-landing--en .cy-seal > span { font-size: 12.5px; }
+}
+/* 英文提示：中文的寬字距套在拉丁字上過散 */
+.cy-hint:lang(en) {
+  letter-spacing: 0.06em;
+  text-indent: 0;
+}
 .cy-hint--off {
   opacity: 0;
 }
@@ -994,7 +1066,7 @@ body {
   .header-menu-list { animation: none; }
 }
 .nav-en button {
-  font-family: Georgia, "Songti SC", serif !important;
+  font-family: Georgia, "Literata EN", "Songti SC", serif !important;
   letter-spacing: normal !important;
   text-indent: 0 !important;
   overflow-wrap: anywhere;
@@ -1003,20 +1075,37 @@ body {
   max-width: 1080px;
   margin: 16px auto 0;
   padding: 0 24px;
-  font: 13px/1.6 Georgia, "Songti SC", serif;
+  font: 13px/1.6 Georgia, "Literata EN", "Songti SC", serif;
 }
-/* Only the translated character receives profile-en; Chinese cards are untouched. */
+/* 英文界面下所有檔案卡皆掛 profile-en（標目、生卒、門派隨界面為英文）；中文界面諸卡不受影響。
+   尚未译出而回落中文的字段標 zh-src（i18n/zh.jsx）：英文字族覆寫不及之，仍用其內聯的中文字體與字距。 */
 .profile-en {
-  --profile-latin-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Songti SC", serif;
+  --profile-latin-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "Literata EN", Georgia, "Songti SC", serif;
 }
-.profile-en div,
-.profile-en button,
-.profile-en em,
-.profile-en cite,
-.profile-en span:not(.seal-svg-shell):not(.seal-stamp):not(.seal-stamp-ch) {
+.profile-en div:not(.zh-src):not(.zh-src *),
+.profile-en button:not(.zh-src *),
+.profile-en em:not(.zh-src *),
+.profile-en cite:not(.zh-src *),
+.profile-en span:not(.seal-svg-shell):not(.seal-stamp):not(.seal-stamp-ch):not(.zh-src):not(.zh-src *) {
   font-family: var(--profile-latin-serif) !important;
   letter-spacing: normal !important;
   overflow-wrap: anywhere;
+}
+/* 回落中文之段落：.profile-en .profile-prose 為英文壓了行高，中文仍復其原行高 */
+.profile-en .profile-prose.zh-src {
+  line-height: 1.9 !important;
+}
+.profile-en .zh-note {
+  white-space: nowrap;
+}
+/* 回落中文之行內字（<Zh> 包的 span）自身無內聯字體，會承襲父元素已被覆寫的英文字族——
+   故明定其字族：姓名、表字從明朝（同中文卡），其餘從正楷 */
+.profile-en span.zh-src {
+  font-family: "HuiwenZhengKai", serif !important;
+}
+.profile-en .profile-name span.zh-src,
+.profile-en .profile-courtesy span.zh-src {
+  font-family: "HuiwenMingChao", serif !important;
 }
 .profile-en .profile-prose {
   font-size: 14px !important;
@@ -1027,7 +1116,7 @@ body {
 /* The previous Iowan/Palatino stack was already weight 400. Use a finer
    system serif for detail prose rather than requesting a nonexistent light face. */
 .profile-en .char-modal-scroll .profile-prose {
-  --profile-latin-serif: Baskerville, "Times New Roman", Times, "Songti SC", serif;
+  --profile-latin-serif: Baskerville, "Literata EN", "Times New Roman", Times, "Songti SC", serif;
   font-weight: 400;
 }
 .profile-en.texture-test-sm .profile-lifespan-years,

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CHARACTERS } from "./wiki-data";
 import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./posts-data";
-import { translateUI } from "./i18n/ui";
 import { T, tone } from "./theme";
-import { characterTranslation } from "./i18n/characters.en";
+import { useLocale, useT } from "./i18n/locale";
+import { charName, facName } from "./i18n/content";
 
 /* ============================================================
    編制 (posts.jsx) —— 门派职位 × 年份的任期图（苍云、天策、唐军，顶上切换）
@@ -31,16 +31,19 @@ const SOLID = new Set(["正授", "署理", "暂任"]);
 /* 门派说明。年轴范围与参照线在 posts-data.js 的 FACTIONS（苍云：一场败、一场乱、一个人） */
 const INTRO = {
   苍云: ["苍云编制，依文稿〈重看人物、军队体系〉：伍、火、队、旅、团、营，破阵营辖三团。一行一个职位，一条一段任期。",
-    "Cangyun posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."],
+    "Cangyun Army posts by year, following the author’s own establishment (squad, troop, company, regiment, battalion). One row per post; one band per tenure. Content remains in Chinese."],
   天策: ["天策编制：府中诸将、府僚（天策上将府旧制）、营伍（参照折冲府）。一行一个职位，一条一段任期。录有府中十人，另有万花、凌雪阁来府任职者四人列于末组；剑三原有的府中诸将不上图。",
-    "Tiance posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). Ten of the household’s own people, plus four from Wanhua and Lingxue who served there, in the last group; the game’s own senior officers are left off. Content remains in Chinese."],
+    "Tiance Command posts: the household’s senior officers, its staff (after the old Tiance Grand General’s household), and its field units (after the regimental garrisons). Ten of the household’s own people, plus four from Wanhua Valley and Lingxue Pavilion who served there, in the last group; the game’s own senior officers are left off. Content remains in Chinese."],
   唐军: ["唐军编制：唐军不是一个营，按方镇分组——北庭、安西行营、剑南、河东与东都、朔方军、京西与北道、山南西道。职名文中多未写，推定的起止标「（约）」，推定的职名写在浮签备注里。边将所带的卫府武官之衔（果毅都尉、将军之类）写进职衔，不另立格。",
     "Tang army posts, grouped by command rather than by unit: Beiting, the Anxi field army, Jiannan, Hedong and the Eastern Capital, the Shuofang army, the western capital frontier, and Shannan West. Most titles are inferred; inferred dates are marked, and inferred titles are noted in the tooltip. Honorary guard titles (such as regimental vice-commandant) are folded into the rank text rather than given a row. Content remains in Chinese."],
 };
 
-export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
+export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
+  const locale = useLocale();
   const en = locale === "en";
-  const t_ = (k) => translateUI(locale, k);
+  const t_ = useT();
+  /* 任期起止：英文界面下「（约）」作 approx.、長橫作連接號（同檔案卡任職履歷） */
+  const spanOf = (t) => (en ? tenureSpan(t).replace(/（约）/g, " (approx.)").replace("—", "–") : tenureSpan(t));
   /* 悬停与键盘焦点分开记：{ i, x, y }（i 为 TENURES 下标；x、y 相对外框）。浮签先看鼠标，鼠标移走就退回焦点那一段，
      免得鼠标扫过就把键盘打开的浮签关掉；Esc 两个都收 */
   const [hov, setHov] = useState(null);
@@ -121,7 +124,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
         {FACTIONS.map((f) => (
           <button key={f.id} type="button" aria-pressed={f.id === F.id} onClick={() => { clearTip(); onFac?.(f.id); }}
             style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, padding: "2px 12px", background: f.id === F.id ? T.panelHi : "none", border: `1px solid ${f.id === F.id ? T.muted : T.line}`, borderRadius: 3, color: f.id === F.id ? T.ink : T.muted, cursor: "pointer" }}>
-            {t_(f.id)}
+            {facName(locale, f.id)}
           </button>
         ))}
       </div>
@@ -134,7 +137,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
           <button key={w} type="button" onClick={() => onOpenChar(byId[w])}
             style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "none", border: "none", padding: 0, cursor: "pointer", color: T.muted, fontFamily: "HuiwenZhengKai", fontSize: 12 }}>
             <span style={{ width: 11, height: 11, borderRadius: 2, background: colorOf(w) }} />
-            {characterTranslation(locale, w)?.name || byId[w].name}
+            {charName(locale, byId[w])}
           </button>
         ))}
         <span style={{ color: T.faint }}>|</span>
@@ -145,7 +148,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
 
       <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="group"
-          aria-label={en ? `${t_(F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}编制任期图，${Y0}—${Y1}。每段任期是一个按钮，可打开档案`} onMouseLeave={() => setHov(null)}>
+          aria-label={en ? `${facName(locale, F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}编制任期图，${Y0}—${Y1}。每段任期是一个按钮，可打开档案`} onMouseLeave={() => setHov(null)}>
           <defs>
             {/* 起点不明／在任至卷末：色带在左右缘渐隐 */}
             <linearGradient id="posts-fade-l" x1="0" x2="1"><stop offset="0" stopColor={T.panel} stopOpacity="1" /><stop offset="1" stopColor={T.panel} stopOpacity="0" /></linearGradient>
@@ -190,7 +193,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                   const cy = y + ROW_H / 2 + lane * LANE_H;
                   const dim = hot && hot !== t.who;
                   const on = hot === t.who;
-                  const name = characterTranslation(locale, t.who)?.name || byId[t.who].name;
+                  const name = charName(locale, byId[t.who]);
                   const label = t.rank && !t.rank.startsWith(post.label) ? `${name} · ${t.rank}` : name;
                   const fitLabel = textW(label, 11.5) + 10 < x2 - x1 ? label : textW(name, 11.5) + 10 < x2 - x1 ? name : "";
                   const place = (e) => {
@@ -208,7 +211,7 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
                   const tail = thin && textW(name, 10.5) + 10 < room ? name : "";
                   return (
                     <g key={i} opacity={dim ? 0.32 : 1} tabIndex={0} role="button" style={{ cursor: "pointer", outline: "none" }}
-                      aria-label={`${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
+                      aria-label={en ? `${name}, ${tenureTitle(t)}, ${spanOf(t)}, ${t_(t.kind)}${t.draft ? `, ${t_("待核")}` : ""}` : `${name}，${tenureTitle(t)}，${tenureSpan(t)}，${t.kind}${t.draft ? "，待核" : ""}`}
                       aria-describedby={hover && hover.i === i ? "posts-tip" : undefined}
                       onMouseEnter={(e) => setHov(place(e))} onFocus={(e) => setFoc(place(e))} onBlur={() => setFoc(null)} onClick={open}
                       /* 鼠标离开这一段只收鼠标那一份（且只收自己的，免得盖掉刚移入的下一段）；键盘焦点若还在，浮签退回焦点那段 */
@@ -251,15 +254,16 @@ export default function Posts({ locale, onOpenChar, fac = "苍云", onFac }) {
         return (
           <div id="posts-tip" role="tooltip" style={{ position: "absolute", left: hover.x, top: hover.y, width: 300, boxSizing: "border-box", pointerEvents: "none",
             background: T.panelHi, border: `1px solid ${colorOf(t.who)}88`, borderRadius: 3, padding: "8px 12px", fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.ink, lineHeight: 1.75, zIndex: 5 }}>
+            {/* 英文界面：標目、任期類別英文；職銜與上下文、備注暫回落中文（T0 官職表定後接 posts-data 之 en 欄） */}
             <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14 }}>
-              {c.name}<span style={{ color: T.muted, marginLeft: 8 }}>{tenureTitle(t)}</span>
+              {charName(locale, c)}<span lang={en && !t.en ? "zh" : undefined} style={{ color: T.muted, marginLeft: 8 }}>{en && t.en ? t.en.title : tenureTitle(t)}</span>
             </div>
-            <div style={{ color: T.accent, fontSize: 12 }}>{tenureSpan(t)}<span style={{ color: T.faint, marginLeft: 8 }}>{t.kind}</span>
-              {t.draft && <span style={{ color: T.seal, marginLeft: 8 }}>待核</span>}</div>
-            {t.how && <div><span style={{ color: T.faint }}>上　</span>{t.how}</div>}
-            {t.end && <div><span style={{ color: T.faint }}>下　</span>{t.end}</div>}
-            {t.note && <div style={{ color: T.muted }}>{t.note}</div>}
-            <div style={{ color: T.faint, fontSize: 11.5 }}>依据：{t.src.join("；")}</div>
+            <div style={{ color: T.accent, fontSize: 12 }}>{spanOf(t)}<span style={{ color: T.faint, marginLeft: 8 }}>{t_(t.kind)}</span>
+              {t.draft && <span style={{ color: T.seal, marginLeft: 8 }}>{t_("待核")}</span>}</div>
+            {(en && t.en ? t.en.how : t.how) && <div><span style={{ color: T.faint }}>{t_("上　")}</span><span lang={en && !t.en ? "zh" : undefined}>{en && t.en ? t.en.how : t.how}</span></div>}
+            {(en && t.en ? t.en.end : t.end) && <div><span style={{ color: T.faint }}>{t_("下　")}</span><span lang={en && !t.en ? "zh" : undefined}>{en && t.en ? t.en.end : t.end}</span></div>}
+            {t.note && <div lang={en ? "zh" : undefined} style={{ color: T.muted }}>{t.note}</div>}
+            <div style={{ color: T.faint, fontSize: 11.5 }}>{t_("依据：")}{t.src.join(en ? "; " : "；")}</div>
           </div>
         );
       })()}

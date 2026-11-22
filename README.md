@@ -29,6 +29,18 @@ npm run fonts
 
 它先把站内用字补进字符表，再从 git 历史取出完整字体、重裁三枚子集，然后提交字符表和 `src/assets/fonts/` 下变动的字体文件即可。
 
+## 英文版
+
+英文在 <https://jadexuan155229-dot.github.io/eight-thousand-miles-away-wiki/en/>，语言由网址定。英文是叠在中文之上的覆盖层（`src/i18n/`），数据层一字不动，未译之处回落中文。分级、机制、待审清单见 [英文版说明](docs/english-edition.md)。
+
+```bash
+npm run i18n:stamp                         # 人物新译后盖戳（中文原文短哈希）
+npm run i18n:stamp -- --restamp lvdingyi   # 中文改过、英文核过之后重盖
+npm run og                                 # 重截英文预览图 public/og-en.png
+```
+
+`npm run check-data` 末尾一行是英译覆盖率；中文改了而英文未核，会报「英文待核」。
+
 ## 门派色卡
 
 玄墨、素纸各出一张门派色卡（PNG），存作配色参照：

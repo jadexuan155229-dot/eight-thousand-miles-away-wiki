@@ -52,7 +52,17 @@ function novelMentions() {
 // https://vite.dev/config/
 // base：部署到 GitHub Pages 项目站（<user>.github.io/eight-thousand-miles-away-wiki/）时，
 // 站点在子路径下，资产须带此前缀，否则从根请求全部 404。
+// 多頁入口：中文 index.html 在站根，英文 en/index.html 在 en/——同一應用，語言由路徑定
+// （見 src/i18n/use-language.js）。英文另立一頁，是為了讓鏈接預覽讀到英文 meta 與 lang。
 export default defineConfig({
   base: '/eight-thousand-miles-away-wiki/',
   plugins: [react(), novelMentions()],
+  build: {
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        en: fileURLToPath(new URL('./en/index.html', import.meta.url)),
+      },
+    },
+  },
 })

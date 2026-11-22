@@ -2,6 +2,49 @@
 
 ## 2026-11-22
 
+### 修：前进后退后网址与界面语言不一致
+
+- 审查发现：站内换语言用 `replaceState` 只改当前一条历史记录，此前各条仍是旧语言的路径；前进后退在同一文档内换条、不重载，语言状态又只在启动时读一次网址，于是退回 `/#/chars` 而界面仍是英文（反之亦然），此时刷新或转发链接，所见语言与眼前不同。
+- 修法：`useLanguage` 监听 `popstate`，每次前进后退都按路径重定语言。换语言本身仍不另记一条历史（不算一次导航），后退即回上一页、按上一页网址的语言显示。
+- 新增 `npm run check:history`（`scripts/history-check.js`）：临时开发服务器加本机 Chrome，走三组中英切换后的前进、后退、刷新，逐步比对网址、`<html lang>`、界面三者。改前 5 步不合，改后全合。
+
+### 名号分标：本名、波斯语名、日文读法、汉名；人名全部上线
+
+- **中文站亦改**：明教波斯人、苗人的原名原先写在「字」里，卡片上标作「字 Rukh」，不确。今 `zi` 只放汉式表字，其余名号移入新栏 `names`，标签四种：本名（陆羽鸣 Rukh、诺朗齐 Nof Langb Chib）、波斯语名（程骞「字 斯征 · 波斯语名 Parvāz」、唐煦、唐熙）、日文读法（岚川云 Arashikawa Kumo、阿辉 Hikaru）、汉名（春山遥入蓬莱后之方遥；字由「方眠树」改作「眠树」）。卡片、详情、文库批注同用一行；检索兼查各名号。
+- **英文**：余下 25 人上线，124 人全部有英文名。音译者用本名（Rādīn、Royā、Māneli、Golī），苗人用 RPA，日本人物用日语读法（Arashikawa Kumo、Arashikawa Yasuhiko、Hayashi Kyōya、Haruyama Haruka），阿辉 Ahui、墨昆 Mokun、阿会朗 Ahui Lang、贺兰 He Lan、屈突真 Qutu Zhen、彤素 Tongsu、离朱 Lizhu；表字补斯征 Sizheng、镇洛 Zhenluo、弘隽 Hongjuan、谷馨 Guxin、千鹤 Qianhe、眠树 Mianshu (Nemugi)。名号已即英文名者英文卡不重出；岚川云另列 Chinese reading: Lanchuan Yun。About 页补一句非汉人名的体例。
+- **字体**：ō、誰补进字符表，重裁三枚中文子集；英文拉丁字加拉丁扩展一面（Literata latin-ext，约 43KB，仅英文界面按需加载）。
+- check-data 校验名号标签；`names` 纳入英译盖戳。
+
+### 英文版：人名拼音初稿；第二轮定名
+
+- **人名**：124 人出拼音初稿（pypinyin 按词取音，姓前名后、名连写，吕作 Lü，复姓连写），读音与作者手取的 id 逐一比对，不合者从 id（齐晟 Qi Sheng、叶泊秋 Ye Boqiu）。99 人上线、其中 67 人连表字；波斯本名的标法、苗人用苗文还是拼音、5 位日本人物的读法、几个单名与一个表字待作者定，见 [docs/names-draft.md](names-draft.md)。
+- **第二轮定名**：苗疆作 Miao borderlands；地名表未收者一律拼音；卷首副题用单数；关系色谱恩義 Grace & duty、殺伐 Bloodshed；其余工作稿照现稿。
+
+### 英文版：作者定名、卷首英文、About 页
+
+作者审过地基一轮，拍板五事（详见 [docs/english-edition.md](english-edition.md)「作者已定」）。
+
+- **门派**改依 Notion「剑三门派总表」：Cangyun Army、Tiance Command、Wanhua Valley、Lingxue Pavilion、Beggars' Guild 等；标签去冠词。族称、阵营依「术语主表」（Xi / Langya Army 等）。编制页英文说明同步。
+- **地名**：Notion 地名表已定者照录 25 个（Yanmen Pass、Tong Pass、Taiyuan、Changshan……），卷首另需者暂拟 4 个；吐蕃作 Tibet、大漠作 The Gobi。
+- **题名**：英文题头「人山人海 · 档案」作 Characters: Archive，页面标题、预览元数据同步。
+- **卷首英文**：题名 Eight Thousand Miles Away 四词分四行右对齐，印文 Enter，副题 The Soldier, the Assassin and the Physician 竖排侧转，地图道名、城名改英文（画布用系统衬线；纹理按语言各缓存一份）。中文卷首不变。
+- **About 页**（`#/about`，仅英文导航）：唐代背景、剑网三来源、各页读法、英文版体例；页头英文版说明末尾加入口。
+- **作者按不译**：轶事、高光英译写 `false` 即为有意不译，英文界面略去该条；照样盖戳。
+
+### 英文版地基：网址定语言、逐字段回落、防过期
+
+作者要把整站做出一个能给英语世界看的英文版。此前英文只是原型：语言存在 localStorage、默认中文，链接发出去对方看到的是中文；档案卡按「此人有无译文」整卡切换，未译之人在英文界面下连标目也是中文；年表、舆图、行星、群像诸图未接语言。本轮只搭地基、不动内容，分级与待审事项见 [docs/english-edition.md](english-edition.md)。
+
+- **网址定语言**：英文在 `en/`（`en/index.html`，Vite 多页入口），中文仍在站根；英文 meta、`lang`、`hreflang`、预览图 `og-en.png` 写死在英文入口，社交平台预览即为英文。站内切换语言不重载，只换路径、保留哈希，并同步 `<html lang>` 与标题。旧的 localStorage 语言设置不再读。
+- **语言上下文**：语言状态移到 `App`，经 `LocaleContext` 下发；年表、舆图、行星、群像、编制、文库、定场一律接上。
+- **界面字串**：`i18n/ui.js` 扩至约两百条，全站界面在英文下皆为英文；支持 `{变量}` 占位与单复数。图幅下三段长说明另以短键存英文工作稿，中文原段不动。
+- **逐字段回落**：英文界面下标目、生卒（年号由 `eraOf` 推出）、门派人人英文；姓名、表字、出身、档案八目、轶事、高光、年表、地名、关系类型逐项查译文，无则显中文、标 `zh-src`，仍用汇文字体与中文行高；整节皆中文者节题旁注「Chinese original」。吕定仪一卡观感不变。
+- **覆盖层**：新增 `factions.en.js`（32 门派工作稿）、`places.en.js`（暂只底图道名）、`relations.en.js`、`events.en.js`、`novel.en.js`（后三者空表，待 T0）、`tiers.js`（T1 名单）；查表函数集中于 `i18n/content.js`。
+- **拉丁字**：英文界面下为三枚中文字体补一面只含拉丁字的 `@font-face`，英文改走 Iowan／Palatino，无此诸体者用自托管 Literata（OFL，约 50KB）；中文界面不载、不变。英文档案卡原字族栈只在 Georgia／Times 前插入 Literata 保底。
+- **防过期**：`npm run i18n:stamp` 给人物英译逐字段盖中文原文短哈希（`i18n/stamps.json`），中文一改，`check-data` 报「英文待核」；以中文为键的英译其键不在库中即报孤儿，年表另给最近似现题。`check-data` 末尾加一行英译覆盖率；页头英文版说明的数字亦由覆盖层实算。
+- **预览图**：`npm run og` 以本机 Chrome 截英文人物页为 `public/og-en.png`（`-- zh` 则截中文，覆盖 `og.png`）。
+- **顺手修**：山河舆图图例末行基线落在 728，超出 viewBox 高 720，被裁去半行有余；中文图例上移 16 至 604，三行俱全。余波页英文「在场姿态」后的全角冒号改作半角。
+
 ### 门派色卡脚本 `npm run swatches`
 
 作者要把玄墨、素纸下的门派色各出一张色卡留存，并可随改随出。

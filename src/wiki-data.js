@@ -113,7 +113,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "lanchuanyun", name: "岚川云", zi: "千鹤", belong: ["天策", "苍云"], birth: 724, death: null,
+    id: "lanchuanyun", name: "岚川云", zi: "千鹤", names: [["日文读法", "Arashikawa Kumo"]], belong: ["天策", "苍云"], birth: 724, death: null,
     birthplace: "日本奈良，后长于长安", pin: "识", epithet: "", hao: "",
     gloss: "因其名云，以「鹤」应之；又「千鹤」也是日本女名，故有。（另一说：「千鹤」为天策府赐号，取义「千川振迅，鹤目九野」，喻其轻捷矫健与斥候眼目千里之能——两说并存，俟作者定。）",
     profile: F(
@@ -509,7 +509,7 @@ export const CHARACTERS = [
   { id: "yujia", name: "虞嘉", zi: "鹿宾", belong: ["长歌"], birth: null, death: null, birthplace: "", pin: "", epithet: "", hao: "", gloss: "", profile: F("", "", "", "", "", "", "", "") },
   { id: "bailin", name: "白霖", zi: "启商", belong: ["长歌"], birth: 747, death: null, birthplace: "江南东道 杭州（余杭县）", pin: "", epithet: "", hao: "", gloss: "", profile: F("", "", "", "", "", "", "", "") },
   {
-    id: "chengqian", name: "程骞", zi: "斯征 Parvāz", belong: ["长歌", "西域"], birth: 753, death: null,
+    id: "chengqian", name: "程骞", zi: "斯征", names: [["波斯语名", "Parvāz"]], belong: ["长歌", "西域"], birth: 753, death: null,
     birthplace: "陇右道 庭州 北庭大都护府→洛阳", pin: "", epithet: "", hao: "",
     gloss: "پَرواز（Parvāz）——「飞翔、展翼、升腾」：词根 par（羽翼）加 vāz（展开），字面即「展开羽翼、翱翔天空」，与汉名「骞」（高举、飞升）义正相应；又与兄 Āsemūn（天空）成对——一为天空、一为翔于天空，一「仰望」一「升起」，暗合兄弟血统与命运之互补。",
     profile: F(
@@ -666,7 +666,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "chengyu", name: "程宇", zi: "镇洛 Āsemūn", belong: ["天策", "西域", "唐军"], birth: 746, death: 792,
+    id: "chengyu", name: "程宇", zi: "镇洛", names: [["波斯语名", "Āsemūn"]], belong: ["天策", "西域", "唐军"], birth: 746, death: 792,
     birthplace: "陇右道 庭州 北庭大都护府", pin: "", epithet: "", hao: "",
     gloss: "字「镇洛」为程凯所取——程锋世代边将，私心不想让儿子再受边陲之苦，程凯知晓其心意，愿其常镇洛阳便好，但终究没能改变其命运。波斯文名 آسمون（Asemoon，阿赛穆），意即天空。",
     profile: F(
@@ -901,7 +901,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "luyuming", name: "陆羽鸣", zi: "Rukh", belong: ["明教", "波斯"], birth: 715, death: null,
+    id: "luyuming", name: "陆羽鸣", zi: "", names: [["本名", "Rukh"]], belong: ["明教", "波斯"], birth: 715, death: null,
     birthplace: "西域（萨珊波斯流亡王室族裔）", pin: "", epithet: "", hao: "",
     gloss: "رخ（Rukh）——波斯语「脸庞、面容」，诗中喻美丽容颜；又即神话中的白羽鹏鸟（Roc），传说体形巨硕、羽呈白色、以象为食、力大无匹，其源或可上溯古波斯神禽思摩夫（Simurgh）；国际象棋「车」（Rook）一词亦出于此。739年大光明寺事变中「身死」实为失踪，故卒年不著，从 Notion 库。",
     profile: F(
@@ -923,7 +923,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "lunanxin", name: "陆南信", zi: "Nasim", belong: ["明教"], birth: 707, death: null,
+    id: "lunanxin", name: "陆南信", zi: "", names: [["本名", "Nasim"]], belong: ["明教"], birth: 707, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "نسیم（Nasim）——「微风、清风」，诗中常象征温柔、宁静与春天的气息。出生在明教立教的同一年（景龙元年707），这愈发使他认为自己与自己后来笃信的宗教有绝对密不可分的神奇联系。",
     profile: F(
@@ -944,7 +944,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "luwanyue", name: "陆晚月", zi: "Mahtāb", belong: ["明教"], birth: 727, death: null,
+    id: "luwanyue", name: "陆晚月", zi: "", names: [["本名", "Mahtāb"]], belong: ["明教"], birth: 727, death: null,
     birthplace: "安西大都护府 龟兹镇", pin: "", epithet: "", hao: "月儿",
     gloss: "مهتاب（Mahtāb）——「月光」，由 māh（月亮）＋ tāb（光辉、闪耀）而成，波斯文学中常以形容光洁柔和的月光。",
     profile: F(
@@ -963,7 +963,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "langdien", name: "朗迪恩", zi: "Rādīn", belong: ["西域", "平民"], birth: 702, death: null,
+    id: "langdien", name: "朗迪恩", zi: "", names: [["本名", "Rādīn"]], belong: ["西域", "平民"], birth: 702, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "رادین（Rādīn）——常见波斯男名，义为「高贵的、正直的、纯洁的」；人设义项作「亲切／仁慈／侠义」。",
     profile: F(
@@ -972,13 +972,13 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "luya", name: "鲁雅", zi: "Royā", belong: ["西域"], birth: null, death: null,
+    id: "luya", name: "鲁雅", zi: "", names: [["本名", "Royā"]], belong: ["西域"], birth: null, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "رویا（Royā）——「梦、梦想、幻象」，常用于女名，象征理想、美梦与心灵的愿景。（生卒 Notion 库未著录，俟作者补。）",
     profile: F("陆晚月之母，朗迪恩之妻。", "", "", "", "", "", "", ""),
   },
   {
-    id: "luling", name: "陆灵", zi: "Jānān", belong: ["明教"], birth: 722, death: null,
+    id: "luling", name: "陆灵", zi: "", names: [["本名", "Jānān"]], belong: ["明教"], birth: 722, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "جانان（Jānān）——「挚爱的人、心上人」，源自 jān（灵魂、生命、心）；哈菲兹、鲁米诗中常指所爱之人，人设取义「生命／灵魂／美丽」。",
     profile: F(
@@ -990,7 +990,7 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "luyin", name: "陆隐", zi: "Penhān", belong: ["明教"], birth: 718, death: 745,
+    id: "luyin", name: "陆隐", zi: "", names: [["本名", "Penhān"]], belong: ["明教"], birth: 718, death: 745,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "پنهان（Penhān）——「隐藏的、隐秘的、看不见的」。（卒年745依人设文档并陆晚月编年「745 陆隐无」；Notion 档案库 Death Year 暂空，俟作者补录。）",
     profile: F(
@@ -999,7 +999,7 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "luxiao", name: "陆晓", zi: "Farzīn", belong: ["明教"], birth: 725, death: null,
+    id: "luxiao", name: "陆晓", zi: "", names: [["本名", "Farzīn"]], belong: ["明教"], birth: 725, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "فرزین（Farzīn）——「贤明的、睿智的、珍贵的」，可解「智者」；又为波斯古象棋（shatranj）中类「后」之棋子名，兼具力量与智慧之象。人设取义「知晓、博学、智慧」，与汉名「晓」相应。",
     profile: F(
@@ -1010,7 +1010,7 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "maneili", name: "玛奈丽", zi: "Māneli", belong: ["红衣教", "明教", "西域"], birth: 723, death: null,
+    id: "maneili", name: "玛奈丽", zi: "", names: [["本名", "Māneli"]], belong: ["红衣教", "明教", "西域"], birth: 723, death: null,
     birthplace: "西域", pin: "", epithet: "", hao: "",
     gloss: "مانلی（Māneli）——现代波斯女名，因诗人尼玛·尤希吉（Nima Youshij）名诗《Māneli》而广为人知，诗中象征纯洁、美丽、自由的女性形象；人设取义「留在我身边」（برایم بمان）。",
     profile: F(
@@ -1019,13 +1019,13 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "geli", name: "歌莉", zi: "Golī", belong: ["红衣教", "明教"], birth: 752, death: null,
+    id: "geli", name: "歌莉", zi: "", names: [["本名", "Golī"]], belong: ["红衣教", "明教"], birth: 752, death: null,
     birthplace: "长安城郊红衣教活动区域", pin: "", epithet: "", hao: "",
     gloss: "گلی（Golī）——gol（花）之昵称形，义近「如花的、玫瑰色」；rang-e gol，「花的颜色」，可指花色，亦可诗意地指美丽的色泽、春天的气息。",
     profile: F("玛奈丽之女。（生地依 Notion 档案库著录，详情待作者充实。）", "", "", "", "", "", "", ""),
   },
   {
-    id: "tangxu", name: "唐煦", zi: "Dārā", belong: ["明教", "西域"], birth: null, death: null,
+    id: "tangxu", name: "唐煦", zi: "", names: [["波斯语名", "Dārā"]], belong: ["明教", "西域"], birth: null, death: null,
     birthplace: "剑南道 益州（成都府）", pin: "", epithet: "", hao: "",
     gloss: "دارا（Dārā）——「拥有者、富有的、持有财富与力量之人」，源出古波斯语 dāraya-（持有），与大流士（Dāryūsh，「持有善的那位」）同根，波斯史诗与帝王谱系中的尊贵名字——「既拥有财富，也拥有光明的人」。「煦」与双生姊「熙」（Tiyām）相协。（生年 Notion 库未著录，俟作者定。）",
     profile: F("陆晚月与唐哲之子，与唐熙为双生——双胞胎中的男孩，归明教一系。", "", "", "", "", "", "", ""),
@@ -1077,68 +1077,68 @@ export const CHARACTERS = [
     ),
   },
   {
-    id: "tangxi", name: "唐熙", zi: "Tiyām", belong: ["唐门", "西域"], birth: null, death: null,
+    id: "tangxi", name: "唐熙", zi: "", names: [["波斯语名", "Tiyām"]], belong: ["唐门", "西域"], birth: null, death: null,
     birthplace: "剑南道 益州（成都府）", pin: "", epithet: "", hao: "",
     gloss: "تیام（Tiyām）——现代波斯名，人设取义「我的眼睛／挚爱」；诗意语境中亦解作「来自心灵的微笑」「泪滴」，音色柔和。「熙」与双生弟「煦」（Dārā）相协，皆日光和暖之义。",
     profile: F("唐门中人。陆晚月与唐哲之女，双胞胎中的女孩；其弟唐煦归明教一系。（生年 Notion 库未著录，俟作者定。）", "", "", "", "", "", "", ""),
   },
   /* —— 五毒 · 南诏（依 Notion 档案库与苗语取名文本增補） —— */
   {
-    id: "nuolangqi", name: "诺朗齐", zi: "Nof Langb Chib", belong: ["五毒"], birth: 724, death: null,
+    id: "nuolangqi", name: "诺朗齐", zi: "", names: [["本名", "Nof Langb Chib"]], belong: ["五毒"], birth: 724, death: null,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Nof，成人名，苗语中表示「主、王、官」，兼有希望、财富、勇敢一类意思；Langb，乳名；Chib，苗姓，即汉语译过来的蚩尤之「蚩」。",
     profile: F("五毒中人。", "", "", "", "", "", "", ""),
   },
   {
-    id: "naliu", name: "娜留", zi: "Nax Liuf", belong: ["五毒"], birth: 726, death: null,
+    id: "naliu", name: "娜留", zi: "", names: [["本名", "Nax Liuf"]], belong: ["五毒"], birth: 726, death: null,
     birthplace: "蝴蝶谷（？）", pin: "", epithet: "", hao: "",
     gloss: "Nax，稻谷；Liuf，苗姓，意为蝴蝶。",
     profile: F("五毒姐妹中的姐姐。", "", "", "", "", "", "", ""),
   },
   {
-    id: "peiliu", name: "佩留", zi: "Pet Liuf", belong: ["五毒"], birth: 728, death: null,
+    id: "peiliu", name: "佩留", zi: "", names: [["本名", "Pet Liuf"]], belong: ["五毒"], birth: 728, death: null,
     birthplace: "蝴蝶谷（？）", pin: "", epithet: "", hao: "",
     gloss: "Pet，雪花；Liuf，苗姓，意为蝴蝶。",
     profile: F("五毒姐妹中的妹妹。745 年夏成都一夜，奉大祭司之命交割特殊药材后灭口南诏商人蒙萍；746 年继任大祭司，统领村寨。", "", "", "", "", "", "", ""),
   },
   {
-    id: "yangxin", name: "央馨", zi: "Vangb Xenb", belong: ["五毒"], birth: 726, death: 745,
+    id: "yangxin", name: "央馨", zi: "", names: [["本名", "Vangb Xenb"]], belong: ["五毒"], birth: 726, death: 745,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Vangb，簸箕；Xenb，女名后缀，无实义。",
     profile: F("五毒中人，反天一教，唐玄伴侣。745 年夏成都一夜，为截换天一教药材赴客栈，撞见南诏商人蒙萍尸身，冒充商人随伙计入仓库，死于唐门伏击，尸身随仓库焚毁；唐玄只知她失踪。", "", "", "", "", "", "", ""),
   },
   {
-    id: "manran", name: "曼冉", zi: "Mait Rangs", belong: ["五毒"], birth: 716, death: null,
+    id: "manran", name: "曼冉", zi: "", names: [["本名", "Mait Rangs"]], belong: ["五毒"], birth: 716, death: null,
     birthplace: "", pin: "灵", epithet: "", hao: "",
     gloss: "Mait，代表「姑娘」的几个音之一；Rangs，姓，以一种牲畜命此姓。",
     profile: F("五毒大祭司。", "", "", "", "", "", "", ""),
   },
   {
-    id: "niya", name: "尼亚", zi: "Nyax Vos", belong: ["五毒"], birth: 723, death: null,
+    id: "niya", name: "尼亚", zi: "", names: [["本名", "Nyax Vos"]], belong: ["五毒"], birth: 723, death: null,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Nyax，银子；Vos，苗姓，随母（沃家）。",
     profile: F("五毒中人。前村长与沃家独女纽沃之子，卓沃为其舅。（原按：您的相好。）", "", "", "", "", "", "", ""),
   },
   {
-    id: "zhuowo", name: "卓沃", zi: "Zhod Vos", belong: ["五毒", "苗疆"], birth: 708, death: null,
+    id: "zhuowo", name: "卓沃", zi: "", names: [["本名", "Zhod Vos"]], belong: ["五毒", "苗疆"], birth: 708, death: null,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Zhod，虎；Vos，一种武器——以武器命姓，说明古代苗族发明了弓箭来捍卫家园。",
     profile: F("村长。", "", "", "", "", "", "", ""),
   },
   {
-    id: "mangwo", name: "芒沃", zi: "Mangx Vos", belong: ["苗疆"], birth: null, death: null,
+    id: "mangwo", name: "芒沃", zi: "", names: [["本名", "Mangx Vos"]], belong: ["苗疆"], birth: null, death: null,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Mangx，枫木——苗族以枫木为生命之源，枫木生蝴蝶之母妹榜妹留（Mais Bangx Mais Lief）；Vos，苗姓，见卓沃条。",
     profile: F("女执政官。沃家（执政家族）家长，纽沃、卓沃之母。737年收曼冉为义女——名分而已，曼冉保留本姓、不入沃家、不进继承顺位。", "", "", "", "", "", "", ""),
   },
   {
-    id: "niuwo", name: "纽沃", zi: "Hniub Vos", belong: ["苗疆"], birth: null, death: 736,
+    id: "niuwo", name: "纽沃", zi: "", names: [["本名", "Hniub Vos"]], belong: ["苗疆"], birth: null, death: 736,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Hniub，种子；Vos，苗姓，随母（沃家）。",
     profile: F("沃家独女，芒沃之女，卓沃之姊，尼亚之母。约736年病殁，其夫前村长随之失执政之权，村寨继承之争由此而起。", "", "", "", "", "", "", ""),
   },
   {
-    id: "caiyao", name: "彩瑶", zi: "Ncaik Ya", belong: ["五毒"], birth: null, death: null,
+    id: "caiyao", name: "彩瑶", zi: "", names: [["本名", "Ncaik Ya"]], belong: ["五毒"], birth: null, death: null,
     birthplace: "", pin: "", epithet: "", hao: "",
     gloss: "Ncaik，姑娘；Ya，柔和语气，无实义。",
     profile: F("五毒女子。752 年天策在蜀征南诏间，与天策府马翊相识生情。", "", "", "", "", "", "", ""),
@@ -1306,7 +1306,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "linyeshi", name: "林叶矢", zi: "", belong: ["万花"], birth: 750, death: 778,
+    id: "linyeshi", name: "林叶矢", zi: "", names: [["日文读法", "Hayashi Kyōya"]], belong: ["万花"], birth: 750, death: 778,
     birthplace: "日本", pin: "渡", epithet: "", hao: "",
     gloss: "はやし きょうや。「余は彼の燈火の海を渡り來て」——我由灯火之彼岸渡海而来。渡海是岚川一家的注脚，也是叶矢的注脚。",
     profile: F(
@@ -1583,7 +1583,7 @@ export const CHARACTERS = [
   },
   /* —— 蓬莱（依 Notion 档案库与增補文本） —— */
   {
-    id: "haruyama", name: "春山遥", zi: "方眠树", belong: ["蓬莱"], birth: null, death: null,
+    id: "haruyama", name: "春山遥", zi: "眠树", names: [["汉名", "方遥"], ["日文读法", "Haruyama Haruka"]], belong: ["蓬莱"], birth: null, death: null,
     birthplace: "日本", pin: "", epithet: "", hao: "",
     gloss: "春山（Haruyama）是其东瀛姓氏，「遥」（Haruka）是日语名——春山遥，即春山眠樹（Haruyama Nemugi）；蓬莱门派家姓为方，故汉名方遥，字眠树。《庄子·逍遥游》：「今子有大树，患其无用，何不树之于无何有之乡，广莫之野，彷徨乎无为其侧，逍遥乎寝卧其下。」「遥」与「眠树」皆自此出。",
     profile: F("蓬莱门人，东瀛出身。林叶矢渡海来唐时，最初救下他的人。", "", "", "", "", "", "", ""),
@@ -1627,7 +1627,7 @@ export const CHARACTERS = [
   },
   /* —— 平民（岚川家眷属；依 Notion 档案库与《岚川家早年》文本增補。生卒：靖彦生年、阿辉生年依文本与库；赵盈贞、赵廷之生年库中未著，从文本推算并于训诂注明；卒年悉从文本或作者补记明文 —— */
   {
-    id: "jingyan", name: "岚川靖彦", zi: "", belong: ["平民"], birth: 698, death: 747,
+    id: "jingyan", name: "岚川靖彦", zi: "", names: [["日文读法", "Arashikawa Yasuhiko"]], belong: ["平民"], birth: 698, death: 747,
     birthplace: "日本奈良", pin: "", epithet: "", hao: "",
     gloss: "岚川云之父。生年698从文本明文；卒于747——与程凯生父程广亡于同一年，安西与长安（程广殁于小勃律之役）。",
     profile: F(
@@ -1681,7 +1681,7 @@ export const CHARACTERS = [
     ],
   },
   {
-    id: "ahui", name: "阿辉", zi: "", belong: ["平民"], birth: 716, death: 737,
+    id: "ahui", name: "阿辉", zi: "", names: [["日文读法", "Hikaru"]], belong: ["平民"], birth: 716, death: 737,
     birthplace: "日本（琵琶湖一带）", pin: "", epithet: "", hao: "",
     gloss: "「辉」，光彩之意——728年获救后靖彦夫妇所赐之名，取自赵盈贞早夭幼弟之名。他初闻此字解释时，想起的是任务中送过的一只髹漆描金镶贝母妆匣。（卒年库中未著，从文本明文：737年，赵盈贞丧满一年祭日。）",
     profile: F(
