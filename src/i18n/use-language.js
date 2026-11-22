@@ -7,6 +7,10 @@ import { setLatinFaces } from './latin-faces';
    網址即事實源：英文鏈接 <base>en/#/chars/minfangcheng 發給誰、在哪刷新都是英文；
    社交平台預覽不跑腳本，故英文 meta、lang 也寫死在 en/index.html 裡。
    站內切換語言不重載：replaceState 換路徑（哈希原樣保留），同步 <html lang> 與標題。
+   replaceState 只改當前一條歷史記錄，此前諸條仍是舊語言的路徑；前進後退於同一文檔內換條、
+   不重載，故每逢 popstate 重讀路徑定語言——不然退回 /#/chars 而界面仍是英文，刷新或轉發
+   即與眼前所見不同。切換語言本身不另記一條（不算一次導航），後退即回上一頁、按上一頁網址之語言。
+   回歸測試：npm run check:history。
    舊版存在 localStorage 的 cy-language 不再讀——否則同一條鏈接在不同人手裡語言不同。
    ============================================================ */
 
@@ -33,6 +37,12 @@ export function useLanguage() {
   const [locale, setLocale] = useState(readLanguage);
   /* 拉丁字表須在繪製前就位，免英文頁先閃一下中文字體的拉丁字 */
   useLayoutEffect(() => { setLatinFaces(locale === 'en'); }, [locale]);
+  /* 前進後退：網址為準 */
+  useEffect(() => {
+    const onPop = () => setLocale(readLanguage());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
   useEffect(() => {
     const lang = locale === 'en' ? 'en' : 'zh';
     document.documentElement.lang = lang;
