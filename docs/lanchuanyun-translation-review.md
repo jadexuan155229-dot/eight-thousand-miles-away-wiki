@@ -12,6 +12,10 @@
 - **「千鹤」是号，不是字**：数据由 `zi` 改 `hao`，卡片随之（中文名号行只余日文读法，号「千鹤」另出；英文作号 “Qianhe (Chizuru, ‘a thousand cranes’)”）。站内检索顺带兼查别号（中英文），千鹤、知节殿、佛爷皆可检得其人。
 - **训诂中文重写**（原文前后次序反了，「另一说」实为本说）：「千鹤」为天策府赐号，取义「千川振迅，鹤目九野」，喻其轻捷矫健与斥候眼目千里之能。又巧合的是，「千鹤」也似日本女名，又与「云」字相应。英文照之：Qianhe was a name bestowed on her by the Tiance Command, taken from the phrase “a thousand rivers, swift on the wing; a crane’s eye over the nine wilds”: a figure for her lightness and agility, and for a scout’s eye that sees a thousand li. By coincidence, Qianhe also reads like a Japanese woman’s name, Chizuru, “a thousand cranes”, and the crane answers the cloud (yun 云) of her given name.
 
+## 作者补稿（2026-11-22）
+
+- 轶事补一条（据「陆羽鸣问题」一稿）：739年屋脊上那句她听不懂的外语，八个音节，记了很多年；「我是谁」如影随形；高堑挑下印石交她论功，军旅生涯第一笔杀获。英文：… the question of who she was followed her all her life: an enemy she had only just met, on the point of death, had asked her a question she could never answer. 详见 [陆羽鸣清单](luyuming-translation-review.md)。
+
 ## 名号与专名
 
 - 英文名 Arashikawa Kumo，号 Qianhe (Chizuru, ‘a thousand cranes’)，另列 Chinese reading: Lanchuan Yun（第三轮所定；千鹤由字改号见上）。正文里「岚川」作 Arashikawa。
