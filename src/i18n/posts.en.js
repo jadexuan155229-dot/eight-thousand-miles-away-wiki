@@ -9,7 +9,8 @@
 //   P3   ranks in Hucker notation in card fields: 从五品下 → rank 5b2.
 // Checked against Hucker by the author (2026-11-22): 兵马使 Commander and 都知兵马使 Supreme Commander
 // (4684), 行军司马 Adjutant (1790, s.v. chün ssu-ma), 都虞候 Inspector-in-chief, 节度副使 Military Vice
-// Commissioner and 都督 Area Commander (777), 护军 Military Protector (2775, sense 4: the merit title). Not in Hucker, so
+// Commissioner and 都督 Area Commander (777), 护军 Military Protector (2775, sense 4: the merit title).
+// 校尉 Commandant (2456: Hucker uses Commandant for both 校尉 and 都尉, told apart by the prefix). Not in Hucker, so
 // our own renderings on his pattern (自拟): 押衙 (7873 has only the Song sense, Lackey), 子将, and the
 // individual merit and prestige titles below. Hucker entry numbers are noted where they apply.
 // 2026-11-22 T0 working draft (docs/t0-review.md).
@@ -42,7 +43,8 @@ export const postsEn = {
   nw: { label: 'Women’s Guard Corps', full: 'The Women’s Guard Corps' },
   yt: { label: 'Yanta Tower', full: 'Yanta Tower' },
 
-  // 天策（天策编制另议：营作 Corps 名而不套苍云层级；校尉、副尉依折冲府）
+  // 天策（天策编制另议：营作 Corps 名而不套苍云层级）。校尉 Commandant 照 Hucker 2456：校尉、都尉 Hucker
+  // 皆作 Commandant，以前缀相别（Commandant of the Heavenly Bow Corps）；副尉 Vice Commandant 同果毅都尉（2034）
   'tc-jl': { label: 'Drill Commissioner', full: 'Drill Commissioner of the Tiance Command', hint: 'One of the Command’s senior officers, in charge of training. Formerly Yang Ning’s post' },
   'tc-bm': { label: 'Commander', full: 'Commander in the Tiance Command', hint: 'One of the Command’s senior officers, in charge of the troops. Formerly Xu Changhai’s post' },
   'tc-bc': { label: 'Military Service Section', full: 'Administrator of the Military Service Section', hint: 'One of the six sections of the old Tiance Command, keeping the muster rolls and assigning duty' },
