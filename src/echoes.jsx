@@ -194,7 +194,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       )}
 
       <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.muted, marginBottom: 6 }}>
-        {shockGist(locale, shock)} <span style={{ color: T.faint }}>· {t("在場姿態")}：{shockAxis(locale, shock)}</span>
+        {shockGist(locale, shock)} <span style={{ color: T.faint }}>· {t("在場姿態")}{locale === "en" ? ": " : "："}{shockAxis(locale, shock)}</span>
       </div>
 
       <div ref={chartRef} style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>

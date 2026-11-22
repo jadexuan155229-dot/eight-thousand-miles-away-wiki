@@ -1,6 +1,15 @@
 // Translation overlay only: never merge into or mutate wiki-data.js.
 // Unresolved readings and editorial decisions: docs/lvdingyi-translation-review.md.
 // Review notes are deliberately not imported into the public profile.
+//
+// Every field is optional and falls back to the Chinese on its own, so a character can be
+// translated in stages (name first, then profile rows, then anecdotes):
+//   name, zi, hao, epithet, birthplace     strings
+//   gloss                                  { passages: [{ work, section, quote }], explanation } or a string
+//   profile                                { 官职身份: '…', … } keyed by the Chinese row label
+//   anecdotes, highlight                   arrays aligned with the Chinese by index; null = not yet
+// Each translated field is stamped with a hash of its Chinese source (src/i18n/stamps.json,
+// npm run i18n:stamp). When the Chinese changes, check-data reports the English as stale.
 export const charactersEn = {
   lvdingyi: {
     name: 'Lü Dingyi',

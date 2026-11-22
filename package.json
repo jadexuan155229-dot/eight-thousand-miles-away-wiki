@@ -10,7 +10,9 @@
     "check-data": "node scripts/check-data.js",
     "fonts": "node scripts/font-chars.js && python3 scripts/subset-fonts.py",
     "swatches": "node scripts/swatch-cards.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "i18n:stamp": "node scripts/i18n-stamp.js",
+    "og": "node scripts/og-image.js"
   },
   "dependencies": {
     "react": "^19.2.7",

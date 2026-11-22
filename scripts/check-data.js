@@ -7,7 +7,7 @@
    錯誤（exit 1）：會導致崩潰或數據靜默丟失的引用錯。
    警告（exit 0）：可疑但站點尚能運行的問題。
    ============================================================ */
-import { fc, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS } from "../src/wiki-data.js";
+import { fc, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "../src/wiki-data.js";
 import { CHAR_TERMS } from "../src/novel/char-terms.js";
 import { SHOCKS, ECHOES } from "../src/echoes-data.js";
 import { FACTIONS, GRANTS, POSTS, POST_FULL, TENURES } from "../src/posts-data.js";
@@ -15,9 +15,20 @@ import { POST_FAC_SLUG, parseRoute, routeHash } from "../src/router.js";
 import { echoModesEn } from "../src/i18n/echoes.en.js";
 import { SEAL_SVG_FILE } from "../src/seals.js";
 import { missingFontChars } from "./font-chars.js";
-import { readdirSync, existsSync } from "node:fs";
+import { readdirSync, existsSync, readFileSync } from "node:fs";
+import { UI_KEYS } from "../src/i18n/ui.js";
+import { charactersEn } from "../src/i18n/characters.en.js";
+import { factionsEn } from "../src/i18n/factions.en.js";
+import { placesEn } from "../src/i18n/places.en.js";
+import { relationsEn } from "../src/i18n/relations.en.js";
+import { eventsEn } from "../src/i18n/events.en.js";
+import { novelEn } from "../src/i18n/novel.en.js";
+import { TIER1 } from "../src/i18n/tiers.js";
+import { NOVELS } from "../src/novel/index.js";
+import { translatedFields, readStamps, hashOf } from "./i18n-fields.js";
 
 const errors = [];
+let coverageLine = "";
 const warns = [];
 const err = (where, msg) => errors.push(`${where}  ${msg}`);
 const warn = (where, msg) => warns.push(`${where}  ${msg}`);
@@ -247,6 +258,70 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   if (Math.max(lo(s1), lo(s2)) < Math.min(hi(s1), hi(s2)) - 1e-6) warn(`TENURES[${i}]/[${j}] ${s1.who}·${s1.post}`, "同人同格任期重疊");
 }
 
+/* ---------- 英譯 ----------
+   英文為覆蓋層（src/i18n/*.en.js），中文庫一字不動。此處查三件事：
+   錯（exit 1）：英譯指向不存在的人物 id、檔案行標。
+   警告：中文已改而英文未核（戳不符）、新譯未蓋戳；以中文為鍵的英譯其鍵已不在庫中（中文改過，英文成孤兒）；
+         站內界面用了 ui.js 沒有的鍵、ui.js 有而站內不用的鍵。
+   末尾另出一行覆蓋率，供分級推進時看進度（docs/english-edition.md）。 */
+{
+  const { fields, problems } = translatedFields();
+  for (const p of problems) (p.level === "err" ? err : warn)(`英譯 ${p.key}`, p.msg);
+  const stamps = readStamps();
+  for (const f of fields) {
+    if (!(f.key in stamps)) warn(`英譯 ${f.key}`, "新譯未蓋戳——跑 npm run i18n:stamp");
+    else if (stamps[f.key] !== hashOf(f.zh)) warn(`英譯 ${f.key}`, `中文已改，英文待核（核後 npm run i18n:stamp -- --restamp ${f.key}）`);
+  }
+  for (const k of Object.keys(stamps)) if (!fields.some((f) => f.key === k)) warn(`英譯戳 ${k}`, "此字段已無英譯——跑 npm run i18n:stamp -- --prune");
+
+  /* 以中文為鍵者：鍵不在庫中即孤兒。年表另給最近似之現題，便於改鍵 */
+  const titles = EVENTS.map((e) => e.title);
+  const near = (k) => {
+    const grams = (x) => new Set([...x].slice(0, -1).map((ch, i) => ch + x[i + 1]));
+    const a = grams(k);
+    let best = null, bs = 0;
+    for (const t of titles) {
+      const b = grams(t);
+      const inter = [...a].filter((g) => b.has(g)).length;
+      const sc = inter / (a.size + b.size - inter || 1);
+      if (sc > bs) { bs = sc; best = t; }
+    }
+    return bs > 0.3 ? `；最近似的現題：「${best.slice(0, 24)}…」` : "";
+  };
+  for (const k of Object.keys(eventsEn)) if (!titles.includes(k)) warn(`英譯 年表「${k.slice(0, 18)}…」`, `題目已不在 EVENTS（中文改過？）${near(k)}`);
+  const placeKeys = new Set([...Object.keys(LOC_COORDS), ...GEO_BASE.labels.map((l) => l.t.replace(/ /g, ""))]);
+  for (const k of Object.keys(placesEn)) if (!placeKeys.has(k)) warn(`英譯 地名「${k}」`, "不在 LOC_COORDS 與底圖標籤之中");
+  const relTypes = new Set(RELATIONS.flatMap((r) => r.t.split("·")));
+  for (const k of Object.keys(relationsEn)) if (!relTypes.has(k)) warn(`英譯 關係類型「${k}」`, "庫中已無此類型");
+  const facs = new Set([...CHARACTERS.flatMap((c) => c.belong), ...EVENTS.flatMap((e) => e.fac || [])]);
+  for (const f of facs) if (!factionsEn[f]) warn(`英譯 門派「${f}」`, "尚無英譯（i18n/factions.en.js）——英文界面將顯中文");
+  for (const k of Object.keys(factionsEn)) if (!facs.has(k)) warn(`英譯 門派「${k}」`, "庫中已無此門派");
+  const novelTitles = new Set(NOVELS.flatMap((n) => [n.tag, n.title, ...n.chapters.flatMap((ch) => [ch.title, ...(ch.chapters || []).map((x) => x.title)])]));
+  for (const k of Object.keys(novelEn)) if (!novelTitles.has(k)) warn(`英譯 文庫「${k}」`, "文庫結構中已無此題");
+
+  /* 界面字串：靜態掃 t("…")（余波頁另用 echoes.en.js，不在此列）；動態鍵（t(label) 之類）以「源碼中出現此字串」為用 */
+  const SRC_DIR = new URL("../src/", import.meta.url);
+  const srcText = ["wiki.jsx", "posts.jsx", "novel-reader.jsx", "landing.jsx"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
+  /* 動態鍵有出自數據層者：檔案八目之行標（wiki-data.js 之 F）、任期類別（posts-data.js 之 kind） */
+  const dataText = ["wiki-data.js", "posts-data.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
+  const used = new Set([...srcText.matchAll(/\b(?:t|t_|tr)\(\s*"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]));
+  const uiSet = new Set(UI_KEYS);
+  for (const k of used) if (!uiSet.has(k)) warn(`界面英譯「${k}」`, "站內在用而 i18n/ui.js 無此鍵——英文界面將顯中文");
+  for (const k of UI_KEYS) if (!used.has(k) && !srcText.includes(`"${k}"`) && !dataText.includes(`"${k}"`)) warn(`界面英譯「${k}」`, "ui.js 有而站內不用——中文鍵改過？");
+
+  /* 覆蓋率 */
+  const ids = new Set(CHARACTERS.map((c) => c.id));
+  const trd = Object.entries(charactersEn).filter(([id]) => ids.has(id));
+  const hasProfile = (x) => x.profile && Object.values(x.profile).some((v) => v);
+  const t1 = TIER1.filter((id) => charactersEn[id] && hasProfile(charactersEn[id])).length;
+  const anecTotal = CHARACTERS.reduce((n, c) => n + (c.anecdotes || []).length, 0);
+  const anecDone = fields.filter((f) => /\.anecdotes\.\d+$/.test(f.key)).length;
+  const locDone = Object.keys(LOC_COORDS).filter((l) => placesEn[l]).length;
+  const tenDone = TENURES.filter((x) => x.en).length;
+  const pct = (a, b) => `${a}/${b}`;
+  coverageLine = `英譯覆蓋：界面 ${pct([...used].filter((k) => uiSet.has(k)).length, used.size)} · 人名 ${pct(trd.filter(([, x]) => x.name).length, CHARACTERS.length)} · 檔案 ${pct(trd.filter(([, x]) => hasProfile(x)).length, CHARACTERS.length)}（T1 ${t1}/${TIER1.length}） · 軼事 ${pct(anecDone, anecTotal)} · 年表 ${pct(EVENTS.filter((e) => eventsEn[e.title]).length, EVENTS.length)} · 地名 ${pct(locDone, Object.keys(LOC_COORDS).length)} · 門派 ${pct([...facs].filter((f) => factionsEn[f]).length, facs.size)} · 關係類型 ${pct([...relTypes].filter((k) => relationsEn[k]).length, relTypes.size)} · 任期 ${pct(tenDone, TENURES.length)}`;
+}
+
 /* ---------- 字體子集 ----------
    明朝、正楷、老宋只帶字符表所列之字，表外之字靜默回落系統字體——
    站內用字有表外者即報；npm run fonts 補表並重裁子集後自消。 */
@@ -259,6 +334,7 @@ if (missingGlyphs.length) {
 /* ---------- 結果 ---------- */
 for (const w of warns) console.log(`  ⚠ ${w}`);
 for (const e of errors) console.log(`  ✗ ${e}`);
+if (coverageLine) console.log(coverageLine);
 console.log(
   `check-data：人物 ${CHARACTERS.length} · 事件 ${EVENTS.length} · 關係 ${RELATIONS.length} · 地點 ${Object.keys(LOC_COORDS).length} · 補點 ${Object.values(TRACK_SUPPLEMENTS).flat().length} · 詞條 ${CHAR_TERMS.length} · 震源 ${SHOCKS.length} · 回響 ${ECHOES.length}（待核 ${ECHOES.filter((x) => x.draft).length}） · 任期 ${TENURES.length}（待核 ${TENURES.filter((t) => t.draft).length}） · 勳散 ${GRANTS.length}（待核 ${GRANTS.filter((g) => g.draft).length}） —— ` +
   (errors.length ? `${errors.length} 錯` : "無錯") + (warns.length ? `，${warns.length} 警告` : "")

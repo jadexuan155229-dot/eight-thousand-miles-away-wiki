@@ -15,6 +15,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GEO_BASE, LOC_COORDS } from "./wiki-data.js";
 import { serif, useCoarsePointer } from "./theme.js";
+import { useLocale, useT } from "./i18n/locale";
 
 /* ---------------- 輿圖紋理 ---------------- */
 
@@ -678,6 +679,11 @@ const DARK = 0.94;      /* 掩暗層底色不透明度：留 6% 微透，暗中�
 const TRAIL_MS = 1500;  /* 燭光行過之處，墨色徐徐合攏的時長 */
 
 export default function Landing({ onEnter }) {
+  /* 英文界面：題字、印文、副題仍作中文（屬作品之題，英译待作者定，見 docs/english-edition.md）；
+     讀屏標籤與操作提示改英文——提示是告诉人怎么進站的，不能只有中文 */
+  const locale = useLocale();
+  const t = useT();
+  const en = locale === "en";
   const wrapRef = useRef(null);
   const farRef = useRef(null);
   const mapRef = useRef(null);
@@ -868,7 +874,7 @@ export default function Landing({ onEnter }) {
       ref={wrapRef}
       className={"cy-landing" + (leaving ? " cy-landing--leave" : "")}
       onTransitionEnd={(e) => { if (leavingRef.current && e.target === wrapRef.current) finish(); }}
-      aria-label="入站定場：八千里路"
+      aria-label={t("入站定場：八千里路")}
     >
       <canvas ref={farRef} className="cy-scene" aria-hidden="true" />
       <canvas ref={mapRef} className="cy-scene" aria-hidden="true" />
@@ -880,15 +886,15 @@ export default function Landing({ onEnter }) {
       <div ref={glowRef} className="cy-glow" aria-hidden="true" style={{ transform: "translate3d(-999px,-999px,0)" }} />
       <div className="cy-side">
         <div className="cy-titlecol">
-          <h1 className="cy-title">八千里路</h1>
-          <button type="button" className="cy-seal" onClick={enter} aria-label="入卷：進入檔案站">
-            <span>入卷</span>
+          <h1 className="cy-title" lang="zh">八千里路</h1>
+          <button type="button" className="cy-seal" onClick={enter} aria-label={t("入卷：進入檔案站")}>
+            <span lang="zh">入卷</span>
           </button>
         </div>
-        <div className="cy-subtitle">士兵、殺手和大夫</div>
+        <div className="cy-subtitle" lang="zh">士兵、殺手和大夫</div>
       </div>
-      <div className={"cy-hint" + (moved ? " cy-hint--off" : "")}>
-        <span>{coarse ? "拂過屏幕，燭照山河 · 鈐印入卷" : "移燭照覽山河 · 鈐印入卷"}</span>
+      <div className={"cy-hint" + (moved ? " cy-hint--off" : "")} lang={en ? "en" : undefined}>
+        <span>{coarse ? t("拂過屏幕，燭照山河 · 鈐印入卷") : t("移燭照覽山河 · 鈐印入卷")}</span>
       </div>
     </div>
   );
