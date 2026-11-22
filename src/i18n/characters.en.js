@@ -6,6 +6,9 @@
 // translated in stages (name first, then profile rows, then anecdotes):
 //   name, zi, hao, epithet, birthplace     strings
 //   gloss                                  { passages: [{ work, section, quote }], explanation } or a string
+//   names                                  { 汉名: '…' } — English for a Chinese-script entry of c.names
+//                                          (Latin-script entries such as 本名 Rukh are used as they are)
+//   alt                                    [[label, value]] shown in English only (岚川云: 中文读法 Lanchuan Yun)
 //   profile                                { 官职身份: '…', … } keyed by the Chinese row label
 //   anecdotes, highlight                   arrays aligned with the Chinese by index; null = not yet,
 //                                          false = deliberately left untranslated and hidden in English
@@ -72,14 +75,14 @@ export const charactersEn = {
   litingze: { name: 'Li Tingze', zi: 'Runfu' }, // 李庭泽
   yujia: { name: 'Yu Jia', zi: 'Lubin' }, // 虞嘉
   bailin: { name: 'Bai Lin', zi: 'Qishang' }, // 白霖
-  chengqian: { name: 'Cheng Qian' }, // 程骞
+  chengqian: { name: 'Cheng Qian', zi: 'Sizheng' }, // 程骞
   chengkai: { name: 'Cheng Kai', zi: 'Ziyang' }, // 程凯
   qisheng: { name: 'Qi Sheng', zi: 'Guangming' }, // 齐晟
   chengfeng: { name: 'Cheng Feng', zi: 'Lüduan' }, // 程锋
   weiqian: { name: 'Wei Qian', zi: 'Siyi' }, // 魏谦
   xiangjing: { name: 'Xiang Jing', zi: 'Yangjie' }, // 项旌
   mayi: { name: 'Ma Yi', zi: 'Tunan' }, // 马翊
-  chengyu: { name: 'Cheng Yu' }, // 程宇
+  chengyu: { name: 'Cheng Yu', zi: 'Zhenluo' }, // 程宇
   chengzhao: { name: 'Cheng Zhao', zi: 'Gulian' }, // 程钊
   chengduo: { name: 'Cheng Duo', zi: 'Mingzhi' }, // 程铎
   chengjun: { name: 'Cheng Jun', zi: 'Weizhen' }, // 程钧
@@ -91,7 +94,7 @@ export const charactersEn = {
   qinhui: { name: 'Qin Hui' }, // 秦徽
   zswq: { name: 'Zhangsun Wangqing' }, // 长孙忘情
   wbk: { name: 'Wang Bukong' }, // 王不空
-  litingshen: { name: 'Li Tingshen' }, // 李庭深
+  litingshen: { name: 'Li Tingshen', zi: 'Hongjuan' }, // 李庭深
   luweilou: { name: 'Lu Weilou' }, // 陆危楼
   luyuming: { name: 'Lu Yuming' }, // 陆羽鸣
   lunanxin: { name: 'Lu Nanxin' }, // 陆南信
@@ -140,5 +143,31 @@ export const charactersEn = {
   lihanxin: { name: 'Li Hanxin', zi: 'Yanxuan' }, // 李翰昕
   zhaoyingzhen: { name: 'Zhao Yingzhen' }, // 赵盈贞
   zhaotingzhi: { name: 'Zhao Tingzhi' }, // 赵廷之
+  // ---- 2026-11-22 第二轮：作者定（波斯音译名、苗人用本名；日本人物用日语读法；单名、他族名） ----
+  langdien: { name: 'Rādīn' }, // 朗迪恩
+  luya: { name: 'Royā' }, // 鲁雅
+  maneili: { name: 'Māneli' }, // 玛奈丽
+  geli: { name: 'Golī' }, // 歌莉
+  nuolangqi: { name: 'Nof Langb Chib' }, // 诺朗齐
+  naliu: { name: 'Nax Liuf' }, // 娜留
+  peiliu: { name: 'Pet Liuf' }, // 佩留
+  yangxin: { name: 'Vangb Xenb' }, // 央馨
+  manran: { name: 'Mait Rangs' }, // 曼冉
+  niya: { name: 'Nyax Vos' }, // 尼亚
+  zhuowo: { name: 'Zhod Vos' }, // 卓沃
+  mangwo: { name: 'Mangx Vos' }, // 芒沃
+  niuwo: { name: 'Hniub Vos' }, // 纽沃
+  caiyao: { name: 'Ncaik Ya' }, // 彩瑶
+  lanchuanyun: { name: 'Arashikawa Kumo', zi: 'Qianhe', alt: [['中文读法', 'Lanchuan Yun']] }, // 岚川云
+  jingyan: { name: 'Arashikawa Yasuhiko' }, // 岚川靖彦
+  linyeshi: { name: 'Hayashi Kyōya' }, // 林叶矢
+  haruyama: { name: 'Haruyama Haruka', zi: 'Mianshu (Nemugi)', names: { 汉名: 'Fang Yao' } }, // 春山遥
+  ahui: { name: 'Ahui' }, // 阿辉
+  mokun: { name: 'Mokun' }, // 墨昆
+  ahuilang: { name: 'Ahui Lang' }, // 阿会朗
+  helan: { name: 'He Lan', zi: 'Guxin' }, // 贺兰
+  qutuzhen: { name: 'Qutu Zhen' }, // 屈突真
+  tongsu: { name: 'Tongsu' }, // 彤素
+  lizhu: { name: 'Lizhu' }, // 离朱
 };
 export const characterTranslation = (locale, id) => locale === 'en' ? charactersEn[id] ?? null : null;

@@ -38,6 +38,40 @@ export function listField(locale, c, key) {
     .filter(Boolean);
 }
 
+/* ---------- 名號：字、本名、波斯语名、日文读法、汉名（作者 2026-11-22 定） ----------
+   數據層 c.zi 只放漢式表字；其餘名號放 c.names = [[標籤, 值], …]：
+     本名     明教波斯人、苗人之原名（Rukh、Nof Langb Chib）——漢名乃後取或音译
+     波斯语名 以漢名為主、另有波斯語名者（程骞、程宇、唐煦、唐熙）
+     日文读法 日本人物之名的日語讀法（岚川云 Arashikawa Kumo、阿辉 Hikaru）
+     汉名     入中土後所取漢名（春山遥入蓬莱後之方遥）
+   顯示次序：汉名、字、其餘。 */
+export { NAME_LABELS, ALT_LABELS } from "./name-labels";
+export function nameItems(c) {
+  const ns = c.names || [];
+  return [...ns.filter(([k]) => k === "汉名"), ...(c.zi ? [["字", c.zi]] : []), ...ns.filter(([k]) => k !== "汉名")];
+}
+/* 供檢索：諸名號之值連成一串 */
+export const namesText = (c) => nameItems(c).map(([, v]) => v).join(" ");
+/* 英文：[標籤, 值, 是否回落中文]。
+   字、汉名查覆蓋層（zi、names.汉名），無則回落；拉丁字母之名號原樣用。
+   名號之值即英文名者略去（苗人本名、日本人物日文读法已作英文名，免重出）。
+   覆蓋層另可有 alt：[[標籤, 值]]，只在英文出（岚川云之中文读法 Lanchuan Yun）。 */
+export function nameItemsEn(c) {
+  const tr = charactersEn[c.id] || {};
+  const same = (v) => has(tr.name) && v.toLowerCase() === tr.name.toLowerCase();
+  const out = [];
+  for (const [k, v] of nameItems(c)) {
+    if (k === "字") out.push(has(tr.zi) ? [k, tr.zi, false] : [k, v, true]);
+    else if (k === "汉名") out.push(has(tr.names?.汉名) ? [k, tr.names.汉名, false] : [k, v, true]);
+    else if (!same(v)) out.push([k, v, /[\u4e00-\u9fff]/.test(v)]);
+  }
+  for (const [k, v] of tr.alt || []) out.push([k, v, false]);
+  return out;
+}
+
+/* 名號一行出不出：英文下名號皆已併入英文名者不出（見 names.jsx） */
+export const hasCourtesyLine = (locale, c) => (EN(locale) ? nameItems(c).length === 0 || nameItemsEn(c).length > 0 : true);
+
 /* ---------- 門派、地名、關係類型 ---------- */
 export const facName = (locale, f) => (EN(locale) ? factionsEn[f] ?? f : f);
 export const placeName = (locale, l) => (EN(locale) ? placesEn[l] ?? l : l);

@@ -54,9 +54,14 @@ T0 做完，所有图表页（舆图、行星、群像、编制、余波）在�
 - **年月体例**：月份作序数（10th month）；年号作 Tianbao 14；年中改元注 Zhide from the 7th month。
 - **图幅说明文字**、**About 页**：照现稿。作品缘起于剑三苍云雪中关城、薛直为剑三原有人物两处，作者另行确认。
 
+## 第三轮已定（2026-11-22）：名号
+
+- 明教波斯人、苗人的原名不再写在「字」里，中文卡标 **本名**；程骞、程宇两样都有，保留「字」另标 **波斯语名**；唐煦、唐熙同。日本人物标 **日文读法**；春山遥入蓬莱后之汉名方遥标 **汉名**，字作「眠树」。数据结构与各人细目见 [names-draft.md](names-draft.md)「第三轮已定」。
+- 英文名：汉名本是音译者用本名（Rādīn），苗人用 RPA，日本人物用日语读法（Arashikawa Kumo，岚川云另列 Chinese reading: Lanchuan Yun），墨昆 Mokun，阿会朗 Ahui Lang，贺兰 He Lan，弘隽 Hongjuan。
+
 ## 下一步（T0）
 
-- 124 个人名与字：拼音初稿已出，99 人上线（读音与作者所取 id 逐一核过）；波斯、苗、日本人物及少数单名待作者定，见 [names-draft.md](names-draft.md)。
+- 124 个人名：已全部上线。
 - 14 个称号、10 个别号：作者口吻，逐个定。
 - 其余 40 个地名：县作 county，道作 Circuit，郡作 Commandery（同吕定仪档案「Fengzhou (Jiuyuan Commandery), Guannei Circuit」之例）；Notion 地名表已有者先照录。
 - 75 种关系类型：作者逐个定。

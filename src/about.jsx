@@ -76,7 +76,7 @@ export default function About({ onNav }) {
         The English edition is being built in stages. The interface is in English throughout; profiles and the chronology are being translated a character at a time, beginning with the people at the centre of the work, and anything not yet translated appears in the original Chinese. The novel itself is not being translated for now.
       </P>
       <P>
-        Names are given in pinyin, family name first. The sects are named on one consistent scheme (Wanhua Valley, the Tiance Command, the Beggars’ Guild and so on). Official titles follow Charles O. Hucker, <I>A Dictionary of Official Titles in Imperial China</I> (1985).
+        Names are given in pinyin, family name first. Not everyone in the archive is Han Chinese, though. Where the Chinese characters only write down a name from another language, the person appears under that name: the Persian Rādīn, the Miao Nyax Vos, the Japanese Arashikawa Kumo. Where someone holds a Chinese name as well as another, the profile gives the second alongside it, as an original Persian name or a Japanese reading. The sects are named on one consistent scheme (Wanhua Valley, the Tiance Command, the Beggars’ Guild and so on). Official titles follow Charles O. Hucker, <I>A Dictionary of Official Titles in Imperial China</I> (1985).
       </P>
     </article>
   );

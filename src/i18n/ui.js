@@ -30,6 +30,8 @@ const en = {
 
   /* ---------- 人物檔案 ---------- */
   生卒: 'Lifespan', 出身: 'Birthplace', 事件: 'Events', 字: 'Courtesy name',
+  /* 名號標籤（wiki-data.js 之 names，見 i18n/content.js）；中文读法只見於英文覆蓋層之 alt */
+  本名: 'Original name', 波斯语名: 'Persian name', 日文读法: 'Japanese reading', 汉名: 'Chinese name', 中文读法: 'Chinese reading',
   字号待补: 'Courtesy name not yet recorded', 门派待补: 'Faction not yet recorded',
   品评: 'One-character appraisal',
   名字訓詁: 'Name and allusions', 檔案: 'Profile',
@@ -137,7 +139,7 @@ const en = {
   '拂過屏幕，燭照山河 · 鈐印入卷': 'Swipe to light the land · tap the seal to enter',
 
   /* ---------- 說明文字（作者已審 2026-11-22；中文原段在 JSX 內） ---------- */
-  行星說明: 'A binary system: Min Fangcheng (the Cangyun line) and Cheng Kai (the Tiance line) share the centre as equals. The orbits are generated from the number of events each person shares with each centre in the chronology, and so are circle sizes and line weights (all by square root); the length of a ring’s arc shows how many people sit on it. Hover over anyone to see the exact count. A line to a centre is coloured by that person’s relationship with the centre (where there are several, the main one; hover to see them all); a grey line means shared events with no recorded relationship. Lan Chuanyun, Lu Wanyue and Lu Yuming alone are secondary stars: their circles are sized between the two centres and everyone else, while their orbits still follow shared events, and the relationships among the three are always drawn faintly. Anyone who shares at least two events with each centre is a bridge star, tied to both and given a middle size: a balanced one sits between the two centres, and one leaning toward a centre sits on its side (Chen Ruihe shares two events with each and, by the author’s choice, sits on Cheng Kai’s side). The far orbit is coloured by faction, and named where more than three people of a faction sit together.',
+  行星說明: 'A binary system: Min Fangcheng (the Cangyun line) and Cheng Kai (the Tiance line) share the centre as equals. The orbits are generated from the number of events each person shares with each centre in the chronology, and so are circle sizes and line weights (all by square root); the length of a ring’s arc shows how many people sit on it. Hover over anyone to see the exact count. A line to a centre is coloured by that person’s relationship with the centre (where there are several, the main one; hover to see them all); a grey line means shared events with no recorded relationship. Arashikawa Kumo, Lu Wanyue and Lu Yuming alone are secondary stars: their circles are sized between the two centres and everyone else, while their orbits still follow shared events, and the relationships among the three are always drawn faintly. Anyone who shares at least two events with each centre is a bridge star, tied to both and given a middle size: a balanced one sits between the two centres, and one leaning toward a centre sits on its side (Chen Ruihe shares two events with each and, by the author’s choice, sits on Cheng Kai’s side). The far orbit is coloured by faction, and named where more than three people of a faction sit together.',
   '左下圖例可指：': 'The legend at lower left is interactive:',
   '懸停一類預覽，點選或以鍵盤 Enter 常亮（再點或 Esc 收起），全圖只亮此類關係': 'hover over a type to preview it, click it or press Enter to pin it (click again or press Esc to clear), and the chart shows only that kind of relationship',
   '輕觸一類，全圖只亮此類關係（再觸收起）': 'tap a type and the chart shows only that kind of relationship (tap again to clear)',

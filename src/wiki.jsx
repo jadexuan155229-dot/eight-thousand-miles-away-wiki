@@ -19,8 +19,9 @@ import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLocale, useSetLocale, useT } from "./i18n/locale";
 import { eventCountText, libraryCountText } from "./i18n/ui";
-import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage } from "./i18n/content";
+import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage, nameItems, nameItemsEn, namesText, hasCourtesyLine } from "./i18n/content";
 import { Zh, Tx } from "./i18n/zh";
+import { CourtesyLine } from "./i18n/names";
 
 /* ============================================================
    八千里路 · 人山人海 檔案 — 可視化站點原型 v4
@@ -277,11 +278,9 @@ function NameLine({ c, locale }) {
     ? <>{charName(locale, c)} <span className="profile-hanzi" lang="zh">{c.name}</span></>
     : <Zh>{c.name}</Zh>;
 }
-function CourtesyText({ c, locale, t }) {
-  if (!c.zi) return t("字号待补");
-  if (locale !== "en") return `字 ${c.zi}`;
-  const [zi, zh] = charField(locale, c, "zi");
-  return <>{t("字")}: {zh ? <Zh>{zi}</Zh> : zi}</>;
+/* 名號一行：字、本名、波斯语名、日文读法、汉名，見 i18n/names.jsx */
+function CourtesyText({ c }) {
+  return <CourtesyLine c={c} />;
 }
 function CharCard({ c, onOpen }) {
   const locale = useLocale();
@@ -302,7 +301,7 @@ function CharCard({ c, onOpen }) {
     >
       {!tt && (
         <div style={{ writingMode: "vertical-rl", fontFamily: "HuiwenZhengKai", fontSize: 12, letterSpacing: "0.35em", color: T.faint, borderRight: `1px solid ${T.line}`, paddingRight: 8, minHeight: 88 }}>
-          <CourtesyText c={c} locale={locale} t={t} />
+          <CourtesyText c={c} />
         </div>
       )}
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -311,7 +310,7 @@ function CharCard({ c, onOpen }) {
             所形成的間距（約 75px）相當。原版諸卡欄距 10 不變 */}
         <div className="flex items-baseline flex-wrap profile-heading" style={{ gap: tt ? 14 : 10 }}>
           <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 22, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}><NameLine c={c} locale={locale} /></span>
-          {tt && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: c.zi ? T.muted : T.faint, marginRight: 6 }}><CourtesyText c={c} locale={locale} t={t} /></span>}
+          {tt && hasCourtesyLine(locale, c) && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: nameItems(c).length ? T.muted : T.faint, marginRight: 6 }}><CourtesyText c={c} /></span>}
           {!tt && evCount > 0 && <span style={{ fontSize: 11, color: T.faint }}>{eventCountText(locale, evCount)}</span>}
           <Seal ch={c.pin} size={15} svg={SEAL_SVG_FILE[c.id]} />
         </div>
@@ -544,7 +543,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             兩線相距僅三十餘像素，並出則刺目。馬翊、程凱等無稱號者，此線正補其位 */}
         <div className={`flex items-baseline flex-wrap profile-heading${tt && !c.epithet ? " tt-rule" : ""}`} style={{ gap: tt ? 14 : 12, paddingRight: 70 }}>
           <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 30, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}><NameLine c={c} locale={locale} /></span>
-          {c.zi && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 15, color: T.muted, marginLeft: tt ? 6 : 0 }}><CourtesyText c={c} locale={locale} t={t} /></span>}
+          {nameItems(c).length > 0 && hasCourtesyLine(locale, c) && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 15, color: T.muted, marginLeft: tt ? 6 : 0 }}><CourtesyText c={c} /></span>}
           {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, color: T.faint }}>{tr?.hao ? `“${tr.hao}”` : <Zh>「{c.hao}」</Zh>}</span>}
         </div>
         {c.epithet && (
@@ -980,7 +979,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
       e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
       eraOfYM(e.year, e.month).includes(kw) ||
       enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || (byId[id].zi || "").includes(kw) || enHit(charName(locale, byId[id])));
+      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" || /* 已選人物則取其完整編年 */
       fsel === "all" ||
@@ -2340,7 +2339,7 @@ function GeoMap({ onOpenChar }) {
       e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
       eraOfYM(e.year, e.month).includes(kw) ||
       enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || (byId[id].zi || "").includes(kw) || enHit(charName(locale, byId[id])));
+      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" ||
       fsel === "all" ||
@@ -2921,11 +2920,12 @@ export default function Wiki({ onOpenLanding }) {
       return (faction === "全部" || c.belong.includes(faction)) &&
       (q === "" ||
         c.name.includes(q) ||
-        (c.zi || "").includes(q) ||
+        namesText(c).includes(q) ||
         (c.epithet || "").includes(q) ||
         (c.pin || "").includes(q) ||
         (c.birthplace || "").includes(q) ||
-        enHit(tr?.name) || enHit(tr?.zi) || enHit(tr?.epithet) || enHit(tr?.birthplace));
+        enHit(tr?.name) || enHit(tr?.zi) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
+        (en && nameItemsEn(c).some(([, v]) => enHit(v))));
     }
   );
 

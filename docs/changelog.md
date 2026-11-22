@@ -2,6 +2,13 @@
 
 ## 2026-11-22
 
+### 名号分标：本名、波斯语名、日文读法、汉名；人名全部上线
+
+- **中文站亦改**：明教波斯人、苗人的原名原先写在「字」里，卡片上标作「字 Rukh」，不确。今 `zi` 只放汉式表字，其余名号移入新栏 `names`，标签四种：本名（陆羽鸣 Rukh、诺朗齐 Nof Langb Chib）、波斯语名（程骞「字 斯征 · 波斯语名 Parvāz」、唐煦、唐熙）、日文读法（岚川云 Arashikawa Kumo、阿辉 Hikaru）、汉名（春山遥入蓬莱后之方遥；字由「方眠树」改作「眠树」）。卡片、详情、文库批注同用一行；检索兼查各名号。
+- **英文**：余下 25 人上线，124 人全部有英文名。音译者用本名（Rādīn、Royā、Māneli、Golī），苗人用 RPA，日本人物用日语读法（Arashikawa Kumo、Arashikawa Yasuhiko、Hayashi Kyōya、Haruyama Haruka），阿辉 Ahui、墨昆 Mokun、阿会朗 Ahui Lang、贺兰 He Lan、屈突真 Qutu Zhen、彤素 Tongsu、离朱 Lizhu；表字补斯征 Sizheng、镇洛 Zhenluo、弘隽 Hongjuan、谷馨 Guxin、千鹤 Qianhe、眠树 Mianshu (Nemugi)。名号已即英文名者英文卡不重出；岚川云另列 Chinese reading: Lanchuan Yun。About 页补一句非汉人名的体例。
+- **字体**：ō、誰补进字符表，重裁三枚中文子集；英文拉丁字加拉丁扩展一面（Literata latin-ext，约 43KB，仅英文界面按需加载）。
+- check-data 校验名号标签；`names` 纳入英译盖戳。
+
 ### 英文版：人名拼音初稿；第二轮定名
 
 - **人名**：124 人出拼音初稿（pypinyin 按词取音，姓前名后、名连写，吕作 Lü，复姓连写），读音与作者手取的 id 逐一比对，不合者从 id（齐晟 Qi Sheng、叶泊秋 Ye Boqiu）。99 人上线、其中 67 人连表字；波斯本名的标法、苗人用苗文还是拼音、5 位日本人物的读法、几个单名与一个表字待作者定，见 [docs/names-draft.md](names-draft.md)。

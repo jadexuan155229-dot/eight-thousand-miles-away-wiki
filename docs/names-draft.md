@@ -3,71 +3,54 @@
 2026-11-22 出稿。方法：pypinyin 按词取读音，姓在前、名连写（Min Fangcheng）；吕作 Lü；复姓连写（Zhangsun、Lifei、Qutu）；表字连写首字母大写（Heng、Zhiwei）。
 读音另与作者所取的人物 id 逐一比对——id 本是作者手打的拼音（qisheng、yeboqiu），与拼音库默认读法不合时从 id：齐晟作 Qi Sheng（不作 Qi Cheng）、叶泊秋作 Ye Boqiu（不作 Ye Poqiu）；薛褚 Xue Chu、杜徵 Du Zheng 亦由 id 印证。
 
-**已上线 99 人**（其中 67 人连表字），见文末总表。下列 **待定** 者暂不上线，英文界面仍显中文。
+**124 人全部上线**（第三轮定名后）。总表见文末；第三轮所定诸人另列于下。
 
-## 待定：需要作者拍板
+## 第三轮已定（作者 2026-11-22）
 
-### 一、波斯／西域人物（我的建议：分两种）
+### 名号的数据结构
 
-1. **汉姓汉名者**（陆危楼一家、程骞、程宇、唐煦、唐熙）：英文名用汉名拼音（已上线，Lu Yuming 等）。数据里本名写在「字」一栏（陆羽鸣 Rukh、程骞「斯征 Parvāz」），英文界面眼下会标成 "Courtesy name: Rukh"，标签不对。建议：英文下「字」栏里的拉丁字母部分另标 **Persian name**，程骞、程宇这样两样都有的，并列 "Courtesy name: Sizheng · Persian name: Parvāz"。需要你确认：这几个本名是否都可统称 Persian name。
-2. **汉名本是音译者**（朗迪恩、鲁雅、玛奈丽、歌莉）：建议英文直接用本名，汉名并列——拼音音译之音译，是二次走样。
+`wiki-data.js` 的 `zi` 只放汉式表字；其余名号放 `names: [[标签, 值], …]`，标签只许四种（`src/i18n/name-labels.js`，check-data 校验）：
 
-| 中文 | 本名（建议英文名） | 拼音（不建议） |
+| 标签 | 用于 | 英文标签 |
 |---|---|---|
-| 朗迪恩 | Rādīn | Lang Di'en |
-| 鲁雅 | Royā | Lu Ya |
-| 玛奈丽 | Māneli | Ma Naili |
-| 歌莉 | Golī | Ge Li |
+| 本名 | 明教波斯人、苗人的原名（汉名是后取或音译） | Original name |
+| 波斯语名 | 以汉名为主、另有波斯语名者 | Persian name |
+| 日文读法 | 日本人物之名的日语读法 | Japanese reading |
+| 汉名 | 入中土后所取汉名 | Chinese name |
 
-### 二、苗人（10 人）
+中文卡片上一行作「汉名 方遥 · 字 眠树 · 日文读法 Haruyama Haruka」（汉名在字前）；没有任何名号的仍作「字号待补」。英文卡片上，名号的值已经就是英文名的（苗人本名、日本人物的日文读法、音译者的本名），不再重出。英文覆盖层另可加 `alt`（只在英文出），眼下只有岚川云的 **Chinese reading: Lanchuan Yun**。检索兼查各名号。
 
-建议英文名用数据里已有的苗文（RPA 拼写），汉名并列。汉名本是苗名的音译，再转拼音（Nuo Langqi）离原名更远；RPA 词尾的声调字母（-b、-f、-x、-s）英文读者读来陌生，但那是苗文正字，不宜去掉。
+### 各人
 
-| 中文 | 苗文（建议英文名） | 拼音（不建议） |
-|---|---|---|
-| 诺朗齐 | Nof Langb Chib | Nuo Langqi |
-| 娜留 | Nax Liuf | Na Liu |
-| 佩留 | Pet Liuf | Pei Liu |
-| 央馨 | Vangb Xenb | Yang Xin |
-| 曼冉 | Mait Rangs | Man Ran |
-| 尼亚 | Nyax Vos | Ni Ya |
-| 卓沃 | Zhod Vos | Zhuo Wo |
-| 芒沃 | Mangx Vos | Mang Wo |
-| 纽沃 | Hniub Vos | Niu Wo |
-| 彩瑶 | Ncaik Ya | Cai Yao |
-
-### 三、日本人物（5 人）：请给读法
-
-这一组我不猜读法。线索只有 id：春山遥作 haruyama（日语读法），其余四人的 id 是汉语拼音。我的倾向：在唐土以汉名行世者用拼音（岚川云长于长安），身在日本者用日语读法。
-
-| 中文 | id | 拼音稿 | 待你给日语读法 |
+| 中文 | 英文名 | 名号（中文卡） | 英文卡名号行 |
 |---|---|---|---|
-| 岚川云（字 千鹤） | lanchuanyun | Lan Chuanyun | |
-| 岚川靖彦 | jingyan | Lan Chuanjingyan | |
-| 林叶矢 | linyeshi | Lin Yeshi | |
-| 春山遥（字 方眠树） | haruyama | Chun Shanyao | |
-| 阿辉 | ahui | A Hui | |
+| 陆羽鸣 陆南信 陆晚月 陆灵 陆隐 陆晓 | 汉名拼音（Lu Yuming…） | 本名 Rukh / Nasim / Mahtāb / Jānān / Penhān / Farzīn | Original name: … |
+| 程骞 | Cheng Qian | 字 斯征 · 波斯语名 Parvāz | Courtesy name: Sizheng · Persian name: Parvāz |
+| 程宇 | Cheng Yu | 字 镇洛 · 波斯语名 Āsemūn | Courtesy name: Zhenluo · Persian name: Āsemūn |
+| 唐煦 / 唐熙 | Tang Xu / Tang Xi | 波斯语名 Dārā / Tiyām | Persian name: … |
+| 朗迪恩 鲁雅 玛奈丽 歌莉 | **本名**：Rādīn、Royā、Māneli、Golī | 本名 … | （本名即英文名，不重出） |
+| 苗人 10 人 | **苗文（RPA）**：Nof Langb Chib 等，见文末总表 | 本名 … | （同上） |
+| 岚川云（字 千鹤） | **Arashikawa Kumo** | 字 千鹤 · 日文读法 Arashikawa Kumo | Courtesy name: Qianhe · Chinese reading: Lanchuan Yun |
+| 岚川靖彦 | Arashikawa Yasuhiko（やすひこ） | 日文读法 Arashikawa Yasuhiko | — |
+| 林叶矢 | Hayashi Kyōya（きょうや） | 日文读法 Hayashi Kyōya | — |
+| 春山遥 | Haruyama Haruka | 汉名 方遥 · 字 眠树 · 日文读法 Haruyama Haruka | Chinese name: Fang Yao · Courtesy name: Mianshu (Nemugi) |
+| 阿辉 | Ahui | 日文读法 Hikaru（岚川云之母所取汉名；岚川父女与他说日语时读ひかる） | Japanese reading: Hikaru |
+| 墨昆 | Mokun（整体读） | | |
+| 阿会朗 | Ahui Lang（阿会为奚族姓氏） | | |
+| 贺兰（字 谷馨） | He Lan（分写） | | Courtesy name: Guxin |
+| 李庭深（字 弘隽） | Li Tingshen | | Courtesy name: Hongjuan（隽读 juàn） |
+| 屈突真 / 彤素 / 离朱 | Qutu Zhen / Tongsu / Lizhu | | |
 
-> 注：行星关系图的英文说明里已写了 "Lan Chuanyun"，岚川云的读法定了之后一并改。
+**日本人物英文名一律用日语读法**（岚川云的汉语读法另作 Chinese reading 列出）；阿辉的汉名本是汉人母亲所取，英文名用拼音 Ahui，日语读法 Hikaru 另列。这一条若想反过来（如阿辉英文名作 Hikaru），改 `characters.en.js` 一行即可。
 
-### 四、他族、单名
+### 字体
 
-| 中文 | 建议 | 理由 |
-|---|---|---|
-| 屈突真 | Qutu Zhen | 屈突为鲜卑复姓，英文史籍通作 Qutu（如屈突通 Qutu Tong） |
-| 墨昆 | Mokun？或 Mo Kun | 若「墨昆」是奚语名的音译，连写作一词；若是汉式姓名，分写 |
-| 阿会朗 | Ahuilang | 奚语名音译，连写作一词 |
-| 彤素 | Tongsu | 单名，无姓，一词 |
-| 离朱 | Lizhu | 同上（离朱亦是《孟子》《庄子》里的明目之人） |
-| 贺兰 | Helan | 名下只有「贺兰」二字，作复姓兼名用，一词 |
-
-### 五、一个表字
-
-李庭深字弘隽：隽读 juàn 还是 jùn？建议 **Hongjuan**——名「庭深」取深，字「弘隽」当取「隽永」之意，与深相应；读 jùn（同「俊」）则名字不相发明。
+ō（Kyōya）原不在中文字体子集里，已补进字符表并重裁三枚子集（顺手补上久缺的「誰」）。英文界面的拉丁字另加拉丁扩展一面（Literata latin-ext），ā、ō 不再落回中文字体自带的字形。
 
 ## 尚未动的
 
 - 14 个称号、10 个别号：作者口吻，逐个定（下一轮）。
+- 岚川云在行星关系图英文说明里已改作 Arashikawa Kumo。
 
 ## 已上线总表
 

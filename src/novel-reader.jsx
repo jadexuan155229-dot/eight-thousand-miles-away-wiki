@@ -4,7 +4,8 @@ import { NOVELS, FLAT, loadTexts } from "./novel";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { useLocale, useT } from "./i18n/locale";
-import { charName, hasEnName, facName, novelTitle } from "./i18n/content";
+import { charName, hasEnName, facName, novelTitle, nameItems, hasCourtesyLine } from "./i18n/content";
+import { CourtesyLine } from "./i18n/names";
 
 const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
 const fcText = (f) => toneText(fcRaw(f)); /* 作字時用：素紙下守 3:1 */
@@ -227,7 +228,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
           <span style={{ fontFamily: "HuiwenMingChao", fontSize: 17, fontWeight: 700, color: T.ink }}>{c.name}</span>
           {hasEnName(locale, c) && <span lang="en" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: T.muted }}>{charName(locale, c)}</span>}
-          {c.zi && <span style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.muted }}>{t("字")}{locale === "en" ? ": " : " "}{c.zi}</span>}
+          {nameItems(c).length > 0 && hasCourtesyLine(locale, c) && <span style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.muted }}><CourtesyLine c={c} /></span>}
           {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>「{c.hao}」</span>}
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>

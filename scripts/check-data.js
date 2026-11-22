@@ -24,6 +24,7 @@ import { relationsEn } from "../src/i18n/relations.en.js";
 import { eventsEn } from "../src/i18n/events.en.js";
 import { novelEn } from "../src/i18n/novel.en.js";
 import { TIER1 } from "../src/i18n/tiers.js";
+import { NAME_LABELS, ALT_LABELS } from "../src/i18n/name-labels.js";
 import { NOVELS } from "../src/novel/index.js";
 import { translatedFields, readStamps, hashOf } from "./i18n-fields.js";
 
@@ -299,9 +300,16 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   const novelTitles = new Set(NOVELS.flatMap((n) => [n.tag, n.title, ...n.chapters.flatMap((ch) => [ch.title, ...(ch.chapters || []).map((x) => x.title)])]));
   for (const k of Object.keys(novelEn)) if (!novelTitles.has(k)) warn(`英譯 文庫「${k}」`, "文庫結構中已無此題");
 
+  /* 名號標籤：數據層 names 只許 NAME_LABELS；覆蓋層 alt 只許 ALT_LABELS；覆蓋層 names 只譯汉名 */
+  for (const c of CHARACTERS) for (const [k] of c.names || []) if (!NAME_LABELS.includes(k)) err(`人物 ${c.id}`, `名號標籤「${k}」不在 ${NAME_LABELS.join("、")} 之中`);
+  for (const [id, x] of Object.entries(charactersEn)) {
+    for (const [k] of x.alt || []) if (!ALT_LABELS.includes(k)) err(`英譯 ${id}.alt`, `標籤「${k}」不在 ${ALT_LABELS.join("、")} 之中`);
+    for (const k of Object.keys(x.names || {})) if (k !== "汉名") err(`英譯 ${id}.names`, `只譯汉名；「${k}」為拉丁字名號，原樣用即可`);
+  }
+
   /* 界面字串：靜態掃 t("…")（余波頁另用 echoes.en.js，不在此列）；動態鍵（t(label) 之類）以「源碼中出現此字串」為用 */
   const SRC_DIR = new URL("../src/", import.meta.url);
-  const srcText = ["wiki.jsx", "posts.jsx", "novel-reader.jsx", "landing.jsx"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
+  const srcText = ["wiki.jsx", "posts.jsx", "novel-reader.jsx", "landing.jsx", "i18n/names.jsx", "i18n/content.js", "i18n/name-labels.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
   /* 動態鍵有出自數據層者：檔案八目之行標（wiki-data.js 之 F）、任期類別（posts-data.js 之 kind） */
   const dataText = ["wiki-data.js", "posts-data.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
   const used = new Set([...srcText.matchAll(/\b(?:t|t_|tr)\(\s*"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]));

@@ -17,7 +17,7 @@ export const hashOf = (zh) => createHash("sha1").update(typeof zh === "string" ?
 /* false＝有意不譯（軼事、高光），亦算已處理，照樣蓋戳：中文改了仍須重看要不要譯 */
 const has = (v) => v != null && v !== "" && !(typeof v === "object" && !Array.isArray(v) && Object.keys(v).length === 0);
 
-const SCALAR = ["name", "zi", "hao", "epithet", "birthplace", "gloss"];
+const SCALAR = ["name", "zi", "hao", "epithet", "birthplace", "gloss", "names"];
 const LISTS = ["anecdotes", "highlight"];
 
 /* 已译字段：[{ key: "lvdingyi.profile.官职身份", id, zh, en }] ；问题另返回 problems（id 不存在、行标不存在、条数超出） */
