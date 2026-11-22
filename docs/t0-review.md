@@ -67,8 +67,8 @@ T0 一轮：称号、别号、关系类型、地名、编制职名、勋散、�
 
 - **苍云**全照 Notion 方针 P13、P6 与「苍云编制总表」：Commander of the Cangyun Army、Commander of the Rank-Breaker Corps、Commander of the First Regiment、Battalion Commander in the First Regiment、Company Commander、Chief of Scouts、Provost、Warden of Yanta Tower……编制图上用短名（Regimental Commander）。吕定仪任期原作 "Commander, Third Regiment"，已改为 P13 之 "Commander of the Third Regiment"。
 - **天策**（Notion 记「天策编制另议」，本轮拟）：营作 Corps 名（Heavenly Bow Corps、Heavenly Spear Corps、Scout Corps、Heavenly Slayer Corps），不套苍云层级；校尉 Commandant、副尉 Vice Commandant（依折冲府）；教练使 Drill Commissioner、兵马使 Commander of Troops、兵曹参军事 Administrator of the Military Service Section、医博士 Erudite of Medicine、留后 Rear Commander。
-- **唐军**：节度副使 Deputy Military Commissioner（P2：节度使 Military Commissioner）、子将 Sub-commander、行军司马 Field Adjutant、押衙 Headquarters Guard Commander、都虞候 Chief Inspector、都知兵马使 Chief Commander of Troops。后四个标了 🔍，待查 Hucker 正文。
-- **勋散**：品照 P3 作 rank 5b2；骑都尉 Cavalry Commandant、归德郎将 Gentleman-General Who Has Turned to Virtue、忠武将军 General of Loyal Valour 照 Notion；其余勋官十二转、武散官按同一体例直译（Light Chariot Commandant、General of the Cloud Banner……），🔍 待查 Hucker。
+- **唐军**（作者 2026-11-22 查 Hucker 后定）：兵马使 **Commander**、都知兵马使 **Supreme Commander**（皆 Hucker 4684；后者见于该条正文）、行军司马 **Adjutant**（Hucker 1790「军司马」条义三：hsing-chün ssu-ma 作 Adjutant）、都虞候 **Inspector-in-chief**。押衙 Hucker 7873 只收宋代义（Lackey，杂役），与唐使府押衙不合，自拟 Headquarters Guard Commander；子将 Sub-commander 自拟。节度副使暂作 Deputy Military Commissioner（P2：节度使 Military Commissioner），待查 chieh-tu fu-shih：Hucker 惯以「副使」作 Vice Commissioner，若有此条即改 Vice。天策府「兵马使」同改 Commander，全称作 Commander in the Tiance Command（P13「X Commander in …」式，示非一府之长）。Notion 术语主表「兵马使」原作待查暂定 Commander of Troops，以此为准。
+- **勋散**：品照 P3 作 rank 5b2；骑都尉 Cavalry Commandant、归德郎将 Gentleman-General Who Has Turned to Virtue、忠武将军 General of Loyal Valour 照 Notion；其余勋官、武散官的具体名号 Hucker 未逐个立条（作者查），自拟，依同一体例直译（Light Chariot Commandant、General of the Cloud Banner……）。
 - 编制图顶的事件标记缩到与中文四字等宽（安史乱起 Rebellion、回府 Return），否则相邻两标相撞。
 
 ## 五、文库题名

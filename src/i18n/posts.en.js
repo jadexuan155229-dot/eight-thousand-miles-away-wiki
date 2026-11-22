@@ -7,7 +7,10 @@
 //        营 is "Corps" as a name everywhere (Women's Guard Corps, Heavenly Bow Corps).
 //   P2   Hucker for real Tang offices; invented posts avoid words Hucker has taken.
 //   P3   ranks in Hucker notation in card fields: 从五品下 → rank 5b2.
-// Entries marked 🔍 still want a check against Hucker's entry (Notion「Hucker 待查」).
+// Checked against Hucker by the author (2026-11-22): 兵马使 Commander and 都知兵马使 Supreme Commander
+// (4684), 行军司马 Adjutant (1790, s.v. chün ssu-ma), 都虞候 Inspector-in-chief. Not in Hucker, so
+// our own renderings on his pattern (自拟): 押衙 (7873 has only the Song sense, Lackey), 子将, and the
+// individual merit and prestige titles below. Hucker entry numbers are noted where they apply.
 // 2026-11-22 T0 working draft (docs/t0-review.md).
 
 /* 職位：label＝編制圖上的短名（對 POSTS[].label），full＝任期、檔案所用全稱（對 POST_FULL），
@@ -40,7 +43,7 @@ export const postsEn = {
 
   // 天策（天策编制另议：营作 Corps 名而不套苍云层级；校尉、副尉依折冲府）
   'tc-jl': { label: 'Drill Commissioner', full: 'Drill Commissioner of the Tiance Command', hint: 'One of the Command’s senior officers, in charge of training. Formerly Yang Ning’s post' },
-  'tc-bm': { label: 'Commander of Troops', full: 'Commander of Troops of the Tiance Command', hint: 'One of the Command’s senior officers, in charge of the troops. Formerly Xu Changhai’s post' },
+  'tc-bm': { label: 'Commander', full: 'Commander in the Tiance Command', hint: 'One of the Command’s senior officers, in charge of the troops. Formerly Xu Changhai’s post' },
   'tc-bc': { label: 'Military Service Section', full: 'Administrator of the Military Service Section', hint: 'One of the six sections of the old Tiance Command, keeping the muster rolls and assigning duty' },
   'tc-cj': { label: 'Administrator', full: 'Administrator', hint: 'An office of the old Tiance Command, for missions and miscellaneous inspection' },
   'tg-xw': { label: 'Commandant', full: 'Commandant of the Heavenly Bow Corps', hint: 'Units follow the garrison-militia pattern: a Commandant leads three hundred' },
@@ -73,8 +76,8 @@ export const postsEn = {
 
   // 唐军
   'bt-fs': { label: 'Deputy Military Commissioner', full: 'Deputy Military Commissioner of Yixi and Beiting', hint: 'In 741 Beiting and the Four Garrisons of Anxi were separated again' },
-  'bt-dz': { label: 'Chief Commander of Troops', full: 'Chief Commander of Troops, Beiting', hint: 'The general commanding all the circuit’s armies under the Military Commissioner' }, // 🔍
-  'bt-bm': { label: 'Commander of Troops', full: 'Commander of Troops, Beiting' },
+  'bt-dz': { label: 'Supreme Commander', full: 'Supreme Commander, Beiting', hint: 'The general commanding all the circuit’s armies under the Military Commissioner' }, // Hucker 4684
+  'bt-bm': { label: 'Commander', full: 'Commander, Beiting' }, // Hucker 4684
   'bt-zj': { label: 'Sub-commander', full: 'Sub-commander, Beiting' },
   'bt-jz': { label: 'Military Service Section', full: 'Administrator of the Military Service Section, Beiting Protectorate', hint: 'The Protectorate followed prefectural practice; this section kept arms and armour' },
   'bt-sz': { label: 'Juliu Garrison Post', full: 'Juliu Garrison Post, Beiting', hint: 'A garrison post on the Suyab road, west of Tingzhou and east of Luntai county; it appears in Kaiyuan-era Beiting documents' },
@@ -84,15 +87,15 @@ export const postsEn = {
   'ax-xb': { label: 'Little Balur campaign', full: 'Little Balur field army (under Gao Xianzhi)', hint: 'Gao Xianzhi’s campaign against Little Balur in 747' },
   'jn-sb': { label: 'In the ranks', full: 'In the Jiannan army' },
   'jn-pr': { label: 'Pingrong', full: 'Sub-commander at Pingrong', hint: 'Anrong, retaken in 740, was renamed Pingrong' },
-  'jn-yy': { label: 'Headquarters Guard', full: 'Headquarters Guard Commander, Jiannan', hint: 'An officer commanding troops at the Military Commissioner’s headquarters' }, // 🔍
+  'jn-yy': { label: 'Headquarters Guard', full: 'Headquarters Guard Commander, Jiannan', hint: 'An officer commanding troops at the Military Commissioner’s headquarters' }, // 自拟：Hucker 7873 只收宋代义（Lackey，杂役），与唐使府押衙不合
   'jn-dj': { label: 'Mustering troops', full: 'Left to hold Chengdu, mustering troops' },
-  'jn-yh': { label: 'Chief Inspector', full: 'Chief Inspector, Jiannan', hint: 'In charge of military discipline and law' }, // 🔍
+  'jn-yh': { label: 'Inspector-in-chief', full: 'Inspector-in-chief, Jiannan', hint: 'In charge of military discipline and law' }, // Hucker
   'jn-pl': { label: 'Suppressing a revolt', full: 'With the army suppressing a revolt' },
   'jn-tg': { label: 'Against Cui Gan', full: 'The campaign against Cui Gan' },
   'jn-xz': { label: 'Unassigned', full: 'Unassigned' },
   'jn-sc': { label: 'Holding Chengdu', full: 'Holding Chengdu' },
   'hd-qw': { label: 'To the emperor’s aid', full: 'East to the emperor’s aid' },
-  'hd-xs': { label: 'Field Adjutant', full: 'Field Adjutant', hint: 'A senior staff post in a commissioner’s headquarters, in charge of military affairs' }, // 🔍
+  'hd-xs': { label: 'Adjutant', full: 'Adjutant', hint: 'A senior staff post in a commissioner’s headquarters, in charge of military affairs' }, // Hucker 1790 (hsing-chün ssu-ma)
   'hd-sd': { label: 'Shangdang', full: 'Garrison commander at Shangdang' },
   'hd-lb': { label: 'Drilling troops', full: 'Drilling troops at headquarters' },
   'hd-qf': { label: 'Vanguard', full: 'Vanguard' },
@@ -101,7 +104,7 @@ export const postsEn = {
   'sf-yc': { label: 'Attack on Yuci', full: 'Attack on Yuci (Pugu Yang’s troops)', hint: 'Pugu Huai’en’s revolt of 764' },
   'jx-fq': { label: 'Autumn defence', full: 'Autumn defence west of the capital' },
   'jx-fs': { label: 'Envoy', full: 'Envoy to the west' },
-  'sn-bm': { label: 'Liangzhou', full: 'Commander of Troops, Shannan West Circuit', hint: 'Liangzhou was the seat of Shannan West Circuit; the Military Commissioner was someone else' },
+  'sn-bm': { label: 'Liangzhou', full: 'Commander, Shannan West Circuit', hint: 'Liangzhou was the seat of Shannan West Circuit; the Military Commissioner was someone else' },
 };
 
 /* 編制圖分組（POSTS[].group） */
@@ -143,7 +146,7 @@ export const ranksEn = {
   '参军事（军师帐下）': 'Administrator (on the strategist’s staff)',
   '兵曹参军事（李参军）': 'Administrator of the Military Service Section (“Administrator Li”)',
   天策府留后: 'Rear Commander of the Tiance Command',
-  '兵马使（权）': 'Commander of Troops (acting)',
+  '兵马使（权）': 'Commander (acting)',
   崤山工事: 'Mount Xiao fortifications',
   '暂领潼关府兵（曹雪阳遥领）': 'Interim command of the Tong Pass garrison militia (Cao Xueyang commanding from afar)',
   '太原轻骑（与齐晟）': 'Taiyuan light horse (with Qi Sheng)',
@@ -177,21 +180,21 @@ export const ranksEn = {
   平戎城子将: 'Sub-commander at Pingrong',
   剑南节度押衙: 'Headquarters Guard Commander, Jiannan Military Commission',
   '留守成都，点兵': 'Left to hold Chengdu, mustering troops',
-  剑南都虞候: 'Chief Inspector, Jiannan',
+  剑南都虞候: 'Inspector-in-chief, Jiannan',
   随军平郭千仞: 'With the army against Guo Qianren',
   '讨崔旰（随柏茂琳诸将）': 'Against Cui Gan (with Bai Maolin and the other generals)',
   '闲置（带左武卫将军员外置衔）': 'Unassigned (supernumerary General of the Left Militant Guard, in title)',
   '替崔宁守成都（随崔宽）': 'Holding Chengdu for Cui Ning (with Cui Kuan)',
   随北庭边兵东归勤王: 'East with the Beiting frontier troops to the emperor’s aid',
-  '行军司马（李光弼幕下）': 'Field Adjutant (on Li Guangbi’s staff)',
+  '行军司马（李光弼幕下）': 'Adjutant (on Li Guangbi’s staff)',
   '派驻上党，为守将': 'Posted to Shangdang as garrison commander',
   '自贬，在李光弼帐前练兵': 'Self-demoted, drilling troops at Li Guangbi’s headquarters',
   随仆固怀恩出前锋: 'In the vanguard under Pugu Huai’en',
   '东都行营（职名不定）': 'Eastern Capital field army (title unsettled)',
-  '行军司马（王缙幕下）': 'Field Adjutant (on Wang Jin’s staff)',
+  '行军司马（王缙幕下）': 'Adjutant (on Wang Jin’s staff)',
   京西防秋: 'Autumn defence west of the capital',
   '奉使西行，经灵州、天德军，取道回鹘': 'Envoy to the west, by Lingzhou and the Tiande Army, through Uighur lands',
-  '山南西道兵马使（镇梁州）': 'Commander of Troops, Shannan West Circuit (stationed at Liangzhou)',
+  '山南西道兵马使（镇梁州）': 'Commander, Shannan West Circuit (stationed at Liangzhou)',
   '率小队护送诏使赴北庭（带果毅都尉衔）': 'Leading a detachment escorting the imperial envoy to Beiting (with the title of Vice Commandant)',
   北庭瀚海军子将: 'Sub-commander, Hanhai Army, Beiting',
   随杨袭古退守西州: 'Falling back with Yang Xigu to hold Xizhou',
@@ -214,7 +217,9 @@ export const marksEn = {
   北庭分镇: 'Beiting separated', 乱平: 'Rebellion ends', 北庭陷: 'Beiting falls',
 };
 
-/* 勳、散、品、官（GRANTS）。勳官十二轉、武散官從 Hucker 體例直译，🔍 待核正文詞條 */
+/* 勳、散、品、官（GRANTS）。勳官、武散官之具體名號 Hucker 未逐個立條（作者查），自拟，依其體例直译：
+   勳官作 … Commandant／Army Protector，武散官作 General of …／Commandant of …；
+   骑都尉、归德郎将、忠武将军照 Notion 术语主表 */
 export const honoursEn = {
   // 勳官 merit titles
   上护军: 'Senior Army Protector', 护军: 'Army Protector',
