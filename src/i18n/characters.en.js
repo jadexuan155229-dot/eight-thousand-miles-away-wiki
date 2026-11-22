@@ -45,27 +45,27 @@ export const charactersEn = {
     },
   },
   // ---- 人名、表字：拼音初稿（2026-11-22，pypinyin 出稿，读音按作者所取 id 核过；待定者见 docs/names-draft.md） ----
-  minfangcheng: { name: 'Min Fangcheng', zi: 'Heng' }, // 闵方城
-  diyuanke: { name: 'Di Yuanke', zi: 'Zhiwei' }, // 狄元恪
+  minfangcheng: { name: 'Min Fangcheng', zi: 'Heng', epithet: 'The Golden Body of the Snow Ridge' }, // 闵方城
+  diyuanke: { name: 'Di Yuanke', zi: 'Zhiwei', epithet: 'Washed in Snow, Holding the Scales', hao: 'the Gentleman from Taiyuan' }, // 狄元恪
   luowenbi: { name: 'Luo Wenbi', zi: 'Jingshan' }, // 骆文璧
-  lifei: { name: 'Lifei Chenglie', zi: 'Wugong' }, // 荔非承烈
-  jinchenbai: { name: 'Jin Chenbai', zi: 'Lingyun' }, // 靳沉白
-  xuechu: { name: 'Xue Chu', zi: 'Jitao' }, // 薛褚
-  qiuhong: { name: 'Qiu Hong', zi: 'Xianlu' }, // 邱鸿
+  lifei: { name: 'Lifei Chenglie', zi: 'Wugong', epithet: 'The White-Browed Tiger Holds the Pass' }, // 荔非承烈
+  jinchenbai: { name: 'Jin Chenbai', zi: 'Lingyun', epithet: 'The Hermit of the Barren Mountain' }, // 靳沉白
+  xuechu: { name: 'Xue Chu', zi: 'Jitao', epithet: 'Sheathed in the Armoury' }, // 薛褚
+  qiuhong: { name: 'Qiu Hong', zi: 'Xianlu', epithet: 'Enshrining Bones, Lighting Lamps', hao: 'the Fair One of the North · Jade Blade-and-Shield' }, // 邱鸿
   fanzhang: { name: 'Fan Zhang', zi: 'Dingshi' }, // 樊璋
-  guanyue: { name: 'Guan Yue', zi: 'Ziling' }, // 关岳
+  guanyue: { name: 'Guan Yue', zi: 'Ziling', epithet: 'Gathering the Voices of Ten Thousand Mountains' }, // 关岳
   jinghuishi: { name: 'Jing Huishi', zi: 'Chunyi' }, // 景惠时
   guanshan: { name: 'Guan Shan', zi: 'Renshi' }, // 关山
-  lianshuo: { name: 'Lian Shuo', zi: 'Zhihui' }, // 连朔
+  lianshuo: { name: 'Lian Shuo', zi: 'Zhihui', epithet: 'One Feather, a Hook in the Heart' }, // 连朔
   biansaiyuan: { name: 'Bian Saiyuan', zi: 'Sheheng' }, // 边赛远
   rujin: { name: 'Ru Jin', zi: 'Qixiang' }, // 茹锦
-  louyi: { name: 'Lou Yi', zi: 'Zhengu' }, // 楼谊
+  louyi: { name: 'Lou Yi', zi: 'Zhengu', hao: 'Lord of the Tower · the Tower Officer' }, // 楼谊
   louqiao: { name: 'Lou Qiao', zi: 'Jianwang' }, // 楼谯
   liaoqun: { name: 'Liao Qun', zi: 'Yingzhong' }, // 廖群
   lvxichun: { name: 'Lü Xichun', zi: 'Yuanying' }, // 吕希纯
   louhao: { name: 'Lou Hao', zi: 'Subi' }, // 楼皓
   guanhuai: { name: 'Guan Huai' }, // 关槐
-  lubingyu: { name: 'Lu Bingyu', zi: 'Zhisong' }, // 卢秉毓
+  lubingyu: { name: 'Lu Bingyu', zi: 'Zhisong', hao: 'Forge Mountain' }, // 卢秉毓
   liurong: { name: 'Liu Rong', zi: 'Rong' }, // 柳戎
   liuguan: { name: 'Liu Guan', zi: 'Yuanyi' }, // 柳贯
   rendijian: { name: 'Ren Dijian' }, // 任迪简
@@ -76,7 +76,7 @@ export const charactersEn = {
   yujia: { name: 'Yu Jia', zi: 'Lubin' }, // 虞嘉
   bailin: { name: 'Bai Lin', zi: 'Qishang' }, // 白霖
   chengqian: { name: 'Cheng Qian', zi: 'Sizheng' }, // 程骞
-  chengkai: { name: 'Cheng Kai', zi: 'Ziyang' }, // 程凯
+  chengkai: { name: 'Cheng Kai', zi: 'Ziyang', hao: 'Zhijie Hall' }, // 程凯
   qisheng: { name: 'Qi Sheng', zi: 'Guangming' }, // 齐晟
   chengfeng: { name: 'Cheng Feng', zi: 'Lüduan' }, // 程锋
   weiqian: { name: 'Wei Qian', zi: 'Siyi' }, // 魏谦
@@ -93,12 +93,12 @@ export const charactersEn = {
   xuejian: { name: 'Xue Jian' }, // 薛坚
   qinhui: { name: 'Qin Hui' }, // 秦徽
   zswq: { name: 'Zhangsun Wangqing' }, // 长孙忘情
-  wbk: { name: 'Wang Bukong' }, // 王不空
+  wbk: { name: 'Wang Bukong', hao: 'the buddha' }, // 王不空
   litingshen: { name: 'Li Tingshen', zi: 'Hongjuan' }, // 李庭深
   luweilou: { name: 'Lu Weilou' }, // 陆危楼
   luyuming: { name: 'Lu Yuming' }, // 陆羽鸣
   lunanxin: { name: 'Lu Nanxin' }, // 陆南信
-  luwanyue: { name: 'Lu Wanyue' }, // 陆晚月
+  luwanyue: { name: 'Lu Wanyue', hao: 'Little Moon' }, // 陆晚月
   luling: { name: 'Lu Ling' }, // 陆灵
   luyin: { name: 'Lu Yin' }, // 陆隐
   luxiao: { name: 'Lu Xiao' }, // 陆晓
@@ -117,7 +117,7 @@ export const charactersEn = {
   cenquan: { name: 'Cen Quan', zi: 'Jingyuan' }, // 岑荃
   pengyansi: { name: 'Peng Yansi' }, // 彭延思
   chutang: { name: 'Chu Tang', zi: 'Nianyuan' }, // 楚棠
-  wangji: { name: 'Wang Ji', zi: 'Zhenyu' }, // 汪楫
+  wangji: { name: 'Wang Ji', zi: 'Zhenyu', hao: 'Master Mudboat' }, // 汪楫
   pengshilu: { name: 'Peng Huan', zi: 'Chengmu' }, // 彭涣
   leiyin: { name: 'Lei Yin', zi: 'Junxiang' }, // 雷殷
   shenhanying: { name: 'Shen Hanying', zi: 'Canrong' }, // 沈含英
@@ -128,11 +128,11 @@ export const charactersEn = {
   yetiandeng: { name: 'Ye Tiandeng', zi: 'Zhao' }, // 叶添灯
   yeboqiu: { name: 'Ye Boqiu' }, // 叶泊秋
   peiyuan: { name: 'Pei Yuan' }, // 裴元
-  gaoyuan: { name: 'Gao Yuan', zi: 'Huaiqing' }, // 高垣
-  gaoqian: { name: 'Gao Qian', zi: 'Digu' }, // 高堑
-  xuanyang: { name: 'Xuan Yang', zi: 'Youyin' }, // 宣杨
-  xuankang: { name: 'Xuan Kang', zi: 'Shuliang' }, // 宣康
-  mujin: { name: 'Mu Jin', zi: 'Xingbei' }, // 穆津
+  gaoyuan: { name: 'Gao Yuan', zi: 'Huaiqing', epithet: 'Split the Stone: Green Within', hao: 'the Inquisitor' }, // 高垣
+  gaoqian: { name: 'Gao Qian', zi: 'Digu', epithet: 'Moss on the Bones of the Earth' }, // 高堑
+  xuanyang: { name: 'Xuan Yang', zi: 'Youyin', epithet: 'The Hawk Comes Down from the Mountain', hao: 'Huaiqing (her master’s name)' }, // 宣杨
+  xuankang: { name: 'Xuan Kang', zi: 'Shuliang', epithet: 'Grain to Eat, a Bridge to Cross' }, // 宣康
+  mujin: { name: 'Mu Jin', zi: 'Xingbei', epithet: 'The Ford Across the River of Heaven' }, // 穆津
   yeshuxi: { name: 'Ye Shuxi', zi: 'Qingran' }, // 叶曙兮
   yechen: { name: 'Ye Chen' }, // 叶忱
   ranqiongru: { name: 'Ran Qiongru', zi: 'Shuxia' }, // 冉琼如
@@ -143,6 +143,7 @@ export const charactersEn = {
   lihanxin: { name: 'Li Hanxin', zi: 'Yanxuan' }, // 李翰昕
   zhaoyingzhen: { name: 'Zhao Yingzhen' }, // 赵盈贞
   zhaotingzhi: { name: 'Zhao Tingzhi' }, // 赵廷之
+  // 称号 epithet、别号 hao：2026-11-22 T0 工作稿，待作者审（docs/t0-review.md）
   // ---- 2026-11-22 第二轮：作者定（波斯音译名、苗人用本名；日本人物用日语读法；单名、他族名） ----
   langdien: { name: 'Rādīn' }, // 朗迪恩
   luya: { name: 'Royā' }, // 鲁雅
@@ -158,7 +159,7 @@ export const charactersEn = {
   mangwo: { name: 'Mangx Vos' }, // 芒沃
   niuwo: { name: 'Hniub Vos' }, // 纽沃
   caiyao: { name: 'Ncaik Ya' }, // 彩瑶
-  lanchuanyun: { name: 'Arashikawa Kumo', zi: 'Qianhe', alt: [['中文读法', 'Lanchuan Yun']] }, // 岚川云
+  lanchuanyun: { name: 'Arashikawa Kumo', zi: 'Qianhe (Chizuru, ‘a thousand cranes’)', alt: [['中文读法', 'Lanchuan Yun']] }, // 岚川云
   jingyan: { name: 'Arashikawa Yasuhiko' }, // 岚川靖彦
   linyeshi: { name: 'Hayashi Kyōya' }, // 林叶矢
   haruyama: { name: 'Haruyama Haruka', zi: 'Mianshu (Nemugi)', names: { 汉名: 'Fang Yao' } }, // 春山遥
