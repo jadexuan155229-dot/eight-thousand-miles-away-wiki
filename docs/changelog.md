@@ -7,7 +7,7 @@
 T0 剩下的六类一并出工作稿上线，待作者审（[docs/t0-review.md](t0-review.md)）。
 
 - **称号、别号**：13 个称号、10 个别号出英文（体例同吕定仪 *The Weight of a Clerk's Pen*）；与 Notion「作者命名」旧稿对过，闵方城、荔非承烈两条取旧稿。王不空「佛爷」照作者在 Notion 所定作小写 the buddha；岚川云之字照方针 P12 补 Chizuru 与字义。文库批注里的别号英文界面亦改英文。
-- **关系类型**：75 种全出（关系签短名）。
+- **关系类型**：75 种全出（关系签短名）。类名只说关系、不说某一端的身份：两张卡共用一个类名而配对方姓名，网络连线又不分方向，故生父作 Father and child、卫戍作 Guard & charge 之类（审查指出 Father 会在程广卡上把程凯标成父亲；有方向者共改 16 个）。
 - **地名**：余下 40 个全出，69 个地点全有英文；唐境以外用通行英文名（Kucha、Tokharistan、Zaranj）。
 - **编制**：新增 `i18n/posts.en.js` 与查表 `i18n/posts-content.js`。苍云照 Notion 方针 P13、P6 与「苍云编制总表」（Rank-Breaker Corps、Commander of the First Regiment……），天策、唐军本轮拟；任期职名 132 条、勋散 13 条英文界面皆为英文，编制图的职位、分组、悬停说明、图顶标记同。吕定仪任期改依 P13 作 Commander of the Third Regiment。英文编制图左栏放宽。档案「任職履歷」的任期类别标签不再因有英译而隐去。
 - **文库**：故事线标签、题名、两卷、定场、序出稿；英文目录不用【】。

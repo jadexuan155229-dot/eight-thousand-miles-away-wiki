@@ -41,11 +41,13 @@ T0 一轮：称号、别号、关系类型、地名、编制职名、勋散、�
 
 ## 二、关系类型（75）
 
-文件：`src/i18n/relations.en.js`。是关系签上的短名，两头都能读（签上只显对方姓名和类型）。按意思分组，最需要你看的几个：
+文件：`src/i18n/relations.en.js`。是关系签上的短名。**规则：类名只说关系，不说某一端的身份。** 两张卡上显的是同一个类名、配的是对方姓名，群像网络的连线又不分方向，写 Father 的话，在程广卡上就成了说程凯是父亲（审查指出）。故有方向的类型一律作成对式或中性名词：生父 Father and child、义女 Adoptive parent & daughter、师兄 Senior & junior disciple、辅佐 Principal & aide、卫戍 Guard & charge、旧部 Former superior & subordinate、参佐 Commander & staff officer、追随 Leader & follower、代护 Guardianship in trust、受托 Entrustment、看顾 Watchful care、引门 Introduction to the order、解危 Danger averted、随军 Service on campaign；互为者用复数（知己 Confidants、知音 True listeners）。
+
+按意思分组，最需要你看的几个：
 
 - 未遂 Unfulfilled · 未说开 Left unsaid · 未见 Never met
-- 知遇 Recognition · 知契 Understanding · 同契 Kindred bond · 知音 True listener · 同道 Like-minded
-- 遗承 Legacy · 衣钵 Mantle · 代护 Guardian in trust · 度化 Deliverance · 先斥后察 Scorn, then scrutiny
+- 知遇 Recognition · 知契 Understanding · 同契 Kindred bond · 知音 True listeners · 同道 Like-minded
+- 遗承 Legacy · 衣钵 Mantle · 代护 Guardianship in trust · 度化 Deliverance · 先斥后察 Scorn, then scrutiny
 - 恩义 Grace & duty（与色谱类名同）· 杀伐 Bloodshed · 嫌隙 Rift
 - 有情 Affection · 私情 Secret love · 倾慕 Adoration · 伴侣 Partners · 夫妻 Married
 
