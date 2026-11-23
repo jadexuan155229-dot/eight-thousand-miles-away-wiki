@@ -200,7 +200,7 @@ export const TENURES = [
   { post: "t2-vice", who: "qiuhong", y0: 757, m0: 10, y1: 760, m1: 10, kind: "正授", how: "擂台一后任命", end: "断臂", src: ["757.10B", "760.10A"] },
   { post: "t2-vice", who: "qiuhong", y0: 760, m0: 10, y1: 761, m1: 1, kind: "停职", how: "断臂养伤，未免职；760.11 请辞未准", end: "演阵后复职", src: ["760.10A", "760.11B"] },
   { post: "t2-vice", who: "qiuhong", y0: 761, m0: 1, y1: 764, m1: 3, kind: "正授", how: "演阵后复二团副将之职", end: "调一团长官", src: ["761.1A", "764.3"] },
-  { post: "t3-lead", who: "lvdingyi", y0: 745, m0: 11, y1: 755, m1: 12, kind: "正授", how: "雁门关之役后重组擢", end: "行军途中病故，秘不发丧", src: ["745.11", "755.12"], note: "未置副将", en: { title: "Commander of the Third Regiment", how: "Appointed in the reorganisation after the Battle of Yanmen Pass", end: "died on campaign; his death was kept secret" } },
+  { post: "t3-lead", who: "lvdingyi", y0: 745, m0: 11, y1: 755, m1: 12, kind: "正授", how: "雁门关之役后重组擢", end: "行军途中病故，秘不发丧", src: ["745.11", "755.12"], note: "未置副将" },
   { post: "t3-lead", who: "jinchenbai", y0: 755, m0: 12, y1: 756, m1: 2, kind: "代领", rank: "暂领三团", how: "吕定仪临终授意暂领调度；闵方城「你去」，捧印", end: "扶榇返雁门发丧；景惠时为他缝制新旗幡", src: ["755.12", "756.1", "756.2"], note: "秘不发丧期间将旗名号未改，仍是吕定仪的旗；756.1 诱敌时扮作吕定仪身势" },
   { post: "t3-lead", who: "jinchenbai", y0: 756, m0: 2, y1: null, m1: null, kind: "正授", how: "「此后升任团长官」（〈靳+两楼〉未写年月）；作者定以 756.2 扶榇返关发丧、新旗幡为起点", src: ["756.2", "〈靳+两楼〉"] },
   { post: "t3-vice", who: "louqiao", y0: 757, m0: 10, y1: null, m1: null, kind: "正授", how: "晋", src: ["757.10G"], approx: ["y0"] },

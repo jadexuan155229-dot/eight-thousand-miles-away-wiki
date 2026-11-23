@@ -15,7 +15,7 @@ import Echoes from "./echoes";
 import Posts from "./posts";
 import About from "./about";
 import { grantsOf, tenureFac, tenuresOf, tenureSpan } from "./posts-data";
-import { tenureTitleTx, grantTx } from "./i18n/posts-content";
+import { tenureTitleTx, tenureNoteTx, grantTx } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLocale, useSetLocale, useT } from "./i18n/locale";
@@ -606,9 +606,11 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             <div style={{ marginTop: 24 }}>
               <SectionLabel>{t("任職履歷")}</SectionLabel>
               {ts.map((x, i) => {
-                /* 職銜英译查 i18n/posts.en.js（見 posts-content.js）；上下文（how / end）存於 posts-data.js 各條 en 欄，無則回落中文 */
-                const e = en && x.en;
-                const zh = en && !e;
+                /* 職銜英译查 i18n/posts.en.js，上下文（how / end / note）查 i18n/tenures.en.js（皆見 posts-content.js）；逐項回落中文 */
+                const [how, howZh] = tenureNoteTx(locale, x.how);
+                const [end, endZh] = tenureNoteTx(locale, x.end);
+                const [note, noteZh] = tenureNoteTx(locale, x.note);
+                const piece = (s, z) => (z ? <Zh>{s}</Zh> : s);
                 const [title, titleZh] = tenureTitleTx(locale, x);
                 return (
                   <div key={i} style={{ display: "flex", gap: 14, padding: "6px 0", borderBottom: `1px solid ${T.line}44` }}>
@@ -617,14 +619,16 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{facName(locale, tenureFac(x))}</span>}
                       {titleZh ? <Zh>{title}</Zh> : title}
                       {x.kind !== "正授" && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{t(x.kind)}</span>}
-                      {x.draft && <span title={x.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
-                      {(e ? e.how || e.end : x.how || x.end) && (
-                        <div className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
-                          {e ? [e.how, e.end].filter(Boolean).join("; ") : [x.how, x.end && `→ ${x.end}`].filter(Boolean).join("　")}
+                      {x.draft && <span title={note || undefined} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
+                      {(how || end) && (
+                        <div style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
+                          {how && piece(how, howZh)}
+                          {how && end && (en ? " " : "　")}
+                          {end && <>→ {piece(end, endZh)}</>}
                         </div>
                       )}
                       {/* 待核的任期把缘由（note）直接写出来，与编制图浮签一致；不靠悬停 */}
-                      {x.draft && x.note && !e && <div className={zh ? "zh-src" : undefined} lang={zh ? "zh" : undefined} style={{ fontSize: 12, color: T.seal, lineHeight: 1.7 }}>{x.note}</div>}
+                      {x.draft && note && <div style={{ fontSize: 12, color: T.seal, lineHeight: 1.7 }}>{piece(note, noteZh)}</div>}
                     </div>
                   </div>
                 );

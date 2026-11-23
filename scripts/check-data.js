@@ -26,6 +26,7 @@ import { novelEn } from "../src/i18n/novel.en.js";
 import { TIER1 } from "../src/i18n/tiers.js";
 import { NAME_LABELS, ALT_LABELS } from "../src/i18n/name-labels.js";
 import { postsEn, groupsEn, ranksEn, marksEn, honoursEn } from "../src/i18n/posts.en.js";
+import { tenureNotesEn } from "../src/i18n/tenures.en.js";
 import { NOVELS } from "../src/novel/index.js";
 import { translatedFields, readStamps, hashOf } from "./i18n-fields.js";
 
@@ -322,6 +323,9 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   const rankSet = new Set(TENURES.filter((t) => t.rank).map((t) => t.rank));
   for (const r of rankSet) if (!ranksEn[r]) warn(`英譯 職名「${r}」`, "任期自寫職名尚無英譯——英文界面回落中文");
   for (const k of Object.keys(ranksEn)) if (!rankSet.has(k)) warn(`英譯 職名「${k}」`, "任期中已無此職名（中文改過？）");
+  /* 任期上下文（i18n/tenures.en.js，以中文原文為鍵）：只報孤兒；缺譯者英文界面回落中文，進度見覆蓋率 */
+  const tenureNoteSet = new Set(TENURES.flatMap((x) => [x.how, x.end, x.note].filter(Boolean)));
+  for (const k of Object.keys(tenureNotesEn)) if (!tenureNoteSet.has(k)) warn(`英譯 任期說明「${k.slice(0, 18)}」`, "任期中已無此句（中文改過？）");
   const markSet = new Set(FACTIONS.flatMap((f) => f.marks.map((m) => m.label)));
   for (const m of markSet) if (!marksEn[m]) warn(`英譯 編制標記「${m}」`, "尚無英譯");
   const honourSet = new Set(GRANTS.flatMap((g) => [g.guan, g.xun, g.san, g.pin].filter(Boolean)));
@@ -346,10 +350,12 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   const anecTotal = CHARACTERS.reduce((n, c) => n + (c.anecdotes || []).length, 0);
   const anecDone = fields.filter((f) => /\.anecdotes\.\d+$/.test(f.key)).length;
   const locDone = Object.keys(LOC_COORDS).filter((l) => placesEn[l]).length;
-  /* 任期：職銜有英譯者（自有 en.title，或自寫職名／職位全稱已譯） */
-  const tenDone = TENURES.filter((x) => x.en?.title || (x.rank ? ranksEn[x.rank] : postsEn[x.post]?.full)).length;
+  /* 任期：職銜有英譯者（自寫職名／職位全稱已譯）；任期說明：how / end / note 每句各算一項（false＝有意不出，亦算已處理） */
+  const tenDone = TENURES.filter((x) => (x.rank ? ranksEn[x.rank] : postsEn[x.post]?.full)).length;
+  const noteItems = TENURES.flatMap((x) => [x.how, x.end, x.note].filter(Boolean));
+  const noteDone = noteItems.filter((s) => s in tenureNotesEn).length;
   const pct = (a, b) => `${a}/${b}`;
-  coverageLine = `英譯覆蓋：界面 ${pct([...used].filter((k) => uiSet.has(k)).length, used.size)} · 人名 ${pct(trd.filter(([, x]) => x.name).length, CHARACTERS.length)} · 檔案 ${pct(trd.filter(([, x]) => hasProfile(x)).length, CHARACTERS.length)}（T1 ${t1}/${TIER1.length}） · 軼事 ${pct(anecDone, anecTotal)} · 年表 ${pct(EVENTS.filter((e) => eventsEn[e.title]).length, EVENTS.length)} · 地名 ${pct(locDone, Object.keys(LOC_COORDS).length)} · 門派 ${pct([...facs].filter((f) => factionsEn[f]).length, facs.size)} · 關係類型 ${pct([...relTypes].filter((k) => relationsEn[k]).length, relTypes.size)} · 任期 ${pct(tenDone, TENURES.length)}`;
+  coverageLine = `英譯覆蓋：界面 ${pct([...used].filter((k) => uiSet.has(k)).length, used.size)} · 人名 ${pct(trd.filter(([, x]) => x.name).length, CHARACTERS.length)} · 檔案 ${pct(trd.filter(([, x]) => hasProfile(x)).length, CHARACTERS.length)}（T1 ${t1}/${TIER1.length}） · 軼事 ${pct(anecDone, anecTotal)} · 年表 ${pct(EVENTS.filter((e) => eventsEn[e.title]).length, EVENTS.length)} · 地名 ${pct(locDone, Object.keys(LOC_COORDS).length)} · 門派 ${pct([...facs].filter((f) => factionsEn[f]).length, facs.size)} · 關係類型 ${pct([...relTypes].filter((k) => relationsEn[k]).length, relTypes.size)} · 任期 ${pct(tenDone, TENURES.length)} · 任期說明 ${pct(noteDone, noteItems.length)}`;
 }
 
 /* ---------- 字體子集 ----------

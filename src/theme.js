@@ -73,6 +73,8 @@ export const T = { ...SKINS[skin] };
 function applyDocument(k) {
   if (typeof document === "undefined") return;
   document.documentElement.dataset.skin = k;
+  /* 根节点也铺底色：浮签、弹层伸出 .site-root 时，页底不露白（页底原是浏览器默认白） */
+  document.documentElement.style.backgroundColor = SKINS[k].bg;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute("content", SKINS[k].bg);
 }

@@ -1,6 +1,28 @@
 # 更新记录
 
+## 2026-11-24
+
+### 英文版 T2 任期说明：补唐军图
+
+- `src/i18n/tenures.en.js`：唐军图程广、程钊、程铎、唐青阳 53 句，任期说明 234 → **287/287**，三张编制图全满。
+- `src/i18n/events.en.js`：745.6「成都一夜」副队头唐青阳由 a deputy squad leader 改作 a Deputy Company Leader，与职名表取齐。
+- 疑点清单 `docs/tenures-t2-review.md` 补「补译」一节；`docs/english-edition.md` 记进度。
+- **作者审**（同日）：告身照 Hucker 3146 作 Appointment Certificate（T122）。副队头一问是我误读了备注（「领十人」属火长那段），作者看过升迁次序后定不改，仍作 Deputy Company Leader。
+- **审稿意见**（同日）：静息医帐改从 T112 作 the Quiet Breath medical tent（任期说明原照 T088 旧暂译 Quiet Rest Tent），Notion T088 改注；`src/posts.jsx` 三张图英文说明删去 Content remains in Chinese.，改作工作译本说明，苍云编制层级、唐军组名与术语表、职名表取齐。
+- **页底露白**（作者所见）：编制图末几行浮签伸出页底、把页面撑长露出白底。`src/posts.jsx` 浮签离图底不足 240px 改挂其上；`src/theme.js` 给 `<html>` 铺当前皮肤底色。三张图 132 段、中英两种界面逐段验过，浮签不出页底。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 逐段聚焦三张图共 132 段浮签，上、下、备注、依据均无中文。
+
 ## 2026-11-23
+
+### 英文版 T2 任期说明：苍云、天策两张编制图
+
+- 新增 `src/i18n/tenures.en.js`：任期「上」「下」与备注的英译，以中文原文为键（同年表），中文一改即回落中文；`false` 为有意不出。苍云、天策两张图全部任期，连同程锋、程宇、薛坚在唐军图上的几段，219 句；任期说明 0 → 234/287。
+- `src/i18n/posts-content.js` 新增 `tenureNoteTx`；`src/wiki.jsx` 档案页「任职履历」、`src/posts.jsx` 编制图浮签改查此表，逐句回落中文；待核任期的缘由在英文界面也出（原先有英文时反而不出）；英文起讫之间用 →，与中文同。
+- `src/posts-data.js`：吕定仪一段的 `en` 栏挪入新表，数据层恢复一字不动；`tenureTitleTx` 不再读 `en.title`（与职位全称同文）。
+- `scripts/check-data.js`：任期说明孤儿报警告，覆盖率末行加「任期说明」。
+- 疑点清单 `docs/tenures-t2-review.md`（作者只审此单）；`docs/english-edition.md` 记机制与进度。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文档案任职履历（吕定仪、闵方城、程锋、岚川云、李庭深、齐晟、薛坚、程宇），逐段聚焦苍云、天策两图共 89 段浮签，上、下、备注均无中文。
+- **作者审疑点清单**（同日）：编制图浮签「依据」一行英文界面下〈…〉文档名显示为 manuscript(s)，「卡」显示为 profile（`tenureSrcTx`）；东都留守照 Hucker 组合作 Regent of the Eastern Capital（T120），巡官照 Hucker 2746 作 Inspector（T121）；闵方城「几乎如统领」改作 “acting almost as its Commander”。
 
 ### 英文版 T2 人物档案第二批：天策 10 人
 
