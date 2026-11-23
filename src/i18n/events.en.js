@@ -1297,8 +1297,8 @@ export const eventsEn = {
     "Du Fu, a wanderer in Hunan, exchanged poems with the censor Su Huan, also living there far from home; in winter Du Fu died in a boat on the Xiang River. Background: Su Huan is the model for Peng Huan; what to take from the second half of Su Huan’s life is undecided.",
   "程凯病故。自府城告破留下伤病不愈，四十七岁危重，到那时候才、或者说不得不渐渐跟自己和解——名字、家族、命运种种。程锋曾提出接回家中安养，他不听；项旌为校尉，到他寝房外站岗，看人病重觉得心里不安。程凯去后几年，李庭深上书乞骸骨":
     "Cheng Kai died of illness. Wounded and ill, never healed since the Command fell, gravely ill at forty-seven, only then (or rather, only because he had to) did he gradually make peace with himself: his name, his family, his fate and all the rest. Cheng Feng had offered to take him home to rest and recover, and he would not; Xiang Jing, by then a Commandant, stood guard outside his bedroom, uneasy to see him so ill. A few years after Cheng Kai’s death, Li Tingshen begged leave to retire.",
-  "年底，宣杨回门派闻天策府知节殿病故，检得程凯忌日与师父高垣去世同一天——不过隔了十八年":
-    "At the year’s end Xuan Yang, back at her school, heard that Zhijie Hall of the Tiance Command (Cheng Kai) had died of illness, and, looking it up, found that the day of Cheng Kai’s death was the same as the day her master Gao Yuan had died: only eighteen years apart.",
+  "年底，宣杨回门派闻天策府知节殿将军病故，检得程凯忌日与师父高垣去世同一天——不过隔了十八年":
+    "At the year’s end Xuan Yang, back at her school, heard that the General of Zhijie Hall of the Tiance Command (Cheng Kai) had died of illness, and, looking it up, found that the day of Cheng Kai’s death was the same as the day her master Gao Yuan had died: only eighteen years apart.",
   // 771
   "程凯亡后，程锋领命往山南西道，镇梁州，以御京师；程宇随其去。梁州是入蜀的北门：程铎若如待定稿所写闲置成都，兄弟二人隔一条金牛道，一在门口，一在门里":
     "After Cheng Kai’s death, Cheng Feng was ordered to Shannan West Circuit to hold Liangzhou and guard the approaches to the capital; Cheng Yu went with him. Liangzhou was the northern gate into Shu: if Cheng Duo was left idle at Chengdu, as the draft still to be settled has it, the two brothers had only the Jinniu road between them, one at the gate and one inside it.",

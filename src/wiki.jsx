@@ -565,7 +565,8 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
           </p>
         )}
 
-        {c.gloss && (
+        {/* 訓詁英译作 false＝整條是寫給作者自己的備注（如「生年依人設文檔，俟作者補入」）：英文界面略去此塊，不回落中文 */}
+        {c.gloss && !(en && tr?.gloss === false) && (
           /* 有門派底紋的人物：訓詁塊半透明底（alpha 0.58），讓底層紋樣連續透出；其餘人物維持不透明 */
           <div style={{ marginTop: 22, borderLeft: `2px solid ${profileAccent}`, background: factionMark ? `${T.panelHi}94` : T.panelHi, padding: "12px 16px" }}>
             <SectionLabel zh={en && !tr?.gloss}>{t("名字訓詁")}</SectionLabel>

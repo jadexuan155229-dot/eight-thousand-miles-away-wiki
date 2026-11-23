@@ -325,11 +325,11 @@ export const charactersEn = {
   chengkai: {
     name: 'Cheng Kai',
     zi: 'Ziyang',
-    hao: 'Zhijie Hall',
+    hao: 'the General of Zhijie Hall',
     birthplace: 'Luoyang, Duji Circuit (ancestral home: Dong’e, Jizhou)',
     gloss: '“A-Yang” was the childhood name his birth mother gave him; he kept the yang 阳 for himself.',
     profile: {
-      官职身份: 'Before the war, deputy general of the Heavenly Bow Corps of the Tiance Command, known as “General Ziyang”; married Lanchuan Yun in the autumn of 752. After the war he returned to the Command at rank 4a2, Senior Commandant of Light Chariots and General of Robust Valour, serving as its Drill Commissioner and stationed in the Zhijie Hall, which is why everyone in the Command also calls him “Zhijie Hall”.',
+      官职身份: 'Before the war, deputy general of the Heavenly Bow Corps of the Tiance Command, known as “General Ziyang”; married Lanchuan Yun in the autumn of 752. After the war he returned to the Command at rank 4a2, Senior Commandant of Light Chariots and General of Robust Valour, serving as its Drill Commissioner and stationed in the Zhijie Hall, which is why everyone in the Command also calls him “the General of Zhijie Hall”.',
       体貌特征: 'When he first entered the Command he was thin, yet could draw a strong bow, and looked dangerous. Later he set out to build up his strength and muscle, running a long way up the mountain every day to chop a great deal of firewood and carry it back, and gradually filled out.',
       性格: 'On the whole, the bright, optimistic sort. Brave, but afraid of heights; fierce, and quick to cry. Stubborn, with a fierce will to win and a strong need to possess and control; in matters of the heart he frets over gain and loss. He is afraid of being alone: one moment a lone wolf, the next a puppy wagging its tail. For all that he wants to win, his pride does not show much; if anything he can be a little eager to please.',
       偶像: 'Ma Yuan (“A man should die in the wilds of the frontier and come home wrapped in a horse’s hide” / “the years press upon me”) and Huang Zhong.',
@@ -573,7 +573,17 @@ export const charactersEn = {
       'Where the two armies faced each other, enemy scouts often harried them, slipping in disguised as comrades to shake the army with rumours, and slandering him besides. He did not move, but gave them rope in order to catch them, caught and beheaded them, and from then on all within and without were awed into order.',
     ],
   }, // 李庭深
-  luweilou: { name: 'Lu Weilou' }, // 陆危楼
+  luweilou: {
+    name: 'Lu Weilou',
+    birthplace: 'Persia (his forebears were Silk Road merchants who had moved west and settled there to escape the turmoil of the Wei and Jin)',
+    gloss: false,
+    profile: {
+      '官职身份': 'An elder of the “Shadow Moon” in the Zoroastrian faith. In the first year of Jinglong (707) he founded the Mingjiao and became its leader; around the twenty-third year of Kaiyuan (735) the order was at its height.',
+    },
+    anecdotes: [
+      'After the fall of the Sasanians (651), Zoroastrianism found shelter under the Tang, survived and spread east. Among the royal kin who followed the Persian king Peroz in his wanderings, going back and forth between Chang’an and the Western Regions, were Lu Yuming’s grandfather’s and father’s generations, who had long known Lu Weilou, both in the faith and in trade.',
+    ],
+  }, // 陆危楼
   // 陆羽鸣：T1 工作译文（2026-11-22），译注与待审见 docs/luyuming-translation-review.md。
   // 不译：训诂末句「739年大光明寺事变中『身死』实为失踪，故卒年不著，从 Notion 库。」（数据按语）。
   luyuming: {
@@ -602,7 +612,25 @@ export const charactersEn = {
       'For sixteen years after that he stayed in Chang’an, unable to go back. On paper he was dead: with no household registration he could get no travel pass, and on the road through Hexi every garrison post and fort checked passes and signed travellers through. Crossing a pass without one meant a year of penal servitude, and slipping round it one degree more; and if he were ever questioned, the first to be hunted down would be the family who had taken him in. He thought about all of it. Leaving would mean staking the lives of those households, and of Gao Qian, so staying was a debt repaid; what held him was not the court but the bonds of grace and duty between people. Going back to the order was hard too. He was one of the few who had survived that night; he had found the Tiance meeting beforehand and failed to stop what followed; he had been “killed” by the Lingxue Pavilion and was still alive. In a sect of assassins, coming back like that, he would surely be asked whether he had been let go, and his pupil Lu Wanyue would be drawn into the talk. Within the order only Lu Weilou knew: what the order needed was a Shadow Moon master martyred at the Great Bright Temple, not a survivor under suspicion; and the letter he sent Lu Yuming said it was for his protection.',
     ],
   },
-  lunanxin: { name: 'Lu Nanxin' }, // 陆南信
+  lunanxin: {
+    name: 'Lu Nanxin',
+    birthplace: 'the Western Regions',
+    gloss: 'نسیم (Nasim): “breeze, a gentle wind”, in poetry often a sign of tenderness, calm and the breath of spring. He was born in the very year the Mingjiao was founded (the first year of Jinglong, 707), which only made him surer that he and the faith he later held to were bound together by some wonderful, unbreakable tie.',
+    profile: {
+      '官职身份': 'A master in charge under the “Glazed Gold” banner.',
+      '性格': 'A refined and fervent believer who knows the scriptures by heart. Warm-hearted, loyal to his friends and sociable, and at times rash and impatient: the sort who makes a little money, calls all his friends out to a treat, and usually ends up out of pocket. There is a quiet intelligence in him too, though at first it was hidden from view.',
+      '武学': 'The method of the Luminous Lord. Gravely wounded at the Great Bright Temple in 739, his right elbow run through and the sinews and bones drawn up so that the arm would not straighten, he could no longer use his twin blades, and so fell back on this.',
+      '喜好': 'He likes to drink tea or grape wine from a small pot, and collects cups and bowls, mostly of glass, jade and stone: sometimes he sets a row of them out on the carpet and taps them gently with a little hammer, as if playing music; he loves the sound, and is quite carried away by it.',
+      '专擅': 'Meditation and insight, and the keeping of the scriptures: after he came back to the order he often meditated in the hall, and found a great deal of reflection and insight there.',
+    },
+    anecdotes: [
+      'Turmoil came to him young: a frontier mutiny, the dead badly dealt with, and a plague bred from them that struck the whole village; he was one of the few to survive, and after much wandering found his way into the order.',
+      'At first he did not see very far and cared more for the martial arts; he went wherever the order sent him, and that is how he came to make the long journey to Chang’an. Ambushed on a mission, gravely wounded and dying of thirst, he was saved by a travelling merchant: Rādīn, Lu Wanyue’s father. He tried to bring Rādīn into the order and failed, but they became friends, and so the seed was sown of Lu Wanyue joining it (he was always feeding her frosted sugar).',
+      'The larger thought of treating others as he would himself came to him only gradually: it spread out from Lu Wanyue, until he was protective of and caring towards all the young ones in the order.',
+      'In truth he did not want Lu Wanyue to set foot in the central plains. When she said she was going to the south-west he only grudgingly nodded; it was only as the order’s situation changed, as she grew up and came into her skill, and as Rādīn let his daughter go and find her own way, that he gave up being so overprotective. Later, in meditation, he sensed the shadow of war in the north, and on the night Lu Wanyue set out he talked with her, and said one more thing: I’m afraid your friend is going to suffer.',
+      'The half-sentence Lu Yuming spoke as he died, “cišca carāitiš ahi”, was recognised by him: in the Hadokht Nask it is what the soul of the righteous man asks when, crossing the Chinvat Bridge, he meets his own Daēnā. The rest of it, “of all the maidens I have ever seen, you are the fairest in form”, and the maiden’s answer, “I am your own self: your good thoughts, good words and good deeds”, are in the book, and only he knew them; it must have been he who translated the line, too. Lu Wanyue had been trained in the assassins’ line and might not know the old scripture well; he, after his wound, had meditated and kept the scriptures, and being the believer he was, knew these texts better than anyone. So he knew that Lu Yuming had believed, at that moment, that he was being welcomed, and perhaps had not gone wholly in hatred: a feeling he had never imagined; and what had stirred that feeling in Lu Yuming was the face of the Tiance soldier, Lanchuan Yun.',
+    ],
+  }, // 陆南信
   // 陆晚月：T1 工作译文（2026-11-22），译注与待审见 docs/luyuming-translation-review.md（与陆羽鸣同册）。
   luwanyue: {
     name: 'Lu Wanyue',
@@ -624,10 +652,40 @@ export const charactersEn = {
       'In 741 she first met Lanchuan Yun in a lone fortress town in the Western Regions. In 742 they met again at Longmen, where she saw her master’s Sasanian agate seal on Lanchuan; the two fought fiercely, and afterwards, talking, learned some clues about the night her master died. In 745 they met again while investigating the Hongyi Order’s Devil’s City at Longmen. In 756, when Tong Pass fell, she rescued Lanchuan Yun from Tong Pass and took her to the outskirts of Chang’an, where she had set up a house, and there she found her master again, who had remained in the Central Plains for sixteen years.',
     ],
   },
-  luling: { name: 'Lu Ling' }, // 陆灵
-  luyin: { name: 'Lu Yin' }, // 陆隐
-  luxiao: { name: 'Lu Xiao' }, // 陆晓
-  tangxu: { name: 'Tang Xu' }, // 唐煦
+  luling: {
+    name: 'Lu Ling',
+    birthplace: 'the Western Regions',
+    gloss: 'جانان (Jānān): “beloved, the one dear to one’s heart”, from jān (soul, life, heart); in Hafez and Rumi it often means the beloved. The name is taken in the sense of “life, soul, beauty”.',
+    profile: {
+      '官职身份': 'Of the Mingjiao; Lu Wanyue’s senior sister in the order, and a guide to her. Wife of Cheng Feng of the Tiance Command, and mother of Cheng Yu and Cheng Qian.',
+      '喜好': 'She makes very good sweets and pastries from milk.',
+    },
+  }, // 陆灵
+  luyin: {
+    name: 'Lu Yin',
+    birthplace: 'the Western Regions',
+    gloss: 'پنهان (Penhān): “hidden, secret, unseen”.',
+    profile: {
+      '官职身份': 'A Mingjiao assassin, the senior brother who led Lu Wanyue’s squad, and Māneli’s elder brother. In the ninth month of 736 he and several others made trouble in the streets of Chang’an, which led indirectly to the death of Zhao Yingzhen, Lanchuan Yun’s mother, and he was sentenced to exile under Tang law; his sentence served, he was released in 742 and went back to his squad of assassins. In 745 Lanchuan Yun, who had come to the Western Regions again to deal with the Hongyi Order’s unrest, strangled him with a bowstring.',
+    },
+  }, // 陆隐
+  luxiao: {
+    name: 'Lu Xiao',
+    birthplace: 'the Western Regions',
+    gloss: 'فرزین (Farzīn): “wise, sagacious, precious”, readable as “the wise one”; also the name of the queen-like piece in the old Persian chess (shatranj), carrying both strength and wisdom. The name is taken in the sense of “knowing, learned, wise”, answering to the Chinese xiao 晓.',
+    profile: {
+      '官职身份': 'A full member of the Mingjiao (from 741). A man of the central plains whose father served in the Court of State Ceremonial; early on he went with his father to Anxi and lived at Kucha, learning Persian so that one day he could take over his father’s post, and the Mingjiao’s preaching platform at the foot of the Holy Mountain became the place where he practised it (he first came into contact with the order in 736). Lu Nanxin’s pupil and Lu Wanyue’s friend; later Māneli’s partner.',
+      '性格': 'The clear-eyed, endearingly foolish college-student type. Cheerful, curious and eager to learn, keen on every new experience; he writes everything down in a diary, good and bad, a volume every few months.',
+    },
+  }, // 陆晓
+  tangxu: {
+    name: 'Tang Xu',
+    birthplace: 'Yizhou (Chengdu Prefecture), Jiannan Circuit',
+    gloss: 'دارا (Dārā): “possessor, the wealthy one, one who holds riches and power”, from Old Persian dāraya- (to hold), of the same root as Darius (Dāryūsh, “he who holds the good”), an honoured name in Persian epic and in the royal lines: “one who has both riches and light”. Xu 煦 matches his twin sister Xi 熙 (Tiyām).',
+    profile: {
+      '官职身份': 'Son of Lu Wanyue and Tang Zhe, and twin to Tang Xi: the boy of the twins, brought up in the Mingjiao line.',
+    },
+  }, // 唐煦
   tangzhe: { name: 'Tang Zhe', zi: 'Zhuwei' }, // 唐哲
   tangxuan: { name: 'Tang Xuan', zi: 'Jizhi' }, // 唐玄
   tangqi: { name: 'Tang Qi', zi: 'Sujun' }, // 唐绮
@@ -653,10 +711,127 @@ export const charactersEn = {
   yetiandeng: { name: 'Ye Tiandeng', zi: 'Zhao' }, // 叶添灯
   yeboqiu: { name: 'Ye Boqiu' }, // 叶泊秋
   peiyuan: { name: 'Pei Yuan' }, // 裴元
-  gaoyuan: { name: 'Gao Yuan', zi: 'Huaiqing', epithet: 'Split the Stone: Green Within', hao: 'the Inquisitor' }, // 高垣
-  gaoqian: { name: 'Gao Qian', zi: 'Digu', epithet: 'Moss on the Bones of the Earth' }, // 高堑
-  xuanyang: { name: 'Xuan Yang', zi: 'Youyin', epithet: 'The Hawk Comes Down from the Mountain', hao: 'Huaiqing (her master’s name)' }, // 宣杨
-  xuankang: { name: 'Xuan Kang', zi: 'Shuliang', epithet: 'Grain to Eat, a Bridge to Cross' }, // 宣康
+  gaoyuan: {
+    name: 'Gao Yuan',
+    zi: 'Huaiqing',
+    epithet: 'Split the Stone: Green Within',
+    hao: 'the Inquisitor',
+    birthplace: 'a village below Mount Taibai (the Qinling), Guannei Circuit',
+    gloss: 'He saw the moss creeping green over the rocks on the mountain and reckoned that inside they were green too, and would stay so: “so I have long held the green within”. Even if you split the stone, it is green at heart, the same inside and out, never changing. The two seal-script characters on his waist token look like a picture, as if he had painted his life onto it; Gao Qian’s verdict: “That’s far too much like a person’s name… too honest a heart, really.”',
+    profile: {
+      '官职身份': 'A senior member of the Lingxue Pavilion’s Jishu Bureau. Correspondence, intelligence analysis, inquiry and interrogation: he was good at all of it. He helped manage rewards and punishments for the Pavilion’s disciples, and most of the Bureau’s training and interrogation methods were drawn up or improved by him, so that his colleagues called him “the Inquisitor”, and in jest “Minister Gao”. He once ran intelligence and often went into the Main Pavilion, with the ear of the throne itself; after the false charges of 745 he went back to inside work, keeping the Qianqiu Tower and in charge of the rolls, death benefits and records; in 739–741 he was asked to go to the Tiance Command’s Heavenly Slayer Corps to teach interrogation and the endurance of torture.',
+      '体貌特征': 'Tall and imposing, broad in the shoulders and back: put him in armour and he could pass for a general. For years he wore a white robe, black trousers and a vermilion sash, all ordinary cotton and hemp; in winter, a white scarf, red at both ends, with a scorch mark along one edge. In 745 a beating injured one side of his waist and hip, and his right leg could never bear his weight again: the leg never healed, and the man always stood straight.',
+      '性格': 'Upright, strict and careful; young, but never one for horseplay. There is no chill in his eyes; he simply goes straight to the point, with little idle talk. Strict with others and stricter still with himself, he often put himself in harm’s way on missions to cover others, and his colleagues saw him as a pillar. Thorough to the last degree, and yet “always stopping at that one step”; Gao Qian said he kept to his own ground, and was in truth afraid of making mistakes, afraid of sacrifice.',
+      '偶像': 'Shuliang (Xuan Kang): for saving his life in the snowy forest, bringing him into the Pavilion and teaching him; and for those hands, so practised, that threaded a needle for the boy.',
+      '武学': 'The Lingxue Pavilion’s chain blade. His strength was hard and forceful but his footwork never quite kept up, and his martial arts never came to great things; yet he understood deeply how to teach. He created “Beyond the Blue Hills”: the blade’s force cuts a chasm in the ground, and the chain blade binds a man as if under the cruellest torture, the agony breaking his will; only when the blade is withdrawn does he find that the chain’s pain was all illusion, and there is not a mark on him. He used it to test disciples’ endurance of pain and to shake the will of those under interrogation.',
+      '随身物件': 'A waist token with “Huaiqing” in seal script; a long white scarf with red edges (the scorch mark was made by the child Xuan Yang one night; after his death the village woman passed it on to Xuan Yang); bone-setting remedies collected over the years by the post riders, so many he could play cards with them; bean paste pressed into bricks and drying above the stove; and, at the very back of the kitchen against the wall, a jar of Jiannan shaochun with some still left in it.',
+      '喜好': 'A superb cook: stir-fried noodle toppings, tangbing noodles, steamed buns, bean paste (Gao Qian called it “the paste-smith’s devotion”, a pun on “the craftsman’s devotion”). He studies how food is made in every region, and has to get to the bottom of things like the bean bricks of the Yingzhou merchants, or why Shehong shaochun keeps for the better part of a year without spoiling. Mending and sewing: “Clothes have to be mended; they’re not something you can throw away.”',
+      '专擅': 'Intelligence analysis; indexing and putting records in order (any collection he can lay hands on gets a clear index, and the shelves look new); inquiry and interrogation; seeing through disguises (he could tell a false general by the lack of calluses on the web of the hand and the knuckles). “I report only to whoever gives me my orders.”',
+    },
+    anecdotes: [
+      'In the winter of 723, abandoned by his uncle’s family, he trudged all night through the snowstorm carrying his little brother on his back; behind a bank of earth he undid their bundle, wrapped the boy in a felt mat and held him tight. At dawn a pack of wolves surrounded them and he fought them off with everything he had, until Shuliang’s chain blade saved them. “What you get by begging… is never really yours in the end.” “So long as there is a way to make a living, I’m not afraid. Anything is better than freezing to death in the snow.”',
+      'He passed the entrance trial only at the third attempt, tripped up by the mechanisms and by stray thoughts in the Birds-Never-Return (the Pavilion’s trial forest); in training his footwork never kept up, and the seniors would shout in front of everyone, “Gao Yuan, too slow!” In a selection trial he twisted the spear out of a false general’s hands, touching his palm and fingers at close quarters, then without a word walked straight off to report; so he was assigned to the Jishu Bureau, where he began by learning to read.',
+      'Raising his little brother alone: the thin hemp cord he found to tie the child with was never used in the end, and later the little wild cat clawed it to shreds. Once he kicked away a bun some ruffians had tossed them and hurt the boy’s finger by accident; after he had shouted in anger, he reached under the little one in the night and felt the bedding wet and warm. He froze, and after a long while, the tears came.',
+      'The day the village woman married, he shut the brushwood gate tight and leaned against it, listening as the pipes and drums and singing faded away, his fingers twisted into a corner of his scarf, with only that much strength left in him. “What matters most is now. Now he is sure he will never freeze to death in the snow.” Years later, sent home by her husband because she had borne no son, she brought old but clean little clothes for Xuan Yang.',
+      'When he heard that the village woman had been sent home, and not even allowed to take her daughter, he threw down the scissors in his hand with a clatter. When Xuan Yang learned the truth of her own origins, she suddenly understood that throw.',
+      'At the burial grove in 745 Gao Qian accused him of letting a comrade die without helping: “That is the one thing that can’t be forgiven: what you just said.” A person’s fate is to watch door after door close in front of him, without knowing how to open them again. Or they never open again.',
+      'The false charges and the torture: most of the Jishu Bureau’s interrogation methods he had helped perfect, and now they were turned on him. However they questioned him, there were only a few words: “No. It wasn’t me.” Of Gao Qian’s grudge and all that lay behind it, he said not a word. The day he left prison he pushed away the hands that tried to help him, gripped the wooden rail and hauled himself up, staggered out, and fell on the steps.',
+      'In 748 he went to Chao County and asked the woman in the kitchen, “What are you making?”; when he had heard how the soup was made he left all his rice, flour and silk on the stone table and walked away alone. On the way back, at a riverside tavern, someone threw him an old woman’s wooden hairpin with a brown stain on it: “The one who ought to know, I’ll see that she knows. If you make any move then, don’t blame me.”',
+      'In 748 Shen Hanying burned incense and massaged him to treat his injuries; when he pressed on the bruising knotted there for years, tears with no source welled up from the wound, or from his chest, and he covered his eyes tight with one hand and sobbed and sobbed. “Water runs over the piled stones, and moss grows on them again. When the moss is old and thick, the water cannot pass, and no spring grass grows.”',
+      'In the winter of 752 his old injuries flared up again and he died coughing blood, with no one beside him; the charcoal in his room had burned out, and it was as cold as an ice cellar. Soldiers call dying of illness a good end. He left a letter for Xuan Yang setting out her origins, and the question “why must people like us go on surviving at all?”',
+    ],
+    highlight: [
+      '“People should be like the hawk. Through a hundred desperate straits and a thousand turns of the mountain road, there is always a way out. You must get out. Once you are out and far away, look back, and the answer will be there.” (from his last letter to Xuan Yang)',
+    ],
+  }, // 高垣
+  gaoqian: {
+    name: 'Gao Qian',
+    zi: 'Digu',
+    epithet: 'Moss on the Bones of the Earth',
+    birthplace: 'a village below Mount Taibai (the Qinling), Guannei Circuit',
+    gloss: 'From the Bowu zhi (Treatise on Curiosities): “The earth has the famous mountains as its helpers, and stones as its bones.” Moss returning to the bones of the earth: the brothers entered the Pavilion seven or eight years apart, yet each, without the other knowing, took his name from the same moss-grown stones by the lake outside the compound.',
+    profile: {
+      '官职身份': 'A disciple of the Lingxue Pavilion’s Wugou Terrace, trained at the Mingshan Hall; in the same squad as his elder brother Gao Yuan, the Zhijun Qinggu squad, and credited with kills in the Great Bright Temple affair of 739. Later posted out to the area under Chengdu Prefecture in Jiannan Circuit, he was recalled and punished for a leak that cost his comrades their lives, and confined for three years; incited by the Lingxue Tower (the Yanbing Court), he stole secret scrolls from the Jishu Bureau in 745, was found out, fought his way to the Xuanhe Lodge, was caught, and killed himself.',
+      '体貌特征': 'Young and agile, quick in and out with the chain blade; masked, he slicks his forelock back, and his eyes dart about: “I’m just so very ordinary, see.”',
+      '性格': 'Clever and frank, like their mother, but with a touch of gloom somewhere hard to name: call him, and he grins, and you can’t see it any more. Careless of small proprieties, headlong and a law unto himself, he got out of danger alone again and again, and things did turn out well in the end. He prided himself on his “home-ground cunning”: not in weapons, not in skill, but in knowing more than anyone.',
+      '偶像': 'His elder brother Gao Yuan: “I can’t fall short either; I want to be like you.” Later, bitter and estranged: “And to think I once… wanted to be someone like you.”',
+      '武学': 'The chain blade. Outstandingly gifted, quick and perceptive in the essentials at the Mingshan Hall, under his brother’s guidance he became the best of his generation, a better fighter than his brother; posted to Chengdu, within days he had sketched a map of the area for his squad, and before long he had even picked up the dialect.',
+      '随身物件': 'A waist token with “Digu” in seal script; two jars of Shehong shaochun sent from Shu by his Tang Clan brothers.',
+      '喜好': 'Gathering friends to drink, talk and laugh; skipping stones: the pebble skims away in an arc, leap after leap, the evening light breaking on the water and closing again, and he never tires of it; in plain clothes and a bamboo hat he goes in and out of teahouses and taverns, and knows everything that goes on in every street and lane.',
+      '专擅': 'Street intelligence, dialects and maps, close-quarters agility; he knows the lie of the land: “I’m on this square platform every day; I know what’s where better than anyone.”',
+    },
+    anecdotes: [
+      'In the winter of 723, abandoned by their uncle’s family, he was carried out of the snowy forest on his brother’s back, half awake, calling for his brother, calling for his mother. The bed-wetting stayed with him for some years before it got better.',
+      'At ten or so, squatting with his backside in the air under the stove to light the fire for his brother: the firewood was damp, and the smoke drove them both out of the kitchen to stare at each other; Gao Yuan added another smudge of soot to his nose, and they both laughed.',
+      'In the squad there was a girl he had grown close to back in training; they had feelings for each other, but with lives like drifting weeds, neither said so. She died on a mission, and he hung her waist token on a branch in the burial grove: “Not many people would listen to me. She was one, and you didn’t save her.”',
+      'On the roof of the Great Bright Temple in 739, that stroke was meant in earnest; only, Lu Yuming suddenly looked up, and the line of the blade went wide. With the tip of his blade he flicked the Sasanian agate seal from Lu Yuming’s belt and tossed it to Lanchuan Yun to claim the kill: “The rest is mine,” and carried the man off. Some way along, he realised he was still breathing. The Great Bright Temple business was done; the secrets this man knew were worth nothing now, and all that was left was to finish him or dump him somewhere. And he happened to know where to dump him: he dealt in street intelligence, had long kept watch on whose house Lu Yuming stayed at in the city, and knew whose door to knock on. He did not finish him, nor take him to the Jishu Bureau, but left him at the door of that old Persian family, knocked, and went over the wall: the bit of mercy that had always been in him, and also his laziness, his not caring. He never spoke of it afterwards (to change his story he would have had to strip Lanchuan Yun of her kill and own that he had given her the credit on the spot); when he died in 745, it went with him into the burial grove.',
+      'The truth of the Chengdu leak: “Don’t take the lane south of the city” was said, quietly, to the wine merchant’s family. “If they ran into it, could they come out alive?” The two jars of Shehong shaochun had come at just the right time, and at that meal neither of the two touched a thing.',
+      'In the autumn of 743 he sparred with Lanchuan Yun and won on a wet, mossy stone: “Some people look at the stone; some look at the moss, I suppose.” “Mm, interesting. That’s true.”',
+      'In 745 the Lingxue Tower worked on him: “He doesn’t take you seriously; there are those who value you.” Fighting on the hillside, he wounded his brother, and the edge of his blade trembled a little: “Brother, it’s been a while; looks like you’re the one who’s let his practice slip.”',
+      'Caught, and knowing he would not live, he killed himself with poison hidden in a molar, insisting to the end that the Xuanhe Lodge affair had come from his brother: denouncing him by dying, brother against brother. To this day there is no resting place for Gao Qian in the burial grove.',
+      'At the New Year he made mutton filling and shaped laowan dumplings, and told Xuan Yang not to call him Uncle: “Call me that and I’ll want to lean on a stick and stroke my beard at you every day.” He opened a jar of Jiannan wine and teased little Xuan into sneaking licks from a wooden cup, until Gao Yuan reached over and covered the cup with his hand.',
+    ],
+    highlight: [
+      '“You soldiers all dream of being open and aboveboard. But think about it: how many people can stay aboveboard alongside you? You just trap yourselves.”',
+    ],
+  }, // 高堑
+  xuanyang: {
+    name: 'Xuan Yang',
+    zi: 'Youyin',
+    epithet: 'The Hawk Comes Down from the Mountain',
+    hao: 'Huaiqing (her master’s name)',
+    birthplace: 'Wugao Village, Chao county, Luzhou, Huainan Circuit',
+    gloss: 'Her waist token carries on her master Gao Yuan’s old name, “Huaiqing”, which puzzled Cheng Kai when he saw it: “Chuan’er… told me about this name. But she said it was a man.” Her father Shuliang’s real name was Xuan Kang; “Xuan Yang” shares her father’s surname, and the truth of her origins came out only after her master’s death.',
+    profile: {
+      '官职身份': 'A disciple of the Lingxue Pavilion and Gao Yuan’s heir. Found and taken in by Gao Yuan at a ruined temple in Chao County in 740, she formally entered the Pavilion after the upheaval of 745, was later put into a squad and posted out to the Duji region around Luoyang. In 757 she investigated in secret for the screening of surrendered officers and men in the two capitals, and planned the rescue at the North Park lodgings in Luoyang; in 759 she went into an army camp to look into the eunuch Army Monitor; in 770, when Yu Chao’en was executed, a plot the Pavilion had a large hand in, she went to the Tiance Command herself to tell Cheng Kai.',
+      '体貌特征': 'Small, with a pair of round, jet-black eyes; head tilted, a blink: a living little thief grown into a sharp-witted young woman. Later she wore a spray of deep red flowers at her ear.',
+      '性格': 'Quick-witted and decisive: “Being able to decide matters most. What’s done is done, what’s heard is heard; let the past go” (from Gao Yuan’s letter). She knows her own mind, and every word she says is like a jade bead, pattering down all over the floor. Stubborn as a mule: “Someone’s already asked me. I didn’t do it.” When she sees other people cry, it just annoys her.',
+      '偶像': 'Her master, Gao Yuan. “Mount Taibai could fall down, but my master’s kitchen never would.”',
+      '武学': 'Martial arts and the craft of intelligence, taught by Gao Yuan himself; she never forgets what she has seen, and knows how to put it together and use it, going over everything in her mind day after day; she moves through the Birds-Never-Return as if on level ground.',
+      '随身物件': 'A waist token with “Huaiqing” in seal script; her master’s white scarf with red edges (the scorch mark is the one she made as a child); Gao Yuan’s last letter.',
+      '喜好': 'Candied hawthorns (her reward as a child for helping cover missions); sneaking licks of Jiannan shaochun until there was no stopping her; the bustle of the two capitals, going into town with her fellow disciples on their days off: even her accent turned into the capital’s speech.',
+      '专擅': 'Interrogation and memory, reconstruction and reasoning: going over it again and again, she came dimly to realise that the knife of those years might also have been handed over by her own careless listening and talk. Infiltration and disguise, quick improvisation: adding a drug to make a sickness look real, faking an escape without ever leaving the camp.',
+    },
+    anecdotes: [
+      'A ruined temple in the depths of the winter of 740: tousled and filthy, wrapped in an old felt, she patted the dust off a flatbread she had found and held it to the fire to toast, as pleased as if she were in her own home; she took a piece of dried meat first, then quietly looked at him sideways. “You know a good thing when you see it,” said Gao Yuan. In the night she turned over and scorched Gao Yuan’s scarf.',
+      'Before she entered the Pavilion, the village woman carefully trimmed her hair, and her big eyes saw the light of day again; she grinned at the woman, and the woman’s eyes went red.',
+      'In 745 she watched her master walk into the main hall, his face deathly white; later she went to the prison to meet him, and remembered the reek of blood and iron soaked in over and over, and the uneven rustle of something dragged along the ground. From then on, when she saw others cry, it just annoyed her.',
+      'Realising that some of the words that armed the knife in the upheaval of those years might have been hers, she was frightened and full of remorse; her master shook his head and smiled: “Hindsight: put ‘hind’ in front of anything and you can say what you like. That was my sin; none of it has to do with you.”',
+      'In the winter of 752 she did not get there in time to see her master one last time; a little mongrel in the yard ran up with a battered iron plate in its mouth, and the village woman brought her the scarf: “Everything else, he took down with him. This has to go to you.” She carried the scarf to the burial grove, where red flowers under the trees covered the snow, and the snow covered the red flowers again.',
+      'Once she had his letter she spent years running about, piecing together by every means the truth of her parents’ story; she met some shifty sorts too, and only smiled at what they said: “I’ll go and say it at their graves. How about that? And take you along with me.”',
+      'The North Park rescue in 757: first she tied up a guard to get his outfit, put a drug in the food to fake stomach pains, killed the officer on watch and took his token; improvising as she went, she got every prisoner out.',
+      'In 759 she hid in Cheng Kai’s tent for two days, and left a note under his pillow to say goodbye: “I will look for the ones you lost. If I can’t find them, then someday I will surely do something for you.” The danger over the Cheng household’s papers in 769 and the execution of the Army Monitor in 770 both kept that promise.',
+      'Her last meeting with Cheng Kai, in 770: “I know your Command has its Lingyan Pavilion. In our Pavilion it’s trees; for you it’s steles. Only one word apart, and a world of difference.” “Trees… trees, though. They last longer than steles.” At the year’s end she heard that the General of Zhijie Hall had died of illness, and looking it up found that the day of his death was the same as the day her master had died: only eighteen years apart.',
+    ],
+    highlight: [
+      'The argument about the Birds-Never-Return: perhaps it is not that birds that fly into the forest are lost and can never come back, but that they find another way and fly off on their own: the wings are on them, not on us. So not coming back may be a good thing.',
+    ],
+  }, // 宣杨
+  xuankang: {
+    name: 'Xuan Kang',
+    zi: 'Shuliang',
+    epithet: 'Grain to Eat, a Bridge to Cross',
+    birthplace: 'Wugao Village, Chao county, Luzhou, Huainan Circuit',
+    gloss: 'Millet fills a man’s belly, a bridge lets the road through: what poor families hope for, hence the name. When he was small his mother would hold him by the river (always by the river) and say: “This grain keeps people alive, and the bridge lets people get across. Those are the things that matter most.” When he chose his own code name he picked those two characters: grain, and bridge.',
+    profile: {
+      '官职身份': 'A senior of the Lingxue Pavilion, stationed in Huainan Circuit and seldom at the Pavilion itself. Orphaned young, he was picked out in a poor county by the Pavilion’s regional recruiters. In the snowy forest in 723 he saved the brothers Gao Yuan and Gao Qian, and brought Gao Yuan into the Pavilion. In 736, over a case in the capital, he privately sent word to Zhang Jiuling’s household, was denounced by a comrade, and died on a mission; Li Linfu was then President of the Secretariat and Master of the Outer Pavilion.',
+      '体貌特征': 'A Jiangnan accent, his speech light and quick; a streak of red scarf; his chain blade flicked out and back with a hiss, like a silver snake.',
+      '性格': 'Old beyond his years (“People don’t get old at some age or other; they start getting old the moment they’re born”, the old master at the ruined temple told him when he was small, and he laughed and didn’t believe it); he seldom spoke of private things; warm-hearted and brisk, he saved people and took no credit: “A road? There is one. But it’ll cost you your life.”',
+      '武学': 'The chain blade: he took shape out of the shadows of the snow, the blade drove into the lead wolf’s neck and flung it off, and the wolves on either side were all wounded and scattered.',
+      '随身物件': 'A red scarf; needle and thread (borrowed from the neighbours, and threaded for the boy with practised hands); after his death, only his Guiyuan box went back to the Pavilion.',
+      '专擅': 'Running the Huainan region; choosing new recruits: the Lingxue Pavilion looked for orphans in poor counties, “that way their background and they themselves are clean”, and that was how he himself had been chosen.',
+    },
+    anecdotes: [
+      'Saving the Gao brothers from the wolves in the snowy forest in 723: “This is plain as day: they meant to abandon you.” “Didn’t you even think to beg?” The boy answered, “What you get by begging… is never really yours in the end,” and he sighed: “You’re an interesting one.”',
+      'The day Gao Yuan passed the entrance trial, he was waiting before the Suming Court at the mouth of the valley, and smiled at him: “You shouldn’t have.” (The stray thoughts in the Birds-Never-Return.)',
+      'In 728 (the sixteenth year of Kaiyuan) he married at Chao County, and a son was born the next year; in 734 he left home on a temporary posting to the capital and never went home again, and in the autumn of that year his little daughter Xuan Yang was born. Perhaps he never knew, to the end, that she had been born; it is not in the files.',
+      'After his death the Pavilion’s death benefit never reached them: his wife worked and waited in misery, could not bear the taxes, and died with their little son at the hands of a cruel tax official and his rough soldiers; the baby girl was carried off to a market town on a neighbour woman’s back and escaped, and afterwards wandered, staying with an old monk at a ruined temple, until Gao Yuan happened by in 740.',
+      'He died in the capital. There is nothing new under the sun. Gao Yuan followed his comrades up the mountain to pour out wine, and looked at the red flowers under the trees covering the snow, and the snow covering the red flowers again.',
+    ],
+    highlight: [
+      'On a night when the snow lay deep enough to bury a man, a chain flicked out and back with a hiss, like a silver snake: Gao Yuan never saw the blade, only, from the corner of his eye, a streak of red scarf.',
+    ],
+  }, // 宣康
   mujin: { name: 'Mu Jin', zi: 'Xingbei', epithet: 'The Ford Across the River of Heaven' }, // 穆津
   yeshuxi: { name: 'Ye Shuxi', zi: 'Qingran' }, // 叶曙兮
   yechen: { name: 'Ye Chen' }, // 叶忱
@@ -684,8 +859,22 @@ export const charactersEn = {
   // ---- 2026-11-22 第二轮：作者定（波斯音译名、苗人用本名；日本人物用日语读法；单名、他族名） ----
   langdien: { name: 'Rādīn' }, // 朗迪恩
   luya: { name: 'Royā' }, // 鲁雅
-  maneili: { name: 'Māneli' }, // 玛奈丽
-  geli: { name: 'Golī' }, // 歌莉
+  maneili: {
+    name: 'Māneli',
+    birthplace: 'the Western Regions',
+    gloss: 'مانلی (Māneli): a modern Persian woman’s name, made widely known by Nima Youshij’s poem “Māneli”, where it stands for a pure, beautiful, free woman; the name is taken in the sense of “stay with me” (برایم بمان).',
+    profile: {
+      '官职身份': 'Of the Mingjiao; Lu Yin’s younger sister and Golī’s mother. After her brother was killed in 745 she was cast adrift, and in the autumn of 747, at the Gahambar festival, she was carried off by Tibetan raiders; for a time there was something between her and Qi Sheng, but it came to nothing, and in the end she became Lu Xiao’s partner.',
+    },
+  }, // 玛奈丽
+  geli: {
+    name: 'Golī',
+    birthplace: 'the Hongyi Order’s grounds outside Chang’an',
+    gloss: 'گلی (Golī): a pet form of gol (flower), close to “flower-like, rose-coloured”; rang-e gol, “the colour of flowers”, can mean the colour of a flower, or poetically a lovely hue, the breath of spring.',
+    profile: {
+      '官职身份': 'Māneli’s daughter.',
+    },
+  }, // 歌莉
   nuolangqi: { name: 'Nof Langb Chib' }, // 诺朗齐
   naliu: { name: 'Nax Liuf' }, // 娜留
   peiliu: { name: 'Pet Liuf' }, // 佩留
