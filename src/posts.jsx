@@ -4,7 +4,7 @@ import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./
 import { T, tone } from "./theme";
 import { useLocale, useT } from "./i18n/locale";
 import { charName, facName } from "./i18n/content";
-import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx } from "./i18n/posts-content";
+import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx, tenureNoteTx } from "./i18n/posts-content";
 
 /* ============================================================
    編制 (posts.jsx) —— 门派职位 × 年份的任期图（苍云、天策、唐军，顶上切换）
@@ -258,15 +258,14 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
         return (
           <div id="posts-tip" role="tooltip" style={{ position: "absolute", left: hover.x, top: hover.y, width: 300, boxSizing: "border-box", pointerEvents: "none",
             background: T.panelHi, border: `1px solid ${colorOf(t.who)}88`, borderRadius: 3, padding: "8px 12px", fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.ink, lineHeight: 1.75, zIndex: 5 }}>
-            {/* 英文界面：標目、職銜、任期類別英文（職銜查 i18n/posts.en.js）；上下文、備注暫回落中文 */}
+            {/* 英文界面：標目、職銜、任期類別英文（職銜查 i18n/posts.en.js）；上下文、備注查 i18n/tenures.en.js，逐項回落中文 */}
             <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14 }}>
               {charName(locale, c)}<span lang={tenureTitleTx(locale, t)[1] ? "zh" : undefined} style={{ color: T.muted, marginLeft: 8 }}>{tenureTitleTx(locale, t)[0]}</span>
             </div>
             <div style={{ color: T.accent, fontSize: 12 }}>{spanOf(t)}<span style={{ color: T.faint, marginLeft: 8 }}>{t_(t.kind)}</span>
               {t.draft && <span style={{ color: T.seal, marginLeft: 8 }}>{t_("待核")}</span>}</div>
-            {(en && t.en ? t.en.how : t.how) && <div><span style={{ color: T.faint }}>{t_("上　")}</span><span lang={en && !t.en ? "zh" : undefined}>{en && t.en ? t.en.how : t.how}</span></div>}
-            {(en && t.en ? t.en.end : t.end) && <div><span style={{ color: T.faint }}>{t_("下　")}</span><span lang={en && !t.en ? "zh" : undefined}>{en && t.en ? t.en.end : t.end}</span></div>}
-            {t.note && <div lang={en ? "zh" : undefined} style={{ color: T.muted }}>{t.note}</div>}
+            {[[t_("上　"), tenureNoteTx(locale, t.how)], [t_("下　"), tenureNoteTx(locale, t.end)]].map(([k, [s, z]]) => s && <div key={k}><span style={{ color: T.faint }}>{k}</span><span lang={z ? "zh" : undefined}>{s}</span></div>)}
+            {(([s, z]) => s && <div lang={z ? "zh" : undefined} style={{ color: T.muted }}>{s}</div>)(tenureNoteTx(locale, t.note))}
             <div style={{ color: T.faint, fontSize: 11.5 }}>{t_("依据：")}{t.src.join(en ? "; " : "；")}</div>
           </div>
         );

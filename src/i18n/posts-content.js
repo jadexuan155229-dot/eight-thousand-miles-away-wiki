@@ -1,9 +1,11 @@
 import { postsEn, groupsEn, ranksEn, marksEn, honoursEn } from "./posts.en";
+import { tenureNotesEn } from "./tenures.en";
 import { POST_FULL, tenureTitle, grantLabel } from "../posts-data";
 
 /* ============================================================
    編制英译查表（posts-content.js）：皆返回 [文字, 是否回落中文]，同 content.js 之 charField。
-   職名：任期自有 en.title 者先用；有自寫職名（rank）者查 ranksEn；否則用職位全稱 postsEn.full。
+   職名：有自寫職名（rank）者查 ranksEn；否則用職位全稱 postsEn.full。
+   任期上下文（how / end / note）查 tenures.en.js，以中文原文為鍵；值為 false 者英文不出。
    中文一改（rank、label 以中文為鍵），英文即回落中文，不會錯配。
    ============================================================ */
 const EN = (l) => l === "en";
@@ -16,7 +18,6 @@ export const markTx = (locale, m) => (EN(locale) ? pick(marksEn[m], m) : [m, fal
 
 export function tenureTitleTx(locale, t) {
   if (!EN(locale)) return [tenureTitle(t), false];
-  if (t.en?.title) return [t.en.title, false];
   if (t.rank) return pick(ranksEn[t.rank], t.rank);
   return pick(postsEn[t.post]?.full, POST_FULL[t.post]);
 }
@@ -28,4 +29,13 @@ export function grantTx(locale, g) {
   if (parts.some((x) => !honoursEn[x]) || (g.pin && !honoursEn[g.pin])) return [grantLabel(g), true];
   const text = [g.guan && honoursEn[g.guan], g.xun && honoursEn[g.xun], g.san && `${honoursEn[g.san]} (${honoursEn[g.pin]})`].filter(Boolean).join("; ");
   return [(g.zeng ? "Posthumously: " : "") + text, false];
+}
+
+/* 任期上下文：返回 [文字, 是否回落中文]；中文為空或英文標 false（只寫給作者的備注）則 [null, false] */
+export function tenureNoteTx(locale, zh) {
+  if (!zh) return [null, false];
+  if (!EN(locale)) return [zh, false];
+  const e = tenureNotesEn[zh];
+  if (e === false) return [null, false];
+  return pick(e, zh);
 }
