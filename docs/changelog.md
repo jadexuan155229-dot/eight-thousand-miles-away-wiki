@@ -2,6 +2,15 @@
 
 ## 2026-11-23
 
+### 英文版 T2 人物档案第二批：天策 10 人
+
+- `src/i18n/characters.en.js`：齐晟、程锋、魏谦、项旌、马翊、程宇、秦徽、李庭深、李翰屏、李翰昕的籍贯、训诂、档案各目、轶事与高光工作译本（档案 28 → 38/124，轶事 53 → 91/250），盖戳 102 处。品阶统一写法（principal / secondary，upper / lower grade）。
+- `src/wiki-data.js`：李庭深轶事「又或统领或军师近前戍卫」照 T113 既定决定改「都统」。
+- 疑点清单 `docs/profiles-t2-batch2-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文档案（李庭深、齐晟），工作译本标识正常。
+- **作者审疑点清单**（同日）：李庭深轶事 7 改「762年11月」（与年表 762.11、762.11C 一致），英文随改 eleventh month、重盖戳。门荫照 Notion 术语主表 T033（已定，Hucker：yin = protection privilege）统一作 the yin protection privilege：狄元恪档案「门荫从军」（第一批已合并部分）、程锋档案「受荫而入天策」、年表 732「程锋受荫入天策府」三处一并改；岑菡「荫补弘文馆生」待其批次照此译。T033 用法备注补记三处。
+- **审稿意见**（同日）：参军 / 曹参军事 / 兵马使照职名表改作 Administrator / Administrator of the Military Service Section / Commander（李庭深、项旌两人的档案与轶事）；李庭深档案「曹参军事」照任期表补作「兵曹参军事」，重盖戳；项旌轶事「集合了」改译 when the patrol fell in；程宇「乳酥」改译 butter；疑点清单去掉末尾空行。兵马使旧暂译 Commander of Troops 照职名表全站改作 Commander（狄元恪档案 1 处、年表 5 处，均属已合并部分），Notion T022 随改。
+
 ### 英文版 T2 人物档案第一批：苍云 22 人
 
 - `src/i18n/characters.en.js`：狄元恪、荔非承烈、靳沉白、薛褚、邱鸿、樊璋、关岳、景惠时、关山、连朔、边赛远、茹锦、楼谊、楼谯、贺兰、廖群、吕希纯、关槐、薛直、薛坚、长孙忘情、王不空的籍贯、训诂、档案各目与轶事工作译本（档案 6 → 28/124，轶事 45 → 53/250），盖戳 125 处。连朔文物注照 T1 规矩加注照译。
