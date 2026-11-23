@@ -163,7 +163,7 @@ export const charactersEn = {
     name: 'Fan Zhang',
     zi: 'Dingshi',
     birthplace: 'Yunzhou, Hedong Circuit; later Taiyuan',
-    gloss: 'Zhang 璋 is a jade ritual tablet (“half a gui”, Shuowen; the “ivory tablet” of Yang Jiong’s “Joining the Army”); in the Zuozhuan Du Yu glosses the “great vessels” of the altars of state as gui and zhang tablets, and elsewhere as bells and ding cauldrons, so ding 鼎 answers zhang.',
+    gloss: 'Zhang 璋 is a jade ritual tablet (“half a gui”, Shuowen; the yazhang 牙璋 of Yang Jiong’s “Joining the Army” is the toothed jade tally that sends an army out); in the Zuozhuan Du Yu glosses the “great vessels” of the altars of state as gui and zhang tablets, and elsewhere as bells and ding cauldrons, so ding 鼎 answers zhang.',
     profile: {
       '官职身份': 'Di Yuanke’s retainer: as a boy (in 745, aged seven) he was saved by him at a gate of Taiyuan and taken into his household, and has served at his side ever since; in the army he is his personal guard. In the tenth month of 763 he left Di Yuanke and was readied for transfer as Qiu Hong’s deputy (deputy of the First Regiment).',
       '性格': 'Drifting from place to place as a small child, he did not cry or cower: silent and enduring. When someone tried to take his food he only held it tighter and twisted his whole body away.',

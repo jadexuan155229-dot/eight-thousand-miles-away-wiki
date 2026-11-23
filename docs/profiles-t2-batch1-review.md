@@ -35,3 +35,8 @@
 - 薛坚「剑网3原作NPC」括注照译，不删；以后同类来源说明一律照译。
 - 关岳「最健全（最无聊）」照留；作者点评类以后照留。
 - 边赛远「用现在的话说是个越野跑酷选手」改为照留：in today’s terms, a parkour and trail runner。「现代注解不译」这条规矩随之放宽：作者用现代说法打的比方照译，只删纯属写给自己的注。
+
+## 审稿意见（2026-11-23）
+
+- 樊璋训诂：杨炯《从军行》「牙璋辞凤阙」的「牙璋」误作 ivory tablet。牙璋是边作齿状的玉璋，发兵所用的符信，「牙」不是象牙。改作 the yazhang 牙璋 … is the toothed jade tally that sends an army out。
+- T2 档案前台加标：英文界面下，凡有档案译文而不在 T1 名单（`src/i18n/tiers.js`）者，档案页籍贯与门派之下出一句 This profile is a working translation: names and terms are checked, but the author has not reviewed the wording line by line.，与年表页头同一句式；T1 六人不出。
