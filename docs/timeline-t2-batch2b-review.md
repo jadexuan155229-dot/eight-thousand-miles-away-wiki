@@ -17,7 +17,7 @@
 
 - #53 鬼山会 the Guishan Society；剑庐 the Sword Lodge；叶泊秋「修罗刀，菩提道」the blade of the asura, the path of bodhi。
 - #104 千机匣 the Thousand-Mechanism Case（唐门器械）。
-- #92 九原调 the Jiuyuan air；#93 明德树 the Mingde Tree。
+- #92 九原调 the Jiuyuan tune（初拟 air，作者问后改，见下）；#93 明德树 the Mingde Tree。
 - #32 连朔字「知晦」Zhihui；#92 边赛远字「舍衡」Sheheng（字照音，同前例）。
 
 以上四组 Notion 术语主表里都还没有，你没意见我就收进去。
@@ -34,3 +34,11 @@
 - #69「营啸」a camp panic。#109 唐青阳「以青阳代名，冠唐姓」taking Qingyang in place of his name and Tang as his surname。
 - #95、#96 屈突真：中文资料用「他」，英文作 he。
 - 不出的工作标记：#36「（文档作758或759年，系年推定）」；#65 底色后半的写作提示（「可留一句许远说起平戎城的闲话」，底色前半照译）；#84「（依《狄邱樊》原文）」；#85「正文一句带过」；#86「（月份推定，从考课人事）」；#99「（系年推定……）」；#101「（月份推定）」；#104「（按：月份待核）」；#107「（月份待核）」；#110「作者核」（卷数照留）。
+
+## 作者审定（2026-11-23）
+
+- #64 同意：中文按语改作「（《通鉴》卷220）」，英文键随之改；Notion 事件同步。
+- #98「（方案一）」是早期遗留，中文删去三字，英文本已不出；Notion 事件同步。
+- 九原调：作者问 air 何意。air 本义是「曲调」（多指旧曲、民歌），但九原是地名，the Jiuyuan air 英文读者容易读成「九原的空气」，改作 **the Jiuyuan tune**（回响草稿里已作 a tune，正好一致）。
+- 鬼山会、剑庐、千机匣、明德树照拟收入 Notion 术语主表（T114–T116、T118）；九原调作 tune 收入（T117，状态「建议」，待作者点头改「已定」）。
+- 其余无异议。
