@@ -1,0 +1,40 @@
+# 年表 T2 第二批上（750–756，132 条）疑点清单
+
+文件：`src/i18n/events.en.js`。T2 工作译本：**你只看这份清单**。编号 #0–#131 是本批内序号（对照稿里每条都标），括号里是年月。
+
+## 本批体例
+
+- 术语照 Notion 术语表与第一批已定者（天一教 the Tianyi Order、分山 Mountain-Splitting、铁骨衣 Iron-Bone Mantle／Iron-Bone、军师 strategist……）；勋官、职名照 T0 职名表与 Hucker（骑尉 Commandant of Cavalry、飞骑尉 Commandant of Flying Cavalry、留守 Regent、留后 acting Military Commissioner）。
+- 括注照第一批三分，另补两类：**写作指示**（「正文不必用」「正文一句话即可」「仅作地名带过」）与**系年理由**（「作者编年一处作……兹从 Notion」）英文不出；**史源**（《通鉴》卷数）与**站内互见**（见 756.1D 等）照留，「作者核」不出。
+- 「底色：」作 *Background:*，「暗线：」作 *The hidden thread:*，同第一批。
+
+## 疑点
+
+- #1（750.9，邱鸿擂台）「（系年约750，月份推定）」英文不出；「记录作败而实为天赋，与757年擂台成镜像」照译。「力大分山老兵」作 a powerful Mountain-Splitting veteran（分山照术语表）。
+- #19（753.11，闵方城与连朔）原文按语「文档一处作754入冬……兹从关系库私情边753之起点」是来源说明，英文不出。
+- #21（755.3，苍云诈败离雁门）「（倾向：军师事先与郭子仪略有暗通……）」是故事层面的倾向而非工作标记，英文照译，作 tentatively。
+- #26（756.1D）「作者定」不出，其余括注照译。
+- #20（754，吕定仪）「吕諲」英文作 Lü Yin，与陆隐 Lu Yin 只差一个变音符号，英文读者恐混。要不要加一句身份（the official Lü Yin），或者你另有安排？
+- #5（751.9，连朔）「授一骑尉」作 gave him the merit title of Commandant of Cavalry（骑尉照 Hucker 606）。
+- #33（756.2，天策府城破综述）末尾长按语与正文不一致（正文说岚川云「心灰意冷北走」，按语说她实随曹雪阳西撤潼关、757 年九月方北上）。按语里是故事事实而非工作标记，英文照译成括注，读者两处都看得到。**中文正文要不要改从按语？**
+- #42、#44、#46、#48、#50 各条的系年按语（「作者编年一处作……兹从 Notion」「作者已定……」「文本作……当稍后于……」）英文不出。#46 按语里关于肃宗行在（灵武 → 彭原）的史实是系年理由，也随之不出。
+- #33「统领与军师等随圣上入蜀」：天策的「统领」英文作 the commander（小写泛称，未出名）。若指李承恩，要不要出名？
+- #41（756.12，项旌冠字）「扬节」作 Yangjie, “to raise one’s integrity”；《礼记·杂记下》引文自译。
+- #48（752.7）「藏器」作 Cangqi, “keeping the tool hidden”，「君子藏器于身，待时而动」自译。
+- #50（755.6）「道永在潼关度化……未出世之子」作 performed the rites of deliverance for the unborn child。
+- #59（756.1）「药师观」作 the Yaoshi Abbey（照音加 Abbey）。
+- #62（755.7，安禄山献马）「（按：可接岚川云四月潼关所察马匹网络）」是写作备注（可接某线），英文不出。
+- #71、#72「（家信伏线）」「（家信缘起）」，#77「（三柱与连朔同场之唯一一次……「要拦」一下不点破）」，#80「（正文不交代……）」，#85「（763年验骨之先例，正文不点破）」：这些是讲叙事安排的括注，读者看了也有用，英文照译。若你觉得这类也该算工作标记、英文不出，说一声，以后统一。
+- #84（755.12C，贺兰）「静息医帐」作 the Quiet Breath medical tent，新拟，可收术语表。
+- #78（755.3B）「两蕃」作 the Two Fan (the Xi and the Khitan)，加了括注。
+- #90「（九原，仅作地名带过）」、#92「（文档原无系年，暂系于此）」、#98「（正文不必用；若用，止于……）」、#108 与 #109「（具体方式待核）」「（月份不详，系于蚕月）」：写作指示与系年说明，英文不出。
+- #99「即《闵方城763到765》所谓……」：引的是你的工作文档名，英文不出文档名，只留引语（spoken of later）。
+- #94「见《潼关失子》」作 see “Losing a Child at Tongguan”；#106「《四听》序章」作 the prologue of “Four Listenings”。这两个是你的篇名，英文自拟，请定。
+- #96「（因果待定）」作 (how it came about: undecided)。
+- #109《唐律疏议·捕亡》引文自译；「留后崔圆」作 Cui Yuan, the acting Military Commissioner（留后照 Hucker 作 acting Military Commissioner）。
+- #102「唐门」作 the Tang Clan（照门派表）。
+- #129、#131 引《通鉴》卷数照留（Zizhi tongjian, juan 217），「作者核」不出；站内互见（755.12B、756.1D 等）照留。
+- #130「（正文一句话即可……不写入城，不交代家人下落）」是写作指示，英文不出；「草人所掩护者即此」照留。
+- #116、#117、#123、#124 的「月份不详，系于……」不出；#117「德化碑以752年为赞普钟元年」照译。
+- #117「赞普钟」作 Zanpuzhong, the Tsenpo’s younger brother；「东帝」作 Emperor of the East；「京观」作 a jingguan, a mound of the dead。
+- #125「清平官」作 qingpingguan (chancellor)。
