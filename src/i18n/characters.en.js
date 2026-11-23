@@ -84,25 +84,231 @@ export const charactersEn = {
       'After the Battle of Yanmen Pass, insulted in front of the battle line, he did not change countenance: he went into the enemy ranks, cut down their general and took the standard, his modao driving through to the bone, then cut off the head and hurled it into their ranks. The savagery of it broke men’s nerve, and it made his name.',
     ],
   },
-  diyuanke: { name: 'Di Yuanke', zi: 'Zhiwei', epithet: 'Washed in Snow, Holding the Scales', hao: 'the Gentleman from Taiyuan' }, // 狄元恪
+  diyuanke: {
+    name: 'Di Yuanke',
+    zi: 'Zhiwei',
+    epithet: 'Washed in Snow, Holding the Scales',
+    hao: 'the Gentleman from Taiyuan',
+    birthplace: 'Bingzhou (Taiyuan Prefecture, the Northern Capital), Hedong Circuit',
+    gloss: 'Ke 恪 is “reverence” (Book of Songs, “Hymns of Shang · Na”, with the Mao commentary; Erya, “Explaining Words”), and wei 威 answers it from the Analects (“Yao yue”), where the gentleman with robe and cap set straight is looked on with awe, commanding but not fierce: together, a grave, upright, proud bearing.',
+    profile: {
+      '官职身份': 'Current commander of the Second Regiment. Of a great Taiyuan family, of the generation of Di Renjie’s great-grandsons, sinicised Qiang by descent. His eldest brother Yuanshen is an official; he himself entered the army through his family’s privilege, came up through the Taiyuan garrison, and arrived already seasoned, with merit to his name. In the defence of Taiyuan he was one of the Commanders of Troops for the city’s defence, in charge of a stretch of the walls, and also of mobile relief and convoy escort; for his merit in the defence in 757 he was summoned to the Cangyun Army as an officer in waiting, and in the tenth month of that year was parachuted in as commander of the Second Regiment.',
+      '体貌特征': 'Trained in mounted fighting, he has grown ever taller and more strongly built.',
+      '性格': 'Grave, upright, proud. His family’s way does not prize empty talk; he is versed in all six arts, learned enough for the examinations and skilled at examination prose, yet likes martial arts rather better. Strict in rule and order, unafraid in danger and turmoil. When the fighting was fiercest he went days without coming down from the walls, his men caked in dust and blood and utterly spent, and still his bearing was orderly and composed.',
+      '武学': 'He fights with the cavalry lance, and on foot with a ring-pommel blade. The lance is an art of the old aristocratic houses: heavy cavalry with the lance must master the horse’s momentum, the length of the charge, the balance of the shaft and the weight of the thrust, so that on horseback back, hips, arms and weapon almost form one line. Only after joining the Cangyun Army did he begin shield-and-blade, reading through all the manuals and working through them like set exercises, until in martial terms he became the Cangyun Army’s textbook case.',
+      '随身物件': 'On his desk, a small thing from the sea: a little coral paperweight or a conch shell, which after his marriage in 760 came into his baggage by way of Fan Zhang; he recognised where it came from and did not throw it away, but set it on the desk, among all the heavy, orderly things of an army tent.',
+      '喜好': 'Stubbornly growing herbaceous peonies in the harsh climate north of Dai: the peony was the favourite flower of the women soldiers of the old Tiance Command.',
+      '专擅': 'Military and administrative paperwork, and the rules and discipline of city defence. Gate control, post relays, the transport of army supplies: he will look into all of it himself and put it in writing, and though his unit is small, its defence, relief and transport work runs in good order.',
+    },
+  }, // 狄元恪
   luowenbi: { name: 'Luo Wenbi', zi: 'Jingshan' }, // 骆文璧
-  lifei: { name: 'Lifei Chenglie', zi: 'Wugong', epithet: 'The White-Browed Tiger Holds the Pass' }, // 荔非承烈
-  jinchenbai: { name: 'Jin Chenbai', zi: 'Lingyun', epithet: 'The Hermit of the Barren Mountain' }, // 靳沉白
-  xuechu: { name: 'Xue Chu', zi: 'Jitao', epithet: 'Sheathed in the Armoury' }, // 薛褚
-  qiuhong: { name: 'Qiu Hong', zi: 'Xianlu', epithet: 'Enshrining Bones, Lighting Lamps', hao: 'the Fair One of the North · Jade Blade-and-Shield' }, // 邱鸿
-  fanzhang: { name: 'Fan Zhang', zi: 'Dingshi' }, // 樊璋
-  guanyue: { name: 'Guan Yue', zi: 'Ziling', epithet: 'Gathering the Voices of Ten Thousand Mountains' }, // 关岳
-  jinghuishi: { name: 'Jing Huishi', zi: 'Chunyi' }, // 景惠时
-  guanshan: { name: 'Guan Shan', zi: 'Renshi' }, // 关山
-  lianshuo: { name: 'Lian Shuo', zi: 'Zhihui', epithet: 'One Feather, a Hook in the Heart' }, // 连朔
-  biansaiyuan: { name: 'Bian Saiyuan', zi: 'Sheheng' }, // 边赛远
-  rujin: { name: 'Ru Jin', zi: 'Qixiang' }, // 茹锦
-  louyi: { name: 'Lou Yi', zi: 'Zhengu', hao: 'Lord of the Tower · the Tower Officer' }, // 楼谊
-  louqiao: { name: 'Lou Qiao', zi: 'Jianwang' }, // 楼谯
-  liaoqun: { name: 'Liao Qun', zi: 'Yingzhong' }, // 廖群
-  lvxichun: { name: 'Lü Xichun', zi: 'Yuanying' }, // 吕希纯
+  lifei: {
+    name: 'Lifei Chenglie',
+    zi: 'Wugong',
+    epithet: 'The White-Browed Tiger Holds the Pass',
+    birthplace: 'Ding’an county, Ningzhou, Guannei Circuit',
+    gloss: 'Wugong 无功, “without merit”, answers chenglie 承烈, “carrying on the achievement” (lie as “achievement”, Erya), after the Laozi’s “the work done, he does not dwell in it”: a name he gave himself after 745, ashamed to have lived when he had failed to protect the Commander at Yanmen Pass. The “white-browed” of his epithet comes from Wang Wei’s “Song of the Old General”.',
+    profile: {
+      '官职身份': 'Former commander of the Second Regiment. A Qiang, clan elder brother of the Tang general Lifei Yuanli. At twelve or thirteen he went with post-station convoys as guide and guard; at fifteen or sixteen he was picked as a professional soldier to patrol the county; in 734 he went north with a recruitment levy into the Xuanjia Army at Yanmen. In the tenth month of 757 he lost a challenge bout to Qiu Hong, was badly hurt and retired. The Binzhou affair of 763 gives his nominal year of death: the bones identified at Fengxiang and buried at the Li Mu shrine were in truth another man’s; he himself was saved, withdrew from the world, and became a wandering swordsman of the western frontier again.',
+      '体貌特征': 'Strikingly tall and handsome, deep-browed and high-eyed, his skin a little coppery, with something of both Han and Hu in his face. Big-boned and powerful, with superb strength of frame. The tallest of all the soldiers in the story.',
+      '性格': 'Impatient of rules and administrative procedure, careless, forever miscounting grain and weapons; yet in the battle line he stills his breath and gathers himself like a hunting tiger or leopard. As a child he saw only chaos: kin and neighbours lined up before officials and hauled off without distinction; the battlefield seemed simple to him by comparison: the enemy in front, the blade in his hand, every advance and retreat with its reason.',
+      '武学': 'Quick at the killing arts of shield-and-blade, all great sweeping strokes; none of the soldiers of his intake could stand against him. His fighting is like splitting a mountain with a blade: split it and there is a road; the old hands said he held a blade as if it were an axe.',
+      '专擅': 'Finding the way and reading banners, cutting across mountains by short ways, long forced marches under load without tiring; he knows the rules of the passes and the banners and passwords of all the armies.',
+    },
+  }, // 荔非承烈
+  jinchenbai: {
+    name: 'Jin Chenbai',
+    zi: 'Lingyun',
+    epithet: 'The Hermit of the Barren Mountain',
+    birthplace: 'Xihe county, Fenzhou, Hedong Circuit',
+    gloss: 'From Li Qi’s poem on hearing Dong Da play the Hu reed pipe, where the great waste lies deep under white snow (chenbai, “sunk in white”), and Tao Hongjing’s verse answering what the mountains hold: on the ridges, many white clouds (lingyun, “ridge cloud”).',
+    profile: {
+      '官职身份': 'Current commander of the Third Regiment. Descended from Jin Qiang, Marquis of Fenyang under the Western Han, of a scholar-gentry family fallen on hard times. In 742 he went north with his father to escape the fighting and entered Yanta Tower, registered as a copyist to draw rations, and so came to know the Lou family; he later joined the Cangyun Army as a clerk under Lü Dingyi. When Lü Dingyi died of wounds and illness in 755, he left only him to act in his place and to attend him at his bedside; afterwards he rose to regimental commander.',
+      '性格': 'Gentle and cool, almost without self. He runs his troops on a plain, practical pragmatism close to Zen. No mere clerk with his head down over his writing: he is in fact a good communicator, quick to grasp and read what each person wants. After his predecessor Lü Dingyi was gone, he reproduced almost exactly Lü’s style of documents and his rhythm of march and command.',
+      '武学': 'Something of a family tradition. His fighting is fine-grained and thought through; as a martial artist he is a great theorist. His movements are easy and graceful and look slower than other men’s, yet a quick attack cannot break them: it is all turned aside. Sparring at blade and shield with Lü Dingyi, he lost none of the edge of a battlefield weapon, yet had at the same time a quiet, plain, even beautiful quality, every move in measure and in time.',
+      '随身物件': 'Always to hand: a military report and a sample administrative document, and an old seal box (once written with and used by Lü Dingyi), even though what it holds is his own army seal.',
+      '喜好': 'Continuing the shield-and-blade manuals, sketching little figures to show the direction of each movement; in his tent he hangs, just as it was, the old felt map of Yanmen from Lü Dingyi’s tent in the late Commander’s day, and when rivers or hills change he draws a small map himself, mounts and oils it, and pins it to the edge of the wooden frame at the right place.',
+      '专擅': 'Copying and checking documents (in five separate registers: casualties, weapons, provisions, watches and messages); he learned medicine from his father and can set bones.',
+    },
+  }, // 靳沉白
+  xuechu: {
+    name: 'Xue Chu',
+    zi: 'Jitao',
+    epithet: 'Sheathed in the Armoury',
+    birthplace: 'Longmen county, Jiangzhou, Hedong Circuit',
+    gloss: 'Chu 褚 is “to store away” (Zuozhuan, Duke Xiang, year 30), and tao 韬 a sword’s sheath (Shuowen, with Duan Yucai’s note: by extension anything that wraps and hides): the two answer each other, and suit his post in the armoury.',
+    profile: {
+      '官职身份': 'Deputy to Lifei Chenglie during his service; after Lifei retired in 757 he asked to go back to the armoury of the Cangyun stronghold, and from then on was a still, deep pool, asking about nothing. A younger kinsman of Xue Zhi, but of a far humbler branch; orphaned early, he entered the Cangyun armoury as a boy to keep and care for the weapons. Out of reverence for the dead, the camp calls him only by his courtesy name and leaves out the Xue: General Jitao.',
+      '体貌特征': 'Strongly built and powerful.',
+      '性格': 'Steady and silent, careful of speech. Content at the margins, in a supporting place, willing to stay hidden all his life.',
+      '武学': 'He trained in Iron-Bone, and counts as Min Fangcheng’s senior. His Iron-Bone is a plain, hard shield with no thorns on the body; he is excellent at leading troops and holding a formation, but his own martial attainment falls short of Min Fangcheng’s, and sparring with him he loses more than he wins.',
+      '专擅': 'Keeping, maintaining and repairing weapons; supervising the forge (after 758 Lu Bingyu forged blades under him to atone).',
+    },
+  }, // 薛褚
+  qiuhong: {
+    name: 'Qiu Hong',
+    zi: 'Xianlu',
+    epithet: 'Enshrining Bones, Lighting Lamps',
+    hao: 'the Fair One of the North · Jade Blade-and-Shield',
+    birthplace: 'Yunzhong county, Yunzhou, Hedong Circuit',
+    gloss: 'Xianlu 衔芦, “a reed in the beak”, is the wild goose of the Huainanzi (“Xiuwu xun”, with Gao You’s note) and the Gujin zhu, which flies with a reed in its beak so that the archer’s cord cannot catch its wings. His family is sinicised Xianbei, descended from the early Tang general Qiu Yingqi.',
+    profile: {
+      '官职身份': 'After the changes of post at the end of 757, deputy to Di Yuanke (deputy of the Second Regiment); Min Fangcheng’s disciple. He lost an arm in Mokun’s raid on the pass in the tenth month of 760 and for a time asked to resign; at the formation exercise of the first month of 761 he at last stood on his own again; in the tenth month of 763 he was readied as commander of the First Regiment (succeeding Min Fangcheng).',
+      '体貌特征': 'Clean, handsome brows and eyes, a straight nose, pale lips, a jaw like a cut line. The inner corners of his eyes are a little sharp, the eyes long and narrow, his gaze often like still water sealed under ice, yet with a touch of warm sunlight. His skin is a light ochre tending to a cool white. Tall and straight, shoulder blades flat and tight, waist drawn in. Most Cangyun officers are massive; he alone is finely boned, with a close-knit, exacting air. For his looks and bearing he is called “Jade Blade-and-Shield”.',
+      '性格': 'Sensitive, quick of understanding, tenacious, given to reflection, good at rising with the moment. At bottom steady and sincere; he keeps the old Cangyun ways and has made them his own. In his fighting he was born with a kind of “knowing when to stop”: when he could plainly turn the bout, he only pushes the man out, and does not add that last blow.',
+      '武学': 'A born Iron-Bone. His inner strength gathers beneath the bone, so that even out of armour he seems armoured; with shield and blade he treads the snow like a wild goose, alert against traps, holding himself steady against the wind. Standing still he is like a sword in its case: upright, unangered, the edge just showing.',
+    },
+  }, // 邱鸿
+  fanzhang: {
+    name: 'Fan Zhang',
+    zi: 'Dingshi',
+    birthplace: 'Yunzhou, Hedong Circuit; later Taiyuan',
+    gloss: 'Zhang 璋 is a jade ritual tablet (“half a gui”, Shuowen; the “ivory tablet” of Yang Jiong’s “Joining the Army”); in the Zuozhuan Du Yu glosses the “great vessels” of the altars of state as gui and zhang tablets, and elsewhere as bells and ding cauldrons, so ding 鼎 answers zhang.',
+    profile: {
+      '官职身份': 'Di Yuanke’s retainer: as a boy (in 745, aged seven) he was saved by him at a gate of Taiyuan and taken into his household, and has served at his side ever since; in the army he is his personal guard. In the tenth month of 763 he left Di Yuanke and was readied for transfer as Qiu Hong’s deputy (deputy of the First Regiment).',
+      '性格': 'Drifting from place to place as a small child, he did not cry or cower: silent and enduring. When someone tried to take his food he only held it tighter and twisted his whole body away.',
+      '武学': 'He began shield-and-blade with Di Yuanke in 757; at the end of 760 Xue Chu and Qiu Hong found that he showed the aptitude for Iron-Bone; at the challenge bouts of the ninth month of 762 he had indeed come into his own; in the fourth month of 764 Min Fangcheng passed his art on to him.',
+      '随身物件': 'A dog-tooth pendant left by his mother (in fact the broken buckle of the cord at her waist), of unknown origin, until after he joined the Cangyun Army someone used it to guess at his ancestry: the clash with naturalised Xi in a burned village of Yunzhou was where his family was destroyed.',
+    },
+  }, // 樊璋
+  guanyue: {
+    name: 'Guan Yue',
+    zi: 'Ziling',
+    epithet: 'Gathering the Voices of Ten Thousand Mountains',
+    birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
+    gloss: 'Yue 岳, “high peak”, from the Book of Songs (“Song Gao”: lofty is the peak), and ling 陵, also meaning high and great (Book of the Later Han, “Treatise on the Five Phases”).',
+    profile: {
+      '官职身份': 'Min Fangcheng’s deputy at headquarters, for many years at his side helping run the army’s affairs. He once went to Taiyuan to take temporary charge of the Cangyun field headquarters there and to look Di Yuanke over. In the tenth month of 763, on Min Fangcheng’s recommendation, he became Deputy Corps Commander of the Rank-Breaker Corps.',
+      '体貌特征': 'A northern Han, with a patch of burn scars from the right side of his forehead to the tail of his eyebrow.',
+      '性格': 'At bottom kind and easygoing, warm, upright, clear about right and wrong. He makes himself at home with anyone, is quick to react, good at reading faces, adroit. In camp he will also scold the soldiers severely; he is almost Min Fangcheng’s mouth. Now and then he plays with words. He naturally sees through things, especially between people. Grateful for Min Fangcheng’s years of protection and advancement, he will always weigh Min Fangcheng before himself, utterly loyal, ready to sacrifice himself for him. Min Fangcheng never told him what was in his heart, and all his life he never truly understood the man whose steps he followed. He knew it all, and knew there was nothing to be done. Each in this world goes his own way. He may be called the most well-adjusted (and most boring) character among the Cangyun.',
+      '武学': 'Mountain-Splitting. Solid, steady groundwork.',
+      '喜好': 'Studying smithing and forging: Lu Bingyu taught him to forge blades and to repair arms and armour (a friendship that began with a little private motive of Liu Rong’s, who wanted to find out about Min Fangcheng).',
+    },
+  }, // 关岳
+  jinghuishi: {
+    name: 'Jing Huishi',
+    zi: 'Chunyi',
+    birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
+    gloss: 'Hui 惠 from the Book of Songs (“Yan Yan”: gentle and kind, good and careful of herself), and chunyi 春沂, “spring by the Yi”, from the Analects (“Xian jin”): bathing in the Yi in late spring, the scene the Master sighed that he would join.',
+    profile: {
+      '官职身份': 'Army physician. Long at Cangyun, she also helps the head of the Women’s Guard Corps run its affairs and manages the army’s supplies and medicines. At the end of 756 the court honoured her household with the inscription “Integrity and Righteousness”.',
+      '体貌特征': 'A northern Han woman, tall and slender, of a well-proportioned, soft grace.',
+      '性格': 'Gentle and cultivated, quietly kind and constant, self-giving, meticulous in her work. But there is also in her a real inability to bear loneliness, and a soft-heartedness that loses its head when she cares. Her sense of self is rather small; in feeling she always holds back and keeps things in, and so leaves people the loveliest impression. She also likes a little gossip.',
+      '武学': 'While Guan Shan lived she knew she had someone to lean on and did not take martial arts much to heart; after he was gone she thought she must be able to protect herself and to give first aid at the battle line, and Min Fangcheng, when he knew, said nothing, and simply taught her together with Guan Yue.',
+      '随身物件': 'The Nineteen Old Poems that Guan Shan copied out for her; she kept those scrolls always.',
+      '喜好': 'Reading poetry, above all the Nineteen Old Poems; in idle hours, beadwork and knotting cords; at the Dragon Boat Festival her coloured threads are the finest braided of all.',
+      '专擅': 'Treating wounds and training army physicians; the first army physician to pay attention to the signs of soldiers’ psychological wounds: the origin of the idea of healing behind the Quiet Breath medical tent.',
+    },
+    anecdotes: [
+      'Her family practised medicine, and villagers seeking a physician would usually come to her house. It was also for this skill that she followed Guan Shan to Yanmen.',
+      'In her early years, her first pregnancy often made her unwell. But one day, with her parents away, a neighbour came begging for help in an emergency, and though she was over eight months along she went with him all the same. The cart jolted, and on the way back she felt something wrong; the birth came early and hard, and the child was stillborn, suffocated. She never bore a child again.',
+      'In the old days she and Guan Shan would look after and feed stray little animals they picked up. Guan Shan volunteered to milk the ewe, but he was clumsy at it, and a little afraid besides; and what he feared came to pass: he was kicked head over heels, while she stood by, aching for him and laughing.',
+      'She had first meant to settle in Guangwu and make her home a clinic. But Guan Shan passed the Cangyun Army’s selection, and she followed him to the camp, saw the many wounded, learned how short they were of physicians and medicine, and, thinking that Guan Shan might one day be like them, could not rest easy; so she stayed in the Women’s Guard Corps as an army physician.',
+      'An honour is an honour; no one knew how lonely and forlorn she was herself. And the young Xi herder (Qutu Zhen) and the few children with him, in a quite natural and simple way, made the withered plum flower, until at last they “had a time together”, and then it ended in tragedy.',
+    ],
+  }, // 景惠时
+  guanshan: {
+    name: 'Guan Shan',
+    zi: 'Renshi',
+    birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
+    gloss: 'From the Analects (“Yong ye”: the humane delight in mountains) and the Book of Songs (“Jie Nan Shan”: the rocks of the southern hill, towering): ren 仁, humane, and shi 石, stone.',
+    profile: {
+      '官职身份': 'At his death in the fourth year of Tianbao (745) he was a Company Commander in the camp.',
+      '性格': 'Gentle and kindly, not without sharpness, good at sensing others. His concern for people made no distinctions; he had compassion, and dealt fittingly with those above and below. But for the same reason he was easily swayed and could not make up his mind.',
+      '喜好': 'Fenyang wine.',
+    },
+  }, // 关山
+  lianshuo: {
+    name: 'Lian Shuo',
+    zi: 'Zhihui',
+    epithet: 'One Feather, a Hook in the Heart',
+    birthplace: 'The Xi lands, between the Raole Area Command and Yingzhou',
+    gloss: 'Shuo 朔 is the north, and the first day of the month, or dawn; hui 晦 the last day, or night (Shuowen; the Zhuangzi’s morning mushroom that knows nothing of hui and shuo): opposites made to answer, with zhi 知, “knowing”, to speak of his fate. The name Lian Shuo was given by a Langya general and his Han strategist: “Better take the character shuo; it’s like this wind.”',
+    profile: {
+      '官职身份': 'At his first appearance, a Battalion Commander of the Rank-Breaker Corps (his merit for being first up the wall at Mayi was recorded in 756, and he was promoted in the autumn of 757 while stationed in Hexi). Formerly the adopted son of one of An Lushan’s generals, a surrendered Langya officer; after joining the Cangyun Army he was used and taught by Min Fangcheng.',
+      '体貌特征': 'A rather long, thin face, fair skin, thin lips, a high straight nose with a slight hook. Slight of build, at a great disadvantage in close physical contests.',
+      '性格': 'Rebellious and suspicious, original in thought, sharp of tongue, not much given to hiding his edge. Very hardworking, competitive and quick, able to bear heavy responsibility, often finding life in danger. But narrow of heart, arrogant and vain, a little highly strung, and so in the end bound to go to extremes. He is also fiercely protective of the weak, and at such times very loyal and generous; perhaps out of something he lived through himself.',
+      '武学': 'Mountain-Splitting. Beyond the basic style he stole a little of Lü Dingyi’s art; extremely hardworking, training nearly as hard as Guan Yue once did, and making up for his slight build with technique.',
+      '随身物件': 'In one earlobe, an amber and gold earring, long and linked, with gold chain, metal plaques and gems (the artefact: gold earrings excavated from the Northern Wei tombs in the southern suburbs of Datong, Shanxi).',
+      '喜好': 'Fine clothes, gold and jade ornaments.',
+      '专擅': 'Training birds of prey; handling horses and finding the way, pursuit and raiding on the grasslands.',
+    },
+  }, // 连朔
+  biansaiyuan: {
+    name: 'Bian Saiyuan',
+    zi: 'Sheheng',
+    birthplace: 'Wutai county, Daizhou, Hedong Circuit',
+    gloss: 'From Zhang Xie’s “Miscellaneous Poems”, no. 7 (Western Jin), where the poet puts off his rough-gate clothes for a soldier’s tasselled cap: hengmen yi 衡门衣 is commoner’s dress, and sheheng 舍衡, “leaving the rough gate”, tells his story.',
+    profile: {
+      '官职身份': 'Chief of Scouts, promoted by Lanchuan Yun during her time with the Cangyun Army; in a sense her disciple. His father was a Cangyun soldier; he served two years as attendant to Li Tingze of the Changge School, and after the siege of Changshan was lifted in 756 knelt before the horses to join the Cangyun Army.',
+      '体貌特征': 'A northern Han.',
+      '性格': 'Obedient, careful, honest, thoughtful. Still young, he sometimes flusters easily and needs encouragement. But in truth his will is firm, and when he really commits himself to a task he usually does it very well. He can be compared with Wei Qian, but he has seen less of the world than Wei Qian, so though he too is clever, his mind is more literal, less nimble.',
+      '武学': 'Mountain-Splitting.',
+      '喜好': 'Training in qinggong. In a school whose methods are heavy, he is known for being light and quick on his feet, with powerful legs. He looks very quiet, but in fact moves like a hare gone mad.',
+      '专擅': 'Carrying messages; speed of foot. In the siege of Changshan in 756 he ran a long stretch on his own two legs before he found a horse, and rode to the Eastern Pass to bring word to the Cangyun Army.',
+    },
+  }, // 边赛远
+  rujin: {
+    name: 'Ru Jin',
+    zi: 'Qixiang',
+    birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
+    gloss: 'The Ru 茹 clan came from the Rouran; the Tang had a Ru Yizhong, of a Yanmen family, Assault-Resisting Commandant of the Jinmen garrison in Guozhou with the rank of General of Loyal Valour, and Ru Jin is of his line.',
+    profile: {
+      '官职身份': 'The Cangyun Army’s specialist maker of leather armour; taken into the Cangyun Army at sixteen, where she trained in martial arts. Daughter of a hereditary leatherworkers’ household; her parents had become leatherworkers in the rear of the Cangyun camp early on.',
+      '性格': 'After the Battle of Yanmen Pass she and her family stripped the clothes and armour from fallen soldiers and remade them for use, without turning a hair; the Cangyun Army could no longer afford to hire craftsmen, and the Ru family would not abandon its trade in a time of danger.',
+      '专擅': 'Remaking armour, making good use of leftover material, so that it fits the bodies of women soldiers, even better than before.',
+    },
+  }, // 茹锦
+  louyi: {
+    name: 'Lou Yi',
+    zi: 'Zhengu',
+    hao: 'Lord of the Tower · the Tower Officer',
+    birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
+    gloss: 'From Zhang Heng’s “Rhapsody on the Eastern Capital” (Eastern Han), on holding to right, looking to one’s lord and keeping a constant integrity: yi 谊 and zhengu 贞顾.',
+    profile: {
+      '官职身份': 'Commander of the defence of Yanta Tower. The Lou family have kept the tower for generations; in the summer of 745 her father Lou Zhun fell from the tower and died in a Langya surprise attack, and at fifteen she took charge in the crisis: lighting the lamps, sending word, mustering the men and setting the watches as usual, and the tower did not fall into disorder. She married an official of the Cui family of Shuozhou.',
+      '性格': 'A military-bureaucratic figure. A strong sense of responsibility and of family mission, highly effective. The Lou family, keepers of the tower for generations, are proud and stubborn, and do not ask for help.',
+      '专擅': 'Teaching the arts of signalling (lamp signals, flags, the hours for flying kites); helping the camp with surveying and mapping.',
+    },
+  }, // 楼谊
+  louqiao: {
+    name: 'Lou Qiao',
+    zi: 'Jianwang',
+    birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
+    gloss: 'Qiao 谯 (also written 樵) is a high tower for watching the enemy (Book of Han, Biography of Zhao Chongguo, with Yan Shigu’s note), so wang 望, “to watch”, answers it, with jian 肩, “shoulder”, for the watch he shouldered at Yanta Tower.',
+    profile: {
+      '官职身份': 'Promoted deputy to Jin Chenbai of the Third Regiment in 757. Lou Yi’s younger brother, raised in Yanta Tower; at twelve, at the time of the Battle of Yanmen Pass, he flew a kite and looked down on the horror of that battle, and from then on meant truly to join the army and go into battle; later Guan Yue trained him for a while, and he was taken into the Rank-Breaker Corps.',
+      '专擅': 'Flying and maintaining kites; riding the kites or working the great crossbows on the tower, he would send up his own side’s signal lanterns or shoot down the enemy’s, winning merit while still very young.',
+    },
+  }, // 楼谯
+  liaoqun: {
+    name: 'Liao Qun',
+    zi: 'Yingzhong',
+    birthplace: 'Tianbao county, Liangzhou (Wuwei Commandery), Longyou Circuit',
+    gloss: 'Qun 群 is from qunyu 群玉, the Mountain of Massed Jade of the Mu Tianzi zhuan, and ying 莹 the lustre of jade (Shuowen, with Duan Yucai’s note); the Classic of Mountains and Seas makes Jade Mountain the home of the Queen Mother of the West.',
+    profile: {
+      '官职身份': 'A Cangyun recruit (joined the camp in 758–759 and trained in Di Yuanke’s Second Regiment). His father, a clerk of the granary office at the Jiaocheng garrison, was killed in Gai Tinglun’s mutiny in the first month of 757; fleeing east with his mother, he was checked and let through by Lian Shuo’s troops stationed at Liangzhou, and with his father’s bronze seal and a fragment of the household register was enrolled as a son of an army household.',
+      '体貌特征': 'Lean.',
+      '性格': 'One who learns slowly but surely: the peculiar toughness of Hexi people, drilling each movement into his muscles until it becomes second nature.',
+      '武学': 'He started from a low base; Di Yuanke’s textbook-correct blade work was in fact the best starting point for him, since he had no habits of his own that needed breaking.',
+      '随身物件': 'The bronze seal of the Jiaocheng garrison his father left, and a torn scroll of the family genealogy.',
+    },
+  }, // 廖群
+  lvxichun: {
+    name: 'Lü Xichun',
+    zi: 'Yuanying',
+    birthplace: 'Puzhou (Hezhong Prefecture), Hedong Circuit',
+    profile: {
+      '官职身份': 'Lü Dingyi’s daughter, born in the spring of 755 and brought up under the protection of the Lü family of Puzhou. Lü Dingyi, leading the army in guerrilla fighting north of Yanmen, never knew of her.',
+    },
+  }, // 吕希纯
   louhao: { name: 'Lou Hao', zi: 'Subi' }, // 楼皓
-  guanhuai: { name: 'Guan Huai' }, // 关槐
+  guanhuai: {
+    name: 'Guan Huai',
+    profile: {
+      '官职身份': 'Guan Yue’s son, born in the third month of 765.',
+    },
+  }, // 关槐
   lubingyu: { name: 'Lu Bingyu', zi: 'Zhisong', hao: 'Forge Mountain' }, // 卢秉毓
   liurong: { name: 'Liu Rong', zi: 'Rong' }, // 柳戎
   liuguan: { name: 'Liu Guan', zi: 'Yuanyi' }, // 柳贯
@@ -166,11 +372,43 @@ export const charactersEn = {
   chengguang: { name: 'Cheng Guang', zi: 'Qianli' }, // 程广
   chenruihe: { name: 'Chen Ruihe', zi: 'Xinchu' }, // 陈瑞和
   xiamingcang: { name: 'Xia Mingcang' }, // 夏明沧
-  xuezhi: { name: 'Xue Zhi' }, // 薛直
-  xuejian: { name: 'Xue Jian' }, // 薛坚
+  xuezhi: {
+    name: 'Xue Zhi',
+    birthplace: 'Jiangzhou (the Xue clan’s home), Hedong Circuit',
+    profile: {
+      '官职身份': 'The late Commander of the Cangyun Army (the Xuanjia Army). He founded the Xuanjia Army by imperial order; some say that in the beginning he “led the Xue family army into Yanmen Pass”. He fell in the Battle of Yanmen Pass in 745; the emperor laid the blame on him for poor command and docked the Cangyun Army half a year’s pay and provisions, the funeral named no honours at all, and his clan never sent up a memorial asking for them: leaving a name in suspense, and ten years of struggle for the Cangyun Army.',
+      '武学': '“Silver spear, fiery horse”: when Di Yuanke rode into the pass in 757, man and horse in armour, with a long lance, the old horse doctor in a daze thought he was seeing Commander Xue of old.',
+      '专擅': 'Judging men: he took in Min Fangcheng as a groom, Xue Chu as a weak orphan, kept the Ru family as craftsmen: the Xuanjia Army did not ask where you came from.',
+    },
+  }, // 薛直
+  xuejian: {
+    name: 'Xue Jian',
+    profile: {
+      '官职身份': 'Xue Zhi’s only son (an NPC in the original JX3; born 734, as in the game). Eleven when his father died in the Battle of Yanmen Pass in 745, he insisted on staying with the army, and grew into a somewhat cold, hard, blunt temper. In 755 he went west with the Cangyun Army into Shuofang under Guo Ziyi; when the Cangyun Army went back to Yanmen in the second month of 756 he did not go with it but stayed on Guo Ziyi’s staff, and so entered the Shuofang Army: “out in the army to be tested, winning merit again and again”. After Guo Ziyi was dismissed he passed with the Shuofang Army to Pugu Huai’en; in Huai’en’s rising early in 764, his name on the Shuofang rolls, he was put into the force attacking Yuci, and after Pugu Yang’s death went over with the rest to Guo Ziyi.',
+      '武学': 'Shield-and-blade: “All I have to rely on is myself, only the shield and blade in my hands.”',
+      '专擅': 'As a child Xue Chu sparred with him to give him his grounding, and Min Fangcheng was ordered to choose and train a horse for him; the two of them were a “quiet alliance” keeping a distant eye on the late Commander’s son.',
+    },
+    anecdotes: [
+      'His first impression of Min Fangcheng was of the soldier who led his father’s horse: the horse well cared for, the man almost wordless, only nodding when they met and saying “Langjun”, the nasal sound of that jun such as only Min Fangcheng made.',
+      'When his father fell and the whole army was in mourning white, Min Fangcheng wore no mourning, but brought over the horse he had been ordered to break in beforehand; and then held up a hand target and let him strike it, until he was on his knees, hot sweat mixed with tears and snot: “Better?” “I don’t know.” “Not knowing… won’t matter either.”',
+      'Every New Year he went home to make offerings to his father. In the first month of 765, on his way home, he heard that Min Fangcheng had died, and reached Cangyun the next day; Guan Yue led out of the stable a black-green horse, the very image of the one the Commander had once ridden: “Brother Min left word. He said: this is being.”',
+    ],
+  }, // 薛坚
   qinhui: { name: 'Qin Hui' }, // 秦徽
-  zswq: { name: 'Zhangsun Wangqing' }, // 长孙忘情
-  wbk: { name: 'Wang Bukong', hao: 'the buddha' }, // 王不空
+  zswq: {
+    name: 'Zhangsun Wangqing',
+    profile: {
+      '官职身份': 'Successor to Xue Zhi as Commander of the Cangyun Army. In the third month of 746 she took Min Fangcheng with her to Badao Manor to see the elders of the Zhangsun clan, and obtained grain and funds in aid; during the funeral after the Battle of Yanmen Pass, seeing Ru Jin helping to prepare materials and mend, she stood there a long time, and never again spoke of letting the craftsmen’s households go. After the formation exercise of 761 she said to herself, “Worth it at last.”',
+    },
+  }, // 长孙忘情
+  wbk: {
+    name: 'Wang Bukong',
+    hao: 'the buddha',
+    profile: {
+      '官职身份': 'Corps Commander of the Rank-Breaker Corps. At every New Year, when the generals go up to the Li Mu shrine with offerings of wine and dried meat, he often takes the Iron-Bone men separately to burn incense and speaks his own incense vow; soldiers who feel moved change into ordinary clothes and give out gruel to the poor households in the town, which they call “the rain-and-snow ration”.',
+      '武学': 'Iron-Bone. Min Fangcheng “also had guidance from Wang Bukong, and so came into his own”: the one who chooses and passes on, in the silent sitting of the ice cellar.',
+    },
+  }, // 王不空
   litingshen: { name: 'Li Tingshen', zi: 'Hongjuan' }, // 李庭深
   luweilou: { name: 'Lu Weilou' }, // 陆危楼
   // 陆羽鸣：T1 工作译文（2026-11-22），译注与待审见 docs/luyuming-translation-review.md。
@@ -325,7 +563,14 @@ export const charactersEn = {
   ahui: { name: 'Ahui' }, // 阿辉
   mokun: { name: 'Mokun' }, // 墨昆
   ahuilang: { name: 'Ahui Lang' }, // 阿会朗
-  helan: { name: 'He Lan', zi: 'Guxin' }, // 贺兰
+  helan: {
+    name: 'He Lan',
+    zi: 'Guxin',
+    birthplace: 'Mayi county, Shuozhou, Hedong Circuit',
+    profile: {
+      '官职身份': 'Jing Huishi’s pupil, helping in the medical tent; she later carried on Jing Huishi’s Quiet Breath medical tent (its idea of psychological healing). In the An Lushan Rebellion Mayi fell to the rebels and she was carried off as a servant woman; in the first month of 756 Min Fangcheng retook Mayi, Lian Shuo was first up the wall and saved He Lan from the Langya men, and she later joined the Cangyun Army.',
+    },
+  }, // 贺兰
   qutuzhen: { name: 'Qutu Zhen' }, // 屈突真
   tongsu: { name: 'Tongsu' }, // 彤素
   lizhu: { name: 'Lizhu' }, // 离朱
