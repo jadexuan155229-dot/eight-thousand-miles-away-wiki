@@ -63,7 +63,7 @@ export const eventsEn = {
     "Winter. Abandoned by their uncle’s family, the brothers Gao Yuan and Gao Qian struggled through the snow at night, the elder carrying the younger on his back, and at dawn were set upon by a pack of wolves; Shuliang (Xuan Kang) drove the wolves off with his chain blade, saved them and settled them in Yuanmen Gully: “A road? There is one. But you have to sell your life for it.” “So long as it’s a living, we’re not afraid. Anything is better than freezing to death in the snow.”",
   // 724
   "高垣受训参试，三回方入凌雪阁（绊在机关与鸟不归的杂念上）；入门后力道刚劲而身法总不及，侦讯之敏见长，归入机枢府，从识字学起——训练、外勤，懂规矩，耐严刑":
-    "Gao Yuan trained and sat the trials, and got into the Lingxue Pavilion only at the third attempt (tripped up by the mechanisms, and by stray thoughts at the Birds-Never-Return). Once in, his strength was hard and forceful but his footwork never quite enough; his gift was for interrogation, and he was assigned to the Jishu Bureau, where he began by learning to read: training, field work, knowing the rules, enduring harsh interrogation.",
+    "Gao Yuan trained and sat the trials, and got into the Lingxue Pavilion only at the third attempt (tripped up by the mechanisms, and by stray thoughts in the Birds-Never-Return, the Pavilion’s steep trial forest). Once in, his strength was hard and forceful but his footwork never quite enough; his gift was for interrogation, and he was assigned to the Jishu Bureau, where he began by learning to read: training, field work, knowing the rules, enduring harsh interrogation.",
   // 725
   "程广回东都，随驾东封泰山（史：十一月封禅），公务缠身，未往歌楼；夫人于此时有孕（程钧）":
     "Cheng Guang came back to the Eastern Capital and went east with the emperor for the feng sacrifice at Mount Tai (historically, the sacrifice was in the eleventh month); busy with official duties, he did not go to the house of song. His wife became pregnant at this time (with Cheng Jun).",
@@ -76,7 +76,7 @@ export const eventsEn = {
   "阿玉亡故":
     "A-Yu died.",
   // 728
-  "阿辉被岚川夫妇收留（按：原编年此条与「在奈良出生」并系一年，而岚川云生年经作者更正为724，收留之年仍从原文728，俟作者覆核）":
+  "阿辉被岚川夫妇收留（按：原编年此条与「在奈良出生」并系一年，而岚川云生年经作者更正为724，收留之年仍从原文728，作者已确认无误）":
     "Ahui was taken in by the Lanchuan couple.",
   "开元十六年，宣康（黍梁）于巢县成婚，翌年得一子；有他在，妻子温饱、不忧税赋——籍贯人口悉上报留档，此即后来高垣按档寻访之据":
     "In the sixteenth year of Kaiyuan Xuan Kang (Shuliang) married in Chao County, and had a son the next year; with him there, his wife was fed and clothed and never worried about taxes. The household’s registration and members were all reported and kept on file, and this was what Gao Yuan later went by when he traced them through the records.",
@@ -145,8 +145,8 @@ export const eventsEn = {
     "Lü Dingyi joined the Cangyun Army / Lifei’s martial skill came into its own / Min Fangcheng herded livestock at Ganzhou.",
   "景惠时与关山到雁门关安顿，邻女生子（即边赛远），景惠时协助，关山投军":
     "Jing Huishi and Guan Shan settled at Yanmen Pass; when the woman next door gave birth (the child was Bian Saiyuan), Jing Huishi helped; Guan Shan enlisted.",
-  "王维在凉州河西节度副使崔希逸幕下任节度判官，作《老将行》——「射杀中山白额虎，肯数邺下黄须儿」「卫青不败，李广无功」：荔非承烈「白额当关」之号与「无功」之字所本":
-    "Wang Wei, on the staff of Cui Xiyi, Vice Military Commissioner of Hexi at Liangzhou, as administrative assistant, wrote “Song of the Old General”: “He shot dead the white-browed tiger of Zhongshan; would he reckon with the yellow-bearded son of Ye?” and “Wei Qing never lost … Li Guang won no merit.” These lines are the source of Lifei Chenglie’s epithet, The White-Browed Tiger Holds the Pass, and of his courtesy name Wugong, “no merit”.",
+  "王维在凉州河西节度使崔希逸幕下任节度判官，作《老将行》——「射杀中山白额虎，肯数邺下黄须儿」「卫青不败，李广无功」：荔非承烈「白额当关」之号与「无功」之字所本":
+    "Wang Wei, on the staff of Cui Xiyi, Military Commissioner of Hexi at Liangzhou, as administrative assistant, wrote “Song of the Old General”: “He shot dead the white-browed tiger of Zhongshan; would he reckon with the yellow-bearded son of Ye?” and “Wei Qing never lost … Li Guang won no merit.” These lines are the source of Lifei Chenglie’s epithet, The White-Browed Tiger Holds the Pass, and of his courtesy name Wugong, “no merit”.",
   "冬，风雪夜巡线追奚骑，沟谷中伏，前队旗手中箭、旗杆斜折、队阵惊散；荔非不待军令提刀上前，一击劈中欲夺旗之敌骑马颈，掣旗振开、杆杵雪中，队伍在他身后收拢复为严整盾阵；事后以离阵擅动不遵军令受军棍，「背上如火烧，眼里却亮」，此后渐有声名传于营内":
     "Winter. Patrolling the line on a night of wind and snow in pursuit of Xi horsemen, the column was ambushed in a gully; the standard-bearer at the front was hit by an arrow, the staff snapped askew and the ranks broke in alarm. Without waiting for orders Lifei went forward with his blade, cut through the neck of the horse of an enemy rider reaching for the standard, snatched up the flag, shook it out and drove the staff into the snow, and behind him the column closed up again into a tight shield wall. Afterwards he was beaten with the army staff for leaving the ranks and acting without orders, “his back as if on fire, but his eyes bright”, and from then on his name began to be talked about in the camp.",
   "曼冉被沃家家长芒沃（女执政官）收为义女——名分而已：曼冉保留本姓 Rangs，不入沃家，不进继承顺位":
@@ -156,8 +156,8 @@ export const eventsEn = {
   "赵盈贞丧满一年祭日，义兄阿辉以屡未能护主为耻，自尽而亡——生平第一次开口说话，乡音唤「小姐…保重」；靖彦抱之允诺「我带你回去，一定带你回去」，葬于长安西郊，唯留其鱼皮柄东瀛短刀":
     "On the first anniversary of Zhao Yingzhen’s death, Ahui, Lanchuan Yun’s adoptive elder brother, ashamed that he had failed time and again to protect the family he served, took his own life; he spoke for the first time in his life, calling in his own tongue, “Miss… take care.” Jingyan held him and promised, “I’ll take you back. I will take you back.” He was buried in the western outskirts of Chang’an; all that was left was his Japanese short blade with its ray-skin (samegawa) hilt.",
   // 738
-  "苍云（玄甲军）随王忠嗣出关征奚大胜、吕定仪救荔非右膝骨裂、吕定仪妻移居广武城照料":
-    "The Cangyun Army (the Xuanjia Army) marched out of the pass under Wang Zhongsi against the Xi and won a great victory; Lü Dingyi saved Lifei, whose right knee was cracked; Lü Dingyi’s wife moved to Guangwu Fortress to look after him.",
+  "苍云（玄甲军）随王忠嗣出关征奚大胜、吕定仪救荔非右膝骨裂、吕定仪妻移居广武城":
+    "The Cangyun Army (the Xuanjia Army) marched out of the pass under Wang Zhongsi against the Xi and won a great victory; Lü Dingyi saved Lifei, whose right knee was cracked; Lü Dingyi’s wife moved to Guangwu Fortress.",
   "圣人命置延恩、怀德、归仁等县，始放回六胡州流散胡户；县治倚河谷夯土为垣，四面设卡、验牒按伍分编，男丁入屯队，昼出垦作、日落归棚更点，离队、越界、聚众皆不容（开元二十六年置宥州及诸县事）":
     "The emperor ordered the counties of Yan’en, Huaide, Guiren and others established, and the scattered Hu households of the Six Prefectures were at last allowed back. The county seats had rammed-earth walls set against the river valleys and checkpoints on all four sides; papers were inspected and people sorted into units of five; the men were put into farming teams, out to till by day and back in their sheds by sunset for the watch count. Leaving the team, crossing the boundary and gathering in groups were all forbidden. (The founding of Youzhou and its counties in the twenty-sixth year of Kaiyuan.)",
   "春夏间，六胡州流散杂胡持旧牒假称奉招抚，劫掠村镇、劫马邑馆驿；玄甲军封锁关卡独留老驿道诱其入网，荔非巡守道口擒之押回；囚前杀心暗起，薛直诫之——「杀得尽吗？……今日你做主动刀，有一次，便有两次、三次、百次。你成了什么人？」翌日荔非亲押杂胡赴三县安置，二十余日往返，城外宿一夜而去；是年秋，晋破阵营第二团旅帅":
@@ -186,13 +186,13 @@ export const eventsEn = {
   "岚川云受训斥候（739–741），其间认识高垣（凌雪阁中人）":
     "Lanchuan Yun trained as a scout (739–741), and in that time came to know Gao Yuan (of the Lingxue Pavilion).",
   "高垣受托至天杀营（739–741间往来）授近身擒搏、侦讯与反讯问之技，以「青山之后」虚刑试炼弟子耐痛；试岚川云——「你有恨。」「原以为一场杀戮，便能荡平，原来没有。」「你年轻，又是有硬芯的人。自己能弄明白这些事，早晚能。」":
-    "At the Tiance Command’s request Gao Yuan came to the Heavenly Slayer Corps (back and forth between 739 and 741) to teach close-quarters grappling, interrogation and resistance to interrogation, testing the pupils’ endurance of pain with a mock torture called “Behind the Green Mountains”. Testing Lanchuan Yun: “You have hatred.” “I thought one round of killing would level it. It didn’t.” “You’re young, and there’s something hard at your core. You’ll work these things out for yourself. Sooner or later, you will.”",
+    "At the Tiance Command’s request Gao Yuan came to the Heavenly Slayer Corps (back and forth between 739 and 741) to teach close-quarters grappling, interrogation and resistance to interrogation, testing the pupils’ endurance of pain with a mock torture called “Beyond the Blue Hills”. Testing Lanchuan Yun: “You have hatred.” “I thought one round of killing would level it. It didn’t.” “You’re young, and there’s something hard at your core. You’ll work these things out for yourself. Sooner or later, you will.”",
   "皮逻阁迁都太和城，洱海谷地成为南诏心脏":
     "Piluoge moved his capital to Taihe, and the Erhai valley became the heart of Nanzhao.",
   "唐青阳改充长任健儿。开元二十五年诏「于诸色征行人内及客户中招募，取丁壮情愿充健儿长任边军者，每岁加于常例，给田地屋宅」——健儿只从征行人与客户中招，他先当过一回征行人：738年王昱安戎大败后剑南补兵，青神点到他家，他替父亲去了，名册上写的是父亲的名字。739年改充健儿，名册上才第一次是自己的名字；钱粮寄回青神，替家里补庸调的绢":
     "Tang Qingyang re-enlisted as a long-service professional soldier. An edict of the twenty-fifth year of Kaiyuan ordered recruits “from among the campaigners of every kind and the migrant households, taking able-bodied men willing to serve as long-service professional soldiers in the frontier armies, adding to the usual allowance each year and granting fields and houses”. Professional soldiers were drawn only from campaigners and migrant households, and he had already served once as a campaigner: after Wang Yu’s great defeat at Anrong in 738 Jiannan raised replacements, his family in Qingshen was called up, and he went in his father’s place, under his father’s name on the roll. In 739, re-enlisting as a professional soldier, his own name went on the roll for the first time; he sent his pay home to Qingshen to make up the family’s silk for the labour and cloth taxes.",
   "有寨民求医，曼冉以天一教秘法救治男童（天一教正太），男童痊愈后回到父母身边":
-    "A villager came for healing, and Mait Rangs treated a boy with the secret arts of the Tianyi Cult (the Tianyi boy); the boy recovered and went back to his parents.",
+    "A villager came for healing, and Mait Rangs treated a boy with the secret arts of the Tianyi Order (the Tianyi Order boy); the boy recovered and went back to his parents.",
   "陆羽鸣赴长安，落脚城西卑路斯旧部后人家":
     "Lu Yuming went to Chang’an and lodged in the west of the city with a household descended from Peroz’s old retainers.",
   "闵方城与苍云军始有来往、结识关山":
@@ -200,7 +200,7 @@ export const eventsEn = {
   "盖嘉运破碎叶，擒突骑施可汗吐火仙（史）；程广、程钊从征":
     "Gai Jiayun took Suyab and captured Tuhuoxian, qaghan of the Türgesh (historical); Cheng Guang and Cheng Zhao went with him.",
   "大光明寺之役，高垣高堑同队（队号「知君青骨」）早往长安布局、为天策府传递机要；高堑有斩敌之功，并于房顶为岚川云解围":
-    "In the Great Bright Temple affair Gao Yuan and Gao Qian were in the same squad (the squad called “Knowing Your Green Bones”), sent early to Chang’an to lay the ground and to pass secret intelligence to the Tiance Command; Gao Qian had kills to his credit, and on the rooftop he came to Lanchuan Yun’s aid.",
+    "In the Great Bright Temple affair Gao Yuan and Gao Qian were in the same squad (the Zhijun Qinggu squad), sent early to Chang’an to lay the ground and to pass secret intelligence to the Tiance Command; Gao Qian had kills to his credit, and on the rooftop he came to Lanchuan Yun’s aid.",
   "秋，大光明寺事件：天策受命，与少林及凌雪阁围剿明教于长安西市义宁坊大光明寺。事前谋划调兵极其隐秘，主动请命赴长安的陆羽鸣仍于一间馆驿周围发现端倪、摸至天策众将集会处，而为时已迟——岚川云穷追，又有凌雪一重保障，使其折戟；陆晚月与岚川云视角皆以为其被高堑当场杀死，实则失踪，此后滞留中原十六年。陆南信因事不在城内，赶回城下时被戒严当夜部署城楼的少年程凯射穿右肘，伤未妥治，筋骨挛缩，无以用双刀":
     "Autumn: the Great Bright Temple Incident. On orders, the Tiance Command, with Shaolin and the Lingxue Pavilion, surrounded and destroyed the Mingjiao at the Great Bright Temple in the Yining Ward by Chang’an’s Western Market. The planning and the movement of troops were kept utterly secret, yet Lu Yuming, who had asked to be sent to Chang’an, still caught the signs around a post house and felt his way to where the Tiance generals were meeting; but by then it was too late. Lanchuan Yun hunted him down, with the Lingxue Pavilion as a second safeguard, and he fell. Both Lu Wanyue and Lanchuan Yun believed Gao Qian had killed him on the spot; in fact he vanished, and stayed in the Central Plains for sixteen years. Lu Nanxin, away from the city at the time, came hurrying back to the walls and was shot through the right elbow by the young Cheng Kai, posted on the gate tower the night the curfew was imposed; the wound was never properly treated, the sinews and bone contracted, and he could no longer use twin blades.",
   "暗线：屋顶一战，陆羽鸣抬头看岚川云，刀线偏开，颈侧下颌重伤失声、昏死，在场者皆以为已死；临昏前念《哈多赫特·纳斯克》2.10 前半句 cišca carāitiš ahi（亡魂过桥之问）":
@@ -243,7 +243,7 @@ export const eventsEn = {
   "吐蕃两次围安戎、维州，唐青阳与程铎同守城头，守城的是监察御史许远。程铎是洛阳来的，不认得这里的山，也听不懂兵说的话；唐青阳替他认路，替他跟兵说话。两人的分工从这里定下：程铎定规矩，唐青阳把规矩讲给兵听":
     "The Tibetans twice besieged Anrong and Weizhou, and Tang Qingyang and Cheng Duo held the walls together under the Investigating Censor Xu Yuan. Cheng Duo came from Luoyang; he did not know these mountains and could not understand what the soldiers said, so Tang Qingyang found the way for him and spoke to the soldiers for him. Their division of labour was settled here: Cheng Duo made the rules, and Tang Qingyang explained the rules to the soldiers.",
   "曼冉主祭，圣童第二年在旁，当场异状，天一教人暗中施术使其恢复，众人未觉；卓沃察觉，暗中收集曼冉勾连天一教、滥用禁术的证据，欲拉她下马":
-    "Mait Rangs led the rite, the Holy Child at her side for the second year; something went wrong in front of everyone, and a Tianyi man secretly worked a spell to restore him without anyone noticing. Zhod Vos noticed, and began quietly gathering evidence that Mait Rangs was in league with the Tianyi Cult and abusing forbidden arts, meaning to bring her down.",
+    "Mait Rangs led the rite, the Holy Child at her side for the second year; something went wrong in front of everyone, and a Tianyi man secretly worked a spell to restore him without anyone noticing. Zhod Vos noticed, and began quietly gathering evidence that Mait Rangs was in league with the Tianyi Order and abusing forbidden arts, meaning to bring her down.",
   "程钊致书程锋交代后事；不愿受抚的部落袭击俱六守捉，程钊战亡——史书只留「叛」与「降」，功劳记在主帅名下；叶曙兮不肯将他的枪头回炉开刃":
     "Cheng Zhao wrote to Cheng Feng setting out his last wishes; tribes unwilling to submit attacked the Juliu Garrison Post, and Cheng Zhao fell in battle. The histories keep only “revolt” and “surrender”, and the merit went to the commander’s name. Ye Shuxi would not let his spearhead be reforged and given an edge.",
   // 741
@@ -258,7 +258,7 @@ export const eventsEn = {
   "沈含英、许秋生、江蓠同场入门三选一：沈含英选刀（医者之勇），许秋生选木锨（医者之勤），江蓠选桃（医者之智）":
     "Shen Hanying, Xu Qiusheng and Jiang Li entered the Valley together and each chose one of three: Shen Hanying chose the knife (a physician’s courage), Xu Qiusheng the wooden shovel (a physician’s diligence), Jiang Li the peach (a physician’s wisdom).",
   "男童病情反复，父母求医，曼冉借口将男童留下；天一教人趁虚而入，提供药方或术法（具体待定）":
-    "The boy relapsed and his parents sought help; Mait Rangs found an excuse to keep him with her. The Tianyi Cult seized its chance, offering prescriptions or spells (details undecided).",
+    "The boy relapsed and his parents sought help; Mait Rangs found an excuse to keep him with her. The Tianyi Order seized its chance, offering prescriptions or spells (details undecided).",
   "叶忱生于北庭，从母姓；名取程钊遗书中的一个「忱」字——信末寻常一语，并非为她而起":
     "Ye Chen was born at Beiting and took her mother’s surname; her name came from the word chen, “sincere”, in Cheng Zhao’s last letter: an ordinary phrase at the end of the letter, not chosen for her.",
   "岚川云一去西域援边（741–742），随杨宁往救一孤城，初会陆晚月（城内有陆晚月亲眷，岚川云不知）；程凯同行，经庭州（北庭一别），碎叶道遇伏":
@@ -270,8 +270,8 @@ export const eventsEn = {
   // 742
   "靳沉白（约十五岁）随父北上，避敌袭临时入雁塔，助治伤患、书记誊录，因与楼氏结识楼谊、楼谯姐弟；楼准始有以婿之心，欲留塔纳编，靳沉白辞归乡尽孝进学，此后偶通书信":
     "Jin Chenbai (about fifteen) went north with his father; sheltering from an enemy raid in Yanta Tower, he helped tend the wounded and kept the records, and so came to know the Lou family and the sister and brother Lou Yi and Lou Qiao. Lou Zhun began to think of him as a son-in-law and wanted to keep him on the tower’s rolls; Jin Chenbai declined, going home to serve his parents and pursue his studies, and afterwards they exchanged the occasional letter.",
-  "龙门再遇：陆晚月见师父的萨珊玛瑙印石在岚川云身上，二人大打出手；交谈中岚川云复述陆羽鸣临终音节（印石是否交还待定），陆晚月携音节回西域，陆南信认出为亡魂过桥之问；同年，陆隐流刑期满出狱，回归杀手小队":
-    "Meeting again at Longmen: Lu Wanyue saw her master’s Sasanian agate seal on Lanchuan Yun, and the two fought fiercely. As they talked, Lanchuan Yun repeated the syllables Lu Yuming had spoken as he died (whether the seal was given back: undecided); Lu Wanyue carried the syllables back to the Western Regions, and Lu Nanxin recognised them as the question put to the soul at the bridge. The same year Lu Yin, his sentence of exile served, was released and went back to the assassin squad.",
+  "龙门再遇：陆晚月见师父的萨珊玛瑙印石在岚川云身上，二人大打出手；交谈中岚川云复述陆羽鸣临终音节（印石是否交还待定），陆晚月携音节回西域，陆南信认出为亡魂过桥之问；同年，陆隐遇天宝改元大赦获释，回归杀手小队":
+    "Meeting again at Longmen: Lu Wanyue saw her master’s Sasanian agate seal on Lanchuan Yun, and the two fought fiercely. As they talked, Lanchuan Yun repeated the syllables Lu Yuming had spoken as he died (whether the seal was given back: undecided); Lu Wanyue carried the syllables back to the Western Regions, and Lu Nanxin recognised them as the question put to the soul at the bridge. The same year Lu Yin was released in the amnesty for the new Tianbao era and went back to the assassin squad.",
   "夫人到北庭；程锋娶陆灵（在程钊期丧满后）":
     "The principal wife came to Beiting; Cheng Feng married Lu Ling (after the year of mourning for Cheng Zhao was over).",
   "吕定仪女生病，妻子抱去营中诊治；苍云上一代人物一同宴饮场景；开春女儿病势复发，夭折，吕定仪妻返乡":
@@ -287,22 +287,22 @@ export const eventsEn = {
   "男童死亡、化为毒尸，适逢父母探望，曼冉灭口":
     "The boy died and became a poison corpse just as his parents came to visit; Mait Rangs silenced them.",
   "天一教掌握曼冉灭口一事，要挟她相助，始渗透村寨；曼冉意图摆脱压制，转而改造、控制男童以自强":
-    "The Tianyi Cult, knowing about the silencing, blackmailed Mait Rangs into helping it and began to infiltrate the village; Mait Rangs, wanting to throw off its grip, turned to remaking and controlling the boy to strengthen herself.",
+    "The Tianyi Order, knowing about the silencing, blackmailed Mait Rangs into helping it and began to infiltrate the village; Mait Rangs, wanting to throw off its grip, turned to remaking and controlling the boy to strengthen herself.",
   // 743
-  "太原冬日，闵方城路遇犯错被打、跌坐道边不能动的少年伶工杜徵，拉他起来——二人初见（系年暂定743，早于745）":
+  "太原冬日，闵方城路遇犯错被打、跌坐道边不能动的少年伶工杜徵，拉他起来——二人初见":
     "Winter in Taiyuan: Min Fangcheng came upon Du Zheng, a boy musician who had been beaten for a mistake and sat collapsed by the road, unable to move, and pulled him up: their first meeting.",
   "龙飞大营换防，程凯以攒了数年的饷钱欲赎姗娘（昔年爱护过他的歌伎），岚川云代他进歌楼寻人，未果——「好心是他的事，走与不走，走得走不得，却是我的事」；程凯又自往城郊寻阿玉的坟，未得":
-    "When the Longfei Camp changed garrison, Cheng Kai wanted to use the pay he had saved for years to buy out Shanniang (a singing girl who had been kind to him long ago); Lanchuan Yun went into the house of song to find her for him, without success: “Being kind is his affair. Whether I leave, and whether I can leave, is mine.” Cheng Kai then went alone to look for A-Yu’s grave outside the city, and did not find it.",
+    "When the Longfei Camp changed garrison, Cheng Kai wanted to use the pay he had saved for years to buy out Shanniang (a singing girl who had been kind to him long ago); Lanchuan Yun went into the house of song to see her on his behalf, but it came to nothing; Shanniang said, “Being kind is his affair. Whether I leave, and whether I can leave, is mine.” Cheng Kai then went alone to look for A-Yu’s grave outside the city, and did not find it.",
   "秋，天杀营斥候数人奉冷天锋之意访凌雪阁，互通软甲丸药诸物；岚川云与高堑切磋，败于青苔湿石之滑——「有人看石头，有人看青苔吧」；湖畔高垣论青苔与硬芯：「一年到头啊，从不见消萎，比人心人命都坚久。」后岚川云见其腰牌篆字：怀青":
     "Autumn. Several scouts of the Heavenly Slayer Corps visited the Lingxue Pavilion at Leng Tianfeng’s wish, to exchange soft armour, pills and the like; Lanchuan Yun sparred with Gao Qian and lost, slipping on a wet, mossy stone: “Some people look at the stone; some look at the moss.” By the lake Gao Yuan talked of moss and a hard core: “All year round it never withers. It outlasts people’s hearts and people’s lives.” Afterwards Lanchuan Yun saw the seal characters on his waist token: Huaiqing.",
   "天一教叛乱，控制村寨":
-    "The Tianyi Cult rose and took control of the village.",
+    "The Tianyi Order rose and took control of the village.",
   // 744
   "曼冉试图完全控制男童；娜留或已唤醒男童意识（待定）":
     "Mait Rangs tried to take complete control of the boy; Nax Liuf may already have woken his consciousness (undecided).",
   // 745
   "春，两公主和亲奚、契丹，自雁门出关，吕定仪协理各项文书；同年秋两蕃各杀公主举兵南下，吕定仪谏军师闭锁关城、候平卢节度先动以免正面接敌——“可是圣人想听的？”不用，遂有雁门关之役之痛":
-    "Spring: two princesses went out through Yanmen in marriage alliances with the Xi and the Khitan, and Lü Dingyi helped with all the paperwork. That autumn both peoples killed their princesses and marched south. Lü Dingyi urged the strategist to seal the pass and wait for the Pinglu Military Commission to move first rather than meet the enemy head-on (“But is that what the emperor wants to hear?”). He was not heeded, and so came the grief of the Battle of Yanmen Pass.",
+    "Spring: two princesses went out through Yanmen in marriage alliances with the Xi and the Khitan, and Lü Dingyi helped with all the paperwork. That autumn both peoples killed their princesses and marched south. Lü Dingyi urged the strategist to seal the pass and wait for the Pinglu Military Commission to move first rather than meet the enemy head-on (the strategist: “But is that what the emperor wants to hear?”). He was not heeded, and so came the grief of the Battle of Yanmen Pass.",
   "夏，楼准因狼牙偷袭坠塔身亡，楼谊十五岁临危受命，升灯、报讯、点兵、值守如常，塔没有乱；靳氏父子念旧缘北上赴塔协助，靳沉白析文书为死伤、器械、粮秣、值守、传讯五类复核册，事后留塔为书手；与楼谊合写殉塔报文并器械损耗申领，文书落到关内吕定仪手中，拨料不曾拖沓":
     "Summer: Lou Zhun fell from the tower to his death in a Langya surprise attack, and Lou Yi, fifteen, took up the charge in the crisis; the lamps were raised, the signals sent, the men mustered and the watches kept as usual, and the tower did not fall into disorder. Remembering the old connection, Jin Chenbai and his father came north to help at the tower; Jin Chenbai sorted the documents into five verification ledgers (dead and wounded, equipment, grain and fodder, watches, signals), and stayed on afterwards as the tower’s scribe. With Lou Yi he wrote the report on those who died at the tower and the requisition for lost equipment; the papers reached Lü Dingyi inside the pass, and the materials were issued without delay.",
   "狄元恪（十五岁）与同窗自城外别院谈书论道归，太原城门见守卒欺侮一半大流民孩童；同窗劝「何必费口舌」「你是要考进士的，不是当武夫」，他说「哀民多艰，也在于看没看见。谁让他现在我眼前呢」，翻身下马喝止，以「怠惰公务」折服守卒；孩童抱着两个硬馒头不哭不瑟缩，他以糕点相易不成——「你的东西我不抢」——带回府中。父兄不喜，谓结交野童污了门风，他说「逐出这孩子便是逐我」，终得收留。孩童樊璋，云州流民：村寨为边骑冲突所焚，阿爷死于乱兵，阿娘病死岚州道旁葬于浅丘，随逃民车队入太原，籍券俱佚；一直留着阿娘的犬牙吊坠——「娘说是玉做的，看着却像石头」「玉就是石头，切磋琢磨，人才知道好」":
@@ -316,13 +316,13 @@ export const eventsEn = {
   "章仇兼琼开步头路（云南通交州），筑安宁城；东爨诸部起兵杀筑城者，朝廷令蒙归义（皮逻阁）弹压，南诏借爨氏内斗吞并其地。底色：蒙萍换蛊即为此局；安宁盐路由此断绝，卓沃的盐成了筹码":
     "Zhangchou Jianqiong opened the Butou road (linking Yunnan with Jiaozhou) and built Anning; the Eastern Cuan tribes rose and killed the builders, the court ordered Meng Guiyi (Piluoge) to put them down, and Nanzhao used the Cuan’s internal strife to swallow their lands. Background: Meng Ping’s exchange of gu belongs to this situation; the Anning salt road was cut from this point, and Zhod Vos’s salt became a bargaining chip.",
   "成都一夜：佩留交割特殊药材后灭口南诏商人蒙萍；央馨为截换天一教药材冒充商人入仓库，死于唐哲小组伏击，尸身随仓库焚毁，唐哲私藏其驱蚊小球；杨钊扣下布料与药材，照单全收。监视唐哲者为谁，暂未定":
-    "A night in Chengdu: after handing over special medicinal herbs, Pet Liuf silenced the Nanzhao merchant Meng Ping; Vangb Xenb, posing as a merchant to get into the warehouse and switch the Tianyi Cult’s herbs, died in an ambush by Tang Zhe’s team, and her body burned with the warehouse; Tang Zhe secretly kept her little mosquito-repelling ball. Yang Zhao impounded the cloth and the herbs and took the lot. Who was watching Tang Zhe is not yet settled.",
+    "A night in Chengdu: after handing over special medicinal herbs, Pet Liuf silenced the Nanzhao merchant Meng Ping; Vangb Xenb, posing as a merchant to get into the warehouse and switch the Tianyi Order’s herbs, died in an ambush by Tang Zhe’s team, and her body burned with the warehouse; Tang Zhe secretly kept her little mosquito-repelling ball. Yang Zhao impounded the cloth and the herbs and took the lot. Who was watching Tang Zhe is not yet settled.",
   "成都一夜：副队头唐青阳带一火人从平戎城到成都领军器，那一夜宿在城里。仓库起火，他赶到时火场干净得不像火场；他在城里报了所见，最后鲜于仲通结了案，写的是失火。回平戎城后跟程铎说起，程铎说：上面说是失火，就是失火。他记住了那种干净，九年后在唐哲队里又见了一次，才知道是谁收拾的":
     "The night in Chengdu: Tang Qingyang, a deputy squad leader, brought a squad from Pingrong to Chengdu to draw weapons, and that night they stayed in the city. The warehouse caught fire; by the time he got there the scene was too clean to be the scene of a fire. He reported what he had seen in the city, and in the end Xianyu Zhongtong closed the case, writing it down as an accidental fire. Back at Pingrong he told Cheng Duo about it, and Cheng Duo said: if those above say it was a fire, it was a fire. He remembered that cleanness, saw it once more nine years later in Tang Zhe’s team, and only then knew who had cleaned up.",
   "大决战：成都一夜后天一教缺药、毒尸狂暴；曼冉放出卓沃共抗天一教，圣童出手终结毒尸；大祭司一方损失惨重，娜留或死于此役；卓沃趁虚而入":
-    "The decisive battle: after the night in Chengdu the Tianyi Cult ran short of medicine and its poison corpses ran wild; Mait Rangs let Zhod Vos out to fight the Cult together, and the Holy Child struck the blow that ended the poison corpses. The high priestess’s side suffered heavy losses, and Nax Liuf may have died in the fighting; Zhod Vos took her chance.",
+    "The decisive battle: after the night in Chengdu the Tianyi Order ran short of medicine and its poison corpses ran wild; Mait Rangs let Zhod Vos out to fight the Cult together, and the Holy Child struck the blow that ended the poison corpses. The high priestess’s side suffered heavy losses, and Nax Liuf may have died in the fighting; Zhod Vos took her chance.",
   "秋，杨钊携春彩入京，另携郫地蜀货「可直万缗」，分赠诸姊并称「此章仇公所赠也」；得出入禁中，改金吾兵曹参军。杨钊时为章仇兼琼推官，由采访支使鲜于仲通引荐。底色：春彩即成都一夜被扣之布（入京月份不详，系于仲秋）":
-    "Autumn: Yang Zhao came to the capital with spring silks, and with goods of Shu from Pi “worth ten thousand strings of cash”, which he gave out among his female cousins, saying “these are gifts from Lord Zhangchou”; he gained entry to the palace and was made Administrator of the Military Service Section of the Imperial Insignia Guard. Yang Zhao was then a judge under Zhangchou Jianqiong, recommended by Xianyu Zhongtong, assistant to the surveillance commissioner. Background: the spring silks were the cloth impounded on the night in Chengdu.",
+    "Autumn: Yang Zhao came to the capital with spring silks, and with goods of Shu from Pi “worth ten thousand strings of cash”, which he gave out among the Yang sisters, his cousins, saying “these are gifts from Lord Zhangchou”; he gained entry to the palace and was made Administrator of the Military Service Section of the Imperial Insignia Guard. Yang Zhao was then a judge under Zhangchou Jianqiong, recommended by Xianyu Zhongtong, assistant to the surveillance commissioner. Background: the spring silks were the cloth impounded on the night in Chengdu.",
   "雁门关之役":
     "The Battle of Yanmen Pass.",
   "雁门关之役中，荔非承烈于薛直身侧力战不敌，重伤倒地眼看统帅战亡，敌以为其已死未挨补刀；后闵方城出关寻回统帅遗体，将他一同拉回，捡得一命。745年后荔非始有「无功」之字，自谓不能护卫统帅、原该殉死却又得活，无功愧悔":
@@ -353,7 +353,7 @@ export const eventsEn = {
   "程钧弱冠，离家出游":
     "Cheng Jun came of age and left home to travel.",
   "暮春，残军回城、整理一切；薛直大丧，较战亡迟了几个月：三军衣缟，从冰室请出匆匆掩藏的遗骨装裹停放；送殡路上跑上来一只白狮子——丧毕，统帅方携闵方城、吕定仪、薛褚等往霸刀山庄":
-    "Late spring: the battered army came back to the fortress and set everything in order. Xue Zhi’s great funeral came some months after his death in battle: all three armies wore mourning white, and his remains, hastily hidden in the ice cellar, were brought out, dressed and laid out; on the road of the funeral procession a white lion came running up. When the funeral was over the Commander took Min Fangcheng, Lü Dingyi, Xue Chu and others to Badao Manor.",
+    "Late spring: the battered army came back to the fortress and set everything in order. Xue Zhi’s great funeral came some months after his death in battle: all three armies wore mourning white, and his remains, hastily hidden in the ice cellar, were brought out, dressed and laid out; on the road of the funeral procession a white lion came running up (two little girls from a players’ troupe dressed as a white lion). When the funeral was over the Commander took Min Fangcheng, Lü Dingyi, Xue Chu and others to Badao Manor.",
   "程宇生于庭州":
     "Cheng Yu was born at Tingzhou.",
   "苍云访霸刀，宴席狼牙刺客使毒针，吕定仪替闵方城挡下，残毒损伤心脉；后闵方城与统帅先返雁门固防，吕定仪、薛褚留霸刀":
@@ -406,7 +406,7 @@ export const eventsEn = {
     "The first Tianchang Festival (the Qianqiu Festival was renamed that year; the fifth day of the eighth month): Qi Sheng and Māneli performed on the same stage.",
   // 749
   "草场少年木苏（mosur，族语约「威风」之意）随游奕队伍追逃骑，控马认路快过老兵，被带回帐前；报名而族音含混，左右暗笑「倒像将军那条猎犬的名儿」；狼牙将领捏其下巴细看，如相一匹新得的马——「你该有汉姓」，随行青毡汉人（军师）接口取「朔」字——「便像……像这风」。有了大名连朔，收为义子（「假子」，与所谓八千曳落河差不多一回事）；将领言并安置其父母亲眷，起初确也迁居，然奚众惯于游牧，徒有居所无以生活，仍时时出入边境":
-    "A boy of the grasslands, Musu (mosur, roughly “imposing” in his people’s tongue), rode with a patrol in pursuit of fleeing horsemen, handling his horse and finding the way faster than the veterans, and was brought back before the tent. When he gave his name the sounds of his tongue came out blurred, and those around snickered that it sounded “like the name of the general’s hound”. The Langya general took him by the chin and looked him over, as if appraising a newly acquired horse: “You should have a Han surname.” A Han man in a green felt cloak at his side (the strategist) took up the word and chose the character shuo, the north wind: “Like… like this wind.” Given the formal name Lian Shuo, he was taken in as an adopted son (a “false son”, much the same thing as the so-called eight thousand yeluohe). The general said he would settle the boy’s parents and kin too; at first they did move, but the Xi were used to herding on the move and a dwelling alone gave them no living, so they still crossed back and forth over the border.",
+    "A boy of the grasslands, Musu (mosur, roughly “imposing” in his people’s tongue), rode with a patrol in pursuit of fleeing horsemen, handling his horse and finding the way faster than the veterans, and was brought back before the tent. When he gave his name the sounds of his tongue came out blurred, and those around snickered that it sounded “like the name of the general’s hound”. The Langya general took him by the chin and looked him over, as if appraising a newly acquired horse: “You should have a Han surname.” A Han man in a green felt cloak at his side (the strategist) took up the word and chose the character shuo, the north wind: “Like… like this wind.” Given the formal name Lian Shuo, he was taken in as an adopted son (a “false son”, much the same thing as the so-called eight thousand yeluohe, the “stalwarts”, surrendered Tongluo, Xi and Khitan warriors whom An Lushan kept as adopted sons). The general said he would settle the boy’s parents and kin too; at first they did move, but the Xi were used to herding on the move and a dwelling alone gave them no living, so they still crossed back and forth over the border.",
   "沈含英侍医期满，离天策府返谷；程凯套车送行——「这东西两京之隔能有多远，往后要见，不难」":
     "Shen Hanying’s term as attending physician ended, and he left the Tiance Command for the Valley; Cheng Kai harnessed a cart to see him off: “How far apart can the two capitals be? If we want to meet again, it won’t be hard.”",
   "程钧带酒赴天策探程凯，劝他不要过于执着家族认同":

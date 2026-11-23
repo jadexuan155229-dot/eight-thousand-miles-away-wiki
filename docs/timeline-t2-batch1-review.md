@@ -33,3 +33,25 @@
 - **#58 与 #152 相抵**：同在 742 年，#58 说陆隐「流刑期满出狱」，#152 说他「天宝改元大赦获释」。英文各照原文；中文要不要统一，你定。
 - #121（745.8，杨钊）「（入京月份不详，系于仲秋）」英文不出；「诸姊」作 his female cousins（杨氏诸姊实为从妹，若要更准可作 the Yang sisters）。
 - #125（746.3）「送殡路上跑上来一只白狮子」照字作 a white lion。若是狮子狗一类，请告。
+
+## 作者审定（2026-11-23）
+
+- #39「燕帅」即燕忘情，即长孙忘情：英文 the Commander 不动。
+- #11 改：中文「河西节度副使」改「河西节度使」，英文作 Military Commissioner of Hexi。（史料两说：崔希逸或称河西节度使，或称河西节度副大使；唐制大使多由亲王遥领，副大使知节度事即实任主帅。原文「副使」是更低一级的副职，故改。）
+- #14 中文删「照料」二字（「吕定仪妻移居广武城」），英文随删。Notion 同步。
+- #37 加注：yeluohe, the “stalwarts”, surrendered Tongluo, Xi and Khitan warriors whom An Lushan kept as adopted sons。
+- #24 是吕定仪与苍云军军师的对话，那句是军师说的：英文标 the strategist。
+- #26 樊璋为男，无误。
+- #61 收留之年 728 无误：中文按语「俟作者覆核」改「作者已确认无误」（按语仍是工作标记，英文不出）。
+- #54 陆晓一条标记未核对，设计未完成，中文按语保留，英文照旧不出。
+- #69 系年 743 定下：中文删「（系年暂定743，早于745）」，Notion 同步。
+- #65 从术语表：T1 岚川云卡「随身物件」fish-skin grip 改 ray-skin (samegawa) hilt。
+- 新拟专名收入 Notion 术语表：术语主表 T098–T111，地名 L042–L045。
+- #77「鸟不归」是凌雪阁师门内一片试炼用的险峻山林：英文 the Birds-Never-Return, the Pavilion’s steep trial forest。
+- #70 说话人是姗娘：英文标出 Shanniang said。
+- 凌雪阁专名大多接受；「青骨」「青山」用 green 不自然。改拟：青山之后作 **Beyond the Blue Hills**（青山英译惯作 blue hills）；知君青骨照音作 **the Zhijun Qinggu squad**（「青骨」英文没有自然的说法，青一脉里高垣之号怀青已照音作 Huaiqing）。两条在术语表标「待你定」。
+- #100 不改；#102 可。
+- #106、#107 天一教与五毒教、红衣教一路作 **the Tianyi Order**，「天一教正太」作 the Tianyi Order boy；本批 Tianyi Cult 全改。
+- #58 与 #152：#58 改从大赦之说，中文「陆隐流刑期满出狱」改「陆隐遇天宝改元大赦获释」，英文随改（Notion 742.1 本已作「改元大赦 陆隐获释」）。
+- #121 作 the Yang sisters, his cousins。
+- #125「白狮子」是比喻：戏班两个小女孩扮作白狮子。英文加注 (two little girls from a players’ troupe dressed as a white lion)。

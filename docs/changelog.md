@@ -8,6 +8,7 @@
 - 年表页英文界面顶上标明 working translation。
 - 疑点清单 `docs/timeline-t2-batch1-review.md`（作者只审此单）；`docs/english-edition.md` 改写 T2 计划：年表无短事名，改整条分批译。
 - 林叶矢、春山遥保留日语读法（作者定）。
+- **作者审疑点清单**（同日）：中文五处随改（河西节度使崔希逸；删「照料」；陆隐改从大赦之说；阿辉收留按语改「作者已确认无误」；杜徵初见删系年暂定按语），Notion 事件同步两条；英文随改，另：天一教作 the Tianyi Order，青山之后作 Beyond the Blue Hills，知君青骨照音，曳落河、白狮子加注，姗娘、军师标出说话人；T1 岚川云卡鱼皮柄从术语表作 ray-skin (samegawa) hilt；新拟专名收入 Notion 术语表（T098–T111、L042–L045）。详见 `docs/timeline-t2-batch1-review.md` 末节。
 - 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文年表。
 
 ### 回纥过雁门：奉命开关放行（作者定）
