@@ -4,7 +4,7 @@ import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./
 import { T, tone } from "./theme";
 import { useLocale, useT } from "./i18n/locale";
 import { charName, facName } from "./i18n/content";
-import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx, tenureNoteTx } from "./i18n/posts-content";
+import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx, tenureNoteTx, tenureSrcTx } from "./i18n/posts-content";
 
 /* ============================================================
    編制 (posts.jsx) —— 门派职位 × 年份的任期图（苍云、天策、唐军，顶上切换）
@@ -266,7 +266,7 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
               {t.draft && <span style={{ color: T.seal, marginLeft: 8 }}>{t_("待核")}</span>}</div>
             {[[t_("上　"), tenureNoteTx(locale, t.how)], [t_("下　"), tenureNoteTx(locale, t.end)]].map(([k, [s, z]]) => s && <div key={k}><span style={{ color: T.faint }}>{k}</span><span lang={z ? "zh" : undefined}>{s}</span></div>)}
             {(([s, z]) => s && <div lang={z ? "zh" : undefined} style={{ color: T.muted }}>{s}</div>)(tenureNoteTx(locale, t.note))}
-            <div style={{ color: T.faint, fontSize: 11.5 }}>{t_("依据：")}{t.src.join(en ? "; " : "；")}</div>
+            <div style={{ color: T.faint, fontSize: 11.5 }}>{t_("依据：")}{tenureSrcTx(locale, t.src)}</div>
           </div>
         );
       })()}

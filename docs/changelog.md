@@ -10,6 +10,7 @@
 - `scripts/check-data.js`：任期说明孤儿报警告，覆盖率末行加「任期说明」。
 - 疑点清单 `docs/tenures-t2-review.md`（作者只审此单）；`docs/english-edition.md` 记机制与进度。
 - 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文档案任职履历（吕定仪、闵方城、程锋、岚川云、李庭深、齐晟、薛坚、程宇），逐段聚焦苍云、天策两图共 89 段浮签，上、下、备注均无中文。
+- **作者审疑点清单**（同日）：编制图浮签「依据」一行英文界面下〈…〉文档名显示为 manuscript(s)，「卡」显示为 profile（`tenureSrcTx`）；东都留守照 Hucker 组合作 Regent of the Eastern Capital（T120），巡官照 Hucker 2746 作 Inspector（T121）；闵方城「几乎如统领」改作 “acting almost as its Commander”。
 
 ### 英文版 T2 人物档案第二批：天策 10 人
 

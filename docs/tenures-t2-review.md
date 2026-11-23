@@ -29,3 +29,11 @@
 - 程锋「以生执贼庭固求自贬」作 Having been taken alive by the rebels, insisted on being demoted，与职名表 Self-demoted 呼应。
 - 卢秉毓、程骞、高垣与万花三位医者档案还没译，但他们的任期在苍云、天策两张图上，一并译了，两张图浮签已无中文。
 - **还剩**：唐军那张图上程广、程钊、程铎、唐青阳四人的 53 句仍是中文，等这几人的档案批次一起做。
+
+## 作者审定（2026-11-23）
+
+- **依据一行**：照建议，英文界面下〈…〉文档名一律显示为 manuscript，同一段任期有几条的只出一次（作 manuscripts），年表编号照出。顺带把「卡」（人物卡）显示为 profile，原先英文界面直接出一个「卡」字。逻辑在 `src/i18n/posts-content.js` 的 `tenureSrcTx`。
+- **东都留守**：作者核 Hucker，留守作 Regent、东都作 Eastern Capital，二者合称未单列，照组合作 Regent of the Eastern Capital，与年表狄元恪「北都留守」作 Regent of the Northern Capital 一致。收 Notion 术语主表 T120。
+- **巡官**：Hucker 2746 hsün-kuan，Inspector（T'ang–Sung，a lowly official），改大写 Inspector。收 T121。
+- **闵方城「几乎如统领」**：all but its Commander 作者看不懂，英文读者也可能误读成「除了统领什么都是」，改作 “acting almost as its Commander”。
+

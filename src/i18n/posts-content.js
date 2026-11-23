@@ -39,3 +39,15 @@ export function tenureNoteTx(locale, zh) {
   if (e === false) return [null, false];
   return pick(e, zh);
 }
+
+/* 依據：年表編號照出；「卡」作 profile；〈…〉是作者的工作文稿，英文不出篇名，幾條併作一條 manuscript(s)（作者 2026-11-23 定） */
+export function tenureSrcTx(locale, src) {
+  if (!EN(locale)) return src.join("；");
+  const isMs = (s) => /^〈.*〉$/.test(s);
+  const ms = src.filter(isMs).length;
+  const first = src.findIndex(isMs);
+  return src
+    .filter((s, i) => !isMs(s) || i === first)
+    .map((s) => (isMs(s) ? (ms > 1 ? "manuscripts" : "manuscript") : s === "卡" ? "profile" : s))
+    .join("; ");
+}
