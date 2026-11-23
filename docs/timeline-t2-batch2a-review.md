@@ -29,7 +29,7 @@
 - #78（755.3B）「两蕃」作 the Two Fan (the Xi and the Khitan)，加了括注。
 - #90「（九原，仅作地名带过）」、#92「（文档原无系年，暂系于此）」、#98「（正文不必用；若用，止于……）」、#108 与 #109「（具体方式待核）」「（月份不详，系于蚕月）」：写作指示与系年说明，英文不出。
 - #99「即《闵方城763到765》所谓……」：引的是你的工作文档名，英文不出文档名，只留引语（spoken of later）。
-- #94「见《潼关失子》」作 see “Losing a Child at Tongguan”；#106「《四听》序章」作 the prologue of “Four Listenings”。这两个是你的篇名，英文自拟，请定。
+- #94「见《潼关失子》」作 see “Losing a Child at Tongguan”；#106「《四听》序章」作 the prologue of “Four Listenings”（作者：《四听》是旧稿误写，即《思停》，已改，见下）。这两个是你的篇名，英文自拟，请定。
 - #96「（因果待定）」作 (how it came about: undecided)。
 - #109《唐律疏议·捕亡》引文自译；「留后崔圆」作 Cui Yuan, the acting Military Commissioner（留后照 Hucker 作 acting Military Commissioner）。
 - #102「唐门」作 the Tang Clan（照门派表）。
@@ -38,3 +38,12 @@
 - #116、#117、#123、#124 的「月份不详，系于……」不出；#117「德化碑以752年为赞普钟元年」照译。
 - #117「赞普钟」作 Zanpuzhong, the Tsenpo’s younger brother；「东帝」作 Emperor of the East；「京观」作 a jingguan, a mound of the dead。
 - #125「清平官」作 qingpingguan (chancellor)。
+
+## 作者审定（2026-11-23）
+
+- #20、#79 吕諲：加一句身份，英文作 Lü Yin (an official of a Puzhou family, later a chancellor)，首见于 #20（754）。（史载吕諲 712–762，蒲州人，乾元二年同中书门下平章事。）
+- #33 中文正文改从按语：「岚川云随曹雪阳西撤潼关，757年九月北上，当时决定终生不再返回洛阳」；按语里重出的那段删去，余下系年说明照留。英文随改。
+- 天策「统领」即李承恩，游戏里正式称「天策府都统」（秦颐岩为副都统）：站上五处一律改「都统李承恩」（#33、#126、757.7 郭千仞之变、762.11 东京大掠、李庭深卡高光），英文作 Li Cheng’en, Commander-in-Chief of the Tiance Command（都统照 Hucker 作 Commander-in-chief）。Notion 事件同步，术语表收 T113。
+- 《四听》是旧稿误写，即《思停》：#106 中文改《思停》，英文作 the prologue of “A Halting Thought”（照文库已定篇名）；Notion「天策班师离蜀」页同改。全站与 Notion 再无「四听」。
+- #84「静息医帐」收入术语表（T112）。
+- 其余各条照现稿。
