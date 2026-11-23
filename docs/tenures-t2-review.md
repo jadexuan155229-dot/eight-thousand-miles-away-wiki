@@ -57,5 +57,5 @@
 ### 作者审定（2026-11-24）
 
 - **告身**：Hucker 3146 kao-shen，Appointment Certificate（吏部、兵部发给新任官的凭证）。程钊一条改作 the work was his, the Appointment Certificate was not。收 Notion 术语主表 T122。
-- **副队头**：上面第 1 条我问错了。重看数据，「领十人」是 741–745 那段**火长**的备注，不是副队头的；副队头是一队（五十人，见押官条）的副手，排在火长之上。唐青阳的升迁次序是 长任健儿 → 火长 Squad Leader → 副队头 → 队头 Company Leader → 押官。若副队头作 Deputy Squad Leader，英文读者看到「Squad Leader → Promoted Deputy Squad Leader」会以为是降了。作者原答「可以作 Deputy Squad Leader」是按我那句错的前提给的，所以职名表 Deputy Company Leader 和年表 745.6 的改法都先不动，等作者再定。
+- **副队头**：上面第 1 条我问错了。重看数据，「领十人」是 741–745 那段**火长**的备注，不是副队头的；副队头是一队（五十人，见押官条）的副手，排在火长之上。唐青阳的升迁次序是 长任健儿 → 火长 Squad Leader → 副队头 → 队头 Company Leader → 押官。若副队头作 Deputy Squad Leader，英文读者看到「Squad Leader → Promoted Deputy Squad Leader」会以为是降了。作者原答「可以作 Deputy Squad Leader」是按我那句错的前提给的，作者看过次序后定：**不改**，副队头仍作 Deputy Company Leader，年表 745.6 照职名表取齐的改法保留。
 
