@@ -30,7 +30,7 @@ T0 一轮：称号、别号、关系类型、地名、编制职名、勋散、�
 | 邱鸿 | 北地清俊 · 玉刀牌 | the Fair One of the North · Jade Blade-and-Shield |
 | 楼谊 | 塔侯 · 楼官 | Lord of the Tower · the Tower Officer |
 | 卢秉毓 | 冶山 | Forge Mountain |
-| 程凯 | 知节殿 | Zhijie Hall |
+| 程凯 | 知节殿将军（原作「知节殿」，作者 2026-11-24 改，避日语「殿」字敬称之感） | the General of Zhijie Hall（原作 Zhijie Hall） |
 | 王不空 | 佛爷 | the buddha（照作者在 Notion「苍云编制总表」所定，小写） |
 | 陆晚月 | 月儿 | Little Moon |
 | 汪楫 | 泥舟先生 | Master Mudboat |

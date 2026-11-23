@@ -115,7 +115,7 @@ export const tenureNotesEn = {
   "复职，得三百人营；攻拔半山狼牙营垒建功": "Reinstated, with a unit of three hundred; won merit storming the Langya stockade halfway up the hill",
   病故: "Died of illness",
   "766 年仍带天弓营演练": "Still drilling the Heavenly Bow Corps in 766",
-  "回府，驻知节殿；接杨宁之缺": "Back at the Command, stationed in Zhijie Hall; took over Yang Ning’s vacancy",
+  "回府，驻知节殿；接杨宁之缺": "Back at the Command, stationed in the Zhijie Hall; took over Yang Ning’s vacancy",
   "兼领天弓营；府中称「知节殿将军」": "Also in charge of the Heavenly Bow Corps; known in the Command as “the General of Zhijie Hall”",
 
   // 天策 · 斥候
