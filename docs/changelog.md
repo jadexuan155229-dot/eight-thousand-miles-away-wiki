@@ -7,6 +7,7 @@
 - `src/i18n/tenures.en.js`：唐军图程广、程钊、程铎、唐青阳 53 句，任期说明 234 → **287/287**，三张编制图全满。
 - `src/i18n/events.en.js`：745.6「成都一夜」副队头唐青阳由 a deputy squad leader 改作 a Deputy Company Leader，与职名表取齐。
 - 疑点清单 `docs/tenures-t2-review.md` 补「补译」一节；`docs/english-edition.md` 记进度。
+- **作者审**（同日）：告身照 Hucker 3146 作 Appointment Certificate（T122）。副队头一问是我误读了备注（「领十人」属火长那段），职名表 Deputy Company Leader 暂不改。
 - 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 逐段聚焦三张图共 132 段浮签，上、下、备注、依据均无中文。
 
 ## 2026-11-23

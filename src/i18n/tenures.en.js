@@ -258,7 +258,7 @@ export const tenureNotesEn = {
   殁于军中: "Died with the army",
   "初上阵守庭州，兵器遇寒脆折，自请经管": "First in action defending Tingzhou; when the weapons snapped in the cold, asked to take charge of them",
   赴俱六守捉: "Sent to the Juliu Garrison Post",
-  "都护府依州制，兵曹掌兵甲器仗；摄官，未经吏部正授——事是他做的，告身不是他的；叶曙兮读出的「故廉」就是这一条": "The Protectorate followed prefectural practice, its Military Service Section keeping arms and armour. An acting post, never formally conferred by the Ministry of Personnel: the work was his, the patent of appointment was not. This is the “Gulian” Ye Shuxi read in his name",
+  "都护府依州制，兵曹掌兵甲器仗；摄官，未经吏部正授——事是他做的，告身不是他的；叶曙兮读出的「故廉」就是这一条": "The Protectorate followed prefectural practice, its Military Service Section keeping arms and armour. An acting post, never formally conferred by the Ministry of Personnel: the work was his, the Appointment Certificate was not. This is the “Gulian” Ye Shuxi read in his name",
   随父从盖嘉运击突骑施: "With his father, under Gai Jiayun, against the Türgesh",
   "史书只记主帅之名，是他头一回有功不得封赏": "The histories record only the commander’s name: the first time his merit went unrewarded",
   随父从盖嘉运破碎叶: "With his father, under Gai Jiayun, when Suyab was taken",
