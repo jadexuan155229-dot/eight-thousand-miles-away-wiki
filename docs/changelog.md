@@ -8,6 +8,8 @@
 - `src/i18n/events.en.js`：745.6「成都一夜」副队头唐青阳由 a deputy squad leader 改作 a Deputy Company Leader，与职名表取齐。
 - 疑点清单 `docs/tenures-t2-review.md` 补「补译」一节；`docs/english-edition.md` 记进度。
 - **作者审**（同日）：告身照 Hucker 3146 作 Appointment Certificate（T122）。副队头一问是我误读了备注（「领十人」属火长那段），作者看过升迁次序后定不改，仍作 Deputy Company Leader。
+- **审稿意见**（同日）：静息医帐改从 T112 作 the Quiet Breath medical tent（任期说明原照 T088 旧暂译 Quiet Rest Tent），Notion T088 改注；`src/posts.jsx` 三张图英文说明删去 Content remains in Chinese.，改作工作译本说明，苍云编制层级、唐军组名与术语表、职名表取齐。
+- **页底露白**（作者所见）：编制图末几行浮签伸出页底、把页面撑长露出白底。`src/posts.jsx` 浮签离图底不足 240px 改挂其上；`src/theme.js` 给 `<html>` 铺当前皮肤底色。三张图 132 段、中英两种界面逐段验过，浮签不出页底。
 - 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 逐段聚焦三张图共 132 段浮签，上、下、备注、依据均无中文。
 
 ## 2026-11-23

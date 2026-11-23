@@ -100,7 +100,7 @@ export const tenureNotesEn = {
   "逐出师门后至武库，在薛褚手下锻刀": "Expelled from his school, came to the Armoury and forged blades under Xue Chu",
   "凤州，为救边赛远而死": "Died at Fengzhou saving Bian Saiyuan",
   "入女卫营，为景惠时弟子": "Joined the Women’s Guard Corps as Jing Huishi’s pupil",
-  "760.11 景惠时停职期间调度医帐；后承静息帐": "Ran the medical tents while Jing Huishi was suspended in 760.11; later took over the Quiet Rest Tent",
+  "760.11 景惠时停职期间调度医帐；后承静息帐": "Ran the medical tents while Jing Huishi was suspended in 760.11; later took over the Quiet Breath medical tent",
   "父楼准坠塔，十五岁临危受命": "When her father Lou Zhun fell from the tower, she took up the charge in the crisis at fifteen",
 
   // 天策 · 天弓营、教练使

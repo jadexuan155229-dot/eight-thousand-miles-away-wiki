@@ -59,3 +59,8 @@
 - **告身**：Hucker 3146 kao-shen，Appointment Certificate（吏部、兵部发给新任官的凭证）。程钊一条改作 the work was his, the Appointment Certificate was not。收 Notion 术语主表 T122。
 - **副队头**：上面第 1 条我问错了。重看数据，「领十人」是 741–745 那段**火长**的备注，不是副队头的；副队头是一队（五十人，见押官条）的副手，排在火长之上。唐青阳的升迁次序是 长任健儿 → 火长 Squad Leader → 副队头 → 队头 Company Leader → 押官。若副队头作 Deputy Squad Leader，英文读者看到「Squad Leader → Promoted Deputy Squad Leader」会以为是降了。作者原答「可以作 Deputy Squad Leader」是按我那句错的前提给的，作者看过次序后定：**不改**，副队头仍作 Deputy Company Leader，年表 745.6 照职名表取齐的改法保留。
 
+## 审稿意见与作者所见（2026-11-24）
+
+- **静息医帐**：任期说明误作 Quiet Rest Tent（照了 Notion 旧条 T088 的暂译），档案、年表早已用 T112 的 the Quiet Breath medical tent。改从 T112；T088 改注「同 T112」，旧暂译记入放弃理由。
+- **编制图说明**：三张图英文说明末句仍写 Content remains in Chinese.，与浮签全部译完矛盾，改作工作译本说明（与年表、档案同一句式）。顺手把苍云一段的编制层级改照术语表（原作 squad, troop, company, regiment, battalion，次序与 P6 不合，现作 fives, squads, companies, battalions, regiments and corps），唐军一段的组名、果毅都尉与职名表取齐。
+- **页底露白**（作者在站上所见）：编制图末几行的浮签挂在这段之下，伸出页面底部，把页面撑长，露出浏览器默认的白底。两处改：浮签离图底不足 240px 时改挂在这段之上；`<html>` 也铺上当前皮肤的底色，其他弹层伸出页底时也不露白。三张图共 132 段、中英两种界面逐段看过，浮签不再伸出页底，页面高度不变；玄墨、素纸两种皮肤都看过。
