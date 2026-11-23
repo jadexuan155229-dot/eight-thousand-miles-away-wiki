@@ -22,6 +22,7 @@ import { useLocale, useSetLocale, useT } from "./i18n/locale";
 import { eventCountText, libraryCountText } from "./i18n/ui";
 import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage, nameItems, nameItemsEn, namesText, hasCourtesyLine } from "./i18n/content";
 import { Zh, Tx } from "./i18n/zh";
+import { TIER1 } from "./i18n/tiers";
 import { CourtesyLine } from "./i18n/names";
 
 /* ============================================================
@@ -557,6 +558,12 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
           {lifespanFor(locale, c)} {c.birthplace && <>· <Tx v={charField(locale, c, "birthplace")} /></>}
         </div>
         <FacTags belong={c.belong} style={{ marginTop: 8 }} />
+        {/* 英文界面：T1 名單以外的檔案屬 T2 工作译本（docs/english-edition.md），標明之，與年表頁頭同一句式 */}
+        {en && tr?.profile && !TIER1.includes(c.id) && (
+          <p style={{ fontFamily: "JingHuaLaoSong", fontSize: 12.5, color: T.muted, lineHeight: 1.6, margin: "10px 0 0", maxWidth: 560 }}>
+            This profile is a working translation: names and terms are checked, but the author has not reviewed the wording line by line.
+          </p>
+        )}
 
         {c.gloss && (
           /* 有門派底紋的人物：訓詁塊半透明底（alpha 0.58），讓底層紋樣連續透出；其餘人物維持不透明 */
