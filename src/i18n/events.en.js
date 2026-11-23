@@ -104,7 +104,7 @@ export const eventsEn = {
   "高堑入门，明山馆受训，武学要旨灵透颖悟，兄长指点之下愈成同辈佼佼，后入吴钩台——「哥，你平日是一句话不露啊，敢情早就是要员。我也不能差了。」「我的路，未见得就是你的路。」":
     "Gao Qian entered the Pavilion and trained at the Mingshan Hall; quick and perceptive in the essentials of the martial arts, under his elder brother’s guidance he became the best of his generation, and later joined the Wugou Terrace: “Brother, you never let slip a word, and all along you were someone important. I can’t fall behind.” “My road isn’t necessarily your road.”",
   "程锋受荫入天策府":
-    "Cheng Feng entered the Tiance Command on his father’s privilege.",
+    "Cheng Feng entered the Tiance Command through the yin protection privilege.",
   // 733
   "荔非十五六岁骨骼渐成，选为健儿巡守县境；驿道遇袭，胡人霸路劫粮，他推翻粮车作障、抄上侧坡夺刀相搏退敌，粮米终究无损；守关军官收为随从、授以功夫——「自此而始，刀在你手中」，荐往雁门":
     "At fifteen or sixteen, his frame filling out, Lifei was picked as a professional soldier (jian’er) to patrol the county. When Hu raiders held the post road and fell on a grain convoy, he overturned the carts as a barricade, ran up the side slope, wrested a blade from an enemy and fought them off; not a grain was lost. The officer holding the pass took him on as an orderly and taught him to fight (“From now on, the blade is in your hands”), and recommended him to Yanmen.",

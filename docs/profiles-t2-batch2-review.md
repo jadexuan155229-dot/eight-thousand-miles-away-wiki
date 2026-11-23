@@ -28,3 +28,13 @@
 - 程锋轶事 1 柳宗元《梓人传》作 “Biography of a Carpenter”。
 - 程宇训诂里的波斯文名 آسمون (Asemoon) 照留。
 - 李翰屏、李翰昕「与李翰昕为兄妹」拆作兄、妹两处。
+
+## 作者审定（2026-11-23）
+
+- 李庭深轶事 7：照建议改「762年11月洛阳」，英文 eleventh month，重盖戳。
+- **门荫**：作者问有无正式译法。Notion 术语主表 T033 早已定作 Hucker 的 protection privilege（yin），但第一、二批档案没照用（狄元恪作 through his family’s privilege，程锋作 by his father’s privilege），是我漏了。现统一照 T033 用法备注作 **through the yin protection privilege**：
+  - 狄元恪 官职身份「门荫从军」→ he himself entered the army through the yin protection privilege（第一批已合并，随本 PR 改）
+  - 程锋 官职身份「受荫而入天策」→ He entered the Tiance Command through the yin protection privilege
+  - 年表 732「程锋受荫入天策府」→ Cheng Feng entered the Tiance Command through the yin protection privilege.
+  - 岑菡「荫补弘文馆生」尚未译，轮到时照此。T033 用法备注已补记。
+
