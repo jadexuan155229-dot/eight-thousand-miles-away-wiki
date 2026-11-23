@@ -2130,7 +2130,7 @@ export const EVENTS = [
   { year: 760, month: 10, seq: "D", fac: ["苍云"], loc: ["雁门关"], title: "景惠时痛揭所用皆医者所知：医帐中连朔所言、伤口所见，破了医帐的封口；回帐呕酸不止，岚川云以为悲恸，未知其有孕（受孕约在八月中）", chars: ["jinghuishi", "lanchuanyun", "minfangcheng"] },
   { year: 760, month: 11, seq: null, fac: ["苍云"], loc: ["雁门关"], title: "景惠时停职期间，医帐由贺兰调度；她教贺兰以绳结记录兵士情状，唯医者能读", chars: ["jinghuishi", "helan"] },
   { year: 761, month: 1, seq: "C", fac: ["苍云"], loc: ["雁门关"], title: "景惠时问话已结，自请随军赴凤州为军医，女卫营准；无人知其有孕（约五月，裹于冬袍）", chars: ["jinghuishi"] },
-  { year: 761, month: 2, seq: null, fac: ["苍云"], loc: ["凤州"], tloc: { jinchenbai: "雁门关", guanshan: null }, title: "凤州：景惠时为救边赛远而死（边赛远初生时曾受她哺乳，二人皆不知）；岚川云收殓时方知其有孕，对谁都不说（对闵方城说无意义，对关岳等徒增其痛）；靳沉白或隐约知道，亦不说；景惠时以节妇之身归葬（关山之侧，葬处待定），旌表无损", chars: ["jinghuishi", "biansaiyuan", "lanchuanyun", "jinchenbai", "guanyue", "guanshan"] },
+  { year: 761, month: 2, seq: null, fac: ["苍云"], loc: ["凤州"], tloc: { jinchenbai: "雁门关", guanshan: null }, title: "凤州：景惠时为救边赛远而死（边赛远初生时曾受她哺乳，二人皆不知）；岚川云收殓时方知其有孕，对谁都不说（对闵方城说无意义，对关岳等徒增其痛）；靳沉白或隐约知道，亦不说；景惠时以节妇之身归葬（关山之侧），旌表无损", chars: ["jinghuishi", "biansaiyuan", "lanchuanyun", "jinchenbai", "guanyue", "guanshan"] },
   { year: 761, month: 3, seq: null, fac: ["苍云"], loc: ["雁门关"], title: "闵方城返回雁门，仍幽居至次年九月", chars: ["minfangcheng"] },
   { year: 761, month: 6, seq: null, fac: ["苍云"], loc: ["雁门关"], title: "闵方城、岚川云映雪湖畔沐马（此前闵跪李牧祠碑前；对谈前之沉默，与762.4驯捕野马成对）（月份推定）", chars: ["minfangcheng", "lanchuanyun"] },
   { year: 763, month: 11, seq: null, fac: ["苍云"], loc: ["凤翔", "邠州"], tloc: { qiuhong: "邠州", lifei: null }, title: "靳沉白、邱鸿、薛褚赴凤翔取证验骨：靳沉白封存凤翔幕府往来邠州书牍副本与调令底稿；邱鸿赴邠州扣下旧录事参军；薛褚验骨，见臼齿齐整而点头（吐蕃围凤翔解后方至）", chars: ["jinchenbai", "qiuhong", "xuechu", "lifei"] },
