@@ -7,7 +7,7 @@
 - 照第一批与作者审定后的规矩：作者口吻、点评、用现代说法打的比方都照留（李庭深「笑起来像一只萨摩耶」作 looks like a Samoyed）；只删纯属写给自己的注。
 - 心法照 T1：傲血 Proud-Blood Battle Spirit、铁牢 Ironclad Discipline。
 - 品阶统一一个写法：正 principal、从 secondary，上/下 upper/lower grade。如齐晟追赠「从五品下」作 the secondary fifth rank, lower grade，李庭深「正四品上」作 the principal fourth rank, upper grade。职名照职名表（骑都尉 Commandant of Cavalry、游击将军 Mobile Corps Commander、翊麾校尉 Commandant Assisting the Standard、云麾将军 General of the Cloud-like Flags、护军 Military Protector、上轻车都尉 Senior Commandant of Light Chariots、忠武将军 General of Loyal Valour、果毅都尉 Vice Commandant）。
-- 参军 Aide；李庭深「曹参军事」作 Administrative Aide，「李参军」作 Aide Li。
+- 职名照职名表（`src/i18n/posts.en.js`，作者 11-22 核 Hucker）：参军 / 参军事 Administrator，兵曹参军事 Administrator of the Military Service Section，「李参军」作 Administrator Li，兵马使 Commander（李庭深「在府为兵马使」作 a Commander in the Tiance Command）。
 
 ## 要你定的
 
@@ -37,4 +37,12 @@
   - 程锋 官职身份「受荫而入天策」→ He entered the Tiance Command through the yin protection privilege
   - 年表 732「程锋受荫入天策府」→ Cheng Feng entered the Tiance Command through the yin protection privilege.
   - 岑菡「荫补弘文馆生」尚未译，轮到时照此。T033 用法备注已补记。
+
+## 审稿意见（2026-11-23）
+
+- **职名**：初稿把参军作 Aide、李庭深曹参军事作 Administrative Aide / Aide Li、兵马使作 Commander of Troops，没照职名表。已统一改作 Administrator / Administrator of the Military Service Section / Administrator Li / Commander，涉及李庭深官职身份与轶事 3、项旌官职身份与轶事 2。
+- **李庭深「曹参军事」中文补作「兵曹参军事」**：任期表（posts-data）这一段写的就是「兵曹参军事（李参军）」，而单说「曹参军事」不成官名（唐制须冠某曹）。我照任期表补了一个「兵」字，戳已重盖。你若本意不是兵曹，告诉我改回来。
+- **项旌轶事 2「集合了又舍不得扔」**：原译 once he had collected them 是误读，这里的「集合」是巡逻队集合归队，改作 when the patrol fell in。
+- **程宇喜好「乳酥」**：原译 milk pastries 误把「酥」读成了点心。唐人说酥，指的是乳脂制品，所以改作 butter。程锋「糕饼酥酪」的 junkets 是把「酥酪」当一样奶食译的，不用动。
+- **兵马使顺手扫了全站**：Commander of Troops 来自 Notion T022 的旧暂译（「（待查）暂作」），职名表 11-22 核 Hucker 后已定作 Commander，但 T022 没跟着改，所以前几批一直照旧暂译在用。已合并的部分也一并改了：狄元恪档案「守城兵马使」、年表河东兵马使、河西兵马使盖庭伦、太原守城兵马使狄元恪、剑南兵马使徐知道、渭北行营兵马使吕遂，共六处；T022 改作 Commander，并注上依据。
 
