@@ -191,7 +191,7 @@ export const charactersEn = {
     birthplace: 'Yanmen county, Daizhou, Hedong Circuit',
     gloss: 'Hui 惠 from the Book of Songs (“Yan Yan”: gentle and kind, good and careful of herself), and chunyi 春沂, “spring by the Yi”, from the Analects (“Xian jin”): bathing in the Yi in late spring, the scene the Master sighed that he would join.',
     profile: {
-      '官职身份': 'Army physician. Long at Cangyun, she also helps the head of the Women’s Guard Corps run its affairs and manages the army’s supplies and medicines. At the end of 756 the court honoured her household with the inscription “Integrity and Righteousness”.',
+      '官职身份': 'Army physician. Long at Cangyun, she also helps the head of the Women’s Guard Corps run its affairs and manages the army’s supplies and medicines. At the end of 757 the court honoured her household with the inscription “Integrity and Righteousness”.',
       '体貌特征': 'A northern Han woman, tall and slender, of a well-proportioned, soft grace.',
       '性格': 'Gentle and cultivated, quietly kind and constant, self-giving, meticulous in her work. But there is also in her a real inability to bear loneliness, and a soft-heartedness that loses its head when she cares. Her sense of self is rather small; in feeling she always holds back and keeps things in, and so leaves people the loveliest impression. She also likes a little gossip.',
       '武学': 'While Guan Shan lived she knew she had someone to lean on and did not take martial arts much to heart; after he was gone she thought she must be able to protect herself and to give first aid at the battle line, and Min Fangcheng, when he knew, said nothing, and simply taught her together with Guan Yue.',
@@ -244,7 +244,7 @@ export const charactersEn = {
       '体貌特征': 'A northern Han.',
       '性格': 'Obedient, careful, honest, thoughtful. Still young, he sometimes flusters easily and needs encouragement. But in truth his will is firm, and when he really commits himself to a task he usually does it very well. He can be compared with Wei Qian, but he has seen less of the world than Wei Qian, so though he too is clever, his mind is more literal, less nimble.',
       '武学': 'Mountain-Splitting.',
-      '喜好': 'Training in qinggong. In a school whose methods are heavy, he is known for being light and quick on his feet, with powerful legs. He looks very quiet, but in fact moves like a hare gone mad.',
+      '喜好': 'Training in qinggong. In a school whose methods are heavy, he is known for being light and quick on his feet, with powerful legs. He looks very quiet, but in fact moves like a hare gone mad: in today’s terms, a parkour and trail runner.',
       '专擅': 'Carrying messages; speed of foot. In the siege of Changshan in 756 he ran a long stretch on his own two legs before he found a horse, and rode to the Eastern Pass to bring word to the Cangyun Army.',
     },
   }, // 边赛远
