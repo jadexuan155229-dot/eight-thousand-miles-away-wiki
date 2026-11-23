@@ -1184,6 +1184,12 @@ function Timeline({ onOpenChar, onOpenEcho }) {
       <div style={{ display: "flex", gap: 22, alignItems: "flex-start" }}>
         {!narrow && <Toc />}
         <div style={{ flex: 1, minWidth: 0 }}>
+          {/* 英文界面：年表屬 T2 工作译本（docs/english-edition.md），標明之；條數已見於頁頭總說明，不重出 */}
+          {en && (
+            <p style={{ fontFamily: "JingHuaLaoSong", fontSize: 12.5, color: T.muted, lineHeight: 1.6, margin: "0 0 14px", maxWidth: 660 }}>
+              The chronology is a working translation: names and terms are checked, but the author has not reviewed the wording line by line.
+            </p>
+          )}
           <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: fsel === "all" ? 18 : 10 }}>
             <Chip active={fsel === "all"} onClick={() => { setFsel("all"); setWho("all"); }} label={t("全部")} fontFamily="JingHuaLaoSong" />
             {facList.main.map(({ f, n }) => (
