@@ -360,12 +360,140 @@ export const charactersEn = {
       'During the war, under Li Guangbi: to win back his post and the men’s confidence, with no support and without using the Command’s troops, he stormed and took a Langya camp halfway up a mountain, held by twice his own numbers.',
     ],
   },
-  qisheng: { name: 'Qi Sheng', zi: 'Guangming' }, // 齐晟
-  chengfeng: { name: 'Cheng Feng', zi: 'Lüduan' }, // 程锋
-  weiqian: { name: 'Wei Qian', zi: 'Siyi' }, // 魏谦
-  xiangjing: { name: 'Xiang Jing', zi: 'Yangjie' }, // 项旌
-  mayi: { name: 'Ma Yi', zi: 'Tunan' }, // 马翊
-  chengyu: { name: 'Cheng Yu', zi: 'Zhenluo' }, // 程宇
+  qisheng: {
+    name: 'Qi Sheng',
+    zi: 'Guangming',
+    birthplace: 'Tongguan, Huazhou, Guannei Circuit',
+    gloss: 'Sheng 晟 is “bright” (Shuowen, among the characters later appended under the sun radical), so guangming 广明, “broad brightness”, answers it.',
+    profile: {
+      '官职身份': 'Joined the Tiance Command in 749; won merit on the Nanzhao campaigns of 750–752, and before the war was stationed at the Tongguan headquarters in charge of its defence and training. He fell defending Taiyuan in 757, and was posthumously granted the secondary fifth rank, lower grade, as Commandant of Cavalry and Mobile Corps Commander.',
+      '体貌特征': 'The tallest and strongest of the Tiance group, yet with a frame out of the ordinary: his strength never cost him his suppleness, and he does the splits and handstands as if he weighed nothing.',
+      '性格': 'Warm-hearted, frank and open-handed, hating wrong like an enemy, with a strong sense of honour. Rash and straight, single-minded. In temperament rather like Cheng Kai, the kind who will step in when he sees an injustice on the road, and who likes sparring too; he and Cheng Kai and the others were always happily needling and testing each other. But he is more relaxed, not so set on winning every point, without Cheng Kai’s fierce streak that will spend itself regardless: blunt, but strong.',
+      '偶像': 'Not so much an idol as a pang: for those of his own age who gave their lives on the frontier.',
+      '武学': 'Proud-Blood Battle Spirit. His spear work is overbearing and hard-driving.',
+      '喜好': 'The mutton soup with crumbled flatbread made at home; he can put away a great many bowls.',
+      '专擅': 'Prodigious strength, with a signature jarring stroke of the spear that shakes the weapon out of the other man’s grip; raised in a family of acrobats and fire performers, he is master of wrestling, tightrope walking, pole balancing and all the rest.',
+    },
+    anecdotes: [
+      'Long ago his grandfather’s generation came by chance upon some pictures and scores for variety shows, and his father’s generation took it up: a few families of the village ran a troupe of variety, music and dance together, masters of acrobatics and fire shows, even of some small fame, sometimes summoned to perform at the houses of princes and the rich in the capital.',
+      'He joined the army out of wounded pride. One Lantern Festival they were performing in the wards and markets of Chang’an, crowds packed below, fiery trees and silver flowers, cheer upon cheer. He had just slid down from the soft pole when he saw an old man standing nearby, his hair and beard white and wild, who came up to him on his stick and said: my son gave his life on the frontier, and he was your age, young sir; was it so that you lot could do tricks? And all at once it went right through him. He had seen how lavish the princes’ houses were, and knew that what he did was in the end an ornament of good times, a plaything: without the good times, if the skin is gone, where will the hair cling? So when he saw the frontier in danger and the Tiance Command’s recruiting notice, he had to go. His family scolded him: generation after generation we have done this, and you alone are too proud to go on, and must go off where men stake their lives? He said that was because they had not seen the old man’s eyes. He could not wait upon his parents at their side; now, going away to win rank and fortune, he would not count as unfilial.',
+      'The generals of the Command, seeing his outstanding physique, thought rather highly of him. He for his part cherished being a Tiance man, and, not wanting to be told he had only showy skills, trained hard at force and strength to shake off that flashy softness, and it paid off.',
+      'Afraid of snakes, insects, rats and ants. A man that big, and a cricket can drive him with one sudden frog-leap onto a rock, where he crouches not daring to move.',
+      'He once fell in love with a Hu girl. Living in a prince’s house in the capital, he saw a woman of the Western Regions, slender and lovely, in soft, flowing clothes, her head and face often wrapped in a silk scarf so that only a pair of very black, very deep eyes showed. Like him she was one of the performers kept by the royal house, there to train the rare beasts sent in tribute from the Western Regions: lions and tigers were like cats in her hands, and at festivals she performed in the palace. They had no language in common, but there was give and take between them, and for a time they performed together, climbing, throwing and catching on the ropes and poles, amid silver flowers and fiery trees, a dazzle of splendour. Close to her he found whip marks on her body, and did not know why. When he joined the army they parted; later came the war, and the retreat to hold Tongguan. The woman came of the Hongyi Order, and in the war worked for the Langya Army, driving wolves against the patrols and slipping into the city to poison it, until Lanchuan Yun caught her; much happened in between, but in the end he could not save her.',
+      'In the defence of Tongguan, when labourers were levied to build the works, his father was struck by a falling rock, carried home, and after lying a few days died of his injuries.',
+      'After Tongguan fell they fell back to hold Fenghua Valley; when Fenghua Valley fell he was badly wounded, and made his way by stages to Taiyuan, where he gathered comrades into a troop of light horse; Lanchuan Yun came later. They made a surprise attack and killed a Langya general, but having shown their faces they were hunted, and the Cangyun Army sheltered them. The Cangyun Army urged them to change into the black Xuanjia armour for the time being, to lie low; he changed, but unwillingly, and privately let out what was in his heart: in the troupe he himself had sometimes felt that a strapping man seven feet tall, asked what he did, answering “variety shows”, would hardly do. In the end it was the Tiance Command that had given him this dignity, so that people treated him with a measure of respect when he came before them. Now, in danger, was he to throw off this armour?',
+    ],
+    highlight: [
+      'Holding Taiyuan. The assault was fierce, and siege engines that no blade or spear could pierce made straight for the gate. He and Lanchuan Yun cut across and broke the rebel formation, then he wheeled back, dismounted, and putting all his inner strength into it drove his spear through the heavy armour, and the engines collapsed in pieces. He himself went down with an arrow, and was struck by the hammer of a Langya strongman as they surrounded him; his body could not be known by its face, and the only thing left to know him by was the red robe and silver armour.',
+    ],
+  }, // 齐晟
+  chengfeng: {
+    name: 'Cheng Feng',
+    zi: 'Lüduan',
+    birthplace: 'Luoyang, Duji Circuit',
+    gloss: 'Feng 锋 is the point of a weapon (Shuowen; Shiming), and also the van of an army (Book of Han, Biography of Qing Bu), so duan 端, “point”, answers it, with lü 履, “to tread”: one who goes before his men, always treading at the front of the army.',
+    profile: {
+      '官职身份': 'Cheng Guang’s eldest son by his principal wife, Cheng Kai’s eldest brother. He entered the Tiance Command by his father’s privilege, left after three years for the frontier to serve under his father, and became a veteran general of the north-west. Invested with the secondary third rank, as General of the Cloud-like Flags and Military Protector. He came back when war broke out in the central plains; after the battle of Luoyang in 762 he sent Chen Ruihe to save Min Fangcheng. After Cheng Kai’s death, in 771, he was ordered to Shannan West Circuit to hold Liangzhou and guard the approaches to the capital.',
+      '性格': 'Broad-minded, humane and just, thorough and observant, at ease with his station and the order of things, and now and then fond of teasing. Even as a boy he was sensible and kind.',
+      '偶像': 'His father.',
+      '武学': 'Proud-Blood Battle Spirit. In martial arts and army affairs alike, never found wanting.',
+      '喜好': 'Like Cheng Kai, fond of sweet things. His wife is good at cakes, pastries and junkets; you could also say he was lured away by a girl of the Western Regions with a basket of sweets.',
+    },
+    anecdotes: [
+      'When Cheng Kai was little he asked him what he wanted to do for a living, and he said a carpenter. (See Liu Zongyuan’s “Biography of a Carpenter”: he said that the master carpenter carries whole landscapes in his head, knows his materials and directs the workmen, which he understood was really the same as commanding troops; but watching the craftsmen saw and hew and plane, those skills seemed rather more fun. More interesting still, when Cheng Qian later came to the Tiance Command and met young Kyōya, he would watch Kyōya carving wood, lost in it, and in this he took after his father as a boy, though Cheng Feng never knew: he may even have forgotten that as a child he wanted to be a carpenter.)',
+      'Many sons of military houses do not want to serve in the same army as their fathers, feeling that the men below will treat them as young masters, and that any merit they win will be put down to their being “a general’s son”, with no one seeing their own ability. He is not so tangled up about it, and often says none of that matters: however far I run, can I deny that I am my father’s son?',
+      'When Cheng Kai was first brought home as a small child he was always making trouble; once, in the middle of the night, he was burning with fever and made no sound, and it was Cheng Feng who found him, or his life would have been in danger. When Cheng Kai and their father were at odds, so that old and young were both red in the face, it was mostly he who made the peace; and afterwards he looked after this youngest brother well whenever they met. Later, when Cheng Kai was gravely ill, he offered to take him home to rest and recover, but Cheng Kai would not listen.',
+      'Of a line of frontier generals, back in the central plains in the war, he privately did not want his son to suffer the hardships of the frontier again. Cheng Kai knew his mind, and when Cheng Yu came of age gave him the courtesy name Zhenluo, “guarding Luoyang”, wishing that he might always guard Luoyang and no more; but in the end it could not change his fate: in 772 Cheng Yu set out for Beiting, and never came back.',
+    ],
+  }, // 程锋
+  weiqian: {
+    name: 'Wei Qian',
+    zi: 'Siyi',
+    birthplace: 'Youzhou (Fanyang Commandery), Hebei Circuit',
+    gloss: 'From the Book of Changes, the hexagram Qian (Modesty): the way of heaven diminishes the full and increases the modest, so siyi 思益, “thinking of increase”, answers qian 谦, “modest”.',
+    profile: {
+      '官职身份': 'At the time of the secondary seventh rank, upper grade, Commandant Assisting the Standard, leading the scouts in the army under Lanchuan Yun. He fell in the battle of Ye in the third month of 759.',
+      '性格': 'Boyish in spirit, lively, ingenious, quick. Of a merchant family, worldly-wise beyond his years.',
+      '偶像': 'Nothing to speak of, but he admires Lanchuan Yun deeply, with a vague, half-understood longing too; when Lanchuan Yun was badly wounded at Tongguan he for a time bore a grudge against Cheng Kai.',
+      '武学': 'Proud-Blood Battle Spirit. Good with the bow, and with corded weapons such as the rope dart, the meteor hammer and lead-weighted darts.',
+      '随身物件': 'The curved blade his close Xi friend gave him.',
+      '喜好': 'Game: from hunting to dressing to roasting, he does it all himself.',
+      '专擅': 'Riding bareback and judging horses, and the languages of the mixed Hu peoples north of Yan.',
+    },
+    anecdotes: [
+      'His name means “modest”, but proud of his quickness and ability, he has hardly ever been modest.',
+      'A scout under Lanchuan Yun. He entered the Command young, and was forever having his head patted by the senior brothers, Cheng Kai first among them; feeling they treated him as a child, he cared a great deal about whether he had grown taller and stronger.',
+      'He finds the daily round of the camp a bit dull, and makes a long face at any mention of sentry duty. He likes patrols outside better, above all riding on the northern plain of Mount Beimang; he is especially good at light-cavalry raiding, and keen on going off foraging on his own.',
+      'Loyal and true to his friends. Even when the other man is already what his own side defines as a “Hu”, he will do all he can, regardless of being misunderstood and suspected.',
+      'A little vain and brash: at first he came to the Tiance Command for its dignity and fame. He used to think that men in the army were all high-hearted and full of ambition, but that not all of them were truly ready to spend themselves for their country; there was no one in the world without self-interest. Later, after years of campaigning, with all he had seen and heard, his heart was steeped in it, and little by little he came to understand.',
+    ],
+    highlight: [
+      '(Third month of 759) The seesaw battle at Ye, fought in blood. Rebel relief came from the north, and the Tang army was attacked front and rear. Out with light horse scouting the enemy, he was cut off and surrounded; knowing he would not live, he got Xiang Jing out to carry the news and fought to the death with his men, holding a rebel column so that it could not advance. Later Cheng Kai, defying orders, took Xiang Jing back to look for him as the army retreated; he was dug out from among the trampled bodies, dead of his wounds and exhaustion.',
+    ],
+  }, // 魏谦
+  xiangjing: {
+    name: 'Xiang Jing',
+    zi: 'Yangjie',
+    birthplace: 'Heyang, Huaizhou, Hebei Circuit',
+    gloss: 'Jing 旌 is a banner, or an envoy’s banner of authority; a banner commands the host and must be raised high to be seen, so yang 扬, “to raise”, answers it. In mourning for his father at Heyang at the end of 756, he was capped during mourning, and Li Tingshen chose the courtesy name by letter.',
+    profile: {
+      '官职身份': 'During the war an Aide at Li Tingshen’s side, serving as messenger and as clerk and bookkeeper; back at the Command, a Commandant Assisting the Standard of the secondary seventh rank, upper grade, in charge of the guards of all the halls.',
+      '性格': 'Careful and mature beyond his years, loyal and plain. Very cautious and proper, obedient and effective. He seems to have no great ambition, no fixed idea that he must win merit in any particular way.',
+      '偶像': 'He respects all the generals of the Command.',
+      '武学': 'Ironclad Discipline. He only began a year before the war, and his inner method has not yet taken shape; it leans to Ironclad Discipline because he learned that this method better protects his comrades: to do his best in support is good enough for him.',
+      '喜好': 'Weaving little animals out of grass: it was how he used to coax his younger brothers and sisters at home.',
+      '专擅': 'Driving chariots and handling horses, with an excellent sense of balance; he loves sweeping and tidying and keeps everything in good order: whichever tent he lives in is the best kept in the camp, and asked why, he can’t say.',
+    },
+    anecdotes: [
+      'Of an ordinary family that farmed and studied; he had two years at the village school and can read and write, in a neat hand. The eldest son, rather protective, fond of his younger brothers and sisters. He joined the army because the family was poor; otherwise, he feared, his sister would be sold. He came in plain hemp and coarse cloth, thinking he would never pass the selection, but he drove chariots well, knew how to handle horses and had an excellent sense of balance, and the Command, pressed by its war preparations besides, took him in.',
+      'As a recruit on patrol, in idle moments he would pick a few flowers and grasses and weave them into little things, and once he had collected them could not bear to throw them away, so he hung them on his leather belt. Back in camp his Company Commander saw them and scolded him: we are preparing for war with all our hearts, an army of tigers and wolves; where is there time for this sort of thing? I see you don’t know what urgency is. So he was sent to haul stone as punishment. Li Tingshen, then an Aide, passed by and said: I remember you; your writing is good; how is it you’re hauling stone? He took out the little grass bird. Li Tingshen laughed: never mind, come with me; there are some things to be copied, and no one to do them.',
+      'Before the war he was in the strategist’s entourage, and Li Tingshen knew a little of him, so later, in the crisis, he picked him to be at his side. At first, with the camp full of wounded and nothing in any order, whenever Li Tingshen went round the camp he would find some coarse paper, sharpen a stick of charcoal and follow him, recording everything down to the smallest detail, with a look of great devotion.',
+      'He only came of age at the end of 756. Wei Qian said that since General Li was his commanding officer, why not ask him to choose a courtesy name, and so Li Tingshen, with due modesty, played the elder for once and chose the two characters Yangjie. (He was then in mourning for his father at Heyang, capped during mourning, and the name was settled by letter.)',
+      'Ordinary and never pushing himself forward: that perhaps was also what kept him alive, letting him follow Cheng Kai and Li Tingshen at last back to Luoyang and back to the Command. When he left he was a recruit of not even a year, who did not yet know what the school meant, and after six or seven years his standing was of course another matter. Standing there, his feelings were all mixed: he was a Tiance man, yet he had grown up almost entirely outside the Command, and it was enough to make one sigh.',
+      'Later, as a Commandant, he would still stand guard outside Cheng Kai’s bedroom, uneasy to see him so ill.',
+    ],
+    highlight: [
+      'When they fell back to hold one corner of the Command’s city, army supplies were stretched thin. Once officials came with grain, and the escorting officer, seeing him check sack after sack so carefully, called him a busybody; but he firmly stopped the man and held him there, without saying why, until Li Tingshen came back. Only then did he slit open the lower sacks, and what poured out was sand and earth. Caught on the spot, it was all the easier to question and report, and the shortfall was soon made good.',
+      'The first time he went into battle, Li Tingshen sent him to bring back the great banner. He was afraid, and made no secret of it, saying to Li Tingshen: Please give the order, General. I am afraid, but if it’s an order, I’ll dare.',
+    ],
+  }, // 项旌
+  mayi: {
+    name: 'Ma Yi',
+    zi: 'Tunan',
+    gloss: 'Yi 翊 is “flying” (Shuowen, feather radical), close in sense to soaring and roaming, so the courtesy name comes from the Zhuangzi’s “Free and Easy Wandering”: only then will it plan for the south, tunan 图南.',
+    profile: {
+      '官职身份': 'An officer of the Tiance Command. Descended from Ma Yuan, General Who Calms the Waves, who died of illness in the army while campaigning against the peoples of the five streams of Wuling, and from whose mouth comes the phrase “wrapped in a horse’s hide”. In 751–752 he went into Shu with the Tiance Command against Nanzhao, and came to know and love the Wudu woman Ncaik Ya; he fell in battle in 757.',
+    },
+    anecdotes: [
+      'A descendant of Ma Yuan, General Who Calms the Waves, the famous general of the Eastern Han. Senior brother to Cheng Kai and Li Tingshen. (Note: the very man Cheng Kai looks up to is Ma Yuan: “A man should die in the wilds of the frontier and come home wrapped in a horse’s hide”, “the years press upon me”; see the Influences row of his profile.)',
+      '“When was I ever afraid he’d get past me? I’m afraid he’ll get past me and not be able to bear it!”',
+      '“Go! And tell A-Kai later not to forget it was with me that he trained his Ironclad Discipline!”',
+    ],
+    highlight: [
+      'In the autumn of 757, as the two capitals were being recovered and on the eve of the armies’ muster, Li Tingshen’s camp was surrounded at the foot of the hill by the Langya and could not get out; he went to break the encirclement and was killed (undecided).',
+    ],
+  }, // 马翊
+  chengyu: {
+    name: 'Cheng Yu',
+    zi: 'Zhenluo',
+    birthplace: 'Beiting Grand Protectorate, Tingzhou, Longyou Circuit',
+    gloss: 'The courtesy name Zhenluo 镇洛, “guarding Luoyang”, was chosen by Cheng Kai: Cheng Feng, of a line of frontier generals, privately did not want his son to suffer the frontier again, and Cheng Kai, knowing his mind, wished only that he might always guard Luoyang; but it could not change his fate. His Persian name is آسمون (Asemoon), “sky”.',
+    profile: {
+      '官职身份': 'Cheng Feng’s eldest son, born in an army camp, long with the Tang army learning beside his father. He entered the Tiance Command in 763; in 772, after asking again and again, he was at last allowed to lead a small troop escorting an imperial envoy to Beiting, as Vice Commandant (a post, not an honorary rank). For the next twenty years he never came home: when Beiting fell in 790 he fell back with Yang Xigu to hold Xizhou, and in 792 he fell at Xizhou.',
+      '体貌特征': 'Of mixed blood, with deep-set eyes and brows: his mother is of the Mingjiao. Lean but strong, full of energy, very like Cheng Kai when he first entered the Command.',
+      '性格': 'Bold and quick to act. Inevitably hasty, yet simple and pure of heart. Very active, but not unable to sit still: sometimes he is lost listening to someone tell stories or watching someone write.',
+      '偶像': 'His father and his uncle.',
+      '武学': 'Proud-Blood Battle Spirit. Very sharp, steeped in it from childhood.',
+      '喜好': 'Polo: he played from childhood with the frontier herders, mostly big strong men, and was toughened by it; he often misses the roast and grilled meats, the milk pastries and Hu flatbread of Beiting, feeling that the central plains’ versions don’t taste right; he can play the pipa: curious about everything, as a child he pestered his mother to teach him, and he is actually not bad.',
+      '专擅': 'No one of the younger generation in the Command can match his riding; and when he wins he is puzzled: why didn’t any of you come in and fight for it?',
+    },
+    anecdotes: [
+      'At first, at twelve or thirteen, he ran about in the armour his father wore as a boy, the plume on his helmet nearly sweeping the ground, and sometimes Cheng Kai would catch hold of the plume to tease him.',
+      'He came back with his father when war broke out in the central plains; without much on his mind, he has no real homesickness, but often misses the food of Beiting.',
+      'When Lanchuan Yun was teaching Kyōya Chinese, or Li Tingshen was writing, he would sit by without a sound (this too Cheng Feng never knew), and he also went to watch Kyōya carve wood, and took on all the heavy work of moving the timber. He and Kyōya were much of an age, one restless and the other very quiet, yet little by little they became friends.',
+      'He said he wasn’t homesick, but when he learned that the Tibetans had taken Hexi and Longyou and held all the north-west, he was anxious, and asked again and again to go back to Beiting. At last in 772 he went, and for the next twenty years never came home. When Beiting fell in 790 he fell back with Yang Xigu to hold Xizhou, and in 792 he fell at Xizhou.',
+    ],
+  }, // 程宇
   chengzhao: { name: 'Cheng Zhao', zi: 'Gulian' }, // 程钊
   chengduo: { name: 'Cheng Duo', zi: 'Mingzhi' }, // 程铎
   chengjun: { name: 'Cheng Jun', zi: 'Weizhen' }, // 程钧
@@ -394,7 +522,13 @@ export const charactersEn = {
       'Every New Year he went home to make offerings to his father. In the first month of 765, on his way home, he heard that Min Fangcheng had died, and reached Cangyun the next day; Guan Yue led out of the stable a black-green horse, the very image of the one the Commander had once ridden: “Brother Min left word. He said: this is being.”',
     ],
   }, // 薛坚
-  qinhui: { name: 'Qin Hui' }, // 秦徽
+  qinhui: {
+    name: 'Qin Hui',
+    profile: {
+      '官职身份': 'A woman soldier of the Tiance Command, niece of Qin Yiyan. She came to know Di Yuanke at the joint military exercises of 752; they loved each other, apart, with letters passing between the Northern Capital and the Eastern Capital. In the bloody fighting for the Tiance Command’s city in 756 she broke out with her uncle and died of her wounds (in the second or third month of 756).',
+      '武学': 'Mounted archery and cavalry fighting.',
+    },
+  }, // 秦徽
   zswq: {
     name: 'Zhangsun Wangqing',
     profile: {
@@ -409,7 +543,36 @@ export const charactersEn = {
       '武学': 'Iron-Bone. Min Fangcheng “also had guidance from Wang Bukong, and so came into his own”: the one who chooses and passes on, in the silent sitting of the ice cellar.',
     },
   }, // 王不空
-  litingshen: { name: 'Li Tingshen', zi: 'Hongjuan' }, // 李庭深
+  litingshen: {
+    name: 'Li Tingshen',
+    zi: 'Hongjuan',
+    birthplace: 'Chang’an, Jingji Circuit',
+    gloss: 'Shen 深 is depth and subtlety (Book of Changes, “Xici”: only the deep can understand the will of all under heaven); jun 隽 is rich meat (Shuowen), and by extension talk “rich and long-lasting” (Book of Han, Biography of Kuai Tong) and the finest of the wise (Renwu zhi, on Zhang Liang): so jun answers shen, with hong 弘, “broad”, to widen its depth.',
+    profile: {
+      '官职身份': 'Before the war an Administrative Aide at the side of the strategist Zhu Jianqiu, called “Aide Li”; after the war, back at the Command, of the principal fourth rank, upper grade, Senior Commandant of Light Chariots and General of Loyal Valour, serving at the Command as Commander of Troops. After 765 he was often lent to Lingzhou to manage its army; a few years after Cheng Kai was gone he begged leave to retire and went home to care for his old father’s last years. Never once in his life did he follow his own wishes, and yet, of all his comrades in arms, he alone reached high office and was both loyal and filial, and lived long, and died well.',
+      '性格': 'Gentle, self-possessed, dignified and grave. Widely learned, prudent and resourceful, “his heart true and deep”. Deeply responsible, with an ambition to help the world at large, caring towards others: the kind of scholar who believes in orthodox Confucianism. But because he weighs too many things he can seem weak and hesitant, lacking in confidence.',
+      '偶像': 'Sima Qian (“The brave need not die for honour; the coward who admires righteousness, where would he not strive?”).',
+      '武学': 'Proud-Blood Battle Spirit. Of his generation he alone mastered the turning-horse spear thrust.',
+      '随身物件': 'An uncarved jade tablet, one of a pair with Li Tingze’s; and a sweat-shirt Jiang Li once mended for him, which he treasured for many years after, studying the stitches. Zhu Lu once happened to see it too; he did not know what to say, and Zhu Lu turned over the embroidery frame in her hands and said: what does it matter? A heart is a thousand threads; who looks only at the back of a piece of embroidery?',
+      '喜好': 'Being quietly on his own, reading and writing, thinking his own thoughts or watching others; for some reason he loves plum blossom. He is in fact fond of wine, even a little addicted, and will drink too much, but is ashamed to admit it: especially in the war, under heavy pressure, he wanted moments of release. “Abroad, to serve the high ministers; at home, to serve father and elder brothers; in mourning not to dare be remiss; not to be overcome by wine”: only that last he falls short of.',
+      '专擅': 'Superb calligraphy, above all clerical script, full, easy, broad and generous, the kind of good that people of Wanhua Valley all praise (Xu Qiusheng says it is better when he is a little tipsy, but he has never tried it himself and thinks it unreliable); military strategy and formations, and army correspondence.',
+    },
+    anecdotes: [
+      'Descended from the Li of Longxi, a family that had produced generals and chancellors; his father too was a senior civil official in the capital. The eldest son, educated in both letters and arms. Elder brother to Li Tingze, the two of them as close and courteous as twins; he went to school with Lu Bingyu. As a youth he meant to follow in his father’s footsteps, but he and Li Tingze both worshipped Ban Chao, so he was not without a longing for the battlefield; only he lacked martial talent, at least compared with Li Tingze when they drilled at home: perhaps the results were not so different, but he found the training agony, while Li Tingze was at ease. Later Li Tingze pulled him along to try for the Tiance Command, and it was he who got in and Li Tingze who did not. So he often felt that he, the lesser man, had taken what his brother’s heart was set on. Once in the Command his training was always harder, ground at over and over; the results were never poor, but because the process was so hard, or so knotted, he never had any confidence in himself.',
+      'Why the Tiance Command chose him and not Li Tingze: when the two brothers tried for it, there were no other children in the family, so the Command had to choose one of the two. When Li Tingshen shot, one arrow inexplicably missed the target, putting him last. Coming down from the range, he made a point of telling the examiner to check the candidates’ arrows more carefully, in case overused arrows with hidden damage were still in the quivers: no knowing when someone might nock one and have it snap in his hand at the first shot, and that would hurt someone. Afterwards, when they went back and checked, the arrow that had missed was the very one with a crack in the shaft, which would go out of control under the strain. He had already packed and was about to leave when someone came from the great hall with word from the generals, and he was kept on.',
+      'Though he entered the Command young, before the An Lushan Rebellion he had little front-line experience. Because he was lettered and steady, the strategist often kept him at his side, as a pupil learning strategy and formations; later, as an Aide, he helped run the army’s correspondence, or served as a guard close to the Commander-in-Chief or the strategist, went to the capital on rotation, guarded the imperial city: in short, he seldom went to war. The Command had a number of men like this, of high birth, whose helmets never touched mud, whose duties were all very respectable, and who were often seen by the great; some of their fellows sneered at them as young-master soldiers, which made it all the harder for him to be at ease with himself.',
+      'Under all these influences his opinion of himself is very low. In the war he met Jiang Li, and knowing his own heart, treated her as well as he could in the camp, yet dared not promise anything, and even persuaded her to leave the front: a regret for the rest of his life.',
+      'A great drinker. He did not know it himself at first, but drinking with Cheng Kai he would often get Cheng Kai drunk, himself looking all innocence. Only when one birthday everyone egged each other on to ply him with wine did he find out how much he could hold. If you really do hold out until he’s drunk, you’ll find that when he laughs he looks like a Samoyed.',
+      'An old friend in the Changge School once invited him to live there in retirement, a place of refinement, playing the qin and discussing poetry, cleansing the heart, and it was what he had longed for as a youth; but he did not go, and went home to care for his old father’s last years.',
+      'At Luoyang in the tenth month of 762, with Lanchuan Yun and Cheng Kai, he tried to keep Di Yuanke to supper.',
+      'In a corner of his bedroom is a Buddhist shrine with the Diamond Sutra Daoyong gave him. In the war he once asked Daoyong whether there truly was a Buddha-law that blesses all things; they were sitting in Xu Qiusheng’s medicine shed then, and Daoyong said nothing, only looked out and said: “It’s raining.” As the words left his mouth, rain came pattering down outside the shed. In the war Jiang Li once had him burn calming incense; she had brought it right to him, and he would not have it: partly he dislikes smells clinging to him, but more importantly, as a general not yet with full authority, he dared not burn incense in the army tent and lie at ease; later, visiting the Changge School, Du Zheng and Cen Han also gave him some, and he brought it back and never lit it either.',
+      'The war left him with restless nights, palpitations and headaches, and Xu Qiusheng’s needles worked sometimes and sometimes not. After his marriage, sitting alone deep in the night, Zhu Lu combed his hair with white sandalwood pomade and massaged it, and the headache actually eased a little; the last time he had slept so improperly with his hair loose was perhaps as a small child. He said thank you, and Zhu Lu turned and smiled: “Between us… don’t say such things.”',
+    ],
+    highlight: [
+      'When the war came and the city fell, Commander-in-Chief Li Cheng’en and the strategist led the Command’s fighting strength west (later going with the emperor into Shu). Wounded and unable to follow, he took command in the crisis, gathered the wounded and the broken remnants, and played cat and mouse with the enemy. Meanwhile he learned that Li Tingze had been beheaded by the rebels at Luoyang and that their mother, on hearing it, had died of heart failure; for a time he was torn apart, yet held on and did not fall. Cheng Kai, and three hundred soldiers, the embers of the Tiance Command, lived under his protection.',
+      'Where the two armies faced each other, enemy scouts often harried them, slipping in disguised as comrades to shake the army with rumours, and slandering him besides. He did not move, but gave them rope in order to catch them, caught and beheaded them, and from then on all within and without were awed into order.',
+    ],
+  }, // 李庭深
   luweilou: { name: 'Lu Weilou' }, // 陆危楼
   // 陆羽鸣：T1 工作译文（2026-11-22），译注与待审见 docs/luyuming-translation-review.md。
   // 不译：训诂末句「739年大光明寺事变中『身死』实为失踪，故卒年不著，从 Notion 库。」（数据按语）。
@@ -501,8 +664,20 @@ export const charactersEn = {
   yanmi: { name: 'Yan Mi', zi: 'Zhimiao' }, // 颜弥
   litingyun: { name: 'Li Tingyun', zi: 'Sixun' }, // 李庭沄
   mengxueying: { name: 'Meng Xueying' }, // 孟雪萦
-  lihanping: { name: 'Li Hanping', zi: 'Yanzhou' }, // 李翰屏
-  lihanxin: { name: 'Li Hanxin', zi: 'Yanxuan' }, // 李翰昕
+  lihanping: {
+    name: 'Li Hanping',
+    zi: 'Yanzhou',
+    profile: {
+      '官职身份': 'Son of Li Tingshen and Zhu Lu; Li Hanxin’s elder brother.',
+    },
+  }, // 李翰屏
+  lihanxin: {
+    name: 'Li Hanxin',
+    zi: 'Yanxuan',
+    profile: {
+      '官职身份': 'Daughter of Li Tingshen and Zhu Lu; Li Hanping’s younger sister.',
+    },
+  }, // 李翰昕
   zhaoyingzhen: { name: 'Zhao Yingzhen' }, // 赵盈贞
   zhaotingzhi: { name: 'Zhao Tingzhi' }, // 赵廷之
   // 称号 epithet、别号 hao：2026-11-22 T0 工作稿，待作者审（docs/t0-review.md）
