@@ -1,6 +1,6 @@
-# 任期说明 T2（苍云、天策两张编制图）疑点清单
+# 任期说明 T2（三张编制图）疑点清单
 
-文件：`src/i18n/tenures.en.js`（新）。档案页「任职履历」和编制图浮签里，每段任期的「上」（how）、「下」（end）、备注（note），原先英文界面全是中文。本批补齐苍云、天策两张编制图上的全部任期，连同程锋、程宇、薛坚在唐军图上的几段：共 219 句（同句只算一次），任期说明 234/287（check-data 末行新增这一项）。T2 工作译本：**你只看这份清单**。
+文件：`src/i18n/tenures.en.js`（新）。档案页「任职履历」和编制图浮签里，每段任期的「上」（how）、「下」（end）、备注（note），原先英文界面全是中文。本批先补苍云、天策两张图，连同程锋、程宇、薛坚在唐军图上的几段（219 句），作者审后（11-24）又补唐军图其余四人（程广、程钊、程铎、唐青阳，53 句）：共 272 句（同句只算一次），**任期说明 287/287，三张图全满**（check-data 末行新增这一项）。T2 工作译本：**你只看这份清单**。
 
 ## 本批体例
 
@@ -28,7 +28,7 @@
 - 魏谦「752 南诏查实通敌案」照年表 752.2 作 uncovered a treason case。
 - 程锋「以生执贼庭固求自贬」作 Having been taken alive by the rebels, insisted on being demoted，与职名表 Self-demoted 呼应。
 - 卢秉毓、程骞、高垣与万花三位医者档案还没译，但他们的任期在苍云、天策两张图上，一并译了，两张图浮签已无中文。
-- **还剩**：唐军那张图上程广、程钊、程铎、唐青阳四人的 53 句仍是中文，等这几人的档案批次一起做。
+- 唐军图其余四人见文末「补译」一节。
 
 ## 作者审定（2026-11-23）
 
@@ -36,4 +36,21 @@
 - **东都留守**：作者核 Hucker，留守作 Regent、东都作 Eastern Capital，二者合称未单列，照组合作 Regent of the Eastern Capital，与年表狄元恪「北都留守」作 Regent of the Northern Capital 一致。收 Notion 术语主表 T120。
 - **巡官**：Hucker 2746 hsün-kuan，Inspector（T'ang–Sung，a lowly official），改大写 Inspector。收 T121。
 - **闵方城「几乎如统领」**：all but its Commander 作者看不懂，英文读者也可能误读成「除了统领什么都是」，改作 “acting almost as its Commander”。
+
+## 补译：唐军图其余四人（2026-11-24）
+
+程广、程钊、程铎、唐青阳 53 句，体例同上。三张图共 132 段浮签逐段聚焦看过，上、下、备注、依据均无中文。
+
+### 要你定的
+
+1. **副队头**：唐青阳那段备注说副队头「领十人」，与火长同数，可职名表作 Deputy Company Leader（队头 Company Leader）。年表 745.6「成都一夜」原作 a deputy squad leader，我照职名表取齐，改作 a Deputy Company Leader。你若觉得该按人数，改作 Deputy Squad Leader 一路，告诉我，职名表和年表一起改。
+2. **告身**：程钊「告身不是他的」暂作 the patent of appointment。Hucker 若有 kao-shen 条目，顺手看一眼译法。
+
+### 处理说明（不用回）
+
+- 程钊兵曹那条长备注照译（「事是他做的，告身不是他的；叶曙兮读出的『故廉』就是这一条」），字作 Gulian，与年表叶曙兮条一致。
+- 程广「〈程家系列〉【4】：边府幕前一等一的名将」去掉文档名，作 One of the very finest generals of the frontier command。
+- 程铎「首告程凯」照年表作 informing on Cheng Kai；牙前 headquarters guard、都虞候 Inspector-in-chief 照职名表。
+- 程铎三段待核任期的备注「年表此条待定」作 The timeline entry is undecided：这是在说明这几段为什么标待核，读者看得见，照留。
+- 唐青阳两条出处：《通典》卷一四八引李靖兵法，作 Li Jing’s military methods as quoted in the Tongdian (Comprehensive Institutions), juan 148，第二次出现简作 Li Jing, quoted in the Tongdian。
 

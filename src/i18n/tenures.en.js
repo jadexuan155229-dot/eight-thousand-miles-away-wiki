@@ -7,9 +7,8 @@
 // Style (docs/english-edition.md): terse chart fragments, no closing full stop; posts and ranks as in
 // posts.en.js (ranks in Hucker notation, rank 5b2); the author's working-document titles are not
 // carried over; "inferred" / "unconfirmed" stay, since the chart exists to show what rests on what.
-// 2026-11-23 T2 working draft: every tenure on the Cangyun and Tiance charts, and the Tang army stints of
-// Cheng Feng, Cheng Yu and Xue Jian (docs/tenures-t2-review.md). Still Chinese: Cheng Guang, Cheng Zhao,
-// Cheng Duo and Tang Qingyang on the Tang army chart, to be done with their profiles.
+// 2026-11-23/24 T2 working draft: every tenure on all three charts (Cangyun, Tiance, Tang army)
+// (docs/tenures-t2-review.md).
 
 export const tenureNotesEn = {
   // 苍云 · 统帅、破阵营
@@ -245,6 +244,65 @@ export const tenureNotesEn = {
   战后叙功: "Rewarded for merit after the war",
   此后终老天策府: "Spent the rest of his life at the Tiance Command",
   "闻谷中危难，返万花谷": "Hearing the Valley was in danger, went back to Wanhua Valley",
+
+  // 唐军 · 北庭（程广、程钊）
+  盖嘉运帐下统兵: "Commanding troops under Gai Jiayun",
+  升节度副使: "Promoted Military Vice Commissioner",
+  "〈程家系列〉【4】：边府幕前一等一的名将": "One of the very finest generals of the frontier command",
+  随盖嘉运击突骑施: "With Gai Jiayun against the Türgesh",
+  "随盖嘉运破碎叶、擒吐火仙": "With Gai Jiayun when he took Suyab and captured Tuhuoxian",
+  北庭与安西四镇再次分设: "Beiting and the Four Garrisons of Anxi separated again",
+  殁于小勃律之役: "Died in the Little Balur campaign",
+  "741.10 以副使出北庭西路，被围，程凯率百骑解围": "741.10: took the western road out of Beiting as Vice Commissioner and was surrounded; Cheng Kai broke the siege with a hundred horse",
+  以北庭节度副使从高仙芝讨小勃律: "As Military Vice Commissioner of Beiting, joined Gao Xianzhi against Little Balur",
+  殁于军中: "Died with the army",
+  "初上阵守庭州，兵器遇寒脆折，自请经管": "First in action defending Tingzhou; when the weapons snapped in the cold, asked to take charge of them",
+  赴俱六守捉: "Sent to the Juliu Garrison Post",
+  "都护府依州制，兵曹掌兵甲器仗；摄官，未经吏部正授——事是他做的，告身不是他的；叶曙兮读出的「故廉」就是这一条": "The Protectorate followed prefectural practice, its Military Service Section keeping arms and armour. An acting post, never formally conferred by the Ministry of Personnel: the work was his, the patent of appointment was not. This is the “Gulian” Ye Shuxi read in his name",
+  随父从盖嘉运击突骑施: "With his father, under Gai Jiayun, against the Türgesh",
+  "史书只记主帅之名，是他头一回有功不得封赏": "The histories record only the commander’s name: the first time his merit went unrewarded",
+  随父从盖嘉运破碎叶: "With his father, under Gai Jiayun, when Suyab was taken",
+  "莫贺达干叛，赴俱六守捉": "When Baga Tarkhan revolted, sent to the Juliu Garrison Post",
+  "不愿受抚的部落袭击守捉，战亡": "Fell in battle when tribes unwilling to submit attacked the post",
+  "功劳记在主帅名下；俱六守捉在庭州以西、轮台县以东，开元北庭文书已见，另有俱六行营": "The merit went to the commander’s name. The Juliu Garrison Post lay west of Tingzhou and east of Luntai county; it appears in Kaiyuan-era Beiting documents, and there was also a Juliu field camp",
+
+  // 唐军 · 剑南（程铎）
+  入剑南: "Went to Jiannan",
+  "738 年尚在洛阳首告程凯，入剑南系于 739 年前后": "In 738 he was still in Luoyang, informing on Cheng Kai; his going to Jiannan is placed around 739",
+  "随章仇兼琼入安戎城，初立军功": "Entered Anrong with Zhangchou Jianqiong; his first merit in battle",
+  入牙前: "Into the headquarters guard",
+  入牙前统兵: "Commanding troops in the headquarters guard",
+  迁都虞候: "Moved up to Inspector-in-chief",
+  "751.4 所部护鲜于仲通突围；751.9 不追逃兵；752.2 部下牵连通敌案": "751.4: his unit covered Xianyu Zhongtong’s breakout; 751.9: did not pursue the deserters; 752.2: men under him drawn into the treason case",
+  "再征南诏，兵源仍靠强征": "Another campaign against Nanzhao, the troops still pressed",
+  "李宓全军覆没，名册无一人回": "Li Mi’s army destroyed; not one name on the rolls came back",
+  追唐青阳也在这一段: "His pursuit of Tang Qingyang also falls in these years",
+  掌军纪: "In charge of military discipline",
+  "郭英乂死；此后去向年表待定": "Guo Yingyi dead; where he went after this is still undecided in the timeline",
+  "与剑南兵马使徐知道同在使府；762.7 徐知道反，自己营里已有人跟了他": "At the Commission’s headquarters with Xu Zhidao, a Commander in Jiannan; when Xu Zhidao rebelled in 762.7, some in his own camp had already gone over to him",
+  郭千仞之变: "Guo Qianren’s revolt",
+  站朝廷委任的节度使: "Sided with the Military Commissioner the court had appointed",
+  "杜鸿渐入蜀，姑息崔旰": "Du Hongjian came into Shu and indulged Cui Gan",
+  "年表此条待定；月份待核": "The timeline entry is undecided; month unconfirmed",
+  "讨旰诸将各得安置，独他被闲置": "The generals who fought Cui Gan were all given places; he alone was left without one",
+  "年表此条待定；衔名可换": "The timeline entry is undecided; the title may change",
+  杨子琳乘虚袭入成都: "Yang Zilin seized the chance to break into Chengdu",
+  "年表此条待定；与唐遐同在一面城墙上": "The timeline entry is undecided; on the same wall as Tang Xia",
+
+  // 唐军 · 剑南（唐青阳）
+  "王昱安戎大败后剑南补兵，青神点到他家，替父亲去": "After Wang Yu’s great defeat at Anrong, Jiannan filled its ranks; at Qingshen his household was called up, and he went in his father’s place",
+  情愿改充长任健儿: "Chose to re-enlist as a long-service professional soldier",
+  名册上写的是父亲的名字: "The roll had his father’s name",
+  "开元二十五年诏，自征行人中招募": "Recruited from among the campaigners under the edict of the twenty-fifth year of Kaiyuan",
+  升火长: "Promoted Squad Leader",
+  升副队头: "Promoted Deputy Company Leader",
+  "领十人；职名据《通典》卷一四八引李靖兵法": "Leading ten; the title follows Li Jing’s military methods as quoted in the Tongdian (Comprehensive Institutions), juan 148",
+  升队头: "Promoted Company Leader",
+  西洱河后补押官: "After the Xi’er River, filled a vacancy as Detachment Officer",
+  西洱河带弩队断后: "At the Xi’er River, led the crossbow company covering the retreat",
+  "西洱河死者六万，活下来的补缺": "Sixty thousand died at the Xi’er River; the survivors filled the gaps",
+  "押送眉州乡人时，赶在点验入册前私放其人，未回营；程铎追十五日不得": "Escorting men of his own Meizhou, let them go before they could be checked and entered on the rolls, and did not return to camp; Cheng Duo pursued him for fifteen days without catching him",
+  "押官为一队五十人之主官（《通典》卷一四八引李靖兵法）": "The Detachment Officer headed a company of fifty (Li Jing, quoted in the Tongdian, juan 148)",
 
   // 苍云 · 薛坚（朔方军）
   "未随苍云归雁门，留郭子仪帐下": "Did not go back to Yanmen with the Cangyun Army; stayed under Guo Ziyi",
