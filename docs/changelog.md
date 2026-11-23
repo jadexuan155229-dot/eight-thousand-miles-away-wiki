@@ -9,6 +9,7 @@
 - 疑点清单 `docs/profiles-t2-batch3-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
 - 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 逐人看过 12 份英文档案，除名号一行照例并列的中文名外无中文，陆危楼训诂块不出。
 - **作者审疑点清单**（同日）：四个新拟专名照拟（T123–T126）；高垣轶事 4 定作「因无子被休」，英文 had borne no son；**称程凯之「知节殿」一律改「知节殿将军」**（作者：单用「知节殿」不自觉沾了日语「殿」字敬称），程凯号英文 Zhijie Hall → the General of Zhijie Hall，官职身份、宣杨轶事 9、年表 770.12 题与英文键随改，驻地照作 the Zhijie Hall（T127）；宣杨轶事 1「你倒识货」英文点明是高垣说的。重盖戳 4 处。
+- **审稿意见**（同日）：高垣轶事 2「高垣哪，慢」原作 “Gao Yuan, slow!”，易读成叫他放慢，改作 “Gao Yuan, too slow!”。
 
 ### 英文版 T2 任期说明：补唐军图
 

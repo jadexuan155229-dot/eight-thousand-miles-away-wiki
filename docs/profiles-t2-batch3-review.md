@@ -42,3 +42,7 @@
 - **高垣轶事 4**：作者原文改过，定稿是「因无子被休」。中文改「多年后民女因无子被休归家」，英文作 because she had borne no son，重盖戳。
 - **知节殿 → 知节殿将军**：作者说单用「知节殿」称程凯，是不自觉沾了日语文学的「殿」字敬称，凡称人处一律改「知节殿将军」，与英文 the General of Zhijie Hall 呼应。改了五处：程凯号（英文 Zhijie Hall → the General of Zhijie Hall）、程凯官职身份「故府中上下也用『知节殿将军』代称他」、宣杨轶事 9、年表 770.12 题（英文键随改）、`docs/t0-review.md` 与 `docs/tiance-posts-draft.md` 的记录。指驻地的「驻知节殿」「守的也是知节殿」照旧，英文统一作 the Zhijie Hall（任期备注原作无冠词的 Zhijie Hall，顺手取齐）。收 Notion T127。Notion 事件库里没有 770.12 这一条，档案库也没有记程凯的号，都不用改。
 - **宣杨轶事 1「你倒识货」**是高垣说的，英文点明：“You know a good thing when you see it,” said Gao Yuan.
+
+## 审稿意见（2026-11-24）
+
+- 高垣轶事 2「高垣哪，慢」原作 “Gao Yuan, slow!”，读来像是叫他放慢，正好反了；原意是嫌他动作慢（正文下接「刀都到你脚底下，还杵着」），改作 “Gao Yuan, too slow!”。
