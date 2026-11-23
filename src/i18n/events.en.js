@@ -7,6 +7,7 @@
 //   batch 2a (2026-11-23): 750–756 (docs/timeline-t2-batch2a-review.md)
 //   batch 2b (2026-11-23): 757–759 (docs/timeline-t2-batch2b-review.md)
 //   batch 3a (2026-11-23): 760–763 (docs/timeline-t2-batch3a-review.md)
+//   batch 3b (2026-11-23): 764 onwards, the last batch (docs/timeline-t2-batch3b-review.md)
 // Terms follow the Notion 术语主表 and the T0 tables (places, posts, factions, names).
 // Bracketed notes: the author's working marks (作者定, 作者核, 待核, 月份待核, 系年暂定, source
 // and dating notes, writing instructions) are left out; story points still open (……待定, 未定)
@@ -1183,4 +1184,145 @@ export const eventsEn = {
     "At the year’s end (late in the twelfth month, before the news of Huai’en’s rising arrived; he went back to the camp at Fenzhou at the start of the new year), Xue Jian came home from the Shuofang Army to visit and make offerings to his father, and went up to the little house at Guangwu to see Min Fangcheng (Min Fangcheng had by then moved to Guangwu, and often looked down on the drill ground): “Langjun.” Min Fangcheng was copying the “Memorial on Sending Out the Troops”: “for they remember the special favour of the late emperor, and wish to repay it to Your Majesty”; “Last summer I was in Hexi … that was the last time I saw the Qilian Mountains”; “Langjun, Lingwu, Shuofang: we can’t fall back any further.” Xue Jian: “For that, I will not spare myself” (by now the squad Min Fangcheng had left at Lingwu had been recalled three months before, see 763.9B; he knew, and Xue Jian may not have). Afterwards Min Fangcheng asked Liu Rong to find him a horse with an iron-grey coat (an old story: after Xue Zhi fell in battle, Min Fangcheng held up a hand target and let the eleven-year-old Xue Jian strike at it until he dropped to his knees). An optional detail: with Hedong and Shuofang facing off at the time, Shuofang officers passing Taiyuan into Hedong had to have their papers checked, and Di Yuanke was in charge of the pass defences.",
   "西山诸州入吐蕃后，唐青阳回岷江上游的祖地一趟，唐哲陪他去：松、维、保一带是氐羌之地，十二月的岷山雪路，又是吐蕃新占之地，一个人走不了。他第一次看见祖先的山（740 年安戎城），穿的是官军的衣服；最后一次，那里已经换了主人":
     "After the prefectures of the Western Hills passed to the Tibetans, Tang Qingyang went back once to his ancestral land on the upper Min River, and Tang Zhe went with him: the Song–Wei–Bao country was the land of the Di and Qiang, the snowy roads of the Min Mountains in the twelfth month, and newly taken by the Tibetans besides; one man alone could not make it. The first time he saw his forefathers’ mountains (Anrong, 740) he was wearing the uniform of the government army; the last time, they had changed masters.",
+  // 764
+  "年内，狄元恪与闵方城交集渐多，偶然让他试过自己的马槊——闵方城一辈子只拿盾刀，而马槊长、重、韧，将门子弟自幼练起尚未必窥其门径，他还是重伤之躯：不见意外也不推让，掂了一下，指腹抹过槊杆，一抽一移便持握得当；手腕一沉，肩背自然一正，两腿扎住，对裹了皮面的草靶一击贯透，抽出又刺，一连数次无一不中。还给狄元恪，什么也没说，走了，留下他看着那个身被数疮的草靶":
+    "In the course of the year Di Yuanke and Min Fangcheng crossed paths more and more, and once, by chance, he let him try his cavalry lance. Min Fangcheng had held nothing but shield-and-blade all his life, and the lance is long, heavy and supple, so that even sons of military houses who train from childhood may never find the way into it, and he was gravely injured besides; he showed neither surprise nor reluctance, weighed it once, ran the pad of his finger along the shaft, and with one draw and shift had his grip right; a sink of the wrist, his shoulders and back squared of themselves, legs planted, and one thrust went clean through a straw target wrapped in hide; he drew it out and thrust again, several times in a row, and not one missed. He gave it back to Di Yuanke without a word and left, leaving him looking at the straw target and its many wounds.",
+  "许秋生授天策府医博士（战后叙功），此后终老天策府":
+    "Xu Qiusheng was made Medical Erudite of the Tiance Command (in the awards for merit after the war), and spent the rest of his life there.",
+  "吐蕃陷凉州，河西节度使杨志烈西走甘州（年份据通行说，月份待核；763.7闵方城护送百姓所入之凉州自此亦失）":
+    "The Tibetans took Liangzhou, and Yang Zhilie, Military Commissioner of Hexi, fled west to Ganzhou (the Liangzhou into which Min Fangcheng had escorted the people at 763.7 was now lost too).",
+  "程骞入天策府试训":
+    "Cheng Qian entered the Tiance Command on trial.",
+  "程锋议修族谱，程凯拒归宗；程钊名下记「未娶，有女一人，从母姓」":
+    "Cheng Feng proposed revising the clan genealogy, and Cheng Kai refused to return to the clan; under Cheng Zhao’s name was written “unmarried; one daughter, who takes her mother’s surname”.",
+  "江蓠产女":
+    "Jiang Li gave birth to a daughter.",
+  "合剑南东、西川为一道，复以严武为节度使":
+    "Jiannan East and West Circuits were combined into one, and Yan Wu was again made Military Commissioner.",
+  "广德二年正月，仆固怀恩反：怀恩既不为朝廷所用，与河东都将李竭诚潜谋取太原，辛云京觉之，杀竭诚，乘城设备；怀恩使其子玚将兵攻太原，云京出与战，玚大败而还，遂与浑瑊引兵围榆次，与河东军相持（《通鉴》卷223，《旧唐书·马燧传》作「斩竭诚，固城自守」；下接764.2A仆固玚之死、怀恩北走灵武；764.2C浑释之之死）":
+    "First month of the second year of Guangde: Pugu Huai’en rebelled. No longer of use to the court, Huai’en secretly plotted with Li Jiecheng, a senior commander of Hedong, to take Taiyuan; Xin Yunjing found out, killed Jiecheng and manned the walls; Huai’en sent his son Yang with troops to attack Taiyuan, Yunjing came out to fight, and Yang was badly beaten and fell back, then with Hun Jian laid siege to Yuci, facing the Hedong army (Zizhi tongjian, juan 223; the Old Book of Tang, Biography of Ma Sui, has “beheaded Jiecheng and held the city fast”; leading on to 764.2A, the death of Pugu Yang and Huai’en’s flight north to Lingwu, and 764.2C, the death of Hun Shizhi).",
+  "正月至二月（仆固怀恩之变），辛云京严守太原，最惧怀恩与回纥合谋自北而来；苍云差事在钉死北面——关岳以新营副守关，狄元恪带二团南下戒备忻、代一线，并为太原北路押粮，辛云京由此识之（764.9召为行军司马之伏笔；又接762.11B：狄元恪亲见朔方军东京纵掠而本部不出营）；闵方城居广武城，不预其事":
+    "First to second month (Pugu Huai’en’s rising): Xin Yunjing held Taiyuan tightly, fearing most of all that Huai’en and the Uighurs would come down together from the north; the Cangyun Army’s task was to nail down the north. Guan Yue, as the new Deputy Corps Commander, held the pass, and Di Yuanke took the Second Regiment south to guard the Xin–Dai line and escort grain on the northern road of Taiyuan, and so Xin Yunjing came to know him (foreshadowing his recall as Adjutant at 764.9; it also follows on from 762.11B, where Di Yuanke saw the Shuofang Army plunder the Eastern Capital and kept his own men in camp); Min Fangcheng lived at Guangwu and took no part.",
+  "薛坚新正初回到汾州营中，旋即怀恩反，被编入仆固玚攻榆次的兵马（浑瑊式：名在朔方军籍，非其所择）；苍云这边狄元恪二团正在忻、代一线戒备，同在一条战线上，始终没有照面；闵方城在广武城、薛褚在武库，各自等消息，一个月里彼此一句话不说（兑现二人「远远关注故统帅儿子」之默契）":
+    "At the start of the new year Xue Jian went back to the camp at Fenzhou, and soon after Huai’en rebelled and he was put into Pugu Yang’s force attacking Yuci (as with Hun Jian: his name was on the Shuofang Army’s rolls, not by his own choice); on the Cangyun side Di Yuanke’s Second Regiment was on guard along the Xin–Dai line, on the same front, and they never met; Min Fangcheng at Guangwu and Xue Chu in the armoury each waited for news, and for a month neither said a word to the other (keeping their unspoken understanding to “keep a distant eye on the late Commander’s son”).",
+  "二月，仆固玚为部将焦晖、白玉所杀，部众哗变；怀恩与麾下三百人渡河北走灵武；郭子仪至汾州，「怀恩之众数万悉归之」（《通鉴》卷223），浑瑊重归郭子仪":
+    "Second month: Pugu Yang was killed by his officers Jiao Hui and Bai Yu, and his men mutinied; Huai’en crossed the river north to Lingwu with three hundred of his followers; Guo Ziyi reached Fenzhou, and “Huai’en’s men, several tens of thousands, all came over to him” (Zizhi tongjian, juan 223), Hun Jian returning to Guo Ziyi.",
+  "仆固玚死后朔方将士归郭子仪，归顺者名籍随军报传至太原北路；狄元恪押粮途中于文书里见「薛坚」之名，遣人传话回雁门——生死凭一纸名册得知（名籍母题）；闵方城听罢无话，薛褚在武库照旧修甲":
+    "After Pugu Yang’s death the Shuofang officers and men came over to Guo Ziyi, and the rolls of those who submitted came with the army reports to the northern road of Taiyuan; Di Yuanke, on the road escorting grain, saw the name “Xue Jian” in the papers and sent word back to Yanmen: life or death known through a single roll of names (the motif of the rolls); Min Fangcheng heard it and said nothing, and Xue Chu went on mending armour in the armoury.",
+  "二月，仆固怀恩北走至灵州，杀守将浑释之，收其军（浑释之即浑瑊之父；两唐书作战死于吐蕃，此从《通鉴》卷223）；灵武自此为怀恩据点，至765.9其死":
+    "Second month: Pugu Huai’en, fleeing north, reached Lingzhou, killed Hun Shizhi, the commander there, and took over his army (Hun Shizhi was Hun Jian’s father; both Books of Tang have him killed fighting the Tibetans; this follows the Zizhi tongjian, juan 223); Lingwu was Huai’en’s stronghold from then until his death at 765.9.",
+  "荔非承烈归葬李牧祠 闵方城退居二线 763年10月的预期人事变动生效":
+    "Lifei Chenglie reburied at the Li Mu shrine; Min Fangcheng stepped back from front-line command; the changes of post planned in the tenth month of 763 took effect.",
+  "荔非一案批复，追认为忠挚之士，赐归葬苍云李牧祠；薛褚迎遗骨归葬毕，又回到武库去，偶尔捻起一根铜丝出神":
+    "The ruling on Lifei’s case came down: he was recognised as a loyal and devoted man and granted burial at the Cangyun Army’s Li Mu shrine; Xue Chu, having brought his remains home and seen them buried, went back to the armoury, and now and then would pick up a length of copper wire and lose himself in thought.",
+  "雁门边地粮站：靳沉白遇少年书手任迪简，廪给簿册出入——簿记须真，人另设法护之（与荔非归葬平行）（月份推定）":
+    "At a frontier grain station at Yanmen, Jin Chenbai came upon the young copyist Ren Dijian, and discrepancies in the ration ledgers: the books must be true, and the person is protected some other way (parallel with Lifei’s reburial).",
+  "闵方城传功樊璋（广武城小院，私下完成，在场唯关岳，狄元恪后至）":
+    "Min Fangcheng passed on his art to Fan Zhang (in the little courtyard at Guangwu, done privately, with only Guan Yue present; Di Yuanke arrived later).",
+  "传功之日：关岳送来汤饼，闵方城对着面碗看了一会热气，忽然说「叫樊璋上来」。小院中令樊璋脱甲持盾，一下一下让他承劲，示意何处松开、何处收紧，一个多时辰；狄元恪自映雪湖亲巡归来才听通报——永远是闵方城说做就执行，旁人只能后一步听说——纵马入广武，恰见樊璋抵住闵方城一击，闵方城一顿，竟退了半步。樊璋掣盾跽地，胸腹间内力震荡如钟，余响不绝；狄元恪立于近旁，隐隐「听」到樊璋背影里的雷音——他在邱鸿那里见识过，薛褚曾引他把手放在武库炉边狸猫肚皮上：「我从没能和人讲清何为铁骨衣。佛音说法，声如雷震，在里头。」闵方城脸色灰白：「带他下去。……你们试他。要在人前。」关岳：「给你留个人？」「下去罢。」「闵大哥，汤饼凉了。」离去时樊璋回身望了闵方城好一会，如幼狮离群；狄元恪犹自望着，见他缓缓坐下去，靠着墙垛，变成城墙的一部分":
+    "The day of the passing on: Guan Yue brought noodle soup, and Min Fangcheng looked at the steam over the bowl for a while and suddenly said, “Have Fan Zhang come up.” In the little courtyard he had Fan Zhang take off his armour and hold the shield, and let him take the force blow by blow, showing him where to loosen and where to tighten, for more than two hours; Di Yuanke, back from inspecting Yingxue Lake himself, only then heard the report (it was always so: Min Fangcheng said it and it was done, and others could only hear of it a step behind), rode into Guangwu, and arrived just as Fan Zhang held off a blow from Min Fangcheng, and Min Fangcheng checked and actually gave back half a step. Fan Zhang dropped his shield and knelt, the inner strength in his chest and belly ringing like a bell, the echo going on and on; Di Yuanke, standing close by, faintly “heard” the thunder in Fan Zhang’s back. He had met it before with Qiu Hong: Xue Chu had once had him put his hand on the belly of the cat by the armoury forge: “I have never been able to explain to anyone what Iron-Bone is. When the Buddha preaches the Law, the voice is like thunder; it’s in there.” Min Fangcheng, grey-faced: “Take him down. … You test him. It has to be in front of people.” Guan Yue: “Shall I leave someone with you?” “Go down.” “Brother Min, the noodles have gone cold.” As he left, Fan Zhang turned and looked back at Min Fangcheng a long while, like a lion cub leaving the pride; Di Yuanke was still looking when he saw him slowly sit down against the battlement and become part of the city wall.",
+  "夏，柳戎为闵方城寻得青黑马；闵方城携柳戎赴北边草场遛马，映雪湖边柳戎睡着，闵方城说草原上睡着魂会走，得喊自己名字把它喊回来；柳戎喊了自己名字，又喊了他大名，闵方城赧然「你…胡闹」（月份推定）":
+    "Summer: Liu Rong found the black-green horse for Min Fangcheng; Min Fangcheng took Liu Rong to the northern grasslands to walk the horse, and by Yingxue Lake Liu Rong fell asleep; Min Fangcheng said that if you fall asleep on the grassland your soul wanders off, and you have to call your own name to call it back; Liu Rong called her own name, and then called his full name, and Min Fangcheng, embarrassed: “You… are being silly.”",
+  "樊璋经人前试艺，定为一团（邱鸿）副官，出狄元恪帐下；任命下时樊璋帐中叩首，狄元恪亦跪而相拥（月份推定）":
+    "After the test of his skill in front of people, Fan Zhang was confirmed as deputy of the First Regiment (Qiu Hong’s), leaving Di Yuanke’s command; when the appointment came down Fan Zhang knelt in the tent and bowed his head to the ground, and Di Yuanke too knelt and embraced him.",
+  "狄元恪离苍云，南归太原任河东节度（辛云京）行军司马；关岳以营副暂兼领二团，再遴选主将（月份推定；伏笔：764年初怀恩之变中辛云京识之，见764.1B；又接762.11B）":
+    "Di Yuanke left the Cangyun Army and went south to Taiyuan as Adjutant to the Military Commissioner of Hedong (Xin Yunjing); Guan Yue, as Deputy Corps Commander, took temporary charge of the Second Regiment as well until a new commander was chosen (foreshadowing: Xin Yunjing came to know him during Huai’en’s rising early in 764, see 764.1B; it also follows on from 762.11B).",
+  "严武破吐蕃七万众，拔当狗城；十月又拔盐川城；崔旰随严武于汉州，取吐蕃四城":
+    "Yan Wu defeated seventy thousand Tibetans and took Danggou city; in the tenth month he also took Yanchuan city; Cui Gan, with Yan Wu at Hanzhou, took four Tibetan cities.",
+  "秋冬，仆固怀恩引回纥、吐蕃十万寇邠州、奉天，郭子仪屯奉天拒之，敌引去（月份推定）":
+    "Autumn and winter: Pugu Huai’en led a hundred thousand Uighurs and Tibetans to raid Binzhou and Fengtian; Guo Ziyi camped at Fengtian to hold them off, and the enemy drew back.",
+  "冬至讲武，天策与神策军竞猎：程宇好胜，独追虎入林遇狼群（后查为神策算计），程凯飞身接住程宇，后背重重着地、带起旧患，连日不得安寝；岚川云接苍云来信，邀新年北上一会，程凯：「去。再不应啊，没时候了」（文档原标十月，冬至在农历十一月，从十一月）":
+    "The winter-solstice military review: the Tiance Command and the Shence Army held a hunting contest; Cheng Yu, eager to win, chased a tiger alone into the woods and met a wolf pack (it later turned out to be a Shence trap); Cheng Kai leapt to catch Cheng Yu and landed hard on his back, bringing his old injuries back, and for days could not sleep; Lanchuan Yun got a letter from the Cangyun Army inviting them north for the new year, and Cheng Kai said: “Go. If we don’t accept this time, there won’t be time left.”",
+  "关岳带训时把女儿关榆放在闵方城寝帐，闵方城裹毯把她安置在腿窝里，一边看文书一边应她；关榆攀马颈伏上马背，闵方城：「你少动这念头。不好。」（后：关榆长大不识碑上之名，在广武城上成婚；关氏子女无一人再沾军伍，年节上李牧祠祭扫「一个无亲无故的苍云将军」）":
+    "When Guan Yue was leading training he left his daughter Guan Yu in Min Fangcheng’s tent, and Min Fangcheng wrapped her in a blanket and settled her in the crook of his legs, answering her while he read his papers; Guan Yu climbed a horse’s neck and lay along its back, and Min Fangcheng: “Put that idea out of your head. It’s no good.” (Afterwards: Guan Yu grew up not knowing the names on the stele, and married on the walls of Guangwu; not one of the Guan children ever had anything to do with the army again, and at New Year they went up to the Li Mu shrine to sweep the grave of “a Cangyun general with no kin”.)",
+  // 765
+  "（结局位置）此时邱鸿已在一团长官任上（764.3 接掌）、樊璋为其副（764.8），二人组合继承闵方城／关岳成为破阵营核心——邱鸿右臂齐肘而断，右上肢位置带肩盾包住残端、左手持刀，为「无盾」铁骨衣；樊璋持斩马刑天，为「重盾」铁骨衣，战阵上补足其薄弱处。后邱鸿与医女贺兰成婚，军饷用以收容边地孤幼":
+    "(Where things stand at the end) By now Qiu Hong was head of the First Regiment (taking over at 764.3) and Fan Zhang his deputy (764.8), and the two together had inherited from Min Fangcheng and Guan Yue the core of the Rank-Breaker Corps: Qiu Hong, his right arm off at the elbow, a shoulder shield covering the stump where the right arm had been and his blade in his left hand, an Iron-Bone “without a shield”; Fan Zhang, wielding Zhanma Xingtian, an Iron-Bone of the “heavy shield”, making up for Qiu Hong’s weak side in battle. Later Qiu Hong married the physician He Lan, and his army pay went to taking in the orphans of the frontier.",
+  "邱鸿接掌一团后，以军饷收容边地孤幼，其中有几个说奚语的孩子（作者定：即屈突真身边那几个孩子；正文不点名，不交代来历）；贺兰以医女协理（与婚事拆开，婚事另见767条；系年月份待定，在邱鸿接掌一团之后，不与闵方城亡故同月）":
+    "After Qiu Hong took over the First Regiment, he used his army pay to take in the orphans of the frontier, among them a few children who spoke Xi (they are the children who were with Qutu Zhen; the story does not name them or say where they came from); He Lan, as physician, helped with the work (the marriage: see 767).",
+  "南诏命凤伽异于昆川筑拓东城（今昆明）；德化碑作「赞普钟十四年」，换算待核":
+    "Nanzhao had Fengjiayi build the city of Tuodong at Kunchuan (present-day Kunming); the Dehua Stele gives “the fourteenth year of Zanpuzhong”.",
+  "正月，岚川云、程凯应邀至苍云（三邀方成：762年末岚川云赴洛阳扑空，763年秋因吐蕃入长安未成行）：宴上击鼓催花，闵方城把花球丢给程凯，程凯一箭射散彩球；关岳打铁花；闵方城与程凯论「偶然」「手印」「是还回去了」，「我这个人，非常幸运。程子阳，你也是」；岚川云与闵方城两上长城（「两下里，总得有一个人高兴」；「不可辜负」「你也让我回来了」）；上元夜闵方城对柳戎道「谢了……种种」":
+    "First month: Lanchuan Yun and Cheng Kai came to the Cangyun Army at its invitation (it took three invitations: at the end of 762 Lanchuan Yun went to Luoyang and missed him, and in the autumn of 763 they could not go because the Tibetans had entered Chang’an); at the feast they played drum-and-pass-the-flower, Min Fangcheng tossed the flower ball to Cheng Kai, and Cheng Kai shot the coloured ball apart with one arrow; Guan Yue put on the iron-flower display; Min Fangcheng and Cheng Kai talked of “chance”, of “handprints”, of “it has been given back”: “I am a very lucky man. Cheng Ziyang, so are you”; Lanchuan Yun and Min Fangcheng went up the Great Wall twice (“Between the two of us, one of us should be happy”; “It must not be let down”; “You let me come back too”); on the night of the Lantern Festival Min Fangcheng said to Liu Rong: “Thank you… for everything.”",
+  "闵方城帐中亡故（时岚川云、程凯正访苍云）：正月十六晨（上元次日），送走天策二人后久无动静，关岳入视、柳戎以狐尾挠其鼻尖而不应；边赛远飞马追回岚川云、程凯；翌日薛坚返苍云（年节归省途中，时已在郭子仪麾下），关岳引至马厩牵出青黑马：「闵大哥留了话，说这是存在」":
+    "Min Fangcheng died in his tent (Lanchuan Yun and Cheng Kai were then visiting the Cangyun Army): on the morning of the sixteenth of the first month (the day after the Lantern Festival), after he had seen the two from the Tiance Command off, there was no sound from him for a long time; Guan Yue went in to look, and Liu Rong tickled the tip of his nose with a fox tail and he did not stir; Bian Saiyuan galloped after Lanchuan Yun and Cheng Kai and brought them back. The next day Xue Jian came back to Cangyun (on his way home for the New Year visit; by then he was under Guo Ziyi), and Guan Yue took him to the stable and led out the black-green horse: “Brother Min left word. He said: this is being.”",
+  "关岳儿子（关槐）出生":
+    "Guan Yue’s son (Guan Huai) was born.",
+  "严武卒。在任厚敛奢侈，梓州刺史章彝小忤即被杖杀，然吐蕃畏之不敢犯境；其母叹「今始免为官婢矣」。是年夏，杜甫携家离成都东下（待核）":
+    "Yan Wu died. In office he had taxed heavily and lived extravagantly, and Zhang Yi, prefect of Zizhou, was flogged to death for a small offence against him, but the Tibetans feared him and did not dare cross the border; his mother sighed, “Only now am I safe from becoming a government slave.” That summer Du Fu left Chengdu with his family and went east.",
+  "郭英乂为剑南节度使":
+    "Guo Yingyi became Military Commissioner of Jiannan.",
+  "永泰元年九月，仆固怀恩诱吐蕃、回纥、党项、吐谷浑、奴剌等数十万入寇，怀恩死于鸣沙（下接765.10郭子仪泾阳单骑见回纥；闵方城已于是年正月亡故）":
+    "Ninth month of the first year of Yongtai: Pugu Huai’en enticed several hundred thousand Tibetans, Uighurs, Dangxiang, Tuyuhun, Nula and others to raid, and Huai’en died at Mingsha (leading on to 765.10, Guo Ziyi riding alone to meet the Uighurs at Jingyang; Min Fangcheng had died in the first month of that year).",
+  "郭英乂杀王崇俊、逼崔旰回成都，崔旰乘大雪败其军，郭英乂出奔被杀；柏茂琳、杨子琳、李昌夔起兵讨旰，蜀中大乱。程铎站朝廷委任的节度使，郭死后随柏茂琳诸将讨旰（待定；月份待核）":
+    "Guo Yingyi killed Wang Chongjun and forced Cui Gan back to Chengdu; Cui Gan, taking advantage of a heavy snowfall, defeated his army, and Guo Yingyi fled and was killed; Bai Maolin, Yang Zilin and Li Changkui raised troops against Cui Gan, and Shu was thrown into chaos. Cheng Duo stood with the Military Commissioner the court had appointed, and after Guo’s death went with Bai Maolin and the other generals against Cui Gan (undecided).",
+  "郭子仪泾阳单骑说回纥（史）；程锋京西防秋，初识回纥上层":
+    "Guo Ziyi rode alone at Jingyang to win over the Uighurs (historical); Cheng Feng, on autumn frontier duty west of the capital, first came to know the Uighur leaders.",
+  // 766
+  "林叶矢随李庭深携程骞下江南，途经湖州苕溪，见陆羽（756年南渡，760年结庐苕溪，此后长居湖州）与其风炉——三足之一铸「圣唐灭胡明年铸」，即764年，把战争的终结铸进器物；「茶道」一词首见于湖州诗僧皎然诗，叶矢佛性与茶道于此合流（注：年份推定，约766–767；原「万花谷中见陆羽」移此，慧木仍在谷中）":
+    "Hayashi Kyōya went south of the Yangzi with Li Tingshen and Cheng Qian, and passing the Tiao Stream at Huzhou saw Lu Yu (who had crossed south in 756, built a hut on the Tiao Stream in 760, and lived at Huzhou long after) and his wind stove: on one of its three legs was cast “made in the year after the holy Tang destroyed the Hu”, that is, 764, casting the end of the war into the vessel itself; the term “the way of tea” first appears in a poem by Jiaoran, the poet-monk of Huzhou, and here Kyōya’s Buddha-nature and the way of tea flowed together (around 766–767).",
+  "程骞服毒草，随李庭深下江南入长歌；李庭深娶朱鹭":
+    "Cheng Qian, having failed to make the grade, tried to take his own life with a poisonous herb; he went south of the Yangzi with Li Tingshen into the Changge School; Li Tingshen married Zhu Lu.",
+  "吐蕃陷甘州、肃州，河西节度杨休明徙治沙州（大历元年；月份待核；闵方城故土自此尽失，其死后一年）":
+    "The Tibetans took Ganzhou and Suzhou, and Yang Xiuming, Military Commissioner of Hexi, moved his seat to Shazhou (first year of Dali; Min Fangcheng’s homeland was now wholly lost, a year after his death).",
+  "杜鸿渐入蜀，姑息崔旰，分置东川；次年崔旰为西川节度使。讨旰诸将各得安置，程铎被闲置——守了一辈子的规矩，最后是规矩不要他（待定）":
+    "Du Hongjian came into Shu, indulged Cui Gan, and divided off Dongchuan; the next year Cui Gan became Military Commissioner of Xichuan. The generals who had moved against Cui Gan were each provided for, and Cheng Duo was left idle: he had kept the rules all his life, and in the end the rules did not want him (undecided).",
+  "南诏立《南诏德化碑》于太和城，自述为合乎华夏礼法的藩国，叛唐「非本心」；段韶在立碑之列——一个 751 年在西洱河打赢的人，听着碑文说自己从未想叛":
+    "Nanzhao set up the Nanzhao Dehua Stele at Taihe city, describing itself as a vassal state in keeping with Chinese rites and law, and its break with the Tang as “not its true intent”; Duan Shao was among those present when the stele was set up: a man who had won at the Xi’er River in 751, listening to the inscription say he had never meant to rebel.",
+  "程锋奉命西行，经灵州至天德军；李庭深的信追到天德军，回信「满纸愧悔」":
+    "Cheng Feng was sent west under orders, by way of Lingzhou to the Tiande Army; Li Tingshen’s letter caught up with him at the Tiande Army, and his reply was “a page full of remorse”.",
+  // 767
+  "邱鸿与贺兰成婚（自765条拆出：闵方城765年正月亡故，弟子事师「心丧三年」（《礼记·檀弓上》），婚事至早在767年前后；具体年月待定）":
+    "Qiu Hong and He Lan married (Min Fangcheng died in the first month of 765, and a disciple keeps “mourning in the heart for three years” for his master (Book of Rites, “Tangong I”), so the marriage was around 767 at the earliest).",
+  "程锋取道回鹘抵北庭，遇杨休明遇害余波，识曹令忠":
+    "Cheng Feng reached Beiting by the Uighur road, met the aftermath of Yang Xiuming’s murder, and came to know Cao Lingzhong.",
+  "程钊生母亡故，程锋葬之于程钊侧并作墓志（790年北庭陷落，墓地湮没）":
+    "Cheng Zhao’s mother died, and Cheng Feng buried her beside Cheng Zhao and wrote her epitaph (when Beiting fell in 790 the graves were lost).",
+  // 768
+  "陈瑞和携江蓠与女儿返故乡庐州安居":
+    "Chen Ruihe took Jiang Li and their daughter home to Luzhou to settle.",
+  "崔旰入朝，赐名崔宁，留弟崔宽守成都；杨子琳乘虚袭入，崔宁妾任氏出家财募兵，崔宽借此击退。杨子琳是程铎当年并肩讨旰的人，崔宁是他不肯认的人，而朝廷认的已是崔宁——他按规矩替崔宁守城，与唐遐同在一面城墙上。规矩没变，变的是规矩指着的人（待定）。唐遐在这时把754年「十五天」的事告诉唐青阳；知道了也不改什么：肩上的伤还在，姓还是唐":
+    "Cui Gan went to court and was given the name Cui Ning, leaving his younger brother Cui Kuan to hold Chengdu; Yang Zilin seized the chance to break in, Cui Ning’s concubine Lady Ren paid for recruits out of the family’s wealth, and with them Cui Kuan drove him back. Yang Zilin was a man Cheng Duo had fought beside against Cui Gan, Cui Ning a man he would not acknowledge, and the man the court acknowledged was now Cui Ning: by the rules, he held the city for Cui Ning, on the same wall as Tang Xia. The rules had not changed; what had changed was the man they pointed to (undecided). It was now that Tang Xia told Tang Qingyang about the “fifteen days” of 754; knowing changed nothing: the wound in his shoulder was still there, and his surname was still Tang.",
+  "程锋自北庭东返，757年腰伤加重，因伤辞官返洛——战乱后宦官专权、鱼朝恩势大，神策军因之复起，程氏军功卓著之族少不得受磋磨":
+    "Cheng Feng came back east from Beiting; the back injury of 757 had grown worse, and he resigned his post on account of it and returned to Luoyang. After the war the eunuchs held power and Yu Chao’en was mighty, and the Shence Army rose again on that account; a clan like the Chengs, outstanding for its military merit, could not escape being ground down.",
+  // 769
+  "程锋道边望尘不拜被构陷，趋庭请罪跪两个时辰方罢——「此人长此以往要失分寸，而我不能。这些事桩桩件件，到往后都是证据」；又有人以夫人西域出身揣度其凭妻室勾连内外。程凯秋冬旧患卧病中致信宣杨请其看顾，一封信耗去不少心神，岚川云收拢纸砚扶其卧下；宣杨自洛阳歌楼联络点得信赴程府，及时搜出被偷藏的文书，凭蛛丝马迹反将一军，度过危机":
+    "Cheng Feng, at the roadside, did not bow to the dust of a great man’s carriage, and was falsely accused; he hurried to court to ask for punishment and knelt for four hours before it was dropped: “If this man carries on like this he will lose all sense of measure, and I cannot. Every one of these things will be evidence later.” Others too speculated that, his wife being from the Western Regions, he used her to make connections inside and outside. Cheng Kai, laid up in autumn and winter with his old illness, wrote to Xuan Yang asking her to look out for his brother; the one letter cost him much of his strength, and Lanchuan Yun gathered up the paper and inkstone and helped him lie down. Xuan Yang got the letter at the liaison post in a Luoyang singing house and went to the Cheng house, found in time the documents someone had secretly hidden there, and following the faintest traces turned the tables, and the crisis passed.",
+  // 770
+  "大历五年四月，帝（李俶）设计绞杀鱼朝恩，凌雪阁不少为此谋划；宣杨往天策府告程凯：监军伏诛，魏谦兄弟可以瞑目，兄长也没白受——末次相见，「我们阁中是树，你们是碑」「树…树啊，它比碑长久」":
+    "Fourth month of the fifth year of Dali: the emperor (Li Chu) contrived to have Yu Chao’en strangled, and many in the Lingxue Pavilion had a hand in the planning; Xuan Yang went to the Tiance Command to tell Cheng Kai: the Army Monitor has been put to death, our brother Wei Qian can close his eyes in peace, and your elder brother did not suffer for nothing. Their last meeting: “In our Pavilion we are trees; you are steles.” “Trees… trees, yes. They last longer than steles.”",
+  "仲夏，林叶矢及冠，岚川云赠之护身短刀，言及短刀来历；是年腊月，程凯病故，叶矢事以父礼，服丧三年，愈发有心事——念及岚川从此在唐土无亲无故，唯一念想是父兄早年亡于长安、再未东还，于是发愿：「如能解她苦厄，我当成行」，为她渡海送故人归乡":
+    "Midsummer: Hayashi Kyōya came of age, and Lanchuan Yun gave him a short blade for his protection, telling him where it came from; in the twelfth month of that year Cheng Kai died, and Kyōya mourned him as a father for three years, more and more weighed down with thought: knowing that Lanchuan now had no kin left in the Tang lands, and that her one remaining wish was for her father and brother, who had died in Chang’an years before and never gone back east, he made a vow, “If I can ease her grief, I will go”: to cross the sea for her and take the departed home.",
+  "杜甫流寓湖南，与侨居的御史苏涣唱和；冬，杜甫卒于湘江舟中（待核；卒月不详，系于孟冬）。底色：苏涣为彭涣原型，其后半生取舍待定":
+    "Du Fu, a wanderer in Hunan, exchanged poems with the censor Su Huan, also living there far from home; in winter Du Fu died in a boat on the Xiang River. Background: Su Huan is the model for Peng Huan; what to take from the second half of Su Huan’s life is undecided.",
+  "程凯病故。自府城告破留下伤病不愈，四十七岁危重，到那时候才、或者说不得不渐渐跟自己和解——名字、家族、命运种种。程锋曾提出接回家中安养，他不听；项旌为校尉，到他寝房外站岗，看人病重觉得心里不安。程凯去后几年，李庭深上书乞骸骨":
+    "Cheng Kai died of illness. Wounded and ill, never healed since the Command fell, gravely ill at forty-seven, only then (or rather, only because he had to) did he gradually make peace with himself: his name, his family, his fate and all the rest. Cheng Feng had offered to take him home to rest and recover, and he would not; Xiang Jing, by then a Commandant, stood guard outside his bedroom, uneasy to see him so ill. A few years after Cheng Kai’s death, Li Tingshen begged leave to retire.",
+  "年底，宣杨回门派闻天策府知节殿病故，检得程凯忌日与师父高垣去世同一天——不过隔了十八年":
+    "At the year’s end Xuan Yang, back at her school, heard that Zhijie Hall of the Tiance Command (Cheng Kai) had died of illness, and, looking it up, found that the day of Cheng Kai’s death was the same as the day her master Gao Yuan had died: only eighteen years apart.",
+  // 771
+  "程凯亡后，程锋领命往山南西道，镇梁州，以御京师；程宇随其去。梁州是入蜀的北门：程铎若如待定稿所写闲置成都，兄弟二人隔一条金牛道，一在门口，一在门里":
+    "After Cheng Kai’s death, Cheng Feng was ordered to Shannan West Circuit to hold Liangzhou and guard the approaches to the capital; Cheng Yu went with him. Liangzhou was the northern gate into Shu: if Cheng Duo was left idle at Chengdu, as the draft still to be settled has it, the two brothers had only the Jinniu road between them, one at the gate and one inside it.",
+  "萨珊波斯余部犹在吐火罗地区活动，入贡之记录至是年犹存":
+    "Remnants of Sasanian Persia were still active in the region of Tokharistan, and records of their tribute survive down to this year.",
+  // 772
+  "程宇得知吐蕃陷河陇、西北尽在其手，屡屡请命，终得率一小队护送诏使赴北庭（是年诏赐北庭曹令忠姓李，史），为果毅都尉，此后音讯断绝":
+    "Cheng Yu, learning that the Tibetans had taken Hexi and Longyou and held all the north-west, asked again and again to go, and at last was allowed to lead a small troop escorting an imperial envoy to Beiting (that year an edict granted Cao Lingzhong of Beiting the surname Li; historical), as Vice Commandant; after that nothing more was heard of him.",
+  // 773
+  "林叶矢为程凯服丧期满，发愿渡海送岚川云父兄遗刀归乡；时无遣唐使船，候船":
+    "His mourning for Cheng Kai over, Hayashi Kyōya vowed to cross the sea and take the blades left by Lanchuan Yun’s father and brother home; there were no embassy ships then, and he waited for a ship.",
+  // 778
+  "宝龟遣唐使归航，第一船遇风破损，小野石根等三十八人、唐使赵宝英等二十五人失踪；藤原清河之女喜娘随残船漂流六日抵天草西仲岛——林叶矢携刀登此船，欲送刀主还乡，以全岚川云夙愿，然海道无常，不见归帆":
+    "The Hōki embassy to the Tang sailed home; the first ship was damaged in a storm, and thirty-eight people including Ono no Iwane, and twenty-five including the Tang envoy Zhao Baoying, were lost; Fujiwara no Kiyokawa’s daughter Kijō drifted six days on the wreck and reached Nishinakajima in Amakusa. Hayashi Kyōya had boarded this ship with the blade, meaning to take its owner home and fulfil Lanchuan Yun’s long-held wish; but the sea road is unsure, and no returning sail was seen.",
+  // 780
+  "程锋亡故":
+    "Cheng Feng died.",
+  // 781
+  "北庭使者经回纥道抵长安，北庭将吏叙官超七资（史）":
+    "Envoys from Beiting reached Chang’an by the Uighur road, and the officers and officials of Beiting were promoted seven grades beyond the usual (historical).",
+  // 790
+  "北庭陷落，程宇随杨袭古退守西州——出兵后十八年未得归返":
+    "Beiting fell, and Cheng Yu fell back with Yang Xigu to hold Xizhou: eighteen years since he set out, and he had never come home.",
+  // 792
+  "程宇殉于西州":
+    "Cheng Yu fell at Xizhou.",
 };
