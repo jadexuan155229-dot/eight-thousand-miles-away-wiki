@@ -298,11 +298,11 @@ export const tenureNotesEn = {
   升副队头: "Promoted Deputy Company Leader",
   "领十人；职名据《通典》卷一四八引李靖兵法": "Leading ten; the title follows Li Jing’s military methods as quoted in the Tongdian (Comprehensive Institutions), juan 148",
   升队头: "Promoted Company Leader",
-  西洱河后补押官: "After the Xi’er River, filled a vacancy as Detachment Officer",
+  西洱河后补押官: "After the Xi’er River, filled a vacancy as Discipline Officer",
   西洱河带弩队断后: "At the Xi’er River, led the crossbow company covering the retreat",
   "西洱河死者六万，活下来的补缺": "Sixty thousand died at the Xi’er River; the survivors filled the gaps",
   "押送眉州乡人时，赶在点验入册前私放其人，未回营；程铎追十五日不得": "Escorting men of his own Meizhou, let them go before they could be checked and entered on the rolls, and did not return to camp; Cheng Duo pursued him for fifteen days without catching him",
-  "押官为一队五十人之主官（《通典》卷一四八引李靖兵法）": "The Detachment Officer headed a company of fifty (Li Jing, quoted in the Tongdian, juan 148)",
+  "押官为一队五十人之主官（《通典》卷一四八引李靖兵法）": "The Discipline Officer headed a company of fifty (Li Jing, quoted in the Tongdian, juan 148)",
 
   // 苍云 · 薛坚（朔方军）
   "未随苍云归雁门，留郭子仪帐下": "Did not go back to Yanmen with the Cangyun Army; stayed under Guo Ziyi",
