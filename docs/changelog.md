@@ -2,6 +2,14 @@
 
 ## 2026-11-24
 
+### 英文版余波 B 批：回响节点（前七个震源）
+
+- `src/i18n/echoes.en.js`：`arcNotesEn` 填入雁门关之役、吕定仪之死、荔非败于邱鸿、天策府城破、大光明寺·陆羽鸣之死、大光明寺·恩仇、常山陷落七个震源的回响节点 370 条（去重后；跨震源重复的同一句共用一条），按震源分段注明。出处括注与自注英文不出；引语照年表、档案英文。
+- `src/i18n/events.en.js`：763 薛褚一条 “talk on reputation” 改作 “talk about reputation”，与 745.12 一条统一。
+- `src/i18n/characters.en.js`：宣杨轶事「我们阁中是树，你们是碑」照年表英文作 we are trees; you are steles。
+- 疑点清单 `docs/echoes-en-batchB-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
+- 验证：check-data 无错（回响节点 370/630）；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；本机 Chrome 看过闵方城（雁门关之役）、岚川云（恩仇）、卢秉毓（常山陷落）三人详情栏。
+
 ### 英文版余波 A 批：在场姿态与姿态说明（接线）
 
 - `src/i18n/echoes.en.js`：新设 `stancesEn`、`stanceNotesEn`、`arcNotesEn` 三表（以中文为键），`stanceText`、`stanceNoteText`、`arcNoteText` 三个查表函数（回 [文字, 是否回落]，直接交 `<Tx>`）；姿态 50 种、说明 109 条全部译出。
