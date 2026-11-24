@@ -26,7 +26,7 @@
 - 茹锦训诂「折冲」照 Hucker 作 Assault-Resisting Commandant，「忠武将军」照职名表作 General of Loyal Valour。
 - 楼谊照档案与轶事（「楼谊、楼谯姐弟」）作女性 she。
 - 景惠时轶事 5「让枯梅开花」照留比喻 made the withered plum flower；「有了一回」与年表同作 had a time together。
-- 王不空「化雨雪粮」作 the rain-and-snow ration。
+- 王不空「化雨雪粮」作 the rain-and-snow ration。（2026-11-24 作者定 alms，改作 the Rain-and-Snow Alms，见 T089。）
 - 长孙忘情照剑三作女性 she，与年表一致。
 
 ## 作者审定（2026-11-23）

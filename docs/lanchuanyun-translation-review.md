@@ -31,7 +31,7 @@
 4. 性格「属中立善良，有一些自由主义的意思」：she is neutral good, with something of a liberal streak。中立善良是阵营九宫格的说法，英文 neutral good 同样通行，照搬。
 5. 性格「面皮薄，不欲狼狈之处为人所见」：easily embarrassed, and does not want anyone to see her at a loss；「心思渐深」：turned her ever more inward。
 6. 性格「义兄自尽」：her adoptive brother’s suicide，照原文直说。
-7. 武学「七探蛇盘枪法」：the Seven Probes, Coiled Snake method（意译枪法名）。
+7. 武学「七探蛇盘枪法」：the Seven Probes, Coiled Snake method（意译枪法名）。（2026-11-24 统一照术语表 T071 改作 Seven-Probe Coiling-Serpent Spear。）
 8. 随身物件「鱼皮柄东瀛短刀」：a Japanese short blade with a fish-skin grip；「扳指」archer’s thumb ring；「皮革护手」leather hand guards。
 9. 喜好「父母带她开蒙学汉话的时候常念」：which her parents often recited when they first taught her Chinese。
 10. 专擅「去黑龙征南诏」：on the campaign against Nanzhao at Heilong。「黑龙」我读作剑三南诏地图「黑龙沼」，英文暂作 Heilong；若另有所指请告知。「奚族话也听得七七八八」：could follow most of what the Xi people said。
