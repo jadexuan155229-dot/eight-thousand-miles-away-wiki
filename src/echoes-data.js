@@ -146,7 +146,7 @@ export const ECHOES = [
     ] },
   { shock: "yanmen745", who: "fanzhang", band: "after", order: 15, stance: "不在场", stanceNote: "七岁；745年即云州流民", mode: "同一场战事的另一端",
     arc: [
-      { y: null, m: null, q: "", note: "云州归化奚众冲突为其家破之始（作者定：即两蕃南下同一波）", card: true },
+      { y: null, m: null, q: "", note: "云州归化奚众冲突为其家破之始（即两蕃南下同一波）", card: true }, /* 作者定（11-24 由括注移出） */
       { y: 758, m: 1, q: "", note: "犬牙吊坠引人猜其祖源" },
       { y: 762, m: 10, q: "G", note: "留守雁门者恰是两个云州人" },
     ] },
@@ -621,7 +621,7 @@ export const ECHOES = [
       { y: 757, m: 5, q: "C", note: "救杜徵至范阳" },
       { y: 758, m: 2, q: "", note: "送岑杜南归，独自北归" },
       { y: 758, m: 10, q: "", note: "被逐出师门，至苍云武库" },
-      { y: null, m: null, q: "", note: "「冶于此山，老死不返」——发心为军队锻刀千口（《种桃》）", card: true },
+      { y: null, m: null, q: "", note: "「同入此山，老死不返」——发心为军队锻刀千口（《种桃》）", card: true },
     ] },
   { shock: "changshan756", who: "biansaiyuan", band: "out", order: 6, stance: "出城报信的人", stanceNote: "李庭泽的执衣", mode: "舍了平民的衣裳",
     arc: [
