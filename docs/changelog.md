@@ -9,6 +9,7 @@
 - `scripts/check-data.js`：覆盖率一行加「余波姿态 · 姿态说明 · 回响节点」，三表孤儿报警告。
 - 疑点清单 `docs/echoes-en-batchA-review.md`；`docs/english-edition.md` 记余波细节层。
 - 验证：check-data 无错（余波姿态 50/50、姿态说明 109/109、回响节点 0/630）；oxlint 12；font-chars 无须补字；vite build 通过；本机 Chrome 看过余波页四人详情栏。
+- **作者定后改**（同日）：震源标题统一作名词短语：闵方城杀奚众 → Min Fangcheng’s Killing of the Xi Herders，那就是一生 → A Whole Life；闵方城（荔非败于邱鸿）姿态「事前不知（作者定：……）」的括注并入姿态说明，`echoes-data.js` 中文同改；余波英文 12 处直撇号改弯撇号。
 
 ### 英文版 T2 人物档案第六批：唐门、五毒、苗疆、南诏、丐帮、万灵、狼牙、纯阳、西域 31 人（T2 档案译完）
 

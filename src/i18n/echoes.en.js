@@ -1,7 +1,7 @@
 // English overlay for the echoes layer (余波). Keys are the Chinese source text,
 // so the Chinese fallback is lossless. Author-approved register (2026-11-09):
 // noun phrases first, effect over literalness, a little mixing allowed.
-// This layer is an author's gloss, kept distinct from the factual layer.
+// This layer is an author’s gloss, kept distinct from the factual layer.
 
 export const echoModesEn = {
   "声名悬而未决": "a name left unsettled",
@@ -11,13 +11,13 @@ export const echoModesEn = {
   "预见而不被听": "foresight unheeded",
   "忠诚成为负担": "fidelity as burden",
   "为尊者讳": "silence out of reverence",
-  "接下兄长的位置": "his cousin's place, inherited",
+  "接下兄长的位置": "his cousin’s place, inherited",
   "以打代哭": "grief in blows",
   "自风筝上目睹": "a view from the kite",
   "从死者身上脱甲": "armor off the dead",
   "从文书里认识这场仗": "a battle known on paper",
   "八岁，不记得": "eight years old, no memory",
-  "穿上他人的记忆": "another man's memory, worn",
+  "穿上他人的记忆": "another man’s memory, worn",
   "同一场战事的另一端": "the other end of the same war",
   "不曾在场": "never there",
   "承接一个残营": "a broken garrison, inherited",
@@ -29,12 +29,12 @@ export const echoModesEn = {
   "为新主缝旗": "a banner for the successor",
   "填一个从未见过的空位": "an absence never witnessed, filled",
   "从死者处偷来的招": "a move stolen from the dead",
-  "为陌生人复原曲调": "a stranger's tune, restored",
+  "为陌生人复原曲调": "a stranger’s tune, restored",
   "从未相见": "never met",
   "把败绩带出关外": "the defeat, carried beyond the pass",
   "终生不知": "a lifelong unknowing",
   "以照料作偿": "atonement by care",
-  "医者的封口": "a physician's sealed lips",
+  "医者的封口": "a physician’s sealed lips",
   "从簿上一个字开始": "one word in a ledger",
   "不问，也不说破": "no question, no disclosure",
   "承接一条不知来处的线": "a lineage of unseen origin",
@@ -61,7 +61,7 @@ export const echoModesEn = {
   "揣着一枚不属于自己的印石": "a seal stone that was never hers to keep",
   "追一枚印石和半句话": "chasing a seal stone and half a sentence",
   "认出那半句": "half a sentence, recognized",
-  "不在弟弟的秘密里": "outside his brother's secret",
+  "不在弟弟的秘密里": "outside his brother’s secret",
   "明教记下的那个死者": "the death the order counted",
   "失了双刀": "twin blades lost",
   "从动手到救人": "from blows to rescue",
@@ -81,7 +81,7 @@ export const echoModesEn = {
   "把他没做完的事做完": "finishing what he left undone",
   "从旁观到动手": "from looking on to striking",
   "锻刀千口，以清罪孽": "a thousand blades against a debt",
-  "舍了平民的衣裳": "the commoner's coat, set down",
+  "舍了平民的衣裳": "the commoner’s coat, set down",
   "前脚出去，后脚城陷": "one step out, and the city fell behind her",
   "来迟一步，在城上守了半年": "a step too late, then half a year on the wall",
   "一双穿旧的靴子": "a pair of worn boots",
@@ -126,16 +126,16 @@ export const echoModesEn = {
 };
 
 export const shocksEn = {
-  yanmen745: { title: "The Battle of Yanmen Pass", gist: "A war's wound passed down the generations", axis: "Distance from the battle" },
+  yanmen745: { title: "The Battle of Yanmen Pass", gist: "A war’s wound passed down the generations", axis: "Distance from the battle" },
   lvdingyi755: { title: "The Death of Lü Dingyi (Kept Secret)", gist: "How the place of the absent is filled", axis: "Distance from the dead" },
-  leitai757: { title: "Lifei's Defeat by Qiu Hong", gist: "Many ways of keeping one secret", axis: "When one learned of the old wound" },
+  leitai757: { title: "Lifei’s Defeat by Qiu Hong", gist: "Many ways of keeping one secret", axis: "When one learned of the old wound" },
   tiance756: { title: "The Fall of the Tiance Garrison", gist: "After a city is lost, where each one goes", axis: "Where one went after that night" },
   daguangming739: { title: "The Great Bright Temple: The Death of Lu Yuming", gist: "A man taken for dead for sixteen years", axis: "After that night, who knew whether he lived" },
   enchou739: { title: "The Great Bright Temple: Debts of Blood and Grace", gist: "And then the great temple went up in flames", axis: "Which side one stood on, the night of the purge" },
   changshan756: { title: "The Fall of Changshan", gist: "Blood, and the flame passed on", axis: "Where one stood when the city fell" },
-  xizhong760: { title: "Min Fangcheng Kills the Xi Herders", gist: "Someone to carry it", axis: "Where each stood at the execution" },
+  xizhong760: { title: "Min Fangcheng’s Killing of the Xi Herders", gist: "Someone to carry it", axis: "Where each stood at the execution" },
   minsi765: { title: "The Death of Min Fangcheng", gist: "It was given back", axis: "When each last saw him" },
-  yisheng765: { title: "That Was a Life", gist: "Down that road he brought back Xue Zhi, brought back Guan Shan, brought back Lian Shuo", axis: "The order in which they left him" },
+  yisheng765: { title: "A Whole Life", gist: "Down that road he brought back Xue Zhi, brought back Guan Shan, brought back Lian Shuo", axis: "The order in which they left him" },
 };
 
 export const bandsEn = {
@@ -153,7 +153,7 @@ export const bandsEn = {
 
 export const echoUiEn = {
   余波: "Aftershocks",
-  作者按: "Author's gloss",
+  作者按: "Author’s gloss",
   所系之事: "Events that bear on them",
   震源: "Shock",
   正面: "Front",
@@ -170,7 +170,7 @@ export const echoUiEn = {
   人物卡: "From the character profile",
   查看檔案: "Open profile",
   導語: "Each shock is an event that hangs over many people. Each person is placed by their distance from it, and each remembers it differently. Click a name to read their echoes.",
-  層註: "This layer is an author's gloss. It is kept apart from the factual layer, and its readings are the author's.",
+  層註: "This layer is an author’s gloss. It is kept apart from the factual layer, and its readings are the author’s.",
 };
 
 /* 在場姿態（echo.stance）、姿態說明（echo.stanceNote）、回響節點（echo.arc[].note）：以中文原文為鍵，查無則回落中文。
@@ -197,7 +197,7 @@ export const stancesEn = {
   "事前知": "Knew beforehand",
   "事中得知": "Learned in the moment",
   "只知结果": "Knew only the result",
-  "事前不知（作者定：只是放学有所成的邱鸿上去试身手）": "Did not know beforehand",
+  "事前不知": "Did not know beforehand",
   "不知亦无需知": "Did not know, did not need to",
   "留在敌后": "Left behind enemy lines",
   "西撤": "Withdrew west",
@@ -254,7 +254,7 @@ export const stanceNotesEn = {
   "裹过那道伤，替他系甲": "had bound that wound, and buckled his armour on for him",
   "当值军医，解甲见旧布": "physician on duty; took off his armour and saw the old bandage",
   "新任军纪官，入营第一件公事": "newly appointed Provost; his first official business in the camp",
-  "事后不问": "asked nothing afterwards",
+  "只是放学有所成的邱鸿上去试身手；事后不问": "only let Qiu Hong, his training come to something, go up and try his hand; asked nothing afterwards",
   "远端承接者": "the one who took it up at the far end",
   "此刻到达": "arriving just then",
   "随叔父突围，伤重牺牲": "broke out with his uncle and died of his wounds",

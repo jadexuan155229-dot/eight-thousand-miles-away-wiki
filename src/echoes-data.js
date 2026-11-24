@@ -268,7 +268,7 @@ export const ECHOES = [
       { y: 761, m: 9, q: "", note: "主持擂台四，「台上已无旧柱」" },
       { y: 763, m: 10, q: "A", note: "为荔非正名，主导起草" },
     ] },
-  { shock: "leitai757", who: "minfangcheng", band: "after", order: 6, stance: "事前不知（作者定：只是放学有所成的邱鸿上去试身手）", stanceNote: "事后不问", mode: "不问，也不说破",
+  { shock: "leitai757", who: "minfangcheng", band: "after", order: 6, stance: "事前不知", stanceNote: "只是放学有所成的邱鸿上去试身手；事后不问", /* 作者定（原在 stance 括注，11-24 移入说明） */ mode: "不问，也不说破",
     arc: [
       { y: 750, m: 9, q: "", note: "考课邱鸿记败而实为天赋，闵方城要为弟子——与757年成镜像（荔非卡）", card: true },
       { y: 757, m: 11, q: "", note: "邱鸿夜饮，「闵方城看一眼墙上挂的」" },

@@ -9,11 +9,15 @@
 - **与分带同名的姿态照分带的英文**：逝者 The dead、当事人 The one involved、留在敌后 Left behind enemy lines 等二十几种，与 `bandsEn` 一字不差。这些姿态和所在分带同名时页面不重复显示，只在两者不同时才并列出来（如 Those who lived it · Lived through it）。
 - **人名、官名照站上已用**：执衣 attendant（边赛远档案已用）、军纪官 Provost（职名表）、主官 commander、副官 deputy、一团 the First Regiment、破阵营 the Rank-Breaker Corps、东陉 the Eastern Pass、药宗 the Beitian School of Medicine。
 
-## 要你定的
+## 作者已定（11-24）
 
-1. **「受功的人」**（樊璋，闵方城之死）：我读成「受了他的功夫」，作 the one he passed his skill to，和他那句记忆方式 the bell he left ringing in the body 对得上。如果「功」是功劳（他替闵方城领了功），告诉我，改作 the one who took the credit 一类。
-2. **「事前不知（作者定：只是放学有所成的邱鸿上去试身手）」**（闵方城，荔非败于邱鸿）：括注是你定案的记录，英文只出 Did not know beforehand。这条姿态和分带「事后不问」不同，所以页面上会并列出来；中文界面现在也连括注一起显示，你要不要把中文的括注挪进别处（比如这条回响的节点里）？
-3. **「留守旧部」**（薛褚，吕定仪之死）：作 Of the old garrison, left on guard。他当时守着苍云堡、在门口接灵，这样译可以吗？
+1. **「受功的人」**：受了闵方城的功夫，照译 the one he passed his skill to。
+2. **「事前不知（作者定：……）」**：括注挪走。中文姿态改作「事前不知」，括注的内容并入姿态说明，作「只是放学有所成的邱鸿上去试身手；事后不问」（英文 only let Qiu Hong, his training come to something, go up and try his hand; asked nothing afterwards）；「作者定」留作数据旁的代码注释。说明从此与分带「事后不问」不同，页面上会并列显示。
+3. **「留守旧部」**：照译 Of the old garrison, left on guard。
+4. **震源标题统一用名词短语**（作者提出）：十个里只有两个不是。
+   - 闵方城杀奚众：Min Fangcheng Kills the Xi Herders → **Min Fangcheng’s Killing of the Xi Herders**。保留他的名字，因为这一震源的重心就是他下的令。
+   - 那就是一生：That Was a Life → **A Whole Life**。你提的 As his whole life 我没照用：英文里 as 后面得接东西（as … what?），单独做标题读起来像半句话。A Whole Life 是名词短语，保住了「一生」，也留着「那就是」那种不加评说的口气。想点明是闵方城的话，可以作 His Whole Life，你挑一个。
+   - 顺带：余波英文里原有 12 处直撇号（Lifei's、war's 等）统一成弯撇号，和全站一致。
 
 ## 处理说明（不用回，有异议再说）
 
