@@ -8,6 +8,7 @@
 - 疑点清单 `docs/echoes-en-batchC-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
 - 验证：check-data 无错（回响节点 630/630）；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；在工作环境里用无头 Chrome（Playwright）对英文版截图，看过闵方城（闵方城之死）、关山（那就是一生）、邱鸿（闵方城杀奚众）三人详情栏。
 - **作者定后改**（11-25）：739.10C 修马蹄的是闵方城，年表英文改作 Xue Zhi came upon Min Fangcheng；邱鸿一行「怎地是我，不见将军」是邱鸿对闵方城转述，英文随之改；关外歌谣「鸿」作 swan goose 并加注说明雁、鸿双关；守如山定作 Firm as a Mountain，收进 Notion 术语主表 T175。
+- **审稿意见后改**（11-25）：关岳「所有人改了嘴脸」由 changed their faces 改作 changed their tune；「医帐调度紧张」由 the medical tents (were) stretched 改作 the medical staff (were) stretched thin。两处节点与年表 760.10C、760.10D 英文同改。
 
 ### 英文版余波 B 批：回响节点（前七个震源）
 
