@@ -26,6 +26,14 @@
 4. **江蓠「引授正意弟子修习基础」**：「正意弟子」我拿不准是指正式入门的弟子，还是某个专门的说法。暂作 teaching the foundations to new disciples。
 5. **七探蛇盘枪**：Notion 术语主表 T071 定作 Seven-Probe Coiling-Serpent Spear，本批赵盈贞照此译。可岚川云的 T1 档案写的是 the Seven Probes, Coiled Snake method，两处对不上。要不要把岚川云那句改成术语表的写法？
 
+## 顺带清的旧术语（Notion 术语主表里还没定的几条）
+
+6. **T059 长歌门**（待核）：站上门派标签、档案已用 the Changge School，共 15 处。建议就定这个，Notion 改作已定。
+7. **T107 知君青骨** the Zhijun Qinggu squad、**T108 青山之后** Beyond the Blue Hills（待你定）：第三批已用，你审时没提异议。建议照用，Notion 改作已定。
+8. **T089 化雨雪粮**（待你定）：Notion 暂作 Rain-and-Snow Alms，可王不空档案（第一批，已上线）实际译成了 “the rain-and-snow ration”，两边不一。我倾向 alms：兵士换常服向寒户分粥，是布施，「化」也是化缘的化；ration 读来像军中发的口粮。你定了，我两边取齐。
+9. **T009 帐前副官**（待核）：Notion 暂作 Headquarters Aide，关岳档案实际译成叙述性的 Min Fangcheng’s deputy at headquarters。全站只此一处，建议就照档案这样写，Notion 改记。
+10. **T021 监军**（待核）：站上 13 处用 Army Monitor（宣杨、年表 770 宦官监军等）。印象里 Hucker 监军 chien-chün 作 Army Supervisor，请顺手翻一下；若是，我全站改。
+
 ## 处理说明（不用回，有异议再说）
 
 - 陈瑞和轶事 2「给『吃剩下的人』接过骨」作 set bones in that city for “the ones left uneaten”。韩愈《张中丞传后叙》两句照中文自译。
