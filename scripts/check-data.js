@@ -12,7 +12,7 @@ import { CHAR_TERMS } from "../src/novel/char-terms.js";
 import { SHOCKS, ECHOES } from "../src/echoes-data.js";
 import { FACTIONS, GRANTS, POSTS, POST_FULL, TENURES } from "../src/posts-data.js";
 import { POST_FAC_SLUG, parseRoute, routeHash } from "../src/router.js";
-import { echoModesEn } from "../src/i18n/echoes.en.js";
+import { echoModesEn, stancesEn, stanceNotesEn, arcNotesEn } from "../src/i18n/echoes.en.js";
 import { SEAL_SVG_FILE } from "../src/seals.js";
 import { missingFontChars } from "./font-chars.js";
 import { readdirSync, existsSync, readFileSync } from "node:fs";
@@ -323,6 +323,12 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   const rankSet = new Set(TENURES.filter((t) => t.rank).map((t) => t.rank));
   for (const r of rankSet) if (!ranksEn[r]) warn(`英譯 職名「${r}」`, "任期自寫職名尚無英譯——英文界面回落中文");
   for (const k of Object.keys(ranksEn)) if (!rankSet.has(k)) warn(`英譯 職名「${k}」`, "任期中已無此職名（中文改過？）");
+  /* 余波姿態、說明、節點（i18n/echoes.en.js，以中文原文為鍵）：只報孤兒；進度見覆蓋率 */
+  {
+    const stS = new Set(ECHOES.map((x) => x.stance)), snS = new Set(ECHOES.map((x) => x.stanceNote).filter(Boolean)), arS = new Set(ECHOES.flatMap((x) => x.arc.map((n) => n.note)));
+    for (const [map, set, nm] of [[stancesEn, stS, "姿態"], [stanceNotesEn, snS, "姿態說明"], [arcNotesEn, arS, "回響節點"]])
+      for (const k of Object.keys(map)) if (!set.has(k)) warn(`英譯 余波${nm}「${k.slice(0, 18)}」`, "余波中已無此句（中文改過？）");
+  }
   /* 任期上下文（i18n/tenures.en.js，以中文原文為鍵）：只報孤兒；缺譯者英文界面回落中文，進度見覆蓋率 */
   const tenureNoteSet = new Set(TENURES.flatMap((x) => [x.how, x.end, x.note].filter(Boolean)));
   for (const k of Object.keys(tenureNotesEn)) if (!tenureNoteSet.has(k)) warn(`英譯 任期說明「${k.slice(0, 18)}」`, "任期中已無此句（中文改過？）");
@@ -355,7 +361,8 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
   const noteItems = TENURES.flatMap((x) => [x.how, x.end, x.note].filter(Boolean));
   const noteDone = noteItems.filter((s) => s in tenureNotesEn).length;
   const pct = (a, b) => `${a}/${b}`;
-  coverageLine = `英譯覆蓋：界面 ${pct([...used].filter((k) => uiSet.has(k)).length, used.size)} · 人名 ${pct(trd.filter(([, x]) => x.name).length, CHARACTERS.length)} · 檔案 ${pct(trd.filter(([, x]) => hasProfile(x)).length, CHARACTERS.length)}（T1 ${t1}/${TIER1.length}） · 軼事 ${pct(anecDone, anecTotal)} · 年表 ${pct(EVENTS.filter((e) => eventsEn[e.title]).length, EVENTS.length)} · 地名 ${pct(locDone, Object.keys(LOC_COORDS).length)} · 門派 ${pct([...facs].filter((f) => factionsEn[f]).length, facs.size)} · 關係類型 ${pct([...relTypes].filter((k) => relationsEn[k]).length, relTypes.size)} · 任期 ${pct(tenDone, TENURES.length)} · 任期說明 ${pct(noteDone, noteItems.length)}`;
+  const echoSt = [...new Set(ECHOES.map((x) => x.stance))], echoSn = [...new Set(ECHOES.map((x) => x.stanceNote).filter(Boolean))], echoAr = [...new Set(ECHOES.flatMap((x) => x.arc.map((n) => n.note)))];
+  coverageLine = `英譯覆蓋：界面 ${pct([...used].filter((k) => uiSet.has(k)).length, used.size)} · 人名 ${pct(trd.filter(([, x]) => x.name).length, CHARACTERS.length)} · 檔案 ${pct(trd.filter(([, x]) => hasProfile(x)).length, CHARACTERS.length)}（T1 ${t1}/${TIER1.length}） · 軼事 ${pct(anecDone, anecTotal)} · 年表 ${pct(EVENTS.filter((e) => eventsEn[e.title]).length, EVENTS.length)} · 地名 ${pct(locDone, Object.keys(LOC_COORDS).length)} · 門派 ${pct([...facs].filter((f) => factionsEn[f]).length, facs.size)} · 關係類型 ${pct([...relTypes].filter((k) => relationsEn[k]).length, relTypes.size)} · 任期 ${pct(tenDone, TENURES.length)} · 任期說明 ${pct(noteDone, noteItems.length)} · 余波姿態 ${pct(echoSt.filter((s) => stancesEn[s]).length, echoSt.length)} · 姿態說明 ${pct(echoSn.filter((s) => stanceNotesEn[s]).length, echoSn.length)} · 回響節點 ${pct(echoAr.filter((s) => arcNotesEn[s]).length, echoAr.length)}`;
 }
 
 /* ---------- 字體子集 ----------

@@ -5,7 +5,8 @@ import { T, tone } from "./theme";
 
 const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
 import { characterTranslation } from "./i18n/characters.en";
-import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi } from "./i18n/echoes.en";
+import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi, stanceText, stanceNoteText, arcNoteText } from "./i18n/echoes.en";
+import { Tx } from "./i18n/zh";
 
 /* ============================================================
    余波 (echoes.jsx) —— 笼罩多人的几场事件，与每个人记住它的方式
@@ -25,8 +26,16 @@ const ROW_H = 42, BAND_H = 30, TOP = 58, SHOCK_ROW_H = 56;
 
 const posOf = (y, m) => y + (m != null ? (m - 1) / 12 : 0.5);
 
-/* 行内短题：取节点说明的第一小句（5–14 字内遇标点即断），否则截 13 字 */
-function shortNote(note) {
+/* 行内短题：取节点说明的第一小句（5–14 字内遇标点即断），否则截 13 字。
+   英文：取第一小句（12–30 字符内遇 , ; : — 即断），否则在 28 字符内的词界截断 */
+function shortNote(note, en) {
+  if (en) {
+    const m = note.slice(0, 31).search(/[,;:—(]/);
+    if (m >= 12) return note.slice(0, m).trim();
+    if (note.length <= 30) return note;
+    const cut = note.slice(0, 28);
+    return `${cut.slice(0, cut.lastIndexOf(" ") > 12 ? cut.lastIndexOf(" ") : 28).trim()}…`;
+  }
   const m = note.slice(0, 15).search(/[，；：。—]/);
   if (m >= 4) return note.slice(0, m);
   return note.length > 14 ? `${note.slice(0, 13)}…` : note;
@@ -34,6 +43,8 @@ function shortNote(note) {
 /* 估字宽（SVG 用户单位）：汉字全宽，西文数字约半宽 */
 const textW = (str, size) => [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? size : size * 0.56), 0);
 const wrapText = (str, n) => { const out = []; const cs = [...str]; for (let i = 0; i < cs.length; i += n) out.push(cs.slice(i, i + n).join("")); return out; };
+/* 英文按词折行，每行至多 n 字符 */
+const wrapWords = (str, n) => { const out = []; let line = ""; for (const w of str.split(" ")) { if (line && (line + " " + w).length > n) { out.push(line); line = w; } else line = line ? `${line} ${w}` : w; } if (line) out.push(line); return out; };
 const LANE_H = 17, LABEL_FS = 11;
 
 /* 年表以外之节点的来源小标：句末注《某篇》者＝文稿，注（关系）者＝关系，余为人物卡 */
@@ -124,7 +135,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
     if (!selected) return { labels: [], lanes: 0 };
     const ends = [];
     const labels = ptsOf(selected).map(({ n, x }) => {
-      const date = nodeText(n), short = shortNote(n.note);
+      const [txt, zh] = arcNoteText(locale, n.note);
+      const date = nodeText(n), short = shortNote(txt, locale === "en" && !zh);
       const w = textW(date, LABEL_FS) + 6 + textW(short, LABEL_FS);
       const lx = Math.max(PLOT_L - 30, Math.min(x - 5, W - 12 - w));
       let lane = ends.findIndex((end) => end + 18 <= lx);
@@ -343,7 +355,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
           })}
           {/* 悬停：同年同月的竖向引线 + 浮签 */}
           {hover && hover.shock === shock.id && (() => {
-            const lines = wrapText(hover.n.note, 24);
+            const [htxt, hzh] = arcNoteText(locale, hover.n.note);
+            const lines = locale === "en" && !hzh ? wrapWords(htxt, 44) : wrapText(htxt, 24);
             const date = nodeText(hover.n) + (hover.n.card ? `　${t("年表以外")}·${srcLabel(hover.n, locale)}` : "");
             const bw = Math.max(textW(date, 11.5), ...lines.map((l) => textW(l, 12))) + 22;
             const bh = 26 + lines.length * 17;
@@ -389,13 +402,9 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
               )}
               <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted }}>
                 {bandLabel(locale, shock.id, selected.band, band ? band[1] : selected.stance)}
-                {/* 在场姿态是这个人自己的位置，分带只是刻度：二者不同则并列；姿态原文为中文，英文版也保留 */}
-                {(selected.stance !== (band && band[1]) || (selected.stanceNote && selected.stanceNote !== (band && band[1]))) && (
-                  <span lang="zh">
-                    {selected.stance !== (band && band[1]) ? `　${selected.stance}` : ""}
-                    {selected.stanceNote && selected.stanceNote !== (band && band[1]) ? `；${selected.stanceNote}` : ""}
-                  </span>
-                )}
+                {/* 在场姿态是这个人自己的位置，分带只是刻度：二者不同则并列（以中文比对）；英文查 stancesEn / stanceNotesEn，查无回落中文 */}
+                {selected.stance !== (band && band[1]) && <>{locale === "en" ? " · " : "　"}<Tx v={stanceText(locale, selected.stance)} /></>}
+                {selected.stanceNote && selected.stanceNote !== (band && band[1]) && <>{locale === "en" ? "; " : "；"}<Tx v={stanceNoteText(locale, selected.stanceNote)} /></>}
               </span>
               <button onClick={() => onOpenProfile(c.id)} style={{ marginLeft: "auto", fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" }}>
                 {t("查看檔案")}
@@ -407,8 +416,8 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             {selected.arc.map((n, i) => (
               <div key={i} style={{ display: "flex", gap: 14, marginTop: 7 }}>
                 <div style={{ minWidth: 72, fontFamily: "HuiwenZhengKai", fontSize: 13, color: n.y != null ? T.accent : T.faint }}>{n.y != null ? nodeText(n) : "—"}</div>
-                <div lang="zh" style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.8 }}>
-                  {n.note}
+                <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 14, color: T.ink, lineHeight: 1.8 }}>
+                  <Tx v={arcNoteText(locale, n.note)} />
                   {n.card && <span title={t("年表以外")} style={{ marginLeft: 8, fontSize: 10.5, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>{srcLabel(n, locale)}</span>}
                 </div>
               </div>
