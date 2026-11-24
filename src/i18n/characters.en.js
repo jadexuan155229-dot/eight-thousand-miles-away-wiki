@@ -101,7 +101,27 @@ export const charactersEn = {
       '专擅': 'Military and administrative paperwork, and the rules and discipline of city defence. Gate control, post relays, the transport of army supplies: he will look into all of it himself and put it in writing, and though his unit is small, its defence, relief and transport work runs in good order.',
     },
   }, // 狄元恪
-  luowenbi: { name: 'Luo Wenbi', zi: 'Jingshan' }, // 骆文璧
+  luowenbi: {
+    name: 'Luo Wenbi',
+    zi: 'Jingshan',
+    birthplace: 'The Shan Stream at the northern foot of Mount Tiantai, Kuaiji Commandery, Yuezhou, Jiangnan East Circuit',
+    gloss: 'Jingshan is the mountain where Bian He of Chu, in the Spring and Autumn period, wept with his uncut jade in his arms. Han Feizi, “Mr He”: “He took his uncut jade in his arms and wept at the foot of the Chu mountain”; Wang Xianshen’s collected commentary says “the Chu mountain” should read “Mount Jing”. So Jingshan answers bi 璧, the jade disc; the children of her generation in the family all take wen 文 and a character with the jade radical in their names. At the heart of the story of Mr He’s jade is “a truth that goes unseen”: inside the uncut stone lies a matchless jade, and all the eye can reach is the rough skin of the stone. She is both the jade waiting to be recognised and the one able to recognise it; only no one comes to ask her to recognise anything. It stands against what Di Yuanke said to Fan Zhang, “a precious sword in its case that has seen the light of day”: the sword in its case he opened; the uncut stone of Mount Jing he did not.',
+    profile: {
+      '官职身份': 'Di Yuanke’s wife (married in 760; later twins, a son and a daughter). A daughter of the Luo of Kuaiji, and of the Penglai school. The Luo had long lived along the Shan Stream at the northern foot of Mount Tiantai in Yuezhou, close to the monasteries and Taoist abbeys on the mountain, with roots in Taoist learning and generations of dealings with the literary men of Yuezhou; their distinction lay in being qing, pure, not in any rank among the great clans. Her father passed the mingjing examination early in Tianbao, served as a District Defender in eastern Zhejiang and as an Administrator in a prefectural section, and around 751 was transferred to a post in Taiyuan Prefecture.',
+      '体貌特征': 'The Penglai way of moving leaves its traces on her everyday bearing: she sits down more lightly than most women of northern gentry families, her centre of gravity lower, like someone used to keeping her balance on a rolling deck.',
+      '性格': 'The kind of person who takes the legend of Liu Chen and Ruan Zhao, who went into Mount Tiantai and met immortals, at its word: others hear it, smile and leave it at that; she hears it and thinks: then I’ll go and look. She bears things quietly and does not complain; in the silence between the two of them, each holds a world the other has never been to. She is more at ease with people who are plain and direct.',
+      '武学': 'The Penglai umbrella art: turning and drawing arcs, she raises a flowing surface around her body, the force spreading along the ribs of the umbrella into a circle, attack and defence with no before and after, two sides of a single movement; her centre of gravity never settles, as if she put herself on purpose into perpetual imbalance and then borrowed momentum from it. The Cangyun shield says “I will catch it”; the Penglai umbrella says “I am not there.”',
+      '随身物件': 'An umbrella; a sea eagle that has followed her from Penglai and works with her in close understanding; a few small things from the sea, one of which (a conch shell or a small coral paperweight) went into Di Yuanke’s luggage through Fan Zhang’s hands in 760 and afterwards sat on his desk at Cangyun.',
+      '喜好': 'Early in the morning, when there is no one in the back courtyard, she goes through a round of umbrella practice, and the sea eagle flies down from the tree to circle with her; when she is done she furls the umbrella, changes into everyday clothes and goes to see to the firewood and rice in the kitchen.',
+      '专擅': 'The umbrella art, and fighting together with the sea eagle; born among the monasteries and abbeys of Mount Tiantai, she has heard both the Tiantai teaching of calm and insight (zhiguan) and the tales of the immortal islands in the sea.',
+    },
+    anecdotes: [
+      'The sea eagle flew with her from Penglai across the greater part of China to Taiyuan. The basin is ringed by mountains, its climate dry and cold, with no sea wind and no fish; here it is utterly out of place, just like Wenbi herself. It roosts in a tall tree in the Di family’s back courtyard, or flies to the mountains outside the city to hunt, and comes back at dusk; the neighbours all know the Di family has a strange great bird, and the Di household being strict in its ways, no one asks much. It is her closest companion in Taiyuan.',
+      'Within the bounds of a Taiyuan back courtyard, the partnership of woman and eagle looks too big: the eagle’s wingspan needs wider space, and the turning umbrella needs a sea wind to work with the air; but she still practises, perhaps so that her body will not forget. Now and then the children see their mother make movements their father never would, light, flowing, as if wind were passing through her sleeves, the great bird circling overhead and casting its shadow; when their mother notices them watching, she stops, smiles and says: Go and read your books.',
+      'Fan Zhang was the only one who stood in both Di Yuanke’s “Yanmen world” and his “Taiyuan world”: pay and letters from home went back and forth between the two through him. Later, when he had trained in the Iron-Bone Mantle, he came upon Wenbi using her umbrella in the back courtyard and stood there staring: “Madam, this skill of yours… does it take a beating?” “It doesn’t.” Fan Zhang thought about it and said, very seriously: “That’s handy.”',
+      false,
+    ],
+  }, // 骆文璧
   lifei: {
     name: 'Lifei Chenglie',
     zi: 'Wugong',
@@ -309,9 +329,61 @@ export const charactersEn = {
       '官职身份': 'Guan Yue’s son, born in the third month of 765.',
     },
   }, // 关槐
-  lubingyu: { name: 'Lu Bingyu', zi: 'Zhisong', hao: 'Forge Mountain' }, // 卢秉毓
-  liurong: { name: 'Liu Rong', zi: 'Rong' }, // 柳戎
-  liuguan: { name: 'Liu Guan', zi: 'Yuanyi' }, // 柳贯
+  lubingyu: {
+    name: 'Lu Bingyu',
+    zi: 'Zhisong',
+    hao: 'Forge Mountain',
+    birthplace: 'Youzhou (Fanyang Commandery), Hebei Circuit',
+    gloss: '“Metal nurtured (yu 毓) into a body, fire held (bing 秉) into a form.” His leisure seal, Forge Mountain (Yeshan), he carved himself: “Once into this mountain together, never to come back till we die.”',
+    profile: {
+      '官职身份': 'A guard of the Badao armoury, living in Bingyan Valley forging blades, or out on garrison duty, knowing nothing of what goes on outside. On ability he could have joined the Saibei Corps, but he was of another surname after all, and never got the chance. In the autumn of 758 he was driven out of his school, and went to the armoury of the Cangyun stronghold to forge blades under Xue Chu in atonement.',
+      '体貌特征': 'A northern Han. A son of a great family, his bearing is easy and dignified, but his eyes never meet anyone’s for long; there is something a little irresolute and withdrawn about him.',
+      '性格': 'Easygoing and carefree on the outside; within, repressed and compliant, and longing for freedom. He is someone who cannot say no.',
+      '武学': 'The sabre. But he likes smithing better, and knows how to recognise ore deposits.',
+      '随身物件': 'A leisure seal he carved for himself, Forge Mountain: “Once into this mountain together, never to come back till we die.”',
+      '喜好': 'When it comes down to it, he likes stones, “dead things”. He reveres the old and loves antiquity, likes the study of seal carving and studies seal script, which his family thinks a petty art.',
+      '专擅': 'Forging blades and repairing arms and armour; recognising ore deposits; carving seals in seal script.',
+    },
+    anecdotes: [
+      'Born in Youzhou, a descendant of the great Lu clan of Fanyang, though of a side branch that stayed out of quarrels; its standing was not low for all that. Ever since Lu Zhi in the Eastern Han, the Lu of Fanyang had held high office generation after generation, handing down Confucian learning, loving study and elegant letters, prolific writers, all of it in literature, history, calligraphy and painting; he alone was no good at it. He did not find study a hardship in itself, and read widely, but he could not pass examinations. His family never let up on him, though, and he never defied them; he sat the examinations doggedly for a good many years, and never once passed.',
+      'The Lu were old family friends of the Li, the Cen and other great clans. He once went to school with the Li brothers, training in both letters and arms.',
+      'After failing yet again he went back to Youzhou, and in a blacksmith’s shop on the street stood lost in watching an old man forge a blade. It was a damaged old blade. The old man knew he had been standing there a long while, and asked what he saw; he said: a ringing; I hear it weeping. Later the old man gave him the old blades, one long and one short, in their case, and said: this is where you belong. The blades looked very old, their edges even badly chipped, but after he entered the school and began his training they cut no differently from sharp blades, and he always kept them at his side.',
+      'From old grievances, Badao and the Lu were sworn enemies, though what really lay behind it not even their generation fully knew. When he first came to join, the school, taking him for a son of the Lu, would not accept him. He said: it was never really about whether you accept me; but someone gave me this blade, and I’m only curious what that means. And so, of all things, he got in. Most likely the old smith had been someone in the school in his day. But he never learned the story behind it, and no one ever told him.',
+      'He had hoped that excelling somewhere else would prove something about himself, but even so, when he went home his father still said it was all the trade of brutes, not the proper path. And yet he was unexpectedly filial. When his brothers were away in office and his parents fell ill, he always went home and nursed them devotedly, though he got no thanks for it.',
+      'Only in the school did he gradually open up. Sparring, drinking and talking nonsense with Liu Rong and the others were probably his very happiest times. He also came to know the people of the Cangyun Army, and was especially close to Guan Yue: he taught Guan Yue to forge blades and to repair arms and armour.',
+      'A man of the cut sleeve: he loves men. At Changshan he met the Changge party, and later he and Du Zheng became partners. Awakened by Du Zheng, he came to know what he truly desired, and for a while could not stop weeping. He said he finally knew why the blade had wept: it was years of being worn down for nothing.',
+      'He went with Li Tingze into the enemy camp to rescue Yan Gaoqing, Prefect of Changshan; Li Tingze was exposed and taken, and talked him into leaving, and he could do nothing. Later he heard that Li Tingze had been executed at Luoyang.',
+      'In the seventh month of 756 he helped hold Jiumen, and was captured when it fell. The rebels recognised him as a son of the Lu family, drugged him to suppress his meridians and delivered him, bound, to the gate of the family house at Fanyang, to force the Lu family to submit. Not long before he had seen with his own eyes Yan Jiming killed before his father, and now it was his turn. (Note: Yan Gaoqing, Prefect of Changshan, and his cousin Yan Zhenqing, Prefect of Pingyuan, rose against An Lushan at the end of 755, and Gaoqing’s youngest son, Yan Jiming, carried messages between their two cities. When Shi Siming took Changshan in the first month of 756, the rebels held a blade to Jiming’s neck to make his father surrender; Gaoqing refused, and Jiming was killed in front of him. Gaoqing himself was taken to Luoyang and put to death. Now the rebels were trying the same thing on the Lu family at Fanyang, An Lushan’s own seat.) … So he forced open his bonds, snatched a blade, killed several rebels on either side, and was hit by an arrow himself; he was about to turn the blade on himself, but his parents in the end could not bear it, gave the Langya intelligence and iron, and saved his life, and so made him bear the guilt for ever.',
+    ],
+  }, // 卢秉毓
+  liurong: {
+    name: 'Liu Rong',
+    zi: 'Rong',
+    birthplace: 'Youzhou (Fanyang Commandery), Hebei Circuit',
+    gloss: 'Liu is her family surname and has nothing to do with her school: a coincidence, or perhaps some distant kinship. But Rong 戎, “arms”, she chose herself after joining the school; her own name was Rong 蓉, as in furong, the lotus.',
+    profile: {
+      '官职身份': 'Of Badao’s Saibei Corps (Badao Manor lies near Changshan Commandery in Hebei). She often escorts merchants’ goods in and out through the frontier passes, and in wartime goes out with the Military Commissioner’s armies against the enemy. In 756, when Changshan was besieged, she got Bian Saiyuan out of the city and back to Badao to ask for help; working in tacit understanding with Min Fangcheng, she sent a letter ahead promising to raise grain and fodder, and met him halfway.',
+      '体貌特征': 'A northern Han woman, tall, strong and handsome, with thick, slightly wavy long hair; she likes vermilion lip rouge.',
+      '性格': 'Bold, open and bright, and decisive too, at times a bit reckless. She longs for romance and likes to take charge and look after people, but does not want the ties of marriage.',
+      '武学': 'Besides her sabre, her kicks are especially fine, like a snow-laden pine.',
+      '喜好': 'Going out hunting with her bow, and collecting sable, fox and other furs to make into clothes. She is very deft with a knife. She loves watching song and dance, and can drum and dance herself, with great vigour.',
+    },
+    anecdotes: [
+      'She cannot bear to hear anything about what girls should or shouldn’t be. Min Fangcheng trod on that mine the first time they met. But then, seeing him tell her to pack snow on the wound to stop the bleeding, and badly hurt as he was, still rise up suddenly and kill, she took a liking to him. Later, when there were missions to and from Yanmen, she often volunteered. Little did she know the man was a handsome block of wood.',
+      'Lanchuan Yun saw how things stood while she was at Yanmen. Not yet knowing Min Fangcheng’s past, once the goods had been delivered she egged him on: go and see her off. Liu Rong just laughed, turned her head away and said: Look at that dazed face; as if I need him to see me off.',
+      'A domineering beauty. Knowing that Min Fangcheng suffered from his wounds and the cold, she once forced a fox-fur coat on him and would not let him refuse it.',
+      'She grinds her sabre bright as snow and uses it as a mirror while she’s at it.',
+    ],
+  }, // 柳戎
+  liuguan: {
+    name: 'Liu Guan',
+    zi: 'Yuanyi',
+    profile: {
+      '官职身份': 'Of Badao. In the action to guard the grain at the Lingqiu fork in 746 he dealt with a sham inspector and swung his sabre to hold off the local militia; at Lü Dingyi’s request he took the earthen fort’s documents, seals and deeds back to Badao, to be handed on to the authorities.',
+    },
+    anecdotes: [
+    ],
+  }, // 柳贯
   rendijian: {
     name: 'Ren Dijian',
     birthplace: 'Wannian county, Jingzhao Prefecture, Guannei Circuit',
@@ -319,7 +391,14 @@ export const charactersEn = {
       '官职身份': 'A historical figure. A man of Wannian in Jingzhao, he passed the jinshi, and began as Administrative Assistant to Li Jinglüe, Commissioner of the Tiande Army. At an army banquet the man serving the wine poured him vinegar by mistake, and fearing that the wine steward would be punished, he drank it all and said nothing (the “vinegar-sipping commander”). When Li Jinglüe died in the twentieth year of Zhenyuan, the troops acclaimed him, and he was made Prefect of Fengzhou and Commissioner of the Tiande Army; later he was Military Commissioner of Yiwu; in the Yuanhe years he went home ill, and ended as Adviser to the Heir Apparent, posthumously named Xiang. The histories do not give his dates; the birth year is an estimate. In the Cangyun storyline, in the spring of 764, a boy copyist at the Yanmen grain station, he meets Jin Chenbai.',
     },
   }, // 任迪简
-  guanyu: { name: 'Guan Yu' }, // 关榆
+  guanyu: {
+    name: 'Guan Yu',
+    profile: {
+      '官职身份': 'Guan Yue’s daughter, born in the second month of 763.',
+    },
+    anecdotes: [
+    ],
+  }, // 关榆
   cenhan: {
     name: 'Cen Han',
     zi: 'Fangyin',
@@ -638,7 +717,20 @@ export const charactersEn = {
       'When they married, Jiang Li told him frankly of her past with the Tiance army, which rather made him feel small: had he not joined Wanhua, he thought, he would be nothing but a down-at-heel scholar; how could he compare with a general, and how had he come by such a wife? In Chang’an in 763, hearing that the general who had come from the Tiance Command was an old acquaintance of Jiang Li’s, he deliberately kept out of the way; Jiang Li understood him, and when Cheng Kai asked to meet him she spoke up for him. Later, when the Tiance army had stayed in Chang’an a little over two months and was going home, Jiang Li had medicines to send and wanted to see them off outside the city, and he would not let her: thinking that she was far along and had a bad back, and could not easily get about, it was he who took the things to the Tiance camp, introduced himself, and said for Jiang Li everything she would have said.',
     ],
   }, // 陈瑞和
-  xiamingcang: { name: 'Xia Mingcang' }, // 夏明沧
+  xiamingcang: {
+    name: 'Xia Mingcang',
+    birthplace: 'A Mohe tribe',
+    profile: {
+      '官职身份': 'A disciple of the Beitian School of Medicine, Mohe by birth, brought up in his tribe as a shaman’s assistant (zhushenren); Meng Xueying’s husband. His family lived by raising sika deer and reindeer; when he was eight or nine his parents fell through the ice while fishing in winter and drowned in the cold, and the tribe’s shaman took him in; at her side he learned song, dance and music, and learned the history and the rites by heart, and he regards her as a grandmother. His tribe lived between the old seat of the Beitian School and Baishuang Valley, and he became a disciple of the school while still a boy; once he had made some progress he came out of the mountains and often practised medicine along the north-eastern frontier, roaming around Yingzhou. In the third month of 763, at Liu Rong’s invitation, he came south from the Beitian School to treat Min Fangcheng, who had for a time lost his sight.',
+      '性格': 'He grew up in the mountain forests and is utterly at ease: when a deer lies down he can sprawl across it any which way and sleep with his head on its body. Open and warm-hearted, with a physician’s kindness: “Everyone’s a child. Having a few years on you doesn’t make you anything special.”',
+      '专擅': 'Practising medicine and tending the wounded; shaman songs.',
+    },
+    anecdotes: [
+      'Passing through Yingzhou for the first time and seeing the suffering there, he stayed to roam and practise medicine; at the refugee camp outside the city he treated an injured little child, and when it cried on a hot summer night he held it close, showed it the stars and chanted the songs the shaman had once chanted to him. Meng Xueying, watching beside them, was suddenly sad (her mother too was Mohe), and so the two came to know each other.',
+      'In the upheaval at Yingzhou in 756, Meng’s father in that dangerous hour entrusted Meng Xueying to him, and he took her north to settle in Baihe Village and brought her into his school to study; in 760 the two made their bows before her father and pledged themselves for life.',
+      'In the third month of 763 Liu Rong sent a letter asking him to come to Cangyun to see to Min Fangcheng; Meng Xueying was then less than three months pregnant, and thinking of what had happened two years before, he was so torn that he walked circles in the room with his hands behind his back; Meng Xueying urged him to go. He stayed at Cangyun over a month and left once Min Fangcheng was out of danger. That autumn Meng Xueying gave birth to a boy, named Jiarong, after a magical plant of the Classic of Mountains and Seas, for its meaning: a grass that flourishes, red-flowered, unafraid of thunder.',
+    ],
+  }, // 夏明沧
   xuezhi: {
     name: 'Xue Zhi',
     birthplace: 'Jiangzhou (the Xue clan’s home), Hedong Circuit',
@@ -833,12 +925,75 @@ export const charactersEn = {
   tangqingyang: { name: 'Tang Qingyang' }, // 唐青阳
   tangxi: { name: 'Tang Xi' }, // 唐熙
   mengping: { name: 'Meng Ping' }, // 蒙萍
-  duanshao: { name: 'Duan Shao', zi: 'Kuishi' }, // 段韶
-  zhuhongqu: { name: 'Zhu Hongqu', zi: 'Fuxiang' }, // 祝红蕖
-  zhulu: { name: 'Zhu Lu', zi: 'Wanting' }, // 朱鹭
-  cenquan: { name: 'Cen Quan', zi: 'Jingyuan' }, // 岑荃
-  pengyansi: { name: 'Peng Yansi' }, // 彭延思
-  chutang: { name: 'Chu Tang', zi: 'Nianyuan' }, // 楚棠
+  duanshao: {
+    name: 'Duan Shao',
+    zi: 'Kuishi',
+    gloss: 'Shao 韶 is the music of Shun of Yu. Kui 夔 was Shun’s master of music. Shi 石 is the stone chime. Book of Documents, “Canon of Shun”: “The Emperor said: ‘Kui! I charge you with the music…’ Kui said: ‘I strike the stone, I tap the stone, and the hundred beasts lead one another in dance.’”',
+    profile: {
+      '官职身份': 'Of the Duan of Nanzhao, a younger kinsman of the grand general Duan Jianwei. At the battle of the Xi’er River in 751 he was on the Nanzhao side: the mirror image of Cheng Duo and the Tiance Command on the Tang side. In 766 he was among those present when the Nanzhao Dehua Stele was set up. The Duan of Dali claim descent from Duan Jianwei’s line.',
+    },
+    anecdotes: [
+    ],
+  }, // 段韶
+  zhuhongqu: {
+    name: 'Zhu Hongqu',
+    zi: 'Fuxiang',
+    birthplace: 'Yangzhou (Guangling Commandery), Huainan Circuit',
+    gloss: 'Yang Yuhuan’s poem for Zhang Yunrong’s dance: “Silk sleeves stir the fragrance, the fragrance never ends; the red lotus sways in the autumn mist. A light cloud on the ridge, a sudden stir of wind; tender willows by the pool first brushing the water.” (Yunrong, the Consort’s maid, danced the Rainbow Skirt dance well; the Consort gave her this poem when she went with the emperor to the Embroidered Ridge Palace.) Her name, Hongqu, “red lotus”, and her courtesy name, Fuxiang, “brushing the fragrance”, both come from it.',
+    profile: {
+      '官职身份': 'A disciple of the Qixiu House.',
+    },
+    anecdotes: [
+    ],
+  }, // 祝红蕖
+  zhulu: {
+    name: 'Zhu Lu',
+    zi: 'Wanting',
+    birthplace: 'Suzhou, Jiangnan East Circuit',
+    gloss: 'Erya, “Explaining Birds”, subcommentary: in the time of King Wei of Chu, crimson egrets (zhulu) came flying in flocks and danced, so there are red ones as well; this is the old drum-and-wind song “Zhu Lu”. The bird is called the white egret, then, and the red ones are simply rare. Book of Jin, “Treatise on Music”: among the short-pipe and cymbal songs of Han there was one called “Zhu Lu”. Book of Songs, “Odes of Chen · Wanqiu”: “Kan goes the drum below Wanqiu; winter or summer, she holds up the egret plumes”, said of shamanesses dancing with egret feathers in their hands; and “Hymns of Zhou · Zhen Lu”: “The egrets in flight, there at the western yong.” The Mao commentary: “The yong is a marsh.” Another reading takes the yong for the biyong, the royal academy ringed by water, where the white egrets came down; hence ting 汀, “the shallows”, to answer lu 鹭, the place where the egret alights.',
+    profile: {
+      '官职身份': 'A disciple of the Qixiu House. From 763, Li Tingshen’s wife.',
+      '性格': 'Quiet and thorough, with a fine eye for what she sees: where nothing is said, she can still see the twists and turns of a person’s heart. Once, seeing Li Tingshen look closely at the stitching on an old undershirt and not know what to say, she turned over the embroidery hoop in her hands: “What does it matter? A person’s heart is a thousand threads. Who looks at embroidery only from the back?”',
+      '武学': 'The sword. She uses a sword just as they do, and has never thought the people of Cangjian anything so very special.',
+      '随身物件': 'A silver box with a fine bamboo comb and hair oil: jasmine is what she likes for herself, and she keeps sandalwood apart for Li Tingshen; a close-woven gauze lampshade she stretched and wove herself.',
+      '喜好': 'Ginkgo: she likes to pick up the fallen leaves and turn them over in her hands. Embroidery.',
+    },
+    anecdotes: [
+      'At fifteen or sixteen (around 750) she came to Cangjian with seniors of the Qixiu House, and a junior sister left her stranded by the lake. Snow was falling in late autumn, and Ye Tiandeng came over to hold an umbrella over her, told her the story of Shenguang standing in the snow, cutting off his arm to seek the Dharma, and the snow turning red for it, and then took her to the refectory at Lingyin Monastery for plain noodles. She said: “Red snow fell from heaven, but Shenguang cutting off his arm to seek the Dharma doesn’t seem to have fallen from heaven… people did it.” The man from Cangjian laughed and said that was true too; but Shenguang’s skull rose in five peaks, an auspicious sign that he was bound to reach enlightenment, so you could see that some things are fated as well.',
+      'She asked Ye Tiandeng why he had never followed that monk and left home, and no sooner were the words out than she felt she should not have asked; he laughed: “Leave home? You have to come into something before you can leave it. I never came into any home; how could I leave one?”',
+      'In late autumn 758 she came to Cangjian with her fellow disciples to help treat the wounded. Seeing the badly hurt and the maimed, she suddenly remembered the story told by the lake in the snow years before. She was not afraid to look at those wounds: it seemed to her that all these people were bits and pieces of Shenguang.',
+      'On the eighth day of the fourth month of 759, the Buddha’s Birthday, she went to Lingyin Monastery to pray for blessing, and saw a monk in a blue-green robe whose brows and eyes were just like Ye Tiandeng’s, only his head was shaved. She called out to him; the monk lowered his eyes, put his palms together in greeting, turned and walked away.',
+      'After the wedding, the first time she went up to the bedchamber in the Jingde Tower, she saw a shrine in one corner with sutras laid before it, and asked Li Tingshen: “General… are you drawn to the Buddha’s teaching?” Li Tingshen smiled wryly: after all the killing he had done, wiping men out to the last, he bowed to an image that does not kill; and taking whatever he wanted had got him nothing in the end, and now that he alone was left alive, he did not yet know in which life the cause of it lay. She said: “And so, General, in this life you keep the sutras.” Li Tingshen was taken aback, and for a long while only looked at her.',
+      'Since the war Li Tingshen had slept badly. When he slipped out quietly in the middle of the night she would follow without a word, move the oil lamp aside, untie his hair cord, and comb his hair and rub his head with sandalwood oil: “Jasmine is what I like to use. A woman’s things, how could you use those? In the camp people would laugh at you for going soft over a woman. This is sandalwood.” The headache did truly ease a little. She moved a little table over herself and put on a close-woven lampshade of her own making, so that the light was soft and dim. Li Tingshen said thank you, and she turned back with a smile: “Between us… let’s not say such things.”',
+    ],
+  }, // 朱鹭
+  cenquan: {
+    name: 'Cen Quan',
+    zi: 'Jingyuan',
+    gloss: 'Chu ci, “Encountering Sorrow”: “The quan does not see what is in my heart.” Wang Yi’s commentary: “Quan is a fragrant herb.” And: “On the Yuan there is angelica, on the Li there are orchids”: the Xiang, the Yuan and the Li (Feng) rivers all grow fragrant herbs, and so yuan 沅 answers quan 荃.',
+    profile: {
+      '官职身份': 'Of the Qixiu House. Cen Han’s eldest sister, and a consort in Emperor Xuanzong’s palace.',
+    },
+    anecdotes: [
+    ],
+  }, // 岑荃
+  pengyansi: {
+    name: 'Peng Yansi',
+    profile: {
+      '官职身份': 'A disciple of the Qixiu House.',
+    },
+    anecdotes: [
+    ],
+  }, // 彭延思
+  chutang: {
+    name: 'Chu Tang',
+    zi: 'Nianyuan',
+    profile: {
+      '官职身份': 'A disciple of the Qixiu House.',
+    },
+    anecdotes: [
+    ],
+  }, // 楚棠
   wangji: { name: 'Wang Ji', zi: 'Zhenyu', hao: 'Master Mudboat' }, // 汪楫
   pengshilu: { name: 'Peng Huan', zi: 'Chengmu' }, // 彭涣
   leiyin: { name: 'Lei Yin', zi: 'Junxiang' }, // 雷殷
@@ -920,10 +1075,65 @@ export const charactersEn = {
       'In Chang’an in 763 she met Cheng Kai again, by then with child. When the child was older, she went back with Chen Ruihe to live quietly in Luzhou.',
     ],
   }, // 江蓠
-  daoyong: { name: 'Daoyong' }, // 道永
-  huimu: { name: 'Huimu' }, // 慧木
-  yetiandeng: { name: 'Ye Tiandeng', zi: 'Zhao' }, // 叶添灯
-  yeboqiu: { name: 'Ye Boqiu' }, // 叶泊秋
+  daoyong: {
+    name: 'Daoyong',
+    birthplace: 'Qihua Village, below Mount Shaoshi',
+    profile: {
+      '官职身份': 'A warrior monk of the Dao generation of Shaolin’s Bodhidharma Hall. He entered Shaolin as a novice in the fifth year of Tianbao (746), and after some years of labour the head monk obtained an ordination certificate for him and he became a monk.',
+      '性格': 'Young and full of his own thoughts; he often lost himself listening to the great bell on the mountaintop.',
+      '武学': 'A warrior monk. In a moment of peril, a stroke of the Golden Bell saved Cheng Kai.',
+      '专擅': 'Chanting the Golden Light Sutra to deliver the suffering and protect the realm: “Within the golden light one may see me, Shakyamuni.”',
+    },
+    anecdotes: [
+      'The youngest child of his family. His father was rough and hard to reason with, and he leaned on his mother a great deal. As a small boy he went down to the fields with his parents, and all their labour brought them barely enough to eat; he often wondered where all that work went. Then his mother died of illness, and he grieved terribly: he thought how one day he would grow up and become a father himself, and when he died his children would have to suffer like this too, and for a moment everything was empty, and he crawled and climbed up the mountain to the monastery gate. When he got there he did not knock but only stood, all night in the wind and rain. The senior brother in charge came out and asked him: So young, and you came up alone? He said: No. The wind and the rain came with me, and the sound of the bamboo.',
+      'In the summer of 755, at Tongguan, he performed the rites of deliverance for the unborn child of Lanchuan Yun and Cheng Kai; in the fifth month of 757 he came upon the remnant camp of the Tiance Command at Mount Mang and saved Cheng Kai, and so stayed in the camp for a time, mostly sitting peacefully on a rope seat under a tree, burning sandalwood and chanting sutras.',
+      'He told the people of the Tiance Command: The north gate of Baima Monastery stands at the foot of Mount Mang, a long way from the monastery itself, and so the saying goes that at Baima you gallop a horse to shut the gate; when this humble monk lodged there I often heard the sound of armies shaking the earth in the far mountains, and so I have long held you in respect.',
+      'When he left he left a slip of writing: “I keep one mind, and wish the prisons ever empty and the beacons long at rest. Years without a word of shield and spear, the ears full only of strings and flutes; unmoving as Mount Song, may it guard Luoyang ten thousand years.” Li Tingshen treated him with courtesy and listened to his teaching together with Cheng Kai, and after he left placed a scroll of the Diamond Sutra on his desk, hoping his comrades would be sheltered by its strength, firm as metal and stone, before which nothing hard can stand.',
+      'He had an old bond with a monk of Lingyin Monastery: it was this monk he had met that rainy night as a boy at the monastery gate, and it was through him that his ordination certificate was obtained. Later the monk travelled south of the Yangzi and took charge of affairs at Lingyin, and Daoyong came to Lingyin several times and came to know Ye Tiandeng; the three of them, never minding seniority, were friends across the years, and would talk deep into the night by lamplight. In the winter of 758, hearing of the monk’s death, he hurried to Lingyin; when Ye Tiandeng cut off his hair before the Buddha he was utterly astonished, and stared a long while before going up to help him tidy his hair, and went in with him to see the abbot.',
+      'He saw Cheng Kai again after the war, and Kyōya too: it was some years later that Cheng Kai happened to bring Kyōya on a visit to Shaolin. Kyōya seemed lost in thought over the line on the desk, “The River of Heaven surges; a single reed crosses it”, and he laughed and sighed: Ah, little Patron Ye (the Ye of Kyōya’s Chinese name, Lin Yeshi). I once knew another Patron Ye, but he went a long way round before he found his answer. Not like you: you know it now. At that moment he seemed to see himself before the monastery gate.',
+    ],
+  }, // 道永
+  huimu: {
+    name: 'Huimu',
+    profile: {
+      '官职身份': 'The youngest of Shaolin’s Hui generation. Obsessed with woodwork since boyhood, he is skilled at carving and at making mechanical wooden figures. Hayashi Kyōya met him in Wanhua Valley, picked up a little of his learning and skill, and went back to the Tiance Command to help improve its message kites.',
+    },
+    anecdotes: [
+    ],
+  }, // 慧木
+  yetiandeng: {
+    name: 'Ye Tiandeng',
+    zi: 'Zhao',
+    birthplace: 'A farming family in a village near Hangzhou, Jiangnan East Circuit',
+    gloss: 'Buddhist books take the lamp as a figure for the Dharma: there is the Record of the Transmission of the Lamp. Du Fu: “The lamp is handed on where there is no daylight; the ground is spread with yellow gold.” Zhao 照, says the Zengyun, is “to shine, as a lamp does”. Book of Changes, “Li hexagram”: “The great man, continuing the light, shines on the four quarters.” So zhao answers the lamp’s light, saying that in the end he goes back to the Buddha’s way. At home he had been named Tianding, “add a son”, without much thought; after he entered Cangjian a monk of Lingyin changed his name and gave him a courtesy name: “Tian-deng, add a lamp, add a flame: just those two characters. And the one character Zhao. It’s not that I was born a Ye of Cangjian; my school said I could take the surname, to make things easier when I’m out in the world, so I use it. Really, the thirty-two marks are no marks at all. A name like this, who knows, it may change again one day.”',
+    profile: {
+      '官职身份': 'A disciple of Cangjian Manor (not born a Ye). In the winter of 758, at Lingyin Monastery, he raised his sword, cut off his hair and became a monk.',
+      '性格': 'Obsessed and wholehearted, unable to tell principle from practice; Ye Boqiu said of him: “You’re obsessed, you are. All I ever heard of you was that you were thick-headed and stubborn; turns out you’ve got this kind of drive in you. You might come to something.” He has his father’s affliction: when he is pressed it flares up and he behaves wildly. Hearing the chanting day and night at the monastery, he slowly gained the power to calm his spirit and settle his will, and any book he has read aloud he remembers, and remembers firmly.',
+      '武学': 'The sword. He once went to the Sword Lodge to learn forging. After his sudden awakening in the winter of 758 he beat every senior brother and sister he had never been able to beat; everyone called it mastery, which he did not like.',
+      '喜好': 'Telling koans and stories of cause and condition. By West Lake he told Zhu Lu the story of Shenguang cutting off his arm and the red snow falling from heaven; in the Southern Market at Luoyang he named Cheng Kai’s bow Cangqi, “keeping the tool hidden”: the gentleman keeps his tool on his person and waits for the moment to act.',
+      '专擅': 'Polishing bronze mirrors: he learned it from a master craftsman just after leaving his school, through an old friend: “There’s something in it that’s like polishing a sword.” He brightens the face with mercury, and soaks the mirror a day in green-vitriol water to give it the look of a Qin or Han antique, which can only be done in the plum-rain season of Jiangnan.',
+    },
+    anecdotes: [
+      'He came from a farming family in Jiangnan. His mother died early; his father was a petty thief who stole and drank, his temper never steady, now sunk in gloom, now violent, and when he was beaten outside he came home and took it out on his son. When the boy was four or five, his father, who would not stop stealing, was beaten to death by villagers who had not meant to kill him; the boy went looking at night and found his father’s body lying in the open, and all he could find to cover it was a torn mat. After that he wandered, stealing and getting beaten, and nearly went the same way, until the authorities took him into a foundling home, where he was wild and hard to manage.',
+      'A monk came to the foundling home to give alms, and when a stall-keeper caught the boy he got him out of trouble; seeing the mass of scars under his sleeves, he put medicine on them, and later took him back to Lingyin Monastery. The monk saw that he was fed and warm and slowly taught him to read and write and the principles of things; there was only compassion in his eyes, and he never reproached him, except that when the boy scribbled and scrawled he grew especially grave and warned him to respect and cherish paper with writing on it, and gave him a brush dipped in water to draw on the ground with. The boy took the monk to the place where he had found his father’s body; the monk put his palms together and chanted the Yankou, the rite for feeding hungry ghosts, and the boy stood by and watched in silence.',
+      'Among his fellow disciples he alone kept to himself; he often could not keep up with the reading, and when he got frantic the affliction flared: he would sweep the books to the floor and knock the teacups over, and when he came back to himself he would clear up in silence and apologise, and he was laughed at a good deal for it. He went back to Lingyin and poured out his troubles to the monk, who said: Fast or slow for a while, none of it matters. Look at the spring: it rises and sinks, and yet it never runs dry; that is the principle of it. Going to the manor to learn the sword was your own choice. Have staying power: that is your lesson.',
+      'Eating at the manor was almost the first time in his life he had eaten meat.',
+      'Later he went to the Sword Lodge to learn forging. A newly forged sword must be blooded, and snake’s blood is mostly used; Ye Boqiu said: Remember, never kill the innocent at will; in our hands the blade of the asura, in our hearts the path of bodhi. He turned it over a good while and then suddenly brightened: Yes. The blade of the asura, the path of bodhi. It was the first time he had found a point where the two halves of his life joined, and he felt that this was how he ought to exist.',
+      'In 752, learning mirror polishing in the Southern Market at Luoyang, he met Cheng Kai and Lanchuan Yun, out shopping before their wedding, and gave them an unsigned mirror with a water-chestnut-flower rim as a wedding gift: “Great riches and great fortune: how could you seek those in words and sounds?” “Polishing a brick won’t make a mirror, and sitting in meditation won’t make a Buddha. No need to cling to forms. The causes and conditions are settled beforehand, not in these empty forms.” He also named the newly bestowed horn bow Cangqi. Seeing Cheng Kai split a melon with the bowstring, he suddenly felt that here at last was someone who truly did not cling to forms.',
+      'In the autumn of 758, when the turmoil reached Jiangnan, the monk took a stray arrow for him and died; dying, he said: Ten thousand thoughts return to one, and life goes on without end. War and separation… they are your lessons too. He ran back to the manor and fought all day; many of his fellow disciples were killed or maimed, people scattered on the ground among the broken blades. Looking at that sight, he thought again of the blade of the asura and the path of bodhi, and the man who had said it was no longer in this world: that man’s blood had been offered up to the enemy’s sword. Afterwards, keeping vigil, he slept for months fully clothed with his sword in his arms, afraid it would come again and find him empty-handed.',
+      'As winter came on snow fell over West Lake, and he woke one morning to find that the sword beside him didn’t look like a sword, but like the stone it was first forged from. At practice no one could beat him; everyone said that, compared with before, it could of course be called mastery, but he was not glad. Keep the tool on your person and wait for the moment to act: when he was most needed to act, he had no tool on him; after that, having or not having, keeping or not keeping, made no difference. So he stood a long time before the Buddha, watching the candle flames flicker, raised his sword and cut off his queue, and the golden crown, pin and ribbons fell to the floor.',
+      '“Before the rain he mends his patchwork robe; under the leaves he shuts the double gate.” On the eighth day of the fourth month of 759, the Buddha’s Birthday, Zhu Lu saw at Lingyin Monastery a monk in a blue-green robe whose brows and eyes were just like Ye Tiandeng’s of old, only his head was shaved; she called out to him, and the monk lowered his eyes, put his palms together in greeting, turned and walked away.',
+    ],
+  }, // 叶添灯
+  yeboqiu: {
+    name: 'Ye Boqiu',
+    profile: {
+      '官职身份': 'An elder of the Sword Lodge at Cangjian Manor, in charge of forging swords. A newly forged sword must be blooded, and snake’s blood is mostly used: “Remember: never kill the innocent at will. In our hands the blade of the asura, in our hearts the path of bodhi.” He died fighting at Cangjian Manor in the autumn of 758, when disaster came to Jiangnan.',
+    },
+    anecdotes: [
+      'Of Ye Tiandeng: “You’re obsessed, you are. All I ever heard of you was that you were thick-headed and stubborn; turns out you’ve got this kind of drive in you. You might come to something.” And: “Since when does this old man need you to tell him whether he’s right?”',
+    ],
+  }, // 叶泊秋
   peiyuan: {
     name: 'Pei Yuan',
     profile: {
@@ -1051,13 +1261,64 @@ export const charactersEn = {
       'On a night when the snow lay deep enough to bury a man, a chain flicked out and back with a hiss, like a silver snake: Gao Yuan never saw the blade, only, from the corner of his eye, a streak of red scarf.',
     ],
   }, // 宣康
-  mujin: { name: 'Mu Jin', zi: 'Xingbei', epithet: 'The Ford Across the River of Heaven' }, // 穆津
-  yeshuxi: { name: 'Ye Shuxi', zi: 'Qingran' }, // 叶曙兮
-  yechen: { name: 'Ye Chen' }, // 叶忱
+  mujin: {
+    name: 'Mu Jin',
+    zi: 'Xingbei',
+    epithet: 'The Ford Across the River of Heaven',
+    birthplace: 'Ganzhou, Longyou Circuit',
+    gloss: 'Erya, “Explaining the Heavens”: “Ximu is called the Ford; between Ji and Dou, it is the ford of the Han.” Xing Bing’s subcommentary quotes Sun Yan: “It parts water from wood; between the lodges Ji and Dou lies the ford of the Heavenly Han.” The River of Heaven lies between the stars of Ji and Dou, and a river must be crossed by ford or bridge, so this station is called the Ford of Ximu; the River of Heaven is the Milky Way. His name and his courtesy name both lie among the stars and the Milky Way.',
+    profile: {
+      '官职身份': 'Of the Yantian School. Later he travelled with Xuan Yang, helping her look into the old case of her father, Xuan Kang, and what had happened in Chao County; much of what comes out later was very likely uncovered with his help.',
+      '性格': 'Gentle and perceptive, quick to pick up whatever is said: “The yuan, Ziwei, Taiwei and the rest, mark out regions of the sky and the allotted fields of the constellations.” “I thought a yuan was just a wall.” “That’s right too: a wall in the sky.”',
+      '武学': 'The Yantian School’s learning of stars and fate; readings by Zi Wei Dou Shu: “Your master has Wuqu sitting in his Life Palace: a lone star, hard on those close to him. Nothing to be done about it. You too.”',
+      '喜好': 'Watching the stars and talking about them: “What are you looking for? Which star? I’ll tell you about it.”',
+      '专擅': 'The allotted fields of the sky and the reckoning of fate, measuring the heavens with a ruler; looking into old cases (he asked Xuan Yang whether she had anything of her father’s, and Xuan Yang spread her empty hands).',
+    },
+    anecdotes: [
+      'One day Xuan Yang suddenly remembered to ask him what all the yuan in his school were about; when he had finished explaining the constellations and their fields, Xuan Yang looked up at the sky with great solemnity: “I’m not looking for anything. I just remembered: I’ve got a wall up in the sky too.”',
+    ],
+  }, // 穆津
+  yeshuxi: {
+    name: 'Ye Shuxi',
+    zi: 'Qingran',
+    birthplace: 'Cangjian Manor (born into the school)',
+    profile: {
+      '官职身份': 'Of a side branch of the Ye family of Cangjian, a family that had long travelled the Western Regions finding fine materials for the school’s swordsmiths. In 738 she came west with her family in search of fine steel (bintie), and at Beiting came to know Cheng Zhao, who had charge of the arms and armour; in the winter of 739 she was betrothed to him, but the bride could not be fetched home until Cheng Feng, the elder, had married, and before that could happen Cheng Zhao died on the western road out of Beiting in 740. The next spring she gave birth to a daughter, Ye Chen, who took her mother’s surname, and took the girl back to Cangjian. She was never entered in the Cheng genealogy.',
+    },
+    anecdotes: [
+      'At Beiting the weapons grew brittle in winter and snapped; the batch she reworked lasted through the winter of 738. With a swordsmith’s eye she read Cheng Zhao’s courtesy name, Gulian, at a glance in its root sense: a blade’s edge ground flat, merit earned and never rewarded.',
+      'From the winter of 739 into 740 she brought Cheng Feng and Lu Ling together: half because she liked Lu Ling, half because once that marriage was made, hers could be. Cheng Feng’s marriage was not allowed until 741, and by then that reason no longer existed.',
+      'In the summer of 740 Cheng Zhao went to the Juliu Garrison Post; before he left, it was she who took that step first. After he died, she would not let his spearhead go back into the furnace to be given an edge.',
+      'The first of the Cheng family to accept her was Cheng Zhao’s mother: in the winter of 738 she sent her winter clothes, and after Cheng Zhao went west to the garrison post the two of them often stood together on the city wall looking down the western road.',
+    ],
+  }, // 叶曙兮
+  yechen: {
+    name: 'Ye Chen',
+    birthplace: 'Beiting Grand Protectorate, Tingzhou, Longyou Circuit',
+    gloss: 'Shuowen: “Chen 忱 is sincerity.” Her name is a word from Cheng Zhao’s last letter: before he died Cheng Zhao wrote to Cheng Feng setting out his last wishes, and the letter said nothing of the child; in an ordinary courtesy at its end there was the word chen, and Ye Shuxi took it.',
+    profile: {
+      '官职身份': 'Of Cangjian, the daughter of Cheng Zhao and Ye Shuxi. She was born at Beiting in the spring of 741 and took her mother’s surname; Cheng Guang wanted to take her in, but Ye Shuxi would not allow it and took her back to Cangjian. She grew up at Cangjian Manor and trained her skills at the Sword Lodge. In the autumn of 758, when disaster came to Jiangnan, she was seventeen and at the manor as a Cangjian disciple; in late autumn that year, at the manor, she came to know Zhu Lu of the Qixiu House, who had come to help treat the wounded.',
+    },
+    anecdotes: [
+    ],
+  }, // 叶忱
   ranqiongru: { name: 'Ran Qiongru', zi: 'Shuxia' }, // 冉琼如
   yanmi: { name: 'Yan Mi', zi: 'Zhimiao' }, // 颜弥
   litingyun: { name: 'Li Tingyun', zi: 'Sixun' }, // 李庭沄
-  mengxueying: { name: 'Meng Xueying' }, // 孟雪萦
+  mengxueying: {
+    name: 'Meng Xueying',
+    birthplace: 'Yingzhou (Liucheng Commandery), Hebei Circuit',
+    profile: {
+      '官职身份': 'A disciple of the Beitian School of Medicine (she entered it in the summer of 758, when the school was restored), and Xia Mingcang’s wife. The daughter of an army officer at Yingzhou: her father was deputy to Liu Zhengchen, Patrol Commissioner on the staff of the Military Commissioner of Pinglu, and later an Assistant General under Hou Xiyi; when Yingzhou fell in the winter of 761 he stayed in the city to cover Hou Xiyi’s rear and was killed. Her mother was Mohe, from a loose-rein (jimi) prefecture of tribespeople settled beside the city, and died of illness when Meng Xueying was about ten. The family’s ancestral seat was Xiangyang; only her father’s soldiering had brought them to this far frontier.',
+      '体貌特征': 'Slender, with delicate looks, a little cool and aloof, her expression always faint and distant.',
+      '性格': 'Cool, quiet and steady, and tough of spirit: when Yingzhou was worn out, she insisted on leaving the school with Xia Mingcang to go home and tend soldiers and people.',
+    },
+    anecdotes: [
+      'Frail from childhood. Her mother sang her Mohe songs from when she was small, and she remembers their images: stars, the moon, forest. Her father, a soldier with clumsy hands, tried hard to work out how to braid her hair properly; if there was cow’s milk in the camp, he would bring a bowl home with him in the evening.',
+      'Around the time of the upheaval at Yingzhou in 756, while helping hand out soup and gruel at the refugee camp outside the city, she saw Xia Mingcang holding an injured little child, showing it the stars and chanting a shaman’s song, and was suddenly sad. “Here’s another one who can’t sleep. Come on, sit down.” “You’re treating me like a child too?” “Everyone’s a child. Having a few years on you doesn’t make you anything special.” She pressed her lips together and smiled.',
+      'In early 762, on the way south after burying her father’s bones, she ran a high fever with pains in her belly, and was frightened by bandits as well, and in the end the child could not be saved; when she came to she still told Xia Mingcang not to blame Liu Rong. Back at the school she slowly recovered over half a year; in the autumn of 763 she gave birth to a boy, Jiarong, a scare but no harm.',
+    ],
+  }, // 孟雪萦
   lihanping: {
     name: 'Li Hanping',
     zi: 'Yanzhou',
@@ -1212,7 +1473,20 @@ export const charactersEn = {
       '“If it can ease her suffering, I will go”: at midsummer of 770 he came of age, and Lanchuan Yun gave him a short knife for self-defence and told him where it had come from. In the twelfth month of that year Cheng Kai died of illness, and he grew ever more burdened. When three years of mourning were over there was no ship to cross on; he waited until the Hōki embassy sailed home in 778, and boarded the first ship with the knife to take its owner home, and so fulfil Lanchuan Yun’s long-held wish. But the ship was damaged, and no sail came home.',
     ],
   }, // 林叶矢
-  haruyama: { name: 'Haruyama Haruka', zi: 'Mianshu (Nemugi)', names: { 汉名: 'Fang Yao' } }, // 春山遥
+  haruyama: {
+    name: 'Haruyama Haruka',
+    zi: 'Mianshu (Nemugi)',
+    names: {
+      '汉名': 'Fang Yao',
+    },
+    birthplace: 'Japan',
+    gloss: 'Haruyama is the family name in Japan, and Haruka the Japanese given name: Haruyama Haruka, that is, Haruyama Nemugi. The family name of the Penglai house is Fang, so the Chinese name is Fang Yao, with the courtesy name Mianshu. Zhuangzi, “Free and Easy Wandering”: “Now you have a great tree and fret that it is of no use. Why not plant it in the village of Nothing-at-All, in the wilds of Broad-and-Boundless, and drift idly, doing nothing, at its side, wander free and easy and lie down asleep beneath it?” Yao, “far and free”, and Mianshu, “asleep under a tree”, both come from it.',
+    profile: {
+      '官职身份': 'Of the Penglai school, born in Japan. The one who first saved Hayashi Kyōya when he crossed the sea to the Tang.',
+    },
+    anecdotes: [
+    ],
+  }, // 春山遥
   ahui: {
     name: 'Ahui',
     birthplace: 'Japan (around Lake Biwa)',
