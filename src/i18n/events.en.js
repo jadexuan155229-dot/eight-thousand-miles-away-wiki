@@ -219,7 +219,7 @@ export const eventsEn = {
   "岚川云以陆羽鸣的萨珊玛瑙印石论功，得出阵即有「杀获」的嘉奖（时剿杀明教徒甚众，未逐一查验）；印石此后留在她手上":
     "Lanchuan Yun claimed the kill with Lu Yuming’s Sasanian agate seal, and was commended for a kill on her very first sortie (so many Mingjiao followers had been killed that no one checked them one by one); the seal stayed in her hands from then on.",
   "闵方城撞见薛直 修马蹄":
-    "Min Fangcheng came upon Xue Zhi trimming a horse’s hooves.",
+    "Xue Zhi came upon Min Fangcheng trimming a horse’s hooves.",
   "稻谷入仓祭，曼冉带男童主祭，受寨民尊崇，称男童为「圣童」":
     "At the festival for bringing the rice into the granary, Mait Rangs led the rite with the boy, and was revered by the villagers, who called the boy “the Holy Child”.",
   "程钊与藏剑叶曙兮定婚，亲迎须俟长兄先娶；程锋劝他先娶，程钊推辞":

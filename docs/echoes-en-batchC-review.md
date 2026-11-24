@@ -8,7 +8,15 @@
 - **引语照年表、档案已有的英文**：「你把我当过人吗」、「吕爻先膝，邱衔芦臂……」、「墙够高，城门够严……」、「放手，樊璋，放手」、「我该早醒」、「罢了。将军……将军安好」、「多活十年」Ten years longer、「那是我最后一次看见祁连山」、「是还回去了」「我这个人，非常幸运。程子阳，你也是」、「不可辜负」「你也让我回来了」、「谢了……种种」、「我的宿将，我不许有失」、「阿城，你说我是不是傻子」、「季韬，去，去找他」等，一律对齐。
 - **出处括注不出**：（《765 访苍云》）（《塞上蕊》）（《墨昆袭关全线》）（《狄、邱、樊》）（《764-1》）（《763-3》）（《763-4》）（《764-2》）（《连朔》）（《闵方城》）（卡）（关系），英文都删，旁边已有出处小标。
 
-## 要你定的
+## 作者已定（11-25）
+
+1. **修马蹄的是闵方城**：节点照旧（Xue Zhi came upon him trimming a horse’s hooves）；年表 739.10C 英文改作 Xue Zhi came upon Min Fangcheng trimming a horse’s hooves。中文「闵方城撞见薛直 修马蹄」未动。
+2. **「怎地是我，不见将军」**：是邱鸿对闵方城转述墨昆的话，「我」是邱鸿自己。英文改作 Telling Min Fangcheng afterwards: “Mokun even asked why it was me, and where the General was”。
+3. **「守如山」**：照拟作 Firm as a Mountain，收进 Notion 术语主表 T175。
+4. **歌谣加注**：鸿改作 swan goose，句后加 (Note: Yanmen means “Goose Gate”; hong, the swan goose, is Qiu Hong’s name.)。
+5. **「尚未走远」**：指闵方城死去不久，英文照旧。
+
+## 原先的问题
 
 1. **薛直「修马蹄，被薛直撞见」**（那就是一生）：节点说的是闵方城在修马蹄，被薛直撞见，英文作 Xue Zhi came upon him trimming a horse’s hooves。可年表 739.10C 中文是「闵方城撞见薛直 修马蹄」，英文译成了闵方城撞见薛直在修马蹄（Min Fangcheng came upon Xue Zhi trimming a horse’s hooves），两处是反的。到底是谁在修马蹄？若是闵方城，年表英文我跟着改，中文也建议写明。
 2. **邱鸿一行，墨昆「怎地是我，不见将军」**（卡）：我读作墨昆迎面撞上的是邱鸿而不是闵方城，于是问「怎么是我（来对上你）？将军呢？」，英文作 Mokun even asked: “Why is it me? Where’s the general?”。「是我」读着有点怪，若原意是「怎地是你」，告诉我。
