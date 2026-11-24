@@ -326,7 +326,7 @@ export const charactersEn = {
     birthplace: 'Dengzhou (Nanyang Commandery), Shannan East Circuit',
     gloss: 'Book of Songs, “Odes of Chen”: “By the bank of that marsh there are rushes and lotus buds (handan 菡萏).” Erya, “Explaining Plants”: “He 荷 is the lotus; its flower is handan.” Shuowen: “handan.” Xu’s commentary: “Han 菡 is like han 含, to hold within: not yet opened.” So fangyin 芳隐, “fragrance hidden”, answers the closed bud of han.',
     profile: {
-      '官职身份': 'At the time, Instructor of Changshan Commandery (Hengzhou). Admitted a student of the Institute for the Advancement of Literature through the yin protection privilege, she later studied at the Changge School’s academy, the Weishan Academy, passed the jinshi, and took up her first post as Proofreader in the Palace Library (in charge of collating texts), rank 9b1; later Instructor of Changshan Commandery, rank 8a, in charge of education and of the academies in the city: a capital official posted out to search the prefecture for books.',
+      '官职身份': 'At the time, Instructor of Changshan Commandery (Hengzhou). Admitted a student of the Institute for the Advancement of Literature through the yin protection privilege, she later studied at the Changge School’s academy, passed the jinshi, and took up her first post as Proofreader in the Palace Library (in charge of collating texts), rank 9b1; later Instructor of Changshan Commandery, rank 8a, in charge of education and of the academies in the city: a capital official posted out to search the prefecture for books.',
       '性格': 'Dignified, refined and clear-minded, with a Confucian’s resolve, and more than a touch of pride.',
       '武学': 'Trained in both of Changge’s paths: Xiangzhi, the healing path, and Mowen, the striking path. Her looks are deceptive: her swordplay is superb, and she can fight surprisingly well.',
       '随身物件': '“Longyuan”, an amber paperweight with a grey tassel: the token she exchanged with Li Tingze.',
@@ -848,7 +848,7 @@ export const charactersEn = {
     birthplace: 'Chang’an county, Yongzhou (Jingzhao Prefecture), Jingji Circuit',
     gloss: 'Book of Songs, “Odes of Zheng”, “Lambskin Coat”: “The lambskin coat is glossy, its three trimmings (ying 英) shine (can 粲). That man there is the flower of the realm.” The Mao preface: “‘Lambskin Coat’ criticises the court: it speaks of the gentlemen of old to admonish the court of its day.” So can 粲 is matched with ying 英. The poem praises a gentleman, and reproaches a court that has no loyal ministers.',
     profile: {
-      '官职身份': 'Senior brother of Wanhua’s Yidu group. In the tenth month of 747 he went with his master to the Tiance Command as Attending Physician, and went back to the school in 749; when war came he brought his juniors to help at the front again.',
+      '官职身份': 'Eldest senior brother among this story’s Wanhua characters. In the tenth month of 747 he went with his master to the Tiance Command as Attending Physician, and went back to the school in 749; when war came he brought his juniors to help at the front again.',
       '性格': 'Refined and gracefully handsome, gentle, clear and upright, unhurried in all he does. Rather an idealist: a medicine boy from childhood and steeped in it for years, he set his heart early on diligent study, with the kind of idealism that would light up the whole world by the gleam of a needle’s point, so that no one else need suffer as he had.',
       '武学': 'Lijing, Wanhua’s healing path, with a painted scroll as his weapon.',
       '随身物件': 'A jade pendant, “Green Bamboo and Cicada Dew”.',
@@ -905,7 +905,7 @@ export const charactersEn = {
     birthplace: 'the outskirts of Chang’an (an orphan, rescued and brought back by people of Wanhua Valley)',
     gloss: 'Li 蓠 is a fragrant herb of old. Shuowen: jiangli is the miwu herb. Sima Xiangru, “Fu on the Shanglin Park”: “covered with jiangli”. Lu Ji of the Western Jin, “Imitating ‘Green, Green the Grass by the River’”: “Lush, lush the jiangli grass, shining (yiyao 熠燿) it grows by the river.” Yiyao is brightness, like something fluttering in the wind. Zhi 芷 speaks of its fragrance, and hua 华 answers its light.',
     profile: {
-      '官职身份': 'Army physician. Later she settled by the Qingzhouhai, Wanhua’s fields of flowers, teaching the foundations to the junior disciples of the Zhengyi rank. Chen Ruihe’s wife.',
+      '官职身份': 'Army physician. Later she settled by the Qingzhou Flower Sea, teaching the foundations to the junior disciples of the Zhengyi rank. Chen Ruihe’s wife.',
       '性格': 'Clear-sighted and quick, bright, innocent and wise, with a stubborn streak and a sharp tongue too. Young, but she sees things clearly; once she decides, she never regrets it, and she adapts very well to any surroundings.',
       '偶像': 'Li Tingshen, you might say. Plenty of her fellows courted her, but she found them, good-natured as they were, too modest and quiet, a little dull; and the wild eccentrics and free spirits she found too strange. Then she met Li Tingshen, a general so very scholarly, with so little presence that she once took him for an official from the capital, and so came to love him.',
       '武学': 'Mainly Lijing, Wanhua’s healing path. But Xu Qiusheng often had her train with him, so her martial arts were not neglected.',

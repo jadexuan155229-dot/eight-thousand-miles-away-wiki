@@ -16,13 +16,13 @@
    - 我上一版说「离经」出自《学记》，是我自己的猜测，查不到依据，撤回。比较可信的读法是「离经叛道」的化用：把「叛」换成「易」，合万花不拘成法的气质。可这种双关译不进英文。
    - 四个名字里只有「花间游」字面在英文里读得通，单把它意译、其余照音，反而不成体例。所以四个都照音，取文中用的简称：Lijing、Huajian、Xiangzhi、Mowen。每份档案武学一栏首次出现时补一句，如 Lijing, Wanhua’s healing path；Huajian, Wanhua’s striking path。
    - 「双修」作 Trained in both of Wanhua’s paths: Lijing, the healing path, and Huajian, the striking path；长歌照此作 Xiangzhi … and Mowen …。
-2. **地点**：
-   - **三星望月**：官方是谷中心三座品字形排列、高耸入云的石针，顶上分建赏星居、觅星殿、摘星楼。照音作 Sanxing Wangyue，陈瑞和官职身份里补一句 the three stone spires at the heart of Wanhua Valley。
-   - **晴昼海**：官方是万花谷天下闻名的花海。照音会和年表里的青州 Qingzhou 撞成一样的拼法，所以仿洱海 Erhai 连写作 the Qingzhouhai，江蓠一条补 Wanhua’s fields of flowers。
-   - **「长歌门中书院」**：上一版我读成了「中书院」，是断错了句。应读作「长歌门中（的）书院」。官方设定里长歌门由相知山庄和微山书院两部分组成，所以译作 the Changge School’s academy, the Weishan Academy。你若不想点出微山之名，我去掉。
-   - **万书楼、挽音阁**：网上的剧情 wiki、萌娘百科都查不到。可能是游戏里没人整理的小地名，也可能是你自己设的。暂照凌雪阁诸院的规矩作 the Wanshu Tower、the Wanyin Pavilion，请告诉我是哪一种。
+2. **地点**（作者 11-24 已定）：
+   - **三星望月**：官方设定是谷中心三座品字形排列的石针，顶上分建赏星居、觅星殿、摘星楼。照音作 Sanxing Wangyue，陈瑞和一条补 the three stone spires at the heart of Wanhua Valley。
+   - **晴昼海**：作者要求把「花海」的意象直接译出。专名照音、通名意译，作 the Qingzhou Flower Sea，与万书楼 the Wanshu Tower、挽音阁 the Wanyin Pavilion 同一体例。上一版担心和青州 Qingzhou 撞拼法，有了 Flower Sea 这个通名，上下文又在万花谷，读者不至于混淆。
+   - **长歌门中书院**：上一版我断成了「中书院」，错了，应读作长歌门中的书院。按作者意思不点出微山之名，只作 the Changge School’s academy。
+   - **万书楼、挽音阁**：作者确认是游戏内地名，照拟作 the Wanshu Tower、the Wanyin Pavilion。
 3. **正意弟子**：官方是万花「门派历程」的称号，有正意弟子（致知诚意，端方晓理，正心修身，博学明辨）、执礼弟子（谦冲自牧，兼济仁心，执礼明意，慎思笃行）。江蓠一条作 teaching the foundations to the junior disciples of the Zhengyi rank。执礼若日后出现，作 the Zhili rank。
-4. **医渡组**：官方设定里也查不到，应该是你自设的组名。照音作 the Yidu group，你若想取字义告诉我。
+4. **医渡组**（作者 11-24 已定）：是作者做人设时自己的分类，不该出现在正文。沈含英官职身份一栏的中文改作「本文中万花人物的大师兄」，英文相应作 Eldest senior brother among this story’s Wanhua characters。
 5. **其余新拟专名**照拟：悬壶 “Xuanhu”, the healer’s hanging pot；青竹蝉露 “Green Bamboo and Cicada Dew”；龙渊 “Longyuan”；琴名辞流 “Ciliu”；商阳指 Shangyang Finger（官方技能名，照音）。你点头后，这几条连同上面的地名、心法名，一并收进 Notion 术语主表。
 6. 顺带核了一下：裴元在官方设定里是药王孙思邈的首徒，人称「活人不医」；入门考的「医者之勇、之智、之勤」三项也是官方的拜师任务，档案写法与设定相合，不用改。
 
