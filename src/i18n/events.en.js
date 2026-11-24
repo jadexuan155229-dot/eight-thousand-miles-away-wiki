@@ -441,7 +441,7 @@ export const eventsEn = {
     "That winter Zhang Qiantuo, governor of Yunnan, made many demands on Geluofeng, cursing him when he did not comply and secretly memorialising his crimes; Geluofeng raised troops, took Yunnan (Yaozhou), killed Qiantuo and seized thirty-two Yi prefectures.",
   // 751
   "骆父（约天宝初年明经出身，历浙东县尉、州曹参军）调赴太原府任中层州县职事，家眷随任北迁，落脚太原城中；骆文璧时在天台山南坡、台州海边一带，未随父北上。太原狄氏为坐地望族，骆父公事上与之往来，两家逐渐知根知底":
-    "Luo’s father (who had passed the mingjing examination early in Tianbao and served as a county sheriff in eastern Zhejiang and as a prefectural administrator) was transferred to a middle-ranking post in Taiyuan, and the family moved north with him and settled inside the city; Luo Wenbi, then on the southern slopes of Mount Tiantai and along the coast of Taizhou, did not go north with her father. The Di of Taiyuan were the great local family, Luo’s father had official dealings with them, and the two families gradually came to know each other well.",
+    "Luo’s father (who had passed the mingjing examination early in Tianbao and served as a District Defender in eastern Zhejiang and as an Administrator in a prefectural section) was transferred to a middle-ranking post in Taiyuan, and the family moved north with him and settled inside the city; Luo Wenbi, then on the southern slopes of Mount Tiantai and along the coast of Taizhou, did not go north with her father. The Di of Taiyuan were the great local family, Luo’s father had official dealings with them, and the two families gradually came to know each other well.",
   "玛奈丽逃出军营投红衣教，时已有身孕":
     "Māneli escaped from the army camp and joined the Hongyi Order; she was already with child.",
   "安禄山兼河东节度使（治太原，辖天兵、大同、岢岚、横野军与云中守捉），代州雁门在其辖内；苍云自此为河东境内唯一不听命于安禄山之兵":
