@@ -8,7 +8,7 @@
 - `src/i18n/events.en.js`：763 薛褚一条 “talk on reputation” 改作 “talk about reputation”，与 745.12 一条统一。
 - `src/i18n/characters.en.js`：宣杨轶事「我们阁中是树，你们是碑」照年表英文作 we are trees; you are steles。
 - 疑点清单 `docs/echoes-en-batchB-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错（回响节点 370/630）；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；在工作环境里用无头 Chromium（Playwright）对英文版截图，看过闵方城（雁门关之役）、岚川云（恩仇）、卢秉毓（常山陷落）三人详情栏，作者定后又在 14a5c6b 上重截卢秉毓、马翊两栏。
+- 验证：check-data 无错（回响节点 370/630）；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；在工作环境里用无头 Chrome（Playwright）对英文版截图，看过闵方城（雁门关之役）、岚川云（恩仇）、卢秉毓（常山陷落）三人详情栏，作者定后又在 14a5c6b 上重截卢秉毓、马翊两栏。
 - **作者定后改**（同日）：马翊之死未定，英文节点照档案作 (undecided)；连朔一条「作者定」由括注移入代码注释，中文改作「（即两蕃南下同一波）」；卢秉毓闲章节点中文「冶于此山」统一作训诂的「同入此山」，英文随之；景惠时「（正文不写）」保留。
 
 ### 英文版余波 A 批：在场姿态与姿态说明（接线）
@@ -17,7 +17,7 @@
 - `src/echoes.jsx`：详情栏姿态与说明、回响节点改走查表，回落中文照例标 `lang="zh"`；图上行内短题与悬停浮签改用英文（短题取第一小句，浮签按词折行）。删去「姿态原文为中文，英文版也保留」的旧注。
 - `scripts/check-data.js`：覆盖率一行加「余波姿态 · 姿态说明 · 回响节点」，三表孤儿报警告。
 - 疑点清单 `docs/echoes-en-batchA-review.md`；`docs/english-edition.md` 记余波细节层。
-- 验证：check-data 无错（余波姿态 50/50、姿态说明 109/109、回响节点 0/630）；oxlint 12；font-chars 无须补字；vite build 通过；本机 Chrome 看过余波页四人详情栏。
+- 验证：check-data 无错（余波姿态 50/50、姿态说明 109/109、回响节点 0/630）；oxlint 12；font-chars 无须补字；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过余波页四人详情栏。
 - **作者定后改**（同日）：震源标题统一作名词短语：闵方城杀奚众 → Min Fangcheng’s Killing of the Xi Herders，那就是一生 → A Whole Life；闵方城（荔非败于邱鸿）姿态「事前不知（作者定：……）」的括注并入姿态说明，`echoes-data.js` 中文同改；余波英文 12 处直撇号改弯撇号。
 
 ### 英文版 T2 人物档案第六批：唐门、五毒、苗疆、南诏、丐帮、万灵、狼牙、纯阳、西域 31 人（T2 档案译完）
@@ -25,7 +25,7 @@
 - `src/i18n/characters.en.js`：唐青阳、唐遐、唐哲、唐绮、唐篪、唐玄、唐熙、央馨、佩留、诺朗齐、尼亚、彩瑶、曼冉、娜留、卓沃、芒沃、纽沃、蒙萍、汪楫、彭涣、雷殷、离朱、彤素、墨昆、阿会朗、屈突真、李庭沄、冉琼如、颜弥、鲁雅、朗迪恩的籍贯、训诂、档案各目与轶事工作译本（档案 90 → 121/124，轶事 245 → 250/250），盖戳 85 处。
 - `src/i18n/events.en.js`：唐青阳诸条青神误拼 Qingshan 4 处改 Qingshen；751 西洱河一条队头、弩队照职名表作 Company Leader、crossbow company；754 一条押官作 Discipline Officer（见下）。
 - 疑点清单 `docs/profiles-t2-batch6-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；本机 Chrome 逐人看过 31 份英文档案，除名号一行照例并列的中文名外无中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；工作环境里的无头 Chrome（Playwright） 逐人看过 31 份英文档案，除名号一行照例并列的中文名外无中文。
 - **作者定后改**（同日）：押官全站由 Detachment Officer 改作 Hucker 7858 的 Discipline Officer（职名表、任期说明 2 处、年表 754、唐青阳档案）；汪楫「枕鱼」取「以鱼为枕」之意作 a fish for a pillow；唐绮原按照留，尼亚原按不译，彭涣「后与杜甫交好」保留。新拟专名与押官、雁塔、两蕃收进 Notion 术语主表 T165–T174。
 
 ### 英文版 T2 人物档案第五批：七秀、藏剑、少林、蓬莱、霸刀、药宗、衍天宗、段氏 21 人
@@ -34,7 +34,7 @@
 - `src/i18n/events.en.js`：751 骆父一条「县尉」照 Hucker 2549 由 county sheriff 改作 District Defender，州曹参军作 an Administrator in a prefectural section。
 - 官名起用私有的 Hucker 索引自查（不入仓库）：县尉、参将、明经、武库、游奕使。
 - 疑点清单 `docs/profiles-t2-batch5-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；本机 Chrome 逐人看过 21 份英文档案，除名号一行照例并列的中文名外无中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；工作环境里的无头 Chrome（Playwright） 逐人看过 21 份英文档案，除名号一行照例并列的中文名外无中文。
 - **作者定后改**（同日）：参将是明清官名，孟雪萦官职身份与年表 758.12A 中文改「裨将」，英文照 Hucker 4607 作 Assistant General（李怀玉「裨将」一并改）；孟雪萦轶事 2「761年初」→「762年初」；穆津「紫微少微」→「紫微太微」；卢秉毓轶事 8 照年表 756.7B 改作协守九门、押到范阳家门前的版本。四处重盖戳。作者定：档案与年表细节不一，以年表为准。新拟专名与县尉、裨将、游奕使、明经收进 Notion 术语主表 T148–T164。
 - `docs/posts-draft.md`：苍云团级「副官（副将、参将）」删去「参将」（作者定，明清官名）。
 - 进度数字更正（审稿人指出）：楼皓、虞嘉、白霖三份中文档案皆无正文，档案上限 121/124（原记 122，漏算楼皓）；第四批后余 52 人（原记 53），第五批后余 31 人、5 条轶事。`docs/english-edition.md`、`docs/profiles-t2-batch4-review.md` 已改。
@@ -45,7 +45,7 @@
 - `src/i18n/characters.en.js`：陈瑞和、沈含英、许秋生、江蓠、林叶矢、裴元、岑菡、杜徵、李庭泽、程骞、程广、程钊、程铎、程钧、任迪简、岚川靖彦、赵盈贞、赵廷之、阿辉的籍贯、训诂、档案各目、轶事与高光工作译本（档案 50 → 69/124，轶事 130 → 195/250），盖戳 190 处。长歌虞嘉、白霖中文档案只有名、字，无可译。
 - `scripts/font-subset-chars.txt` 与三套字体子集：许秋生「薛定谔」的 ö 是站内首见，照 `npm run fonts` 重裁，各多收一字。
 - 疑点清单 `docs/profiles-t2-batch4-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；本机 Chrome 逐人看过 19 份英文档案，除名号一行照例并列的中文名与训诂里照例保留的字外无中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；工作环境里的无头 Chrome（Playwright） 逐人看过 19 份英文档案，除名号一行照例并列的中文名与训诂里照例保留的字外无中文。
 - **查官方设定后改**（同日，作者要求先查）：心法名照音、首现带功能说明（Lijing, Wanhua’s healing path 等）；撤回「离经」出《学记》之说；三星望月作 Sanxing Wangyue（补「谷中心三座石针」）；晴昼海作 the Qingzhouhai（免与青州 Qingzhou 撞拼法）；「长歌门中书院」是我断错句，改作 the Changge School’s academy, the Weishan Academy；正意弟子照「门派历程」称号作 the junior disciples of the Zhengyi rank。万书楼、挽音阁、医渡组官方设定查不到，待作者说明。
 - **作者回复后改**（同日）：万书楼、挽音阁确认为游戏内地名，照拟；晴昼海改作 the Qingzhou Flower Sea，把花海意象直接译出；岑菡一条去掉 Weishan Academy，只作 the Changge School’s academy；「医渡组」是人设分类，不入正文，沈含英中文改作「本文中万花人物的大师兄」，英文作 Eldest senior brother among this story’s Wanhua characters（已重盖戳）。
 - **Hucker 核对**（同日）：正字、文学、弘文馆、太子宾客、判官五个官名对过 Hucker 1440、7704、996、6244、4425，译法不变。岑菡中文品级照唐制改：秘书省正字从九品上 → 正九品下（9a2），常山郡文学正八品 → 从八品下（8b2）；「文学」之名作者定不改。
@@ -56,7 +56,7 @@
 - `src/i18n/characters.en.js`：陆危楼、陆南信、陆灵、陆隐、陆晓、唐煦、玛奈丽、歌莉、高垣、高堑、宣杨、宣康的籍贯、训诂、档案各目、轶事与高光工作译本（档案 38 → 50/124，轶事 91 → 130/250），盖戳 111 处。波斯名训诂照 T1 格式；凌雪阁专名照 Notion 术语主表。
 - `src/wiki.jsx`：训诂英译作 `false`（整条是写给作者自己的注，如陆危楼一条）时，英文界面整块略去，不回落中文。
 - 疑点清单 `docs/profiles-t2-batch3-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 逐人看过 12 份英文档案，除名号一行照例并列的中文名外无中文，陆危楼训诂块不出。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 逐人看过 12 份英文档案，除名号一行照例并列的中文名外无中文，陆危楼训诂块不出。
 - **作者审疑点清单**（同日）：四个新拟专名照拟（T123–T126）；高垣轶事 4 定作「因无子被休」，英文 had borne no son；**称程凯之「知节殿」一律改「知节殿将军」**（作者：单用「知节殿」不自觉沾了日语「殿」字敬称），程凯号英文 Zhijie Hall → the General of Zhijie Hall，官职身份、宣杨轶事 9、年表 770.12 题与英文键随改，驻地照作 the Zhijie Hall（T127）；宣杨轶事 1「你倒识货」英文点明是高垣说的。重盖戳 4 处。
 - **审稿意见**（同日）：高垣轶事 2「高垣哪，慢」原作 “Gao Yuan, slow!”，易读成叫他放慢，改作 “Gao Yuan, too slow!”。
 
@@ -68,7 +68,7 @@
 - **作者审**（同日）：告身照 Hucker 3146 作 Appointment Certificate（T122）。副队头一问是我误读了备注（「领十人」属火长那段），作者看过升迁次序后定不改，仍作 Deputy Company Leader。
 - **审稿意见**（同日）：静息医帐改从 T112 作 the Quiet Breath medical tent（任期说明原照 T088 旧暂译 Quiet Rest Tent），Notion T088 改注；`src/posts.jsx` 三张图英文说明删去 Content remains in Chinese.，改作工作译本说明，苍云编制层级、唐军组名与术语表、职名表取齐。
 - **页底露白**（作者所见）：编制图末几行浮签伸出页底、把页面撑长露出白底。`src/posts.jsx` 浮签离图底不足 240px 改挂其上；`src/theme.js` 给 `<html>` 铺当前皮肤底色。三张图 132 段、中英两种界面逐段验过，浮签不出页底。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 逐段聚焦三张图共 132 段浮签，上、下、备注、依据均无中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 逐段聚焦三张图共 132 段浮签，上、下、备注、依据均无中文。
 
 ## 2026-11-23
 
@@ -79,7 +79,7 @@
 - `src/posts-data.js`：吕定仪一段的 `en` 栏挪入新表，数据层恢复一字不动；`tenureTitleTx` 不再读 `en.title`（与职位全称同文）。
 - `scripts/check-data.js`：任期说明孤儿报警告，覆盖率末行加「任期说明」。
 - 疑点清单 `docs/tenures-t2-review.md`（作者只审此单）；`docs/english-edition.md` 记机制与进度。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文档案任职履历（吕定仪、闵方城、程锋、岚川云、李庭深、齐晟、薛坚、程宇），逐段聚焦苍云、天策两图共 89 段浮签，上、下、备注均无中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文档案任职履历（吕定仪、闵方城、程锋、岚川云、李庭深、齐晟、薛坚、程宇），逐段聚焦苍云、天策两图共 89 段浮签，上、下、备注均无中文。
 - **作者审疑点清单**（同日）：编制图浮签「依据」一行英文界面下〈…〉文档名显示为 manuscript(s)，「卡」显示为 profile（`tenureSrcTx`）；东都留守照 Hucker 组合作 Regent of the Eastern Capital（T120），巡官照 Hucker 2746 作 Inspector（T121）；闵方城「几乎如统领」改作 “acting almost as its Commander”。
 
 ### 英文版 T2 人物档案第二批：天策 10 人
@@ -87,7 +87,7 @@
 - `src/i18n/characters.en.js`：齐晟、程锋、魏谦、项旌、马翊、程宇、秦徽、李庭深、李翰屏、李翰昕的籍贯、训诂、档案各目、轶事与高光工作译本（档案 28 → 38/124，轶事 53 → 91/250），盖戳 102 处。品阶统一写法（principal / secondary，upper / lower grade）。
 - `src/wiki-data.js`：李庭深轶事「又或统领或军师近前戍卫」照 T113 既定决定改「都统」。
 - 疑点清单 `docs/profiles-t2-batch2-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文档案（李庭深、齐晟），工作译本标识正常。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文档案（李庭深、齐晟），工作译本标识正常。
 - **作者审疑点清单**（同日）：李庭深轶事 7 改「762年11月」（与年表 762.11、762.11C 一致），英文随改 eleventh month、重盖戳。门荫照 Notion 术语主表 T033（已定，Hucker：yin = protection privilege）统一作 the yin protection privilege：狄元恪档案「门荫从军」（第一批已合并部分）、程锋档案「受荫而入天策」、年表 732「程锋受荫入天策府」三处一并改；岑菡「荫补弘文馆生」待其批次照此译。T033 用法备注补记三处。
 - **审稿意见**（同日）：参军 / 曹参军事 / 兵马使照职名表改作 Administrator / Administrator of the Military Service Section / Commander（李庭深、项旌两人的档案与轶事）；李庭深档案「曹参军事」照任期表补作「兵曹参军事」，重盖戳；项旌轶事「集合了」改译 when the patrol fell in；程宇「乳酥」改译 butter；疑点清单去掉末尾空行。兵马使旧暂译 Commander of Troops 照职名表全站改作 Commander（狄元恪档案 1 处、年表 5 处，均属已合并部分），Notion T022 随改。
 
@@ -97,14 +97,14 @@
 - 疑点清单 `docs/profiles-t2-batch1-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
 - **作者审疑点清单**（同日）：景惠时旌表档案改作 757 年底（与年表、回响一致），英文随改、重盖戳；薛坚游戏来源括注、关岳作者点评照留；边赛远「越野跑酷选手」一句改为照译（作者用现代说法打的比方照译）。
 - **审稿意见**：樊璋训诂「牙璋」误作 ivory tablet，改作齿状玉璋、发兵符信（toothed jade tally）；`src/wiki.jsx` 档案页加 T2 工作译本标识（英文界面、有档案译文、不在 T1 名单者出一句，与年表页头同式；T1 六人不出）。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文档案（狄元恪、景惠时）。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文档案（狄元恪、景惠时）。
 
 ### 英文版 T2 年表第三批下（末批）：764 年以后 63 条
 
 - `src/i18n/events.en.js`：764 年以后（广德二年至贞元）63 条工作译本，年表英译 558/621 → **621/621，年表全部译完**。体例照第三批上作者审定后的规矩。
 - 疑点清单 `docs/timeline-t2-batch3b-review.md`（作者只审此单）；`docs/english-edition.md` 记年表 T2 完成。
 - **作者审疑点清单**（同日）：765.1B「这是存在」英文改直译 being；766 程骞「服毒草」英文点明是试训未成而寻短见；「斩马刑天」改照音 Zhanma Xingtian，收 Notion 术语主表 T119（建议）。764.1A 补入怀恩与李竭诚谋取太原、辛云京杀竭诚、玚攻太原败而围榆次（《通鉴》卷223，《旧唐书·马燧传》），英文、Notion 同步。764.2A 出处在《通鉴》卷223 广德二年二月条，作者查得原文后核定：「三百骑」改「三百人」，引文补作「怀恩之众数万悉归之」，按语改「（《通鉴》卷223）」；英文、Notion 同步。764.6A 杀浑释之一事，《通鉴》叙于二月怀恩北走至灵州之时，并无「六月」，作者同意挪为 764.2C，764.1A 互见随改；英文、Notion 同步。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 展开英文年表全部各节，无残留中文，页头显示 621 of 621。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 展开英文年表全部各节，无残留中文，页头显示 621 of 621。
 
 ### 英文版 T2 年表第三批上：760–763 年 130 条
 
@@ -113,7 +113,7 @@
 - 疑点清单 `docs/timeline-t2-batch3a-review.md`（作者只审此单）；`docs/english-edition.md` 记本批，余 764 年以后 63 条作末批。
 - **作者审疑点清单**（同日）：761.2 景惠时葬处中文改「（关山之侧）」（删「葬处待定」，与回响一致，Notion 同步）；【预警】作 [content warning]；「郎心有脚」化自《一代宗师》，英文加意译括注；写作建议类照留；两个篇名照拟；762.11B 仆从一句改读；761.4 边民小碑改译。763.2A 辛云京闭城一节，作者查《旧唐书·辛云京传》《马燧传》，均不足为出处（后者是怀恩谋取太原的另一事）；随后核得出处在《通鉴》卷223 广德元年追叙，分两次闭城（762 年怀恩太原见可汗时闭城、不犒师；763 年送可汗出塞时闭城不与相闻），原 763.2A 并作一次。作者定按时间拆开：762.8B 补第一次，763.2A 只留第二次并删「俟核」，762.9D、763.3B 措辞随改；英文、Notion 同步。
 - **762.8B 拆条**（审稿意见，作者同意）：8B 后半所叙（药子昂迎劳、怀恩太原见可汗并第一次闭城、议进军、渡河）在回纥过雁门（762.9D）之后，月份倒置；拆出新条 762.9E（九月推定，在回纥过雁门之后），8B 只留八月南下至京师震骇，9D 互见改指 9E。事件 620 → 621；英文、Notion 同步。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文年表 762 节，760–763 无残留中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文年表 762 节，760–763 无残留中文。
 
 ### 英文版 T2 年表第二批下：757–759 年 111 条
 
@@ -122,14 +122,14 @@
 - 758.12A 平卢军乱引《通鉴》「节度使由军士废立自此始」核实不误（乾元元年冬十二月条，卷220），英文照引并标卷数。
 - **作者审疑点清单**（同日）：758.12A 中文按语「此句凭记忆，俟核《通鉴》卷220」改「（《通鉴》卷220）」；759.10A 删早期遗留的「（方案一）」；九原调改译 the Jiuyuan tune（air 易读成「九原的空气」）；鬼山会、剑庐、千机匣、九原调、明德树收入 Notion 术语主表（T114–T118）。Notion 事件两条同步。
 - 疑点清单 `docs/timeline-t2-batch2b-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文年表 757 节，760 年以前无残留中文。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文年表 757 节，760 年以前无残留中文。
 
 ### 英文版 T2 年表第二批上：750–756 年 132 条
 
 - `src/i18n/events.en.js`：750–756 年 132 条工作译本（年表英译 184/620 → 316/620）。体例照第一批，括注另补两类：写作指示与系年理由不出；史源（《通鉴》卷数）与站内互见照留。
 - 疑点清单 `docs/timeline-t2-batch2a-review.md`（作者只审此单）；`docs/english-edition.md` 记分批（750 年代分上下两批）。
 - **作者审疑点清单**（同日）：吕諲加身份；756.2 天策府城破综述中文改从按语（岚川云随曹雪阳西撤潼关、757 年九月北上，当时决定终生不再返回洛阳）；天策「统领」五处改「都统李承恩」（英文 Commander-in-Chief of the Tiance Command）；《四听》改《思停》（旧稿误写）；静息医帐、都统收入 Notion 术语表（T112、T113）。Notion 事件同步。回响「岚川云 · 天策府城破」随之同改：756.2 节点只留「心灰意冷离开」，另加 757.9A「北上雁门，当时决定终生不再返回洛阳」（与 Notion 同步）。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文年表。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文年表。
 
 ### 云州运粮方向措辞（作者定，与 Notion 同步）
 
@@ -147,7 +147,7 @@
 - 疑点清单 `docs/timeline-t2-batch1-review.md`（作者只审此单）；`docs/english-edition.md` 改写 T2 计划：年表无短事名，改整条分批译。
 - 林叶矢、春山遥保留日语读法（作者定）。
 - **作者审疑点清单**（同日）：中文五处随改（河西节度使崔希逸；删「照料」；陆隐改从大赦之说；阿辉收留按语改「作者已确认无误」；杜徵初见删系年暂定按语），Notion 事件同步两条；英文随改，另：天一教作 the Tianyi Order，青山之后作 Beyond the Blue Hills，知君青骨照音，曳落河、白狮子加注，姗娘、军师标出说话人；T1 岚川云卡鱼皮柄从术语表作 ray-skin (samegawa) hilt；新拟专名收入 Notion 术语表（T098–T111、L042–L045）。详见 `docs/timeline-t2-batch1-review.md` 末节。
-- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；本机 Chrome 看过英文年表。
+- 验证：check-data 无错；oxlint 12（基线不变）；无新字须补；vite build 通过；工作环境里的无头 Chrome（Playwright） 看过英文年表。
 
 ### 回纥过雁门：奉命开关放行（作者定）
 
