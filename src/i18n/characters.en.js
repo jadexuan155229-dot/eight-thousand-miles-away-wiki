@@ -917,14 +917,91 @@ export const charactersEn = {
       '官职身份': 'Son of Lu Wanyue and Tang Zhe, and twin to Tang Xi: the boy of the twins, brought up in the Mingjiao line.',
     },
   }, // 唐煦
-  tangzhe: { name: 'Tang Zhe', zi: 'Zhuwei' }, // 唐哲
-  tangxuan: { name: 'Tang Xuan', zi: 'Jizhi' }, // 唐玄
-  tangqi: { name: 'Tang Qi', zi: 'Sujun' }, // 唐绮
-  tangchi: { name: 'Tang Chi', zi: 'Yousheng' }, // 唐篪
-  tangxia: { name: 'Tang Xia', zi: 'Baihe' }, // 唐遐
-  tangqingyang: { name: 'Tang Qingyang' }, // 唐青阳
-  tangxi: { name: 'Tang Xi' }, // 唐熙
-  mengping: { name: 'Meng Ping' }, // 蒙萍
+  tangzhe: {
+    name: 'Tang Zhe',
+    zi: 'Zhuwei',
+    birthplace: 'Yizhou (Chengdu Prefecture), Jiannan Circuit',
+    gloss: 'Zhe 哲 is wisdom. Yang Xiong, Model Sayings, “Cultivating the Self”: someone asked what benevolence, righteousness, ritual, wisdom and good faith are for, and he said: “Benevolence is a dwelling; righteousness is a road; ritual is clothing; wisdom is a candle; good faith is a tally. Dwelling in the house, following the road, wearing the clothes aright, lighting the candle, holding the tally: the gentleman does not move, and when he moves he gains.” So zhu 烛, “candle”, answers zhe, saying that he lives hidden among the bamboo and sees clearly into the smallest things.',
+    profile: {
+      '官职身份': 'Of the Tang Clan.',
+    },
+    anecdotes: [
+    ],
+  }, // 唐哲
+  tangxuan: {
+    name: 'Tang Xuan',
+    zi: 'Jizhi',
+    birthplace: 'Yizhou (Chengdu Prefecture), Jiannan Circuit',
+    gloss: 'Huainanzi, “Techniques of the Ruler”: “The way of heaven is dark and silent, without form or rule.” Guangyun, level tone, xian rhyme: “Xuan 玄 is stillness.” So ji 寂, “stillness”, goes with xuan.',
+    profile: {
+      '官职身份': 'Tang Zhe’s elder brother (not by blood): once a yaoren of the Wudu, a living subject for their drugs, he escaped as a small child and was taken in by Tang Zhe’s family.',
+    },
+    anecdotes: [
+    ],
+  }, // 唐玄
+  tangqi: {
+    name: 'Tang Qi',
+    zi: 'Sujun',
+    gloss: 'Shuowen: “Qi 绮 is patterned silk.” Shiming: “Qi is slanting: its pattern slants, not following the run of warp and weft.” Ban Gu, “Rhapsody on the Eastern Capital”: “The frontiers are parted like patterned silk.” And: “Su 素 is fine white silk.” Both are silk fabrics, and so they go together; in terms of pattern, they go together as opposites.',
+    profile: {
+      '官职身份': 'Of the Tang Clan. (The author’s original note: the do-anything artillery girl.)',
+    },
+    anecdotes: [
+    ],
+  }, // 唐绮
+  tangchi: {
+    name: 'Tang Chi',
+    zi: 'Yousheng',
+    gloss: 'Erya, “Explaining Music”: “The great chi is called yi.” The chi is a bamboo wind instrument, played held crosswise. Book of Songs, “Lesser Odes · What Man Is He”: “The elder brother blows the xun, the younger blows the chi.” Zheng Xuan’s commentary: “They answer each other in harmony like xun and chi.” Answering each other must be in harmony; elder and younger stand for brothers, and brothers in harmony are friends, so you 友, “friend”, adorns sheng 声, “sound”.',
+    profile: {
+      '官职身份': 'Of the Tang Clan.',
+    },
+    anecdotes: [
+    ],
+  }, // 唐篪
+  tangxia: {
+    name: 'Tang Xia',
+    zi: 'Baihe',
+    gloss: 'Erya, “Explaining Words”: “Xia 遐 is far.” Xia and “far” mean the same, and so go together. Records of the Grand Historian, “Hereditary House of the Marquis of Liu”: “The swan flies high, a thousand li at a stroke; its quills full-grown, it crosses the four seas.” Erya, “Explaining Implements”: the base of the feather is called he 翮, the hollow lower end of the quill; Zheng Xuan’s commentary on the Rites of Zhou, “Officers of Earth · Feather Man”: “He is the base of the feather.” The swan, with its quills, can travel far, and so he answers xia.',
+    profile: {
+      '官职身份': 'Of the Tang Clan.',
+    },
+    anecdotes: [
+    ],
+  }, // 唐遐
+  tangqingyang: {
+    name: 'Tang Qingyang',
+    birthplace: 'Qingshen county, Meizhou, Jiannan Circuit (north of the Qingyi River)',
+    gloss: 'Qingyang was his family’s own surname; when he finished his training he took it in place of his given name, with Tang as his surname. The Qingyang clan takes as its first ancestor Xuanxiao, son of the Yellow Emperor, called Qingyang: the Records of the Grand Historian say that Xuanxiao came down to live on the Jiang River and that his descendants took Qingyang as their clan name; Sima Zhen’s Suoyin: “The Jiang and the Ruo rivers are both in Shu.” The Essentials of Historical Geography: three rivers in Shu are called Qingyi, “blue-green clothes”, one of them at Qingshen, because the Lord Cancong dressed in blue-green and taught the people to farm. Gu Jiegang conjectured that the Qingyang legend may have begun in Shu and only later been attached to the Yellow Emperor’s line: the Qingyang were very likely at first a tribe on the north bank of the Qingyi River, a branch of the Qingyi people; south of a mountain or north of a river is yang, hence the name Qingyang. His own name was Ji. Shuowen, silk radical: “Ji 纪 is separating silk.” In reeling silk you find the end of the thread and part the strands one by one until they run clear: a name a silkworm-raising family would pick up ready to hand. Ji is also order and discipline, and also to record: he remembered the name of every soldier in the camp, and it was he who explained the discipline of Cheng Duo’s camp to the soldiers. When he finished his training he gave it up, and took Qingyang in its place.',
+    profile: {
+      '官职身份': 'A professional soldier (jian’er) of Jiannan by origin, fifteen years under Cheng Duo (739–754): Squad Leader in 741, Deputy Company Leader in 745, already Company Leader by the Xi’er River (751), and Detachment Officer after the battle. In the silkworm month of 754, escorting men of his home district from Meizhou, he let them go before they could be checked and entered on the rolls, did not go back to camp himself, and joined the Tang Clan; after 757 he finished his training, took Qingyang in place of his given name and Tang as his surname, and served in Tang Zhe’s squad. His forebears were a branch of the descendants of the ancient Cancong (a Di-Qiang people): the Cancong tamed the wild silkworm into the domestic one, invented the reeling and weaving of silk and founded the farming civilisation of ancient Shu, and the very character shu 蜀 is a totem bound up with the silkworm. His family were silkworm farmers at Qingshen, and some of their silk was sold to the Tang Clan for bowstrings.',
+      '体貌特征': 'Since 754 he has had an old wound in his right shoulder where a crossbow bolt went through; on rainy days he cannot lift that arm high.',
+      '性格': 'Talkative, fond of telling old stories, good at smoothing things over. He remembers the name of every soldier in the camp, which village each comes from and how many there are at home. Obedient to those above, protective of those below. He does not trust “what they say up there”; he trusts “what I’ve counted myself”.',
+      '武学': 'In the army, a crossbowman: Cheng Duo fought at the very front, and for fifteen years his crossbow was behind Cheng Duo. After the bolt through his right shoulder in 754 he could no longer draw an army crossbow; in the Tang Clan he learned the Thousand-Mechanism Case under Tang Qi instead, and the mechanisms in the case cock it for him.',
+      '随身物件': 'A square of plain silk his mother wove. After the Xi’er River in 751 he wrote on it, one by one, the names of the men from Qingshen in his company who had fallen.',
+      '专擅': 'Telling silk: by touch he can tell which prefecture a bolt of silk comes from and how close its warp and weft are, the counterpart of Tang Zhe’s way with medicines. He knows the mountain roads, can lead soldiers, and can keep a muster roll.',
+    },
+    anecdotes: [
+    ],
+  }, // 唐青阳
+  tangxi: {
+    name: 'Tang Xi',
+    birthplace: 'Yizhou (Chengdu Prefecture), Jiannan Circuit',
+    gloss: 'تیام (Tiyām): a modern Persian name; for this character it means “my eyes, my beloved”; in poetic use it can also mean “a smile from the heart” or “a teardrop”, and its sound is soft. Xi 熙 goes with her twin brother’s name, Xu 煦 (Dārā): both mean the gentle warmth of sunlight.',
+    profile: {
+      '官职身份': 'Of the Tang Clan. The daughter of Lu Wanyue and Tang Zhe, the girl of the twins; her younger brother, Tang Xu, belongs with the Mingjiao.',
+    },
+    anecdotes: [
+    ],
+  }, // 唐熙
+  mengping: {
+    name: 'Meng Ping',
+    profile: {
+      '官职身份': 'A Nanzhao merchant.',
+    },
+    anecdotes: [
+    ],
+  }, // 蒙萍
   duanshao: {
     name: 'Duan Shao',
     zi: 'Kuishi',
@@ -994,9 +1071,40 @@ export const charactersEn = {
     anecdotes: [
     ],
   }, // 楚棠
-  wangji: { name: 'Wang Ji', zi: 'Zhenyu', hao: 'Master Mudboat' }, // 汪楫
-  pengshilu: { name: 'Peng Huan', zi: 'Chengmu' }, // 彭涣
-  leiyin: { name: 'Lei Yin', zi: 'Junxiang' }, // 雷殷
+  wangji: {
+    name: 'Wang Ji',
+    zi: 'Zhenyu',
+    hao: 'Master Mudboat',
+    birthplace: 'She county, Shezhou (Xin’an Commandery), Jiangnan West Circuit',
+    gloss: 'A mudboat is a small boat used in the shallows of mudflats, called a mud-shore boat (Biographies of Fishing Gear, “Boats and Oars · The Mud-Shore Boat”). His lodgings at the Changge School are called the Zhenyu (“pillow-fish”) Studio, hence his sobriquet, Master Mudboat. His name, Ji 楫, “oar”, his courtesy name, Zhenyu, “pillowed on fish”, his sobriquet, Nizhou, “mudboat”: all of a piece, all things of the water.',
+    profile: {
+      '官职身份': 'Of the Beggars’ Guild. He has lodgings at the Changge School, called the Zhenyu Studio.',
+    },
+    anecdotes: [
+      'As a child his home was by the sea. When the tide went out the mudboats went onto the flats, the boatman kneeling on his left leg at the stern and pushing off the mud with his right, cutting the evening beach into pieces; some of the little boats were carried off by the tide and not heard of again for years, and from then on he half knew the drifting and the sorrow that go with boats. His father said the ground under their courtyard had once been beach, and when they dug the foundations they had turned up a small hill of boat planks, sculls and oars; so many new boats now grew out of this ground that the wrecks beneath must be too many to find room for. He lay in a mudboat and stroked its red-pine bottom, the grain hard as iron: what ancient ship was this, come back in this life in a new shape? Time and space so vast can sunder anything, and blur every cause and effect past reading.',
+    ],
+  }, // 汪楫
+  pengshilu: {
+    name: 'Peng Huan',
+    zi: 'Chengmu',
+    birthplace: 'Bazhou (Qinghua Commandery), Shannan West Circuit',
+    gloss: 'Book of Changes, “Huan hexagram”: “The Commentary on the Judgement says: … it is favourable to cross the great river; riding on wood brings success.” In high antiquity boats were hollowed from logs, so riding on wood is riding in a boat, answering Huan’s sense of “favourable to cross the great river”. (The character draws on Su Huan as he appears in Feng Zhi’s essay “Du Fu in His Last Years”.)',
+    profile: {
+      '官职身份': 'Of the Beggars’ Guild. A man of a mountain people; he passed the examinations, but the world had no place for him. With the south-west torn by fighting, he went back to the mountains and armed his people to defend themselves; he is a fine hunter and archer. Later a friend of Du Fu.',
+      '喜好': 'Hunting with the bow, at which he excels.',
+    },
+    anecdotes: [
+    ],
+  }, // 彭涣
+  leiyin: {
+    name: 'Lei Yin',
+    zi: 'Junxiang',
+    profile: {
+      '官职身份': 'Of the Beggars’ Guild.',
+    },
+    anecdotes: [
+    ],
+  }, // 雷殷
   shenhanying: {
     name: 'Shen Hanying',
     zi: 'Canrong',
@@ -1302,9 +1410,34 @@ export const charactersEn = {
     anecdotes: [
     ],
   }, // 叶忱
-  ranqiongru: { name: 'Ran Qiongru', zi: 'Shuxia' }, // 冉琼如
-  yanmi: { name: 'Yan Mi', zi: 'Zhimiao' }, // 颜弥
-  litingyun: { name: 'Li Tingyun', zi: 'Sixun' }, // 李庭沄
+  ranqiongru: {
+    name: 'Ran Qiongru',
+    zi: 'Shuxia',
+    profile: {
+      '官职身份': 'Of Chunyang Palace. She and Yan Mi are senior sister and junior brother in the school.',
+    },
+    anecdotes: [
+    ],
+  }, // 冉琼如
+  yanmi: {
+    name: 'Yan Mi',
+    zi: 'Zhimiao',
+    profile: {
+      '官职身份': 'Of Chunyang Palace. Ran Qiongru’s junior brother in the school.',
+    },
+    anecdotes: [
+    ],
+  }, // 颜弥
+  litingyun: {
+    name: 'Li Tingyun',
+    zi: 'Sixun',
+    birthplace: 'Chang’an / Taiyuan',
+    profile: {
+      '官职身份': 'Of Chunyang Palace. Li Tingshen’s youngest sister of his generation; after the two capitals were recovered in 757 she took up the Taoist life and entered Chunyang.',
+    },
+    anecdotes: [
+    ],
+  }, // 李庭沄
   mengxueying: {
     name: 'Meng Xueying',
     birthplace: 'Yingzhou (Liucheng Commandery), Hebei Circuit',
@@ -1369,8 +1502,26 @@ export const charactersEn = {
   }, // 赵廷之
   // 称号 epithet、别号 hao：2026-11-22 T0 工作稿，待作者审（docs/t0-review.md）
   // ---- 2026-11-22 第二轮：作者定（波斯音译名、苗人用本名；日本人物用日语读法；单名、他族名） ----
-  langdien: { name: 'Rādīn' }, // 朗迪恩
-  luya: { name: 'Royā' }, // 鲁雅
+  langdien: {
+    name: 'Rādīn',
+    birthplace: 'the Western Regions',
+    gloss: 'رادین (Rādīn): a common Persian man’s name, meaning “noble, upright, pure”; for this character, “kind, merciful, chivalrous”.',
+    profile: {
+      '官职身份': 'A Hu merchant trading on his own account along the road from Kucha to the Yumen Pass, in pearls and jade, spices, brocade and horses. Lu Wanyue’s father, Royā’s husband. On the road he happened to save Lu Nanxin, badly wounded in an ambush and dying of thirst, and the two became close friends: this was how his daughter came to join the Mingjiao; Lu Nanxin wanted to bring him in too, but never did. Towards his daughter, his way was to leave her free to explore.',
+    },
+    anecdotes: [
+    ],
+  }, // 朗迪恩
+  luya: {
+    name: 'Royā',
+    birthplace: 'the Western Regions',
+    gloss: 'رویا (Royā): “dream, vision”, often a girl’s name, standing for ideals, sweet dreams and the heart’s vision.',
+    profile: {
+      '官职身份': 'Lu Wanyue’s mother, Rādīn’s wife.',
+    },
+    anecdotes: [
+    ],
+  }, // 鲁雅
   maneili: {
     name: 'Māneli',
     birthplace: 'the Western Regions',
@@ -1387,16 +1538,98 @@ export const charactersEn = {
       '官职身份': 'Māneli’s daughter.',
     },
   }, // 歌莉
-  nuolangqi: { name: 'Nof Langb Chib' }, // 诺朗齐
-  naliu: { name: 'Nax Liuf' }, // 娜留
-  peiliu: { name: 'Pet Liuf' }, // 佩留
-  yangxin: { name: 'Vangb Xenb' }, // 央馨
-  manran: { name: 'Mait Rangs' }, // 曼冉
-  niya: { name: 'Nyax Vos' }, // 尼亚
-  zhuowo: { name: 'Zhod Vos' }, // 卓沃
-  mangwo: { name: 'Mangx Vos' }, // 芒沃
-  niuwo: { name: 'Hniub Vos' }, // 纽沃
-  caiyao: { name: 'Ncaik Ya' }, // 彩瑶
+  nuolangqi: {
+    name: 'Nof Langb Chib',
+    gloss: 'Nof, an adult name, meaning in Miao “lord, king, official”, with overtones of hope, wealth and courage; Langb, a childhood name; Chib, a Miao clan name, the Chi of Chiyou when rendered in Chinese.',
+    profile: {
+      '官职身份': 'Of the Wudu Order.',
+    },
+    anecdotes: [
+    ],
+  }, // 诺朗齐
+  naliu: {
+    name: 'Nax Liuf',
+    birthplace: 'Butterfly Valley (?)',
+    gloss: 'Nax, rice; Liuf, a Miao clan name meaning butterfly.',
+    profile: {
+      '官职身份': 'The elder of the Wudu sisters.',
+    },
+    anecdotes: [
+    ],
+  }, // 娜留
+  peiliu: {
+    name: 'Pet Liuf',
+    birthplace: 'Butterfly Valley (?)',
+    gloss: 'Pet, snowflake; Liuf, a Miao clan name meaning butterfly.',
+    profile: {
+      '官职身份': 'The younger of the Wudu sisters. On a night in Chengdu in the summer of 745, on the high priestess’s orders, she handed over special herbs and then silenced the Nanzhao merchant Meng Ping; in 746 she succeeded as high priestess and ruled the village.',
+    },
+    anecdotes: [
+    ],
+  }, // 佩留
+  yangxin: {
+    name: 'Vangb Xenb',
+    gloss: 'Vangb, winnowing basket; Xenb, a suffix for girls’ names, with no meaning of its own.',
+    profile: {
+      '官职身份': 'Of the Wudu Order, set against the Tianyi Order; Tang Xuan’s companion. On a night in Chengdu in the summer of 745, going to an inn to intercept and switch the Tianyi Order’s herbs, she came upon the body of the Nanzhao merchant Meng Ping, posed as the merchant and went with the inn’s man into the warehouse, and died in an ambush by the Tang Clan; her body burned with the warehouse. Tang Xuan knew only that she had disappeared.',
+    },
+    anecdotes: [
+    ],
+  }, // 央馨
+  manran: {
+    name: 'Mait Rangs',
+    gloss: 'Mait, one of several sounds that stand for “girl”; Rangs, a clan name, named after a kind of livestock.',
+    profile: {
+      '官职身份': 'High priestess of the Wudu Order.',
+    },
+    anecdotes: [
+    ],
+  }, // 曼冉
+  niya: {
+    name: 'Nyax Vos',
+    gloss: 'Nyax, silver; Vos, a Miao clan name, taken from his mother (the Vos family).',
+    profile: {
+      '官职身份': 'Of the Wudu Order. Son of the former village chief and of Hniub Vos, only daughter of the Vos family; Zhod Vos is his maternal uncle.',
+    },
+    anecdotes: [
+    ],
+  }, // 尼亚
+  zhuowo: {
+    name: 'Zhod Vos',
+    gloss: 'Zhod, tiger; Vos, a kind of weapon: a clan named after a weapon, which shows that the Miao of old invented the bow and arrow to defend their homes.',
+    profile: {
+      '官职身份': 'The village chief.',
+    },
+    anecdotes: [
+    ],
+  }, // 卓沃
+  mangwo: {
+    name: 'Mangx Vos',
+    gloss: 'Mangx, maple: for the Miao the maple is the source of life, and from the maple was born the Butterfly Mother, Mais Bangx Mais Lief; Vos, a Miao clan name, see Zhod Vos.',
+    profile: {
+      '官职身份': 'The woman who governs. Head of the Vos household (the ruling family), mother of Hniub Vos and Zhod Vos. In 737 she took Mait Rangs as an adopted daughter: a title only; Mait Rangs kept her own clan name, did not enter the Vos household and had no place in its succession.',
+    },
+    anecdotes: [
+    ],
+  }, // 芒沃
+  niuwo: {
+    name: 'Hniub Vos',
+    gloss: 'Hniub, seed; Vos, a Miao clan name, taken from her mother (the Vos family).',
+    profile: {
+      '官职身份': 'Only daughter of the Vos family: daughter of Mangx Vos, elder sister of Zhod Vos, mother of Nyax Vos. She died of illness around 736, and her husband, the former village chief, lost the right to rule with her; the struggle over the village’s succession began there.',
+    },
+    anecdotes: [
+    ],
+  }, // 纽沃
+  caiyao: {
+    name: 'Ncaik Ya',
+    gloss: 'Ncaik, girl; Ya, a soft particle with no meaning of its own.',
+    profile: {
+      '官职身份': 'A woman of the Wudu Order. In 752, during the Tiance Command’s campaign against Nanzhao from Shu, she met Ma Yi of the Tiance Command, and they fell in love.',
+    },
+    anecdotes: [
+    ],
+  }, // 彩瑶
   // 岚川云：T1 工作译文（2026-11-22），译注与待审见 docs/lanchuanyun-translation-review.md。
   // 作者审后（2026-11-22）：「千鹤」改为号（非字），训诂中文重写（先天策府赐号之义，后日本女名、与云相应），英文照之。
   // 作者审后（2026-11-22）：删轶事「晕血」一条（中英俱删）；高光第一条作者按改为英文说明其人物定位。
@@ -1507,8 +1740,33 @@ export const charactersEn = {
       'His short blade Jingyan gave to Lanchuan Yun when she joined the army: “Let him go with you; he would want that.” It stayed with her half her life; in 770 she passed it on to her adopted son Kyōya and told him where it came from, and in 778 Kyōya boarded a ship of the homeward Hōki embassy with the knife, meaning to take its owner home. The ship was damaged, and no sail came home: the promise to “take you back”, carried by two generations, was never fulfilled.',
     ],
   }, // 阿辉
-  mokun: { name: 'Mokun' }, // 墨昆
-  ahuilang: { name: 'Ahui Lang' }, // 阿会朗
+  mokun: {
+    name: 'Mokun',
+    birthplace: 'The Xi lands',
+    profile: {
+      '官职身份': 'A Xi avenger; leader of a raiding force formed by the remnants of the Two Fan (the Xi and the Khitan) in league with Langya officers in Hebei. His parents were dead from the day he was born: his father, a young Xi man whom Min Fangcheng had befriended years before while posing as a herdsman, died in the purge of the pastures by Langya’s proxies, cursing to the end that he had been deceived; his mother, gravely wounded, gave birth in the snow and died. He grew up in the tribe with his maternal uncle, taught from childhood to take revenge on the Cangyun Army and on Min Fangcheng.',
+      '体貌特征': 'His height went from 167 cm as a boy to 181 cm as a grown man.',
+      '性格': 'At first hot-headed and rash (in the winter of 757, the attempt on Min Fangcheng’s life: finding the banners and sentries all changed, he grew frantic and lay in wait in the main tent); after his humiliation and his return to the tribe he turned to patience and long planning: planted agents, false evidence, feints and ambushes. In seven years he changed from an assassin into a man who commanded troops. His hatred was not born of anything he lived through but handed down from others: a mission conferred on him.',
+      '武学': 'His gift for command is on record: he reorganised the old Xi bands into cavalry formations, set ambushes in the mountain valleys, and feinted at Yanta Tower to draw the tiger from its mountain: “These are not frontier raiders; this is a killing formation” (Di Yuanke’s words).',
+      '专擅': 'Spying and ambush: slipping in to scout banners and sentry posts, leaving planted agents in place of rank-and-file soldiers, faking tokens to lay the blame elsewhere, feinting east to strike west.',
+    },
+    anecdotes: [
+      'In the winter of 757 (then fifteen) he slipped into the forward camp to kill, and was noticed by Lanchuan Yun and seized by Bian Saiyuan; under questioning he mocked Min Fangcheng in front of everyone with the humiliation Min Fangcheng had suffered years before to protect Guan Shan. Min Fangcheng beheaded several of his companions, made him watch, and then, of all things, let him go: old guilt had turned into forgiveness. Liu Rong, furious, tied him hand and foot and threw him outside the camp, on the old ground. Back at his tribe he was reviled instead for having begged on his knees for his life.',
+      'When he withdrew in the tenth month of 760 he had his soldiers leave behind ambiguous tokens (leather cords, deer bones, bronze bells), laying the blame on Qutu Zhen and the friendly Xi herders: a frame-up made without his even being there, which set off the whole chain of wrongful killing, imprisonment, a request to resign and the formation exercise.',
+      'Two raids on the pass: once he struck the wrong man (Di Yuanke, mistaken for Min Fangcheng, was badly wounded), once he had an innocent man killed by another’s hand (Qutu Zhen). He never killed with his own hand the man he truly meant to kill, and in the end died by that man’s blade. Born when Min Fangcheng first joined the army, he died on the eve of Min Fangcheng’s stepping back from the front line; the last time in his life Min Fangcheng held a blade before a battle line, it was against this enemy he had once let go with his own hand.',
+    ],
+  }, // 墨昆
+  ahuilang: {
+    name: 'Ahui Lang',
+    birthplace: 'Youzhou (Fanyang Commandery), Hebei Circuit',
+    gloss: 'The Ahui are one of the great clans of the five tribes of the Xi.',
+    profile: {
+      '官职身份': 'A Xi, Wei Qian’s childhood friend, both of them from Youzhou. In the summer of 757, in the scouts’ affair in the Tiance remnant camp, he ran onto Wei Qian’s curved blade and died.',
+    },
+    anecdotes: [
+      'The curved blade Wei Qian carries was a gift from this Xi friend.',
+    ],
+  }, // 阿会朗
   helan: {
     name: 'He Lan',
     zi: 'Guxin',
@@ -1517,8 +1775,33 @@ export const charactersEn = {
       '官职身份': 'Jing Huishi’s pupil, helping in the medical tent; she later carried on Jing Huishi’s Quiet Breath medical tent (its idea of psychological healing). In the An Lushan Rebellion Mayi fell to the rebels and she was carried off as a servant woman; in the first month of 756 Min Fangcheng retook Mayi, Lian Shuo was first up the wall and saved He Lan from the Langya men, and she later joined the Cangyun Army.',
     },
   }, // 贺兰
-  qutuzhen: { name: 'Qutu Zhen' }, // 屈突真
-  tongsu: { name: 'Tongsu' }, // 彤素
-  lizhu: { name: 'Lizhu' }, // 离朱
+  qutuzhen: {
+    name: 'Qutu Zhen',
+    birthplace: 'The Xi lands',
+    profile: {
+      '官职身份': 'A herdsman of the friendly Xi, one of the few who could come and go between Cangyun ground and the pastures; he once helped the Cangyun Army escort its grain. In the tenth month of 760 he was framed by Mokun and wrongly put to death by Min Fangcheng.',
+      '性格': 'Good by nature; he would never harm anyone (Jing Huishi’s words).',
+    },
+    anecdotes: [
+    ],
+  }, // 屈突真
+  tongsu: {
+    name: 'Tongsu',
+    gloss: 'Classic of Mountains and Seas, “Classic of the Regions Within the Seas”: “Di Jun gave Yi a red bow and white-feathered arrows, to aid the lands below; and Yi set about relieving the hundred hardships of the earth below.” Tong 彤 is red; su 素 is white; zeng 矰 is an arrow trimmed with white feathers and tied to a silk cord: the name comes from “red bow, white arrows”.',
+    profile: {
+      '官职身份': 'Of Wanling Manor.',
+    },
+    anecdotes: [
+    ],
+  }, // 彤素
+  lizhu: {
+    name: 'Lizhu',
+    gloss: 'Classic of Mountains and Seas, “Classic of the Regions Beyond the Seas: South”: “Mount Di: Emperor Yao is buried on its south side, Emperor Ku on its north. There are bears, brown bears, striped tigers, long-tailed apes, leopards, the lizhu and the shirou.” The lizhu may be a three-legged bird of myth, something like a crow; it is also said to have been a minister of the Yellow Emperor with extraordinary sight, able to see the tip of an autumn hair at a hundred paces, and good at finding things: the Jingdian shiwen, juan 27, quotes Sima: “A man of the Yellow Emperor’s time, who could see the tip of an autumn hair at a hundred paces; some say, the point of a needle at a thousand li.”',
+    profile: {
+      '官职身份': 'Of Wanling Manor.',
+    },
+    anecdotes: [
+    ],
+  }, // 离朱
 };
 export const characterTranslation = (locale, id) => locale === 'en' ? charactersEn[id] ?? null : null;
