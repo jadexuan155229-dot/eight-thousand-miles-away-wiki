@@ -312,14 +312,81 @@ export const charactersEn = {
   lubingyu: { name: 'Lu Bingyu', zi: 'Zhisong', hao: 'Forge Mountain' }, // 卢秉毓
   liurong: { name: 'Liu Rong', zi: 'Rong' }, // 柳戎
   liuguan: { name: 'Liu Guan', zi: 'Yuanyi' }, // 柳贯
-  rendijian: { name: 'Ren Dijian' }, // 任迪简
+  rendijian: {
+    name: 'Ren Dijian',
+    birthplace: 'Wannian county, Jingzhao Prefecture, Guannei Circuit',
+    profile: {
+      '官职身份': 'A historical figure. A man of Wannian in Jingzhao, he passed the jinshi, and began as Administrative Assistant to Li Jinglüe, Commissioner of the Tiande Army. At an army banquet the man serving the wine poured him vinegar by mistake, and fearing that the wine steward would be punished, he drank it all and said nothing (the “vinegar-sipping commander”). When Li Jinglüe died in the twentieth year of Zhenyuan, the troops acclaimed him, and he was made Prefect of Fengzhou and Commissioner of the Tiande Army; later he was Military Commissioner of Yiwu; in the Yuanhe years he went home ill, and ended as Adviser to the Heir Apparent, posthumously named Xiang. The histories do not give his dates; the birth year is an estimate. In the Cangyun storyline, in the spring of 764, a boy copyist at the Yanmen grain station, he meets Jin Chenbai.',
+    },
+  }, // 任迪简
   guanyu: { name: 'Guan Yu' }, // 关榆
-  cenhan: { name: 'Cen Han', zi: 'Fangyin' }, // 岑菡
-  duzheng: { name: 'Du Zheng', zi: 'Wenqing' }, // 杜徵
-  litingze: { name: 'Li Tingze', zi: 'Runfu' }, // 李庭泽
+  cenhan: {
+    name: 'Cen Han',
+    zi: 'Fangyin',
+    birthplace: 'Dengzhou (Nanyang Commandery), Shannan East Circuit',
+    gloss: 'Book of Songs, “Odes of Chen”: “By the bank of that marsh there are rushes and lotus buds (handan 菡萏).” Erya, “Explaining Plants”: “He 荷 is the lotus; its flower is handan.” Shuowen: “handan.” Xu’s commentary: “Han 菡 is like han 含, to hold within: not yet opened.” So fangyin 芳隐, “fragrance hidden”, answers the closed bud of han.',
+    profile: {
+      '官职身份': 'At the time, Instructor of Changshan Commandery (Hengzhou). Admitted a student of the Institute for the Advancement of Literature through the yin protection privilege, she later studied at the Changge School’s Zhongshu Academy, passed the jinshi, and took up her first post as Proofreader in the Palace Library (in charge of collating texts), rank 9b1; later Instructor of Changshan Commandery, rank 8a, in charge of education and of the academies in the city: a capital official posted out to search the prefecture for books.',
+      '性格': 'Dignified, refined and clear-minded, with a Confucian’s resolve, and more than a touch of pride.',
+      '武学': 'Trained in both paths, Mowen and Xiangzhi. Her looks are deceptive: her swordplay is superb, and she can fight surprisingly well.',
+      '随身物件': '“Longyuan”, an amber paperweight with a grey tassel: the token she exchanged with Li Tingze.',
+      '喜好': 'Rice in tea and pickled relishes; making incense, and reading literary criticism.',
+      '专擅': 'Collating books, collecting books, detecting forgeries (and forging them herself).',
+    },
+    anecdotes: [
+      'Of the Cen clan of Nanyang, a great family of officials, she is particular about food and clothes, even though what she likes is no costly fare: the tea must be strong and dark, fish and meat grilled till just charred and sprinkled with fine salt, and the rice left to cool a little so that it has some bite.',
+      'She likes to cut flowers for vases or set them in water basins as offerings, lotus flowers and seedpods above all. She enjoys making incense but in fact seldom uses it herself, finding it too much like face powder. Only after Li Tingze was gone, her hands stained with enemy blood, often feeling unclean and unable to bring herself to play the qin, did she use more of it.',
+      'She has an odd, endearing side. Her grandfather was a book collector, and at the Changge School she often put the books in order in the Wanshu Tower; when she got bored she would make up fake books of her own, grand-sounding things like the Posthumous Drafts of the Masters or the Lacunae of Yu Zishan Supplied, slip them onto the shelves, add them to the catalogue too, and be secretly delighted when someone borrowed one. When Li Tingze came to Changge he found several books he had never heard of, read them and even discussed them with his fellows, thinking the Changge School’s library well deserved its fame; Cen Han, beside him, could not keep a straight face and burst out laughing. Li Tingze was not annoyed at all, but liked her for it, and afterwards the two of them would secretly make up fake books together whenever they had nothing else to do.',
+      'Her qin is named “Ciliu”, from the Wenxin diaolong, “Smelting and Cutting”: “Words are like a river’s flow (ciliu); when it brims over, it floods.”',
+      'Pure in bone, with the air of a famous scholar. “When the state has lost the Way, to be rich and honoured is a disgrace.” With that resolve she joined Li Guangbi’s staff, set on serving in the front line. In their troubles she and Du Zheng held each other up; when Du Zheng went blind she took him south back to Changge, and afterwards lived in the Wanshu Tower, collating books and teaching pupils.',
+    ],
+  }, // 岑菡
+  duzheng: {
+    name: 'Du Zheng',
+    zi: 'Wenqing',
+    birthplace: 'Jinyang county, Taiyuan Prefecture (the Northern Capital), Bingzhou, Hedong Circuit',
+    gloss: 'Shuowen: “One who acts in obscurity and yet becomes known (wen 闻): him one summons (zheng 徵).”',
+    profile: {
+      '官职身份': 'At the time steward of the academy in Changshan. He never sought the examinations or office, and helped run the academy in the city with no standing but that of a free wanderer of the jianghu.',
+      '体貌特征': 'Dazzlingly handsome.',
+      '性格': 'Quick-witted, idle and teasing, bright and spirited, proud and obsessive; in ordinary times he can seem a little glib and flippant.',
+      '偶像': 'Shi Kuang and Gao Jianli.',
+      '武学': 'Trained in both paths, Mowen and Xiangzhi.',
+      '喜好': 'Raw fish slices, crab-roe congee; experimenting with face make-up.',
+      '专擅': 'A born ear and sense of pitch.',
+    },
+    anecdotes: [
+      'Through all the upheavals of his youth he grew into someone who does not throw himself in, who stands by and watches. His sense of morality is not very strong. As things in Hebei grew more pressing, Li Tingze rushed about raising volunteers, and Cen Han used the academy as a base to help store grain and medicine. Only he helped, but without much zeal. He felt that some things, when they come, simply come: they have their own drift, their own waxing and waning of force, and no amount of resistance is any use. But before long Li Tingze was in danger, and when he understood that the danger had come right up beside him, he at last took a stand.',
+      'Posing as a disappointed man of letters, he went into the Langya camp to gather intelligence in conversation, to help with the rescue. It failed: Li Tingze died a martyr, and seeing Cen Han heartbroken, his mind gradually grew deeper and darker. In 757, back in Changshan to bring out the academy’s students, he recognised, by the arrowhead Lu Bingyu had brought back, that the Langya officer who came to inspect the academy was the very man who had shot Li Tingze; disguised as a clerk, he received him with the qin, made sure, and struck. He succeeded, but was gravely wounded: he lost both eyes, blinded and disfigured. Later he went back to the school, lived in the Wanyin Pavilion, listening to the strings and teaching the qin.',
+      'The true listener (zhiyin) for the scores on Min Fangcheng’s desk: coming to the Cangyun Army, he happened to see them, played from them, sensed where the note lengths or rhythms were written wrong, told him, and taught him how to write them down.',
+    ],
+  }, // 杜徵
+  litingze: {
+    name: 'Li Tingze',
+    zi: 'Runfu',
+    birthplace: 'Chang’an / Taiyuan',
+    gloss: 'Book of Rites, “The Meaning of the Interchange of Missions”: “The gentlemen of old compared their virtue to jade: warm, smooth and lustrous (run er ze 润而泽): that is humaneness.” Fu 甫 is a fine name for a man.',
+    profile: {
+      '官职身份': 'At the time Administrator of the Granary Section of Changshan Commandery, Hengzhou. He took office young, and joined Changge. In the first month of 756 he went into the enemy camp to rescue his superior, Yan Gaoqing, was pointed out by a turncoat battalion commander, hit by an arrow and taken; too badly wounded to move, he was not sent off with Yan Gaoqing’s first batch of prisoners (in the middle of the first month; Yan Gaoqing was killed at Luoyang that same month), but went with the second batch at the end of the first month, reached Luoyang under escort in the third month and was put in prison, and in the fifth month was beheaded outside Luoyang.',
+      '性格': 'Clear, easy-going and open, warm and sincere. He had a soldier’s ambition young, an ambition for his country, broadly speaking. Cleverer than his elder brother, quicker at both books and martial arts, yet as close and loving with his brother as twins. Since his brother had joined the army, and he had no wish to take his brother’s purpose from him, he chose another road. He resented it a little when young, but could talk himself out of it.',
+      '偶像': 'Ban Chao; he was also often moved by the poems and fu of Yu Xin’s later years.',
+      '武学': 'Mowen, his sword work above all.',
+      '随身物件': 'A peach-blossom hairpin, its shaft tipped with ink: the love token between him and Cen Han. His remains were found with the head apart from the body, and the body was known only by the peach-blossom hairpin inside his robe.',
+      '喜好': 'Yanduxian (bamboo shoots stewed with ham and salt pork, a home dish of Suzhou and Hangzhou). Loves to travel far and wide.',
+    },
+  }, // 李庭泽
   yujia: { name: 'Yu Jia', zi: 'Lubin' }, // 虞嘉
   bailin: { name: 'Bai Lin', zi: 'Qishang' }, // 白霖
-  chengqian: { name: 'Cheng Qian', zi: 'Sizheng' }, // 程骞
+  chengqian: {
+    name: 'Cheng Qian',
+    zi: 'Sizheng',
+    birthplace: 'Beiting Grand Protectorate, Tingzhou, Longyou Circuit; later Luoyang',
+    gloss: 'پَرواز (Parvāz): “flight, spreading the wings, rising”: from par (wing) and vāz (opening out), literally “spreading the wings and soaring into the sky”, which matches his Chinese name Qian 骞 (to rise high, to soar); it also pairs with his elder brother’s name Āsemūn (sky): one the sky, one what soars in it, one “looking up” and one “rising”, hinting at how the brothers’ blood and fates complement each other.',
+    profile: {
+      '官职身份': 'Younger son of Cheng Feng and Lu Ling. He trained for a time at the Tiance Command and failed, and resisted it besides; later, on Li Tingshen’s recommendation, he entered the Changge School.',
+      '体貌特征': 'Of mixed parentage, with deep-set eyes and strong brows: his mother was of the Mingjiao.',
+    },
+  }, // 程骞
   // 程凯：T1 工作译文（2026-11-22），译注与待审见 docs/chengkai-translation-review.md。
   // 轶事第九条（序号 8）「（按：作者隐喻——……金乌……）」：原写 false 不译；作者审后（2026-11-22）改为英文简述其隐喻。
   chengkai: {
@@ -494,11 +561,83 @@ export const charactersEn = {
       'He said he wasn’t homesick, but when he learned that the Tibetans had taken Hexi and Longyou and held all the north-west, he was anxious, and asked again and again to go back to Beiting. At last in 772 he went, and for the next twenty years never came home. When Beiting fell in 790 he fell back with Yang Xigu to hold Xizhou, and in 792 he fell at Xizhou.',
     ],
   }, // 程宇
-  chengzhao: { name: 'Cheng Zhao', zi: 'Gulian' }, // 程钊
-  chengduo: { name: 'Cheng Duo', zi: 'Mingzhi' }, // 程铎
-  chengjun: { name: 'Cheng Jun', zi: 'Weizhen' }, // 程钧
-  chengguang: { name: 'Cheng Guang', zi: 'Qianli' }, // 程广
-  chenruihe: { name: 'Chen Ruihe', zi: 'Xinchu' }, // 陈瑞和
+  chengzhao: {
+    name: 'Cheng Zhao',
+    zi: 'Gulian',
+    birthplace: 'Luoyang, Duji Circuit',
+    gloss: 'Shuowen, Knife radical: “Zhao 钊 is to wear down (wan 刓).” Duan Yucai’s note: “Metal has points and edges; handling wears them away.” Records of the Grand Historian, “Biography of the Marquis of Huaiyin”: “The seal was worn smooth in his hand, and he could not bear to give it.” So zhao is metal with its edges worn down. Lian 廉: Yupian, “an edge”; Book of Documents, “Counsels of Gao Yao”: “simple, yet with edges (lian)”; Book of Rites, “The Conduct of the Scholar”: “whetting his edges and corners (lian yu)”.',
+    profile: {
+      '官职身份': 'Second son of the Cheng family, by a secondary wife (his mother was a maid who came with the principal wife at her marriage, freed after his birth and made a concubine). Raised in Luoyang, he went to Beiting with his mother around 733. He carried on the family tradition, and his merit went unrewarded. In the tenth month of 740, when tribes unwilling to submit attacked the Juliu Garrison Post, he fell in battle, before Cheng Guang.',
+      '性格': 'Steady and taciturn, with great patience; more rigorous than Cheng Feng, but also colder. Used to forbearance and stratagem, with a strong sense of responsibility for the family’s affairs.',
+      '武学': 'Good at commanding formations, skilled with the spear and in mounted fighting, though among the brothers his fighting did not count for much; in tactics, rather, he was ahead of them.',
+      '专擅': 'Commanding formations, and tactics.',
+    },
+    anecdotes: [
+      'With Cheng Kai: he recognised Cheng Kai’s ability but disliked his character, thinking him too impulsive and stubborn, and often looked on him coldly. As a child he paid Cheng Kai no particular attention; later, since Cheng Kai counted for little in the family, he felt some pity for him, but never sought him out. After Cheng Kai fought his way out of the house and joined the Tiance Command on his own, he only said, “Let him do what he likes.”',
+      'In the winter of 735, when the Türgesh besieged Beiting, he first went into battle; when the weapons on the walls snapped in the cold, he asked to take charge of repairing the arms and armour, and stayed with the arms and armour from then on: the man Ye Shuxi sought out in 738, when she came west looking for iron, was the one in charge of them. In the first month of the next year he went out with Gai Jiayun and broke the Türgesh, and the histories record only the commander’s name.',
+      'In the winter of 739 he was betrothed to Ye Shuxi of Cangjian Manor; since a younger brother should not bring home his bride before the eldest has married, Cheng Feng urged him to marry first, and he declined. In the summer of 740, when Baga Tarkhan revolted, he was sent to the Juliu Garrison Post, and before he left, he and Ye Shuxi had a child; in the tenth month, when tribes unwilling to submit attacked the post, he fell in battle. As he died he wrote to Cheng Feng setting out his last wishes, and the letter said nothing of the child. His posthumous daughter Ye Chen was born at Beiting in the spring of 741 and took her mother’s surname; the family register reads “unmarried; one daughter, who takes her mother’s surname”.',
+    ],
+  }, // 程钊
+  chengduo: {
+    name: 'Cheng Duo',
+    zi: 'Mingzhi',
+    birthplace: 'Luoyang, Duji Circuit',
+    gloss: 'Analects, “Bayi”: “The world has long been without the Way; Heaven is going to use the Master as its wooden bell (mu duo 木铎).” Guoyu, “Discourses of Wu”: “Before dawn the king took up the drumstick and himself sounded the bells and drums, the dingning and the chunyu, and shook the bells (zhen duo).” The bell is shaken to sound a warning to the many, whether in commanding an army or in governing the people: the meaning is one. So mingzhi 鸣治, “sounding to govern”, answers duo 铎.',
+    profile: {
+      '官职身份': 'Third son of the Cheng family, the most soldierly of them all, a general’s son to the core. Stationed in Shu for many years.',
+      '性格': 'A soldier of iron and blood: harsh and rigid, holding military discipline and the family’s honour above all.',
+      '武学': 'Both the long spear and shield-and-blade; the strongest of the Cheng brothers at close quarters (single combat on horseback), and the one who fights most like Cheng Guang.',
+    },
+    anecdotes: [
+      'He greatly respects Cheng Feng, sees him as the heart of the family, and is willing to serve as his right hand. On the battlefield they work together perfectly, but in the family’s own affairs he leans more to the military, while Cheng Feng is more rounded.',
+      'Early on he utterly rejected Cheng Kai, thinking his birth an embarrassment and that he would never amount to much. He was the first in the family to raise the question of Cheng Kai’s standing, opposing his being put on an equal footing with the sons of the principal wife; when they were children he was extremely hard on Cheng Kai, and once even proposed sending him away from the family. Yet later, during the An Lushan Rebellion, he still kept a private eye on how Cheng Kai was faring in the fighting.',
+    ],
+  }, // 程铎
+  chengjun: {
+    name: 'Cheng Jun',
+    zi: 'Weizhen',
+    birthplace: 'Luoyang, Duji Circuit',
+    gloss: 'Jun 钧 is the potter’s wheel; taojun 陶钧 is often used for creation, the shaping of nature: Zou Yang, “Letter to the Prince of Liang from Prison”: “So the sage kings governed the age and ruled its ways, shaping them alone upon the potter’s wheel.” Zhen 甄 is making pottery: Book of Han, “Biography of Dong Zhongshu”: “It is like clay on the wheel: it is only for the potter (zhen) to make of it what he will”; by extension, to shape, to bring about; Book of Han, “Biography of Ban Gu”: “shaping Yin and moulding Zhou”. The ancients often spoke of heaven and earth as a furnace and of the potter’s work as creation, so weizhen 唯甄, “only the potter”, answers jun.',
+    profile: {
+      '官职身份': 'Fourth son of the Cheng family, and the odd one out: unwilling to take up the family calling, he roamed far and wide, making friends among the knights-errant of the jianghu, with little to do with the army or politics. He joined the army briefly, but soon left. In the war he took no part in any great battle, but travelled from place to place, now and then bringing Cheng Kai news; in the end he went into hiding amid the turmoil, and no one knows what became of him.',
+      '性格': 'Free and easy, dashing, humorous and casual, fond of poetry and wine, quite out of keeping with the severity of the other Cheng brothers.',
+      '武学': 'Born into a military family, he learned the family spear (shuo lance) technique from his third brother Cheng Duo as a boy; after leaving home he leaned more to qinggong and a wandering swordsman’s style, wearing a blade day to day and seldom using the spear.',
+      '喜好': 'Poetry and wine.',
+    },
+    anecdotes: [
+      'He is the brother Cheng Kai is closest to in the family. When Cheng Jun was little, Cheng Kai taught him how to dodge punishment from their father and brothers, and took him sneaking off to the Luoyang night market. Unlike his elder brothers he cares least of all about Cheng Kai’s birth, and even jokes, “If you had no name and no surname, you’d be free, at least.”',
+      'After Cheng Kai joined the Tiance Command, he once happened by to visit him, bringing wine as a gift, but also urged him not to cling so hard to the family’s acceptance.',
+    ],
+  }, // 程钧
+  chengguang: {
+    name: 'Cheng Guang',
+    zi: 'Qianli',
+    birthplace: 'Luoyang, Duji Circuit',
+    gloss: 'Shuowen: “A great building with a hall.” Book of Changes, “Appended Statements”: “In breadth and greatness (guang da 广大) it matches heaven and earth.” So qianli 千里, “a thousand li”, answers guang 广, broad.',
+    profile: {
+      '官职身份': 'Cheng Kai’s birth father. From 741 Military Vice Commissioner of Yixi and Beiting; died in 747 in the Little Balur campaign (under Gao Xianzhi). His second son, Cheng Zhao, had died before him, in 740, on the western road out of Beiting.',
+    },
+  }, // 程广
+  chenruihe: {
+    name: 'Chen Ruihe',
+    zi: 'Xinchu',
+    birthplace: 'Hefei county, Luzhou, Huainan Circuit',
+    gloss: 'Shuowen, Jade radical: rui 瑞 is “jade used as a token of good faith (xin 信)”. So xin answers rui, and chu 初, “the beginning”, adorns it: a heart set on its course from the first, and never wavering.',
+    profile: {
+      '官职身份': 'Head of the guards at Sanxing Wangyue in Wanhua Valley. In the eighth month of 757 he led a squad of Wanhua disciples into Suiyang with Nan Jiyun’s relief force and lived through the city’s last two months; when it fell in the tenth month he was spared as a physician, and later went back to the Valley. When disaster came to Wanhua Valley in 758 he kept a cool head, a pillar of his generation; in the eleventh month of 762, serving with the army under Cheng Feng, he treated the gravely wounded Min Fangcheng. Jiang Li’s husband.',
+      '性格': 'Steady and decisive, and endlessly patient. He has something of a “plodding, unremarkable” air about him, and yet is not wholly without ambition: it shows more as a kind of uncomplaining willingness to bear whatever work comes. He has seen many horrors in the army, the last two months at Suiyang worst of all, and so holds soldiers and their commanders in particular respect, and in a certain fear as well: respect for their holding out, and fear of what they will have to fill the breach with when they hold out to the very end. The second half he never speaks of; it lies pressed down beneath that plodding, uncomplaining manner.',
+      '武学': 'Trained in both paths, Lijing and Huajian.',
+      '专擅': 'Major surgery, above all bones and wounds. He always looks as if he isn’t sure of himself, and is in fact very capable; half of that unsure look he brought back from Suiyang.',
+    },
+    anecdotes: [
+      'His court Mandarin has a bit of an accent. His voice is light and quick, a mixture of southern and northern speech.',
+      'He was once sent up from Luzhou as a provincial candidate and sat the jinshi examination in Chang’an again and again without passing, and for a time was too ashamed to go home. Then, as chance would have it, he met Xu Qiusheng in Chang’an, they talked, and he joined the school.',
+      'In the eighth month of 757 he led a squad of Wanhua disciples back into Suiyang with the relief force Nan Jiyun had borrowed from Ningling, losing some of his fellows on the way: of three thousand men, only a thousand got in. Why go to Suiyang? Han Yu said that Zhang Xun and Xu Yuan, “holding one city, defended the whole realm” and “screened the Yangzi and the Huai”: behind the city lay Hefei in Luzhou, and he was holding the gate to his own home. He then lived through the city’s last two months: after the sparrows were netted and the rats dug out, it was people; a doctor whose field was bones and wounds, he set bones in that city for “the ones left uneaten”. When the city fell on the ninth day of the tenth month he was kept on as a physician, lost among the four hundred or so survivors; only when An Qingxu abandoned Luoyang and fled north a week later did he get away, walking seven or eight hundred li, and reaching Luoyang in the eleventh month. (Note: Suiyang is the most literal place where “loyalty” devoured “humaneness”: people at the time blamed Zhang Xun for the cannibalism, and Li Han wrote his biography in his defence. His saving of Min Fangcheng in front of Cheng Feng’s tent in 762, and his kneeling in 763 to set a deaf-mute boy’s broken legs straight, can both be read as things he brought out of Suiyang.)',
+      'In the winter of 757 he treated Cheng Feng’s injured back, and the high fever of Cheng Feng’s little son Cheng Qian, and so by chance came to know Cheng Feng; in 762, when Min Fangcheng was gravely wounded in battle and all but beyond saving, it was he, serving with the army under Cheng Feng, who saved him.',
+      'When the Tibetans took Chang’an in 763, Kyōya was brought back to the camp for the displaced by Lanchuan Yun with both legs crushed, and it was he who treated him. The boy was deaf and mute, knew no Chinese, and had only just come through the turmoil; at the least pain he would only cry and cry, and still he never grew impatient: kneeling beside the boy, he straightened his legs little by little, splinted them, gave him medicine, and tried one way after another to ask him things and comfort him.',
+      'When they married, Jiang Li told him frankly of her past with the Tiance army, which rather made him feel small: had he not joined Wanhua, he thought, he would be nothing but a down-at-heel scholar; how could he compare with a general, and how had he come by such a wife? In Chang’an in 763, hearing that the general who had come from the Tiance Command was an old acquaintance of Jiang Li’s, he deliberately kept out of the way; Jiang Li understood him, and when Cheng Kai asked to meet him she spoke up for him. Later, when the Tiance army had stayed in Chang’an a little over two months and was going home, Jiang Li had medicines to send and wanted to see them off outside the city, and he would not let her: thinking that she was far along and had a bad back, and could not easily get about, it was he who took the things to the Tiance camp, introduced himself, and said for Jiang Li everything she would have said.',
+    ],
+  }, // 陈瑞和
   xiamingcang: { name: 'Xia Mingcang' }, // 夏明沧
   xuezhi: {
     name: 'Xue Zhi',
@@ -703,14 +842,94 @@ export const charactersEn = {
   wangji: { name: 'Wang Ji', zi: 'Zhenyu', hao: 'Master Mudboat' }, // 汪楫
   pengshilu: { name: 'Peng Huan', zi: 'Chengmu' }, // 彭涣
   leiyin: { name: 'Lei Yin', zi: 'Junxiang' }, // 雷殷
-  shenhanying: { name: 'Shen Hanying', zi: 'Canrong' }, // 沈含英
-  xuqiusheng: { name: 'Xu Qiusheng', zi: 'Wenzhan' }, // 许秋生
-  jiangli: { name: 'Jiang Li', zi: 'Zhihua' }, // 江蓠
+  shenhanying: {
+    name: 'Shen Hanying',
+    zi: 'Canrong',
+    birthplace: 'Chang’an county, Yongzhou (Jingzhao Prefecture), Jingji Circuit',
+    gloss: 'Book of Songs, “Odes of Zheng”, “Lambskin Coat”: “The lambskin coat is glossy, its three trimmings (ying 英) shine (can 粲). That man there is the flower of the realm.” The Mao preface: “‘Lambskin Coat’ criticises the court: it speaks of the gentlemen of old to admonish the court of its day.” So can 粲 is matched with ying 英. The poem praises a gentleman, and reproaches a court that has no loyal ministers.',
+    profile: {
+      '官职身份': 'Senior brother of Wanhua’s Yidu group. In the tenth month of 747 he went with his master to the Tiance Command as Attending Physician, and went back to the school in 749; when war came he brought his juniors to help at the front again.',
+      '性格': 'Refined and gracefully handsome, gentle, clear and upright, unhurried in all he does. Rather an idealist: a medicine boy from childhood and steeped in it for years, he set his heart early on diligent study, with the kind of idealism that would light up the whole world by the gleam of a needle’s point, so that no one else need suffer as he had.',
+      '武学': 'Lijing, with a painted scroll as his weapon.',
+      '随身物件': 'A jade pendant, “Green Bamboo and Cicada Dew”.',
+      '喜好': 'The poetry of Chen Zi’ang, for its “bones clear and set, vast and soaring up to the River of Heaven”.',
+      '专擅': 'Versed in all six arts, outstanding in medicine among his generation, and of fine character too, respectful to those above and kind to those below: all but perfect. He never imagined he would stand out from others, and somehow did.',
+    },
+    anecdotes: [
+      'When he was very small, an epidemic broke out in his village, one deadly to grown men and women; so only he and a few other children were carried out, and came to the Valley.',
+      'As a child he once nearly went missing and was about to be carried off, and was saved in a back lane by Cheng Kai, who was stabbed doing it and left with a scar on his right forearm; neither knew the other’s name, and Cheng Kai even took him for a little girl.',
+      'Now and then he envied the free-spirited masters and eccentrics of the Valley, though not because he wanted to be like them himself. He studied his arts step by step and treated the sick, and when things were quiet and he thought it over, he would feel a little lost: Jiang Li once asked him a question that went straight to the soul, what he loved and longed for most, and he could not say.',
+      'He set great store by bearing. A few days after he came to the Tiance Command, word suddenly came that most of the soldiers in the camp were vomiting and purging without end; he hurried to treat them, and the furious soldiers, taking him for a Shence spy, turned their bows on him. Knowing it was useless to argue, he stood squarely with his hands behind his back to take the arrow, until Cheng Kai threw him down, shielded him and got him away, and he was confined to his quarters. Shut in his room, he still worried over the soldiers’ symptoms, and wrote out prescriptions for Cheng Kai to take to the infirmary, brew, and share out in the camp. Lanchuan Yun, watching from the back, said nothing and went off to find evidence to clear his name; and so he became friends with the Tiance people.',
+      'In fact he is very good at roundabout digs. In his first two years at the Tiance Command, Cheng Kai, ordered to help the Wanhua people, was very eager, and would often agree to something before he had heard the half of it and set off at once. So he said: why are you called Ziyang? You ought to be called Zilu: “When Zilu had heard something and had not yet been able to act on it, his only fear was that he would hear something more.” And so Cheng Kai got a nickname: when someone in the infirmary said “Zilu has come to hear the Way again”, everyone knew who was meant.',
+      'In his teens, when he truly entered the school as a pupil, a knife, a wooden shovel and a peach were set on the table for them to choose from. He chose the knife, and the trial that followed was to cut off a monkey’s ears; he did it through gritted teeth, and was in a daze for a long while after. Only later did he learn that the knife stood for a physician’s courage. What he had chosen, he never told Jiang Li, Xu Qiusheng or the others.',
+      'He once gave Xu Qiusheng a brush rest in the shape of a bamboo joint: “He wanted me always to remember: a gentleman keeps his jie.” Jie 节 is both the joint of a bamboo and integrity.',
+      'A hopeless cook. Life is for blowing up kitchens.',
+    ],
+    highlight: [
+      'In the second month of 756, at the front, he alone insisted on examining the bodies once more, and found among them that Cheng Kai might yet be brought back. When Cheng Kai was carried back and his armour taken off, the scar on his right forearm showed, and Shen Hanying knew him for the boy who had once saved his life. Xu Qiusheng urged him not to, and Li Tingshen begged him to: caught between the two, he made up his mind, and spent his inner strength to the last to seal the wounds and clear Cheng Kai’s breath and channels.',
+      'In the fifth month of 756, his inner strength still spent, he was surrounded when the Langya Army raided the pasture, and died protecting the wounded.',
+      '“When we speak of hastening with all our heart to the rescue, it so often… does not come down to the ‘rescue’ at all. What we do is, mostly, the ‘hastening’. To go, to do all we can, to attend to and ease every kind of pain and sickness: that is where the heart of it lies.”',
+    ],
+  }, // 沈含英
+  xuqiusheng: {
+    name: 'Xu Qiusheng',
+    zi: 'Wenzhan',
+    birthplace: 'Xinfeng county, Yongzhou (Jingzhao Prefecture), Jingji Circuit (merged into Huichang in the seventh year of Tianbao, renamed Zhaoying: the county of the Huaqing Palace)',
+    gloss: 'Chuci, “Summons of the Soul”: “Deep, deep (zhan 湛) the river water, and maples above it.” Hong Xingzu’s supplementary commentary: “The maple… after the frost its leaves turn a lovely red, and so the poets often speak of it.” The maple is a scene of autumn, so zhan is matched with qiu 秋, autumn. In the Five Phases autumn belongs to metal, and metal is the sign of arms: it feels like fate, a man bound for places where you fight with your strength, not a scholar of the usual sort.',
+    profile: {
+      '官职身份': 'When war came he came to help, and served as army physician in Li Tingshen’s camp; in 764 he was made Medical Erudite of the Tiance Command, and spent the rest of his life there. He took Kyōya as his pupil.',
+      '体貌特征': 'His face is stern, cool and aloof; measured against the usual picture of the inner-strength schools, he looks rather rugged. He is often too lazy to tie up his hair, and when alone often has the air of one who sleeps among the hills and marshes, easy and detached.',
+      '性格': 'Upright and mild, but with a sharp tongue. His expression is distant and cool, yet there is vigour in how he acts. Meticulous in everything he does. Rather a pessimist: he often feels that all he does will leave no trace in the end, and that the world will always simply be as it is. That is not something he could ever say to his senior brother or junior sister; when he happened to mention it to Cheng Kai and Li Tingshen, they understood, and that, oddly, was a comfort.',
+      '偶像': 'The free spirit of the Wei and Jin. The poetry of Tao Yuanming.',
+      '武学': 'A marvellous two-path man, liable to switch at any moment into a hot-tempered Huajian. He seldom strikes, but when he does, it counts.',
+      '随身物件': '“Xuanhu”, the healer’s hanging pot: a small bronze piece in the shape of a teapot, small enough to close in the hand, given him by his senior brother when they came out of the Valley to help; and the bamboo-joint brush rest Shen Hanying gave him.',
+      '喜好': 'Longing for the Wei and Jin in all the wrong ways: he longs for carefree moments of “the weeds thick, the bean sprouts few”, with no need to dress properly, and really does it, too: on a summer night, leaning on a rock by the pool with his collar open, perfectly content.',
+      '专擅': 'Painting. Landscapes and figures alike, though he seldom mentions it himself; later he drew reconnaissance sketches to help the army.',
+    },
+    anecdotes: [
+      'The son of a village martial-arts teacher, he learned some rough external skills, and so moves briskly, is not afraid to act, and speaks bluntly, at times even a little roughly: that was how he poured medicine into Cheng Kai when Cheng Kai fell into a sudden coma. His martial upbringing has its uses, too: testing needles on himself, he can go all out and bear the pain.',
+      'His home county of Xinfeng had Huichang carved out of it in the Tianbao years, and Huichang was renamed Zhaoying: the very county of the Huaqing Palace. In the tenth month of 747, when Shen Hanying went with his master to the Tiance Command, Xuanzong was visiting the hot-spring palace and renaming it the Huaqing Palace: the emperor was in his home town.',
+      'His father died in an epidemic; Shen Hanying, travelling to treat the sick, saved his life and his mother’s, and brought him into the school: “Are you afraid?” “They’re my own parents. What is there to be afraid of? But do you have a way?” “I will do all I can. Come in with me.” He did not hesitate.',
+      'Some of his fellows laughed at his background and said that he was a rough sort, after all. As a boy he minded this terribly, and his early training did not go smoothly: for the first two years he could never pass the school’s examinations at the first try. He fretted, while Shen Hanying, unhurried beside him, kept him at his books. Later, examining patients and using the needle, he was trained in all of it by Shen Hanying, hand over hand.',
+      'His mother, gravely ill with a winter chill, did not live through that winter. On New Year’s Eve Shen Hanying stayed with him, sitting on the couch, talking slowly: “Brother, I just never thought that in the end it would be my own family I couldn’t save.” “When we speak of hastening with all our heart to the rescue, it so often… does not come down to the ‘rescue’ at all.” He revered and loved Shen Hanying, and followed him for years after; perhaps some of what he felt went beyond what fellow pupils feel, but he did not want to pick such things apart.',
+      'His senior brother, having saved Cheng Kai, could not protect himself and died at last, and for a time he bore Cheng Kai a grudge for it. Later Cheng Kai risked his life to bring back Shen Hanying’s jade pendant, and seeing that he meant it from the heart, he came to respect him. “Qiusheng could die at any time. But as things stand, I have to find a way to live. I can’t let all that my brother cared for fall into the dust for nothing.”',
+      'He is from Xinfeng: the first line of Wang Wei’s “Song of Youth” is “The fine wine of Xinfeng, ten thousand cash a measure.” He can hold his drink, and would drink with Li Tingshen till midnight, sometimes talking of poetry and painting too: the plum-blossom-in-the-cold picture that always hangs in Li Tingshen’s room in winter is his work. But of course he can’t outdrink Li Tingshen: one night Li Tingshen, all smiles, drank him into a stupor, and he wandered off on his own to use Shangyang Finger on the bushes beside the camp, befuddled but utterly determined.',
+      'Schrödinger’s obsessive: the brushes on the rack on his desk must hang in order of size, but that is only for putting them away; when he actually writes, anything goes, and he can write small characters with a big brush; once he took a battered brush with its hairs all splayed and, as if nothing were amiss, wrote fly’s-head small script with a single tuft. Ask, and he says a good calligrapher doesn’t choose his brush; ask what a brush needs for good calligraphy, and he says it needs hairs.',
+      'By nature he likes to keep a low profile, free and without ties, yet everything he does is the result of accepting a tie: Shen Hanying asked him to watch over the two generals, and he did, and in the end spent his life at the Tiance Command; in the Valley he always said he did not want to take pupils, and yet he took Kyōya on. He once bound the herb drawings Kyōya had made into a book and took it to the Valley to show his fellows, and was rather proud of it. (Note: the Newly Revised Materia Medica originally came with twenty-five juan of Illustrations; his volume carried on the tradition of the officially compiled herbal atlas.)',
+      'When it came to choosing one of three he took the wooden shovel, which stands for a physician’s diligence. “By my nature I would have taken the knife, for sure. But I thought then: I’m a rough sort anyway, and having come to this fairyland of a place, I ought to be a bit more refined.” He jokes that from the war camps all the way to the Command, what he has laboured with is indeed his strength, and only his strength.',
+    ],
+  }, // 许秋生
+  jiangli: {
+    name: 'Jiang Li',
+    zi: 'Zhihua',
+    birthplace: 'the outskirts of Chang’an (an orphan, rescued and brought back by people of Wanhua Valley)',
+    gloss: 'Li 蓠 is a fragrant herb of old. Shuowen: jiangli is the miwu herb. Sima Xiangru, “Fu on the Shanglin Park”: “covered with jiangli”. Lu Ji of the Western Jin, “Imitating ‘Green, Green the Grass by the River’”: “Lush, lush the jiangli grass, shining (yiyao 熠燿) it grows by the river.” Yiyao is brightness, like something fluttering in the wind. Zhi 芷 speaks of its fragrance, and hua 华 answers its light.',
+    profile: {
+      '官职身份': 'Army physician. Later she settled by the Qingzhou Sea, teaching the foundations to new disciples. Chen Ruihe’s wife.',
+      '性格': 'Clear-sighted and quick, bright, innocent and wise, with a stubborn streak and a sharp tongue too. Young, but she sees things clearly; once she decides, she never regrets it, and she adapts very well to any surroundings.',
+      '偶像': 'Li Tingshen, you might say. Plenty of her fellows courted her, but she found them, good-natured as they were, too modest and quiet, a little dull; and the wild eccentrics and free spirits she found too strange. Then she met Li Tingshen, a general so very scholarly, with so little presence that she once took him for an official from the capital, and so came to love him.',
+      '武学': 'Mainly Lijing. But Xu Qiusheng often had her train with him, so her martial arts were not neglected.',
+      '随身物件': 'A bracelet from Shen Hanying: offcuts of green jade ground into little bamboo joints, bored through the middle and strung on silk thread. On her desk she always keeps a copy of Chen Cangqi’s Supplement to the Materia Medica (739), which gathers the folk herbs left out of the standard works.',
+      '喜好': 'The Chuci; sewing sachets. Growing up in Wanhua Valley she saw many rare flowers and strange plants, yet she cares nothing for costly blooms, and loves to gather little wild flowers and fragrant herbs to make sachets to wear at her waist; she often jokes with “Better to be the orchid broken and the jade shattered than to flourish as mugwort and wormwood”, saying that mugwort and wormwood are just what she likes. (Note: from the Shishuo xinyu, “Speech and Conversation”; in the Li Sao mugwort and wormwood are the weeds of “Why have the fragrant herbs of former days now become mere mugwort and wormwood?”, so her liking for them turns the Li Sao on its head.)',
+    },
+    anecdotes: [
+      'When it came to choosing one of three she was still small, and liking neither of the other two, she chose the peach: a physician’s wisdom.',
+      'Back then she insisted on going out of the Valley with her senior brothers to the front at the Eastern Capital, and found the wounded in a far more dreadful state than she had imagined: at first she even felt sick, and would run out of the tent to deal with it on her own and then come back, never letting it hold up the work, and so little by little grew seasoned.',
+      'After two or three years with the army, hearing that the Valley was in danger, she went back with her fellows; before she left she got no answer from Li Tingshen, and went away heartbroken. By the time she arrived the trouble in the Valley was over, leaving only devastation (this was the autumn of 758); rocks loosened by the blasts came down again, and she was hurt by a falling stone, the bones of her back put out of place. Chen Ruihe got her out, treated her with care and helped her recover, and over a year or two, warmth grew between them.',
+      'Later, in the Valley, she saw Xu Qiusheng bring Kyōya. Kyōya’s handwriting looked familiar to her, and yet it was not Xu Qiusheng’s hand; she asked who had taught him, and Kyōya said: General Li. She was lost for a moment, and picked up the sheet and looked at it for a long time.',
+      'In Chang’an in 763 she met Cheng Kai again, by then with child. When the child was older, she went back with Chen Ruihe to live quietly in Luzhou.',
+    ],
+  }, // 江蓠
   daoyong: { name: 'Daoyong' }, // 道永
   huimu: { name: 'Huimu' }, // 慧木
   yetiandeng: { name: 'Ye Tiandeng', zi: 'Zhao' }, // 叶添灯
   yeboqiu: { name: 'Ye Boqiu' }, // 叶泊秋
-  peiyuan: { name: 'Pei Yuan' }, // 裴元
+  peiyuan: {
+    name: 'Pei Yuan',
+    profile: {
+      '官职身份': 'An elder of Wanhua Valley. When new disciples enter the school he sets a knife, a wooden shovel and a peach on the table for them to choose from: the knife stands for a physician’s courage, the shovel for a physician’s diligence, the peach for a physician’s wisdom. Shen Hanying chose the knife (he had to cut off three pairs of monkey ears before it was done), Xu Qiusheng the wooden shovel, Jiang Li the peach.',
+    },
+  }, // 裴元
   gaoyuan: {
     name: 'Gao Yuan',
     zi: 'Huaiqing',
@@ -853,8 +1072,40 @@ export const charactersEn = {
       '官职身份': 'Daughter of Li Tingshen and Zhu Lu; Li Hanping’s younger sister.',
     },
   }, // 李翰昕
-  zhaoyingzhen: { name: 'Zhao Yingzhen' }, // 赵盈贞
-  zhaotingzhi: { name: 'Zhao Tingzhi' }, // 赵廷之
+  zhaoyingzhen: {
+    name: 'Zhao Yingzhen',
+    birthplace: 'Hengzhou (Changshan Commandery), Hebei Circuit',
+    gloss: 'The Zhao surname traces back to the same clan as the Marquis of Shunping of Yongchang Village (Zhao Yun): “At the battle of Dangyang his righteousness pierced metal and stone, his loyalty guarded his lord.”',
+    profile: {
+      '官职身份': 'Lanchuan Yun’s mother, only daughter of the ironware merchant Zhao Tingzhi, raised in the capital. She trained in martial arts with her father from childhood, light and nimble, with some real skill behind her; the family had handed down a spear manual, the Seven-Probe Coiling-Serpent Spear.',
+      '体貌特征': 'Bright and brisk. She liked a side-slit robe better than a skirt, tied her hair in a knot with no pins or ornaments, the loose strands hanging soft about her forehead and ears, a leather belt cinched at the waist and her sleeves rolled up: every job at home that meant climbing up or getting down, she snatched for herself, and the neighbours marvelled: so this woman from the land of Tang really is different.',
+      '性格': 'Brisk and forthright, with a knight-errant’s warm heart: when the young toughs of the ward pestered the dyer’s daughter, she “would always shout at them”. She sees people clearly, too: “A boy, why be so delicate about him? He has a lot on his mind; let him be with Yun, and she can cheer him up.”',
+      '武学': 'The family spear.',
+    },
+    anecdotes: [
+      'In idle moments she would pick up a wooden staff from the shop and run through a spear form, with Lanchuan Yun beside her watching: plainly a child’s face, and yet when the girl fixed her mind on it, no one could break her concentration.',
+      'She named the rescued boy Hui, the name of her little brother who had died young; something in this boy’s looks reminded her of him. Jingyan put his arm lightly round her shoulders: “So that’s it. In this world… no meeting is without a reason.”',
+      'In the autumn of 736, when a brawl among Mingjiao followers spread into the family’s ironware shop, she, seven months pregnant, fell and took fright and could not give birth safely; she lost blood, went into convulsions, and died with her child. Leaning against the wall she still said: “Don’t hurry, Yun… go and find a doctor, Mother is just going to…”',
+    ],
+  }, // 赵盈贞
+  zhaotingzhi: {
+    name: 'Zhao Tingzhi',
+    birthplace: 'Hengzhou (Changshan Commandery), Hebei Circuit',
+    gloss: 'Of the line of the Marquis of Shunping of Yongchang Village.',
+    profile: {
+      '官职身份': 'Lanchuan Yun’s maternal grandfather. In his early years a soldier of the Tiance Command (he joined in Empress Wu’s reign), he was lamed by a stray arrow in one foot and discharged as an invalid, and the medicine and pay he was owed never came. Finding his own way, he learned the trade in an ironsmith’s shop in the capital, later took over an ironware shop in the Yining Ward and ran it for half his life. In old age he went home to Changshan; when Changshan fell at the start of 756, the old man dug out his armour of former days, put it on to protect the townsfolk, and died in the fighting.',
+      '体貌特征': 'A hale old man with a limp.',
+      '性格': 'Tough and clear-sighted, with a sharp tongue: “The day you take up the spear, you become someone else’s spear. And when something goes wrong, you’re the one they make take the blame.” He doted on his clever only daughter, kept her by him and let her have her way in everything; even her husband she chose for herself: she said she liked him, and he nodded.',
+      '武学': 'Spear and staff.',
+      '随身物件': 'A wooden chest he kept under his bed and took everywhere: bright silver lamellar armour, a jujube-red surcoat, and a waist token with “Tiance Command” in seal script, on it the character Zhao 赵, cut with particular vigour.',
+      '专擅': 'Forging ironware.',
+    },
+    anecdotes: [
+      'Of what befell the garrison soldiers under Empress Wu he kept silent: “Soldiers… so often the people above just turn their hand over: one moment they’re holding up the founders’ heroes, the next they’re crushing you till you can’t breathe.” Illustrious as their forebear was down the ages, in the end they were no great family, and had no one to catch them.',
+      'With one step-in thrust Lanchuan Yun knocked the wooden staff from his hand, the tip of her staff coming to rest under his beard, and recited the eulogy from the family shrine: “At the battle of Dangyang his righteousness pierced metal and stone, his loyalty guarded his lord. Were the dead aware, it would make him immortal; the living, in gratitude, would forget themselves…” Before she had finished the last words, the old man threw back his head, waved his hand, and two trails of tears ran down.',
+      'After he fell, that old Tiance armour was gathered up by Cen Han, Du Zheng and others of the Changge School and left in the Cangyun Army’s keeping; in the winter of 757 Min Fangcheng put it into Lanchuan Yun’s hands himself, and only then did his granddaughter come to understand that she was descended from a loyal minister who had stood by his lord in peril.',
+    ],
+  }, // 赵廷之
   // 称号 epithet、别号 hao：2026-11-22 T0 工作稿，待作者审（docs/t0-review.md）
   // ---- 2026-11-22 第二轮：作者定（波斯音译名、苗人用本名；日本人物用日语读法；单名、他族名） ----
   langdien: { name: 'Rādīn' }, // 朗迪恩
@@ -921,10 +1172,67 @@ export const charactersEn = {
       'Fighting with the Cangyun Army in the Battle of Luoyang, seeing a comrade gravely wounded, she threw aside the Cangyun shield-and-blade, took a long spear from an enemy’s hands, and went into the ranks as though there were no one there.',
     ],
   },
-  jingyan: { name: 'Lanchuan Jingyan' }, // 岚川靖彦（日文读法 Arashikawa Yasuhiko 只在名號一行出）
-  linyeshi: { name: 'Hayashi Kyōya' }, // 林叶矢
+  jingyan: {
+    name: 'Lanchuan Jingyan',
+    birthplace: 'Nara, Japan',
+    gloss: 'Lanchuan Yun’s father. He died in 747, the same year as Cheng Kai’s birth father Cheng Guang: in Anxi and in Chang’an (Cheng Guang fell in the Little Balur campaign).',
+    profile: {
+      '官职身份': 'A Japanese student with the embassy to the Tang: chosen in 716 (the second year of Reiki, under Empress Genshō), he crossed west in 717 with Tajihi no Agatamori’s embassy, four ships and five hundred and fifty-seven people, landed at Yangzhou and went on to Chang’an; a close friend and fellow student of Chao Heng (Abe no Nakamaro), he also knew the scholar-monk Genbō and Kibi no Makibi. Made Collator in the Palace Library (rank 9a1), he put texts in order and translated them, and within six years had risen to be a Clerk of the Secretariat (rank 7b1). The books he translated were taken back to his own country and presented to the sovereign, and won great favour, so that he was kept on and could hardly resign, and went on writing through sickness and pain.',
+      '性格': 'A gentle, reserved scholar, careful and courteous. He believed in balancing going out into the world with withdrawing from it, and would not meet violence with violence: “If we answer killing with killing, what do we become?” He thought himself a coward, who knew only how to keep out of trouble; and the grief of losing his wife taught him that when pain falls on you, and hurts so much, you will dig to the bottom of it.',
+      '喜好': 'Singing and reciting: teaching his daughter to read the Jijiu pian, telling her the stories behind momijigari, the outings to view the autumn leaves; airing books in the sun, and copying them.',
+      '专擅': 'At home in both Japanese and Chinese; translating texts.',
+    },
+    anecdotes: [
+      'In Chang’an he met Zhao Yingzhen and they came to know and love each other, one gentle and reserved, the other bright and brisk, and so they were pledged for life; family affairs took him home, and he lived for some years with his wife in the western outskirts of Heijō-kyō; in 731 the whole family came back to the Tang.',
+      'In 728, by the river behind his house in Nara, he pulled out a dying young scout and took him in, treating him as one of the family; in 737 the young man died to follow his mistress, and holding him, Jingyan promised: “I’ll take you back. I will take you back.” That promise later passed into his daughter’s hands, and then into Kyōya’s: two generations carried it, and it was never fulfilled.',
+      'Teaching the little Lanchuan Yun to speak Chinese: “Speaking the tongues of both lands, isn’t Father clever?” “So that Mother won’t be so lonely, one day we will cross the sea to the west, to the great Tang I’m always telling you about.” And: “Yun… you won’t only be someone who has come here from abroad. You will become one of the people of ‘here’ too.”',
+      'After his wife’s death he went out alone to face the Mingjiao followers who came to the door to apologise: “She is gone; no amount of regret will help now. You need not argue right and wrong with me any more. Go and keep your followers in good order, and do no more harm to others.” Lanchuan Yun had never heard her father’s voice like that; she only saw the wind blow right through his thin blue-green robe.',
+    ],
+  }, // 岚川靖彦（日文读法 Arashikawa Yasuhiko 只在名號一行出）
+  linyeshi: {
+    name: 'Hayashi Kyōya',
+    birthplace: 'Japan',
+    gloss: 'Hayashi Kyōya. “余は彼の燈火の海を渡り來て”: I have come across the sea from the far shore of the lamplight. Crossing the sea is the note that runs through the Lanchuan family, and through Kyōya too.',
+    profile: {
+      '官职身份': 'Of Wanhua Valley, Xu Qiusheng’s pupil; Lanchuan Yun’s adopted son. At first Xu Qiusheng’s medicine boy.',
+      '体貌特征': 'Fair-skinned and slight, with long, thick lashes like a fan screen. Frail of build; he grew up in a military command, but was too delicate to be allowed to train in martial arts.',
+      '性格': 'Quiet and inwardly gifted, sensitive and fine-grained, kind-hearted and resilient. Shy by nature. Born to feel anxious over other people’s pain and sickness.',
+      '武学': 'Left almost deaf by an illness when small, and unable to speak, he was not allowed to train.',
+      '随身物件': 'A bronze tea ze, a scoop for measuring tea, with a plum-blossom handle, given him by Xu Qiusheng when he became his pupil (The Classic of Tea, “Four: Utensils”: “The ze is a measure, a standard, a gauge”: a master’s gift to a pupil, for its sense of rule and measure); and the short knife for self-defence that Lanchuan Yun gave him when he came of age in 770.',
+      '喜好': 'Woodcarving and the way of tea. Likes stir-fried mushrooms and fresh greens.',
+      '专擅': 'Good at painting flowers, birds, grasses and insects, and ever better under Xu Qiusheng’s guidance: when learning to recognise herbs he drew them on paper and labelled them in Chinese, every one detailed and alive.',
+    },
+    anecdotes: [
+      'His father, a maker of Buddhist images, went to the Tang in 752 with Fujiwara no Kiyokawa’s embassy to learn the craft of Buddhist image-making (in the fourth month of that year came the eye-opening of the Great Buddha of Tōdai-ji), and afterwards stayed in the Tang and never came back. In 761 Kō no Gendo came home from the Tang bringing a letter from his father, and that was what set him going; the embassies of 761 and 762 both came to nothing, one for a damaged ship and one for want of wind; with no one left at home and no official ship to wait for, in the spring of 763 he took passage alone on a Silla merchant ship to cross the sea and find his father, and on the way was saved by Haruyama Haruka of Penglai. In Chang’an, through Fujiwara no Kiyokawa, the ambassador of his father’s embassy (then named Heqing and serving as Director of the Palace Library), he found his father. Half a year after he came to the Tang (763), when the Tibetans took Chang’an, a burning roof beam fell and crushed his legs, and his father, shielding him from an enemy blade, was killed. Lanchuan Yun saved him and brought him back to the Tiance Command, asked Xu Qiusheng to treat him, talked with him by brush and paper, taught him Chinese, and later adopted him. Little by little he came to feel he belonged; though he seldom showed it, he depended on her, and when she and Cheng Kai were away a long time he could not help asking when General Yun would be back.',
+      'Once healed, he became a pupil of Wanhua; seeing Cheng Kai trapped in his pain and Lanchuan Yun’s worry, and remembering their kindness, he wanted to help. When he saw Cheng Kai pushing himself regardless of his injuries he always wanted to talk him out of it, but he had only signs and the shapes of words on his lips to begin with, and when he could not put it together in time he would get himself flushed red with frustration.',
+      'Not yet well versed in pharmacology, he dared to test medicines on himself: before he was even out of the dispensary he was slumped over the table, gasping for breath. Xu Qiusheng managed to bring him round and demanded straight out what he thought he was doing; he signed: if not on myself… then on the patients? Xu Qiusheng had nothing to say.',
+      'Cheng Yu, young and careless, would take him riding on the plain in idle hours, and he would come home feverish from the wind. Cheng Kai could not help scolding his nephew a little; Kyōya could not hear him but could read his face, and tugged at Cheng Kai, shaking his head, then turned to comfort Cheng Yu: it’s nothing, I didn’t know it would happen myself.',
+      'In Wanhua Valley he met the Shaolin monk Huimu, picked up a little of his woodcraft and mechanisms, and came back to help improve the Command’s message kites. Around 766 he went south of the Yangzi with Li Tingshen and Cheng Qian, and passing Huzhou (Lu Yu had crossed south in 756, built a hut on the Tiao Stream in 760, and lived at Huzhou long after) he met Lu Yu, and saw that wind stove too: on one of its three feet was cast “Cast in the year after the Sage Tang destroyed the Hu”, that is, 764, casting the end of the war into the thing itself. The word chadao, “the way of tea”, first appears in a poem by Jiaoran, the poet-monk of Huzhou; his Buddha-nature and the way of tea came together here.',
+      '“The River of Heaven surges; a single reed crosses it”: he had a Buddha-nature young, and at Daoyong’s desk a line of verse woke something in him, and from then on “crossing the sea” stayed always in his heart. Daoyong asked: do you know this character? What do you see? He wrote: when I came, the sea.',
+      '“If it can ease her suffering, I will go”: at midsummer of 770 he came of age, and Lanchuan Yun gave him a short knife for self-defence and told him where it had come from. In the twelfth month of that year Cheng Kai died of illness, and he grew ever more burdened. When three years of mourning were over there was no ship to cross on; he waited until the Hōki embassy sailed home in 778, and boarded the first ship with the knife to take its owner home, and so fulfil Lanchuan Yun’s long-held wish. But the ship was damaged, and no sail came home.',
+    ],
+  }, // 林叶矢
   haruyama: { name: 'Haruyama Haruka', zi: 'Mianshu (Nemugi)', names: { 汉名: 'Fang Yao' } }, // 春山遥
-  ahui: { name: 'Ahui' }, // 阿辉
+  ahui: {
+    name: 'Ahui',
+    birthplace: 'Japan (around Lake Biwa)',
+    gloss: 'Hui 辉, “brightness, radiance”: the name Jingyan and his wife gave him after they saved him in 728, taken from the name of Zhao Yingzhen’s little brother who died young. When he first heard what the character meant, he thought of a lacquered cosmetic box, painted in gold and inlaid with mother-of-pearl, that he had once delivered on a mission.',
+    profile: {
+      '官职身份': 'Lanchuan Yun’s adoptive elder brother. As a child he was taken in by the house of a powerful clan and minister and trained as a scout (a ninja), to rid them of their enemies in the dark; when he was ten or so he failed a mission and was made to drink poison, and his voice was ruined so that he could barely speak; afterwards he chose silence as well. In 728, gravely wounded on a mission and near death, he drifted downstream to the riverbank in Nara’s western outskirts, where Jingyan saved him; from then on he worked for the Lanchuan household and guarded it, and they treated him as one of the family. In 731 he came back to the Tang with the family and lived in Chang’an, often helping Zhao Tingzhi look after the ironware shop.',
+      '体貌特征': 'Regular-featured, lean and wiry, fair-skinned, with handsome brows, and his body covered in scars, the flesh knotted and twisted. He wears Tang-style kuzhe made in Chang’an: a short jacket of dark blue-black brocade and cotton with narrow sleeves and roundel patterns, wide hemp-grey trousers bound at the shins with leg wraps, black brocade bracers with rust-red ties; all year round a white ramie scarf hides half his face, and a patterned brocade headband sits low over his brows.',
+      '性格': 'Steady and courteous, he knows what matters, and repays kindness in fear and trembling; his boyishness shows only when he takes Lanchuan Yun running in the hills and fields. In someone who has always been silent, silence has its depths: the shallow kind is like wind, the deep kind sinks.',
+      '武学': 'Ninjutsu: shuriken, cross spikes, hand claws, the short blade, ghostly footwork; with stepping posts set out in the nine palaces he gave the little Lanchuan Yun the grounding of her qinggong, and few of her generation could match her.',
+      '随身物件': 'A Japanese short blade with a ray-skin hilt; the hair ribbon Zhao Yingzhen embroidered with clouds.',
+      '喜好': 'Red pickled ginger: here, for once, he is very forward, finishing off the little pink heap for Lanchuan Yun, who won’t eat ginger; when Jingyan asked, “Or do you really like it…?”, the tips of his ears slowly went red.',
+      '专擅': 'Unusually keen eyes and ears; he can tell any footfall or birdcall; guarding.',
+    },
+    anecdotes: [
+      'When the ship back to the Tang ran into rough seas in 731, he lashed the mistress and Lanchuan Yun to the foot of the mast with rope: rough, perhaps, but safe. When they landed and met sea raiders, there was a flash of snow-light from his sleeve, and in a moment blood was spilled on the sand; he turned to the family and raised a hand to cover his face, lightly, and Jingyan put his hands over his daughter’s eyes.',
+      'On autumn days he would sit on a branch halfway up a tree, hidden by the maple leaves, gazing far off to the north. Jingyan guessed it was Lake Biwa: “Perhaps he grew up over there. That place has seen… a great many things, all quarrels of the imperial house.”',
+      'In the autumn of 737, on the anniversary of Zhao Yingzhen’s death, he took his own life. For the first time in his life he spoke, hoarse, in the speech of his home: “My lady… lost her life, was wronged, and I… again and again… could not save her… Miss… take care…” Jingyan held him and promised, “I’ll take you back. I will take you back”, and buried him in the western outskirts of Chang’an.',
+      'His short blade Jingyan gave to Lanchuan Yun when she joined the army: “Let him go with you; he would want that.” It stayed with her half her life; in 770 she passed it on to her adopted son Kyōya and told him where it came from, and in 778 Kyōya boarded a ship of the homeward Hōki embassy with the knife, meaning to take its owner home. The ship was damaged, and no sail came home: the promise to “take you back”, carried by two generations, was never fulfilled.',
+    ],
+  }, // 阿辉
   mokun: { name: 'Mokun' }, // 墨昆
   ahuilang: { name: 'Ahui Lang' }, // 阿会朗
   helan: {
