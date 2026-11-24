@@ -39,16 +39,15 @@
    - 秘书省正字：中文作「从九品上」。《唐六典》卷十、《新唐书·百官志》都作正九品下，从九品上应是东宫司经局正字的品级。中文已改正九品下，英文 rank 9b1 → 9a2。
    - 常山郡文学：中文作「正八品」。《新唐书·百官志》外官条，京兆等三府文学从八品上，都督府、上州从八品下。恒州按上州，中文已改从八品下，英文 rank 8a → 8b2。
    - 另：《新唐书》注说州文学原称经学博士，德宗即位（779）才改称文学。753 年按制度应称经学博士。作者定沿用「文学」，英文仍作 Instructor。
-3. **七探蛇盘枪**：Notion 术语主表 T071 定作 Seven-Probe Coiling-Serpent Spear，本批赵盈贞照此译。可岚川云的 T1 档案写的是 the Seven Probes, Coiled Snake method，两处对不上。要不要把岚川云那句改成术语表的写法？
+3. **七探蛇盘枪**（作者 11-24 定）：统一照术语表 T071 作 Seven-Probe Coiling-Serpent Spear。岚川云 T1 档案那句已改。
 
 ## 顺带清的旧术语（Notion 术语主表里还没定的几条）
 
-4. **T059 长歌门**（待核）：站上门派标签、档案已用 the Changge School，共 15 处。建议就定这个，Notion 改作已定。
-5. **T107 知君青骨** the Zhijun Qinggu squad、**T108 青山之后** Beyond the Blue Hills（待你定）：第三批已用，你审时没提异议。建议照用，Notion 改作已定。
-6. **T089 化雨雪粮**（待你定）：Notion 暂作 Rain-and-Snow Alms，可王不空档案（第一批，已上线）实际译成了 “the rain-and-snow ration”，两边不一。我倾向 alms：兵士换常服向寒户分粥，是布施，「化」也是化缘的化；ration 读来像军中发的口粮。你定了，我两边取齐。
-7. **T009 帐前副官**（待核）：Notion 暂作 Headquarters Aide，关岳档案实际译成叙述性的 Min Fangcheng’s deputy at headquarters。全站只此一处，建议就照档案这样写，Notion 改记。
-8. **T021 监军**（待核）：站上 13 处用 Army Monitor（宣杨、年表 770 宦官监军等）。印象里 Hucker 监军 chien-chün 作 Army Supervisor，请顺手翻一下；若是，我全站改。
-
+4. **T059 长歌门**（作者 11-24 定）：the Changge School，Notion 改作已定。
+5. **T107 知君青骨** the Zhijun Qinggu squad、**T108 青山之后** Beyond the Blue Hills（作者 11-24 定）：照用，Notion 改作已定。
+6. **T089 化雨雪粮**（作者 11-24 定 alms）：作 the Rain-and-Snow Alms。王不空档案原作 “the rain-and-snow ration”，已取齐。
+7. **T009 帐前副官**（作者 11-24 同意）：照关岳档案作 Min Fangcheng’s deputy at headquarters，Notion 改记。
+8. **T021 监军**（还要你定）：Hucker 815 有两个义项。(1) 汉至南北朝作 Army Supervisor，指出征时领兵的将官，是统兵的人。(2) 是监军使 chien-chün shih 的简称，作 Army-supervising Commissioner，指中央派去节制地方节度使的代表。站上 13 处都是唐代宦官监军使（边令诚、鱼朝恩、骆奉先等），属于义项 (2)。所以 Army Supervisor 不能用，它指的是领兵的人。要在 Army-supervising Commissioner 和现用的 Army Monitor 之间选（见 minfangcheng 审稿记录：你说 supervisor 译不出「监」）。
 ## 处理说明（不用回，有异议再说）
 
 - 陈瑞和轶事 2「给『吃剩下的人』接过骨」作 set bones in that city for “the ones left uneaten”。韩愈《张中丞传后叙》两句照中文自译。
