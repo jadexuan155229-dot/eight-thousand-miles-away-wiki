@@ -8,6 +8,7 @@
 - `scripts/font-subset-chars.txt` 与三套字体子集：许秋生「薛定谔」的 ö 是站内首见，照 `npm run fonts` 重裁，各多收一字。
 - 疑点清单 `docs/profiles-t2-batch4-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
 - 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；本机 Chrome 逐人看过 19 份英文档案，除名号一行照例并列的中文名与训诂里照例保留的字外无中文。
+- **查官方设定后改**（同日，作者要求先查）：心法名照音、首现带功能说明（Lijing, Wanhua’s healing path 等）；撤回「离经」出《学记》之说；三星望月作 Sanxing Wangyue（补「谷中心三座石针」）；晴昼海作 the Qingzhouhai（免与青州 Qingzhou 撞拼法）；「长歌门中书院」是我断错句，改作 the Changge School’s academy, the Weishan Academy；正意弟子照「门派历程」称号作 the junior disciples of the Zhengyi rank。万书楼、挽音阁、医渡组官方设定查不到，待作者说明。
 
 ### 英文版 T2 人物档案第三批：明教、凌雪阁 12 人
 
