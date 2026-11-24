@@ -212,7 +212,7 @@ export const ranksEn = {
   '火长（平戎城，程铎麾下）': 'Squad Leader (Pingrong, under Cheng Duo)',
   副队头: 'Deputy Company Leader',
   '队头（弩队）': 'Company Leader (crossbow company)',
-  押官: 'Detachment Officer',
+  押官: 'Discipline Officer',
 };
 
 /* 編制圖時間軸上的標記（FACTIONS[].marks[].label） */
