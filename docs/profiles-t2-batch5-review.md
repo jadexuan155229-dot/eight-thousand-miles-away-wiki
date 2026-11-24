@@ -9,15 +9,15 @@
 - 和年表重合的句子，英文照年表已有的译法，一字不改：神光立雪、断臂求法、雪为之红；「修罗刀，菩提道」the blade of the asura, the path of bodhi；「藏器」Cangqi；无铭菱花镜；道永临别字纸；「雨前缝百衲，叶下闭重关」；「万念归一，生生不已」；程钊之字「故廉」Gulian；狄元恪对樊璋那句「是匣中宝剑，见了天光」。
 - 官名照 Hucker（这批起我自己用索引查）：县尉 District Defender（Hucker 2549）、州曹参军 Administrator（6876）、明经 mingjing（4007，与 jinshi 同例照音）、武库 armoury（7779）。游奕使 Hucker 未收，照年表作 Patrol Commissioner。
 
-## 要你定的
+## 作者已定（11-24）
 
-1. **县尉**：骆父「历浙东县尉」，Hucker 2549 作 District Defender。年表 751 骆父那条原来写的是 a county sheriff in eastern Zhejiang，和 Hucker 不一致，我顺手一起改成了 District Defender，州曹参军也改成 an Administrator in a prefectural section。站上地名里的「县」照旧作 county，只有官名照 Hucker。你若觉得 District Defender 和 county 挨在一起别扭，告诉我。
-2. **参将**：孟雪萦之父「后为侯希逸麾下参将」。Hucker 6870 参将 ts’an-chiang 是明清的官名（Assistant Regional Commander），唐代没有。英文暂作 a staff officer under Hou Xiyi，没用明清官名。中文要不要改成唐代的说法（如「裨将」「偏将」），还是保留，你定。
-3. **孟雪萦轶事 2 的年份**：写的是「761年初敛葬父亲遗骨后南返」，可官职身份和年表都说营州 761 年冬（761.12）陷落，敛葬在 762 年正月（762.1B）。应该是「762年初」。你同意的话中英一起改。
-4. **穆津「紫微少微」**：三垣是紫微垣、太微垣、天市垣，少微是太微垣里的一组星，不是一垣。是想写「紫微太微」吗？英文暂照原文作 Ziwei, Shaowei。
-5. **卢秉毓被俘的经过，档案和年表细节不同**：轶事 8 说在河间、平原一带转战，断后被擒，押赴法场逼降卢氏；年表 756.7B 说协守九门，城破被俘，灌药压制经脉押到范阳家门前。两处英文各照原文译了，没有替你统一。要统一的话告诉我以哪边为准。
+1. **县尉**：照 Hucker 2549 作 District Defender，年表 751 骆父一条同步改。地名的「县」照旧作 county。
+2. **参将 → 裨将**：参将是明清官名（Hucker 6870）。孟雪萦官职身份与年表 758.12A 两处中文改作「裨将」，英文照 Hucker 4607 作 Assistant General；年表同条李怀玉「裨将」原作 the subordinate general，一并改作 the Assistant General。
+3. **孟雪萦轶事 2**：「761年初」改「762年初」，中英同改。作者定：档案与年表细节不一时，**以年表为准**。
+4. **穆津**：「紫微少微」改「紫微太微」，英文 Ziwei, Taiwei。
+5. **卢秉毓轶事 8**：照年表 756.7B 的版本改写中文开头——「756年七月协守九门，城破被俘。叛军认出他是卢氏子，灌药压制经脉，擒送范阳家府门前，逼降卢氏。」其后「不久前他亲见颜季明……永远背负罪责」照原文不动。英文开头照年表译法。
 
-## 新拟专名（照拟，你点头后收进 Notion 术语主表）
+## 新拟专名（作者 11-24 同意，已收进 Notion 术语主表）
 
 - 敬德楼 the Jingde Tower（李庭深寝房所在，朱鹭轶事 4）
 - 达摩院 the Bodhidharma Hall（道永）
