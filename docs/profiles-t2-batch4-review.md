@@ -47,7 +47,7 @@
 5. **T107 知君青骨** the Zhijun Qinggu squad、**T108 青山之后** Beyond the Blue Hills（作者 11-24 定）：照用，Notion 改作已定。
 6. **T089 化雨雪粮**（作者 11-24 定 alms）：作 the Rain-and-Snow Alms。王不空档案原作 “the rain-and-snow ration”，已取齐。
 7. **T009 帐前副官**（作者 11-24 同意）：照关岳档案作 Min Fangcheng’s deputy at headquarters，Notion 改记。
-8. **T021 监军**（还要你定）：Hucker 815 有两个义项。(1) 汉至南北朝作 Army Supervisor，指出征时领兵的将官，是统兵的人。(2) 是监军使 chien-chün shih 的简称，作 Army-supervising Commissioner，指中央派去节制地方节度使的代表。站上 13 处都是唐代宦官监军使（边令诚、鱼朝恩、骆奉先等），属于义项 (2)。所以 Army Supervisor 不能用，它指的是领兵的人。要在 Army-supervising Commissioner 和现用的 Army Monitor 之间选（见 minfangcheng 审稿记录：你说 supervisor 译不出「监」）。
+8. **T021 监军**（作者 11-24 定）：Hucker 815 有两个义项。(1) 汉至南北朝作 Army Supervisor，指出征领兵的将官；(2) 是监军使 chien-chün shih 的简称，作 Army-supervising Commissioner，指中央派去节制节度使的代表。站上 13 处都是唐代宦官监军使，属义项 (2)。作者定用 Army-supervising Commissioner，全站 13 处已由 Army Monitor 改过来。
 ## 处理说明（不用回，有异议再说）
 
 - 陈瑞和轶事 2「给『吃剩下的人』接过骨」作 set bones in that city for “the ones left uneaten”。韩愈《张中丞传后叙》两句照中文自译。

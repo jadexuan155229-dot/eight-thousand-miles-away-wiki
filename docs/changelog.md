@@ -11,7 +11,7 @@
 - **查官方设定后改**（同日，作者要求先查）：心法名照音、首现带功能说明（Lijing, Wanhua’s healing path 等）；撤回「离经」出《学记》之说；三星望月作 Sanxing Wangyue（补「谷中心三座石针」）；晴昼海作 the Qingzhouhai（免与青州 Qingzhou 撞拼法）；「长歌门中书院」是我断错句，改作 the Changge School’s academy, the Weishan Academy；正意弟子照「门派历程」称号作 the junior disciples of the Zhengyi rank。万书楼、挽音阁、医渡组官方设定查不到，待作者说明。
 - **作者回复后改**（同日）：万书楼、挽音阁确认为游戏内地名，照拟；晴昼海改作 the Qingzhou Flower Sea，把花海意象直接译出；岑菡一条去掉 Weishan Academy，只作 the Changge School’s academy；「医渡组」是人设分类，不入正文，沈含英中文改作「本文中万花人物的大师兄」，英文作 Eldest senior brother among this story’s Wanhua characters（已重盖戳）。
 - **Hucker 核对**（同日）：正字、文学、弘文馆、太子宾客、判官五个官名对过 Hucker 1440、7704、996、6244、4425，译法不变。岑菡中文品级照唐制改：秘书省正字从九品上 → 正九品下（9a2），常山郡文学正八品 → 从八品下（8b2）；「文学」之名作者定不改。
-- **旧术语清账**（同日，作者定）：七探蛇盘枪统一照 T071 作 Seven-Probe Coiling-Serpent Spear（岚川云 T1 档案已改）；T059 长歌门 the Changge School、T107 知君青骨、T108 青山之后、T009 帐前副官（照关岳档案叙述性译法）改作已定；T089 化雨雪粮定作 the Rain-and-Snow Alms（王不空档案由 ration 改正）。T021 监军对过 Hucker 815，站上 13 处属唐代监军使义项，待作者在 Army-supervising Commissioner 与 Army Monitor 之间定。Notion 术语主表新增 T128–T147（第四批心法、地名、正意弟子、器物名与五个 Hucker 官名）。
+- **旧术语清账**（同日，作者定）：七探蛇盘枪统一照 T071 作 Seven-Probe Coiling-Serpent Spear（岚川云 T1 档案已改）；T059 长歌门 the Changge School、T107 知君青骨、T108 青山之后、T009 帐前副官（照关岳档案叙述性译法）改作已定；T089 化雨雪粮定作 the Rain-and-Snow Alms（王不空档案由 ration 改正）。T021 监军对过 Hucker 815，站上 13 处属唐代监军使义项，作者定用 Army-supervising Commissioner（Hucker 815 义项 2，监军使简称），全站 13 处由 Army Monitor 改过来。Notion 术语主表新增 T128–T147（第四批心法、地名、正意弟子、器物名与五个 Hucker 官名）。
 
 ### 英文版 T2 人物档案第三批：明教、凌雪阁 12 人
 
