@@ -9,6 +9,7 @@
 - `src/i18n/characters.en.js`：宣杨轶事「我们阁中是树，你们是碑」照年表英文作 we are trees; you are steles。
 - 疑点清单 `docs/echoes-en-batchB-review.md`（作者只审此单）；`docs/english-edition.md` 记本批。
 - 验证：check-data 无错（回响节点 370/630）；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；本机 Chrome 看过闵方城（雁门关之役）、岚川云（恩仇）、卢秉毓（常山陷落）三人详情栏。
+- **作者定后改**（同日）：马翊之死未定，英文节点照档案作 (undecided)；连朔一条「作者定」由括注移入代码注释，中文改作「（即两蕃南下同一波）」；卢秉毓闲章节点中文「冶于此山」统一作训诂的「同入此山」，英文随之；景惠时「（正文不写）」保留。
 
 ### 英文版余波 A 批：在场姿态与姿态说明（接线）
 
