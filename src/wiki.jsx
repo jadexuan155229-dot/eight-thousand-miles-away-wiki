@@ -2300,10 +2300,47 @@ function Community({ onOpenChar }) {
         const ang = i * 2.399963;
         const rad = members.length === 1 ? 0 : cr * Math.sqrt((i + 0.6) / members.length);
         const x = gx + rad * Math.cos(ang), y = gy + rad * Math.sin(ang);
-        pos[c.id] = { x, y };
         nodes.push({ c, x, y, f });
       });
     });
+    /* 相鄰兩群之圓半徑和大於群心距，交界處圈會互疊：舊時十五對圓心相距不足一圈徑，
+       紐沃、秦徽幾為彭延思、陸靈全蓋，懸停不到；門派群名亦壓住十四圈。
+       今以排斥鬆弛分開：圓心距不足 MIN（懸停放大之圈亦不蓋鄰圈之心）者各退一半，
+       壓群名者推出名框；每輪微拉回原位，群形大致不變。名框取中英兩者之寬者，兩種界面同一佈局；
+       字寬按字數估（不待字體載入，每次結果一樣）。 */
+    const MIN = 38, R = 15.5;
+    const labBox = centers.map((g) => {
+      const enS = g.f === "其他" ? "Other" : facName("en", g.f);
+      const w = Math.max([...g.f].length * 13 * 1.3, enS.length * 12 * 0.6), y = g.gy - g.cr - 10;
+      return { l: g.gx - w / 2 - 3, r: g.gx + w / 2 + 3, t: y - 15, b: y + 6 };
+    });
+    const home = nodes.map((n) => [n.x, n.y]);
+    for (let it = 0; it < 600; it++) {
+      let bad = 0;
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const p = nodes[i], q = nodes[j];
+        let dx = q.x - p.x, dy = q.y - p.y;
+        const d = Math.hypot(dx, dy);
+        if (d >= MIN) continue;
+        bad++;
+        if (d < 0.01) { dx = Math.cos(i + j); dy = Math.sin(i + j); } else { dx /= d; dy /= d; }
+        const m = (MIN - d) / 2 + 0.1;
+        p.x -= dx * m; p.y -= dy * m; q.x += dx * m; q.y += dy * m;
+      }
+      for (const n of nodes) for (const bx of labBox) {
+        const cx = Math.max(bx.l, Math.min(n.x, bx.r)), cy = Math.max(bx.t, Math.min(n.y, bx.b));
+        const dx = n.x - cx, dy = n.y - cy, d = Math.hypot(dx, dy);
+        if (d >= R) continue;
+        bad++;
+        if (d < 0.01) n.y = n.y - bx.t < bx.b - n.y ? bx.t - R - 0.1 : bx.b + R + 0.1; /* 圓心落在框內：自近邊推出 */
+        else { n.x = cx + (dx / d) * (R + 0.1); n.y = cy + (dy / d) * (R + 0.1); }
+        /* 久不收斂者多夾在上下兩個群名之間，上推下推皆入他框：另向橫邊滑出 */
+        if (it > 200) n.x += n.x < (bx.l + bx.r) / 2 ? -1.5 : 1.5;
+      }
+      if (!bad) break;
+      if (it < 150) nodes.forEach((n, k) => { n.x += (home[k][0] - n.x) * 0.02; n.y += (home[k][1] - n.y) * 0.02; });
+    }
+    nodes.forEach((n) => { pos[n.c.id] = { x: n.x, y: n.y }; });
     return { nodes, pos, centers };
   }, []);
   const active = RELATIONS.filter((r) => pos[r.a] && pos[r.b] && relActive(r, Y));
