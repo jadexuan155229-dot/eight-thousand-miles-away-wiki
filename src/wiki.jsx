@@ -2302,7 +2302,7 @@ function Chip({ active, onClick, label, fontFamily = gUI }) {
   );
 }
 
-/* 量字寬（SVG 用戶單位＝字號單位）：以 canvas 照實際字族量，英文拉丁字面已由 latin-faces 接管，量出即所見 */
+/* 量字寬（SVG 坐標單位，與字號同）：以 canvas 照實際字族量，英文拉丁字面已由 latin-faces 接管，量出即所見 */
 let measureCtx = null;
 function measureText(str, fs, family) {
   try {

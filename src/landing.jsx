@@ -33,6 +33,10 @@ const FEATURED = [
   ["睢阳", "small"], ["灵武", "small"],
 ];
 const SHOWN_NAME = { "太原府": "太原", "云州-云中": "云州" };
+/* 棋子名號方位：默認取輿圖之 LOC_COORDS.la；卷首棋子大，另有所需者於此覆寫。
+   雁门关、潼关：2026-11-25 輿圖中文改了方位（避輿圖標籤互壓），卷首仍照原位（e、n）。
+   睢阳：手機上與洛阳名號相疊（中英皆然），移棋子上方（試過下、左，手機或桌面仍疊） */
+const PIECE_LA = { 雁门关: "e", 潼关: "n", 睢阳: "n" };
 
 /* 英文卷首：地图上的道名、城名改英文（地名表定名，见 i18n/places.en.js）。
    畫布繪字在模組層函數裡，故以此旗標傳入；定場一次只掛一份，掛載時由組件設定。
@@ -653,7 +657,7 @@ function paintMap(cv, w, h, g, dpr) {
   for (const [name, kind] of FEATURED) {
     const c = LOC_COORDS[name];
     const p = c && g.toDest(c.x, c.y);
-    if (p) pieces.push({ name, kind, la: c.la, ...p });
+    if (p) pieces.push({ name, kind, la: PIECE_LA[name] || c.la, ...p });
   }
   pieces.sort((a, b) => a.y - b.y);
   const base = Math.max(0.95, Math.min(1.7, w / 1200));
