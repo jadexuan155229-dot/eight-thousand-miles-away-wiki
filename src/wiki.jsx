@@ -1869,7 +1869,7 @@ function Planetary({ onOpenChar }) {
         </text>
         <circle cx={CX[k]} cy={CY} r={40} fill={T.panel} stroke={T.accent} strokeWidth={2.4} />
         <circle cx={CX[k]} cy={CY} r={47} fill="none" stroke={T.accent} strokeWidth={0.7} opacity={0.5} />
-        <text x={CX[k]} y={CY - 7} textAnchor="middle" style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
+        <text x={CX[k]} y={CY - 7} textAnchor="middle" lang={en ? "zh" : undefined} style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
         <text x={CX[k]} y={CY + 10} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
         <text x={CX[k]} y={CY + 24} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 7.5 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} – ${englishEraOf(c.death)}` : `${eraOf(c.birth)} — ${eraOf(c.death)}`}</text>
         {/* 英文名：雙核圈大，名下另起一行；其餘星圈小，英文名只入懸停（見 renderNode） */}
@@ -1902,7 +1902,8 @@ function Planetary({ onOpenChar }) {
           <circle cx={n.x} cy={n.y} r={r0 + 4} fill="none" stroke={fc(n.c.belong[1])}
             strokeWidth={sec ? 1 : 0.8} opacity={soft ? 0.35 : 0.7} />
         )}
-        <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle"
+        {/* 圈內作漢字名（英文名入懸停）；英文界面下標 lang="zh"，讀屏按中文念 */}
+        <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle" lang={en ? "zh" : undefined}
           style={{ fontFamily: gName, fontSize: fs, fill: soft ? T.muted : T.ink, fontWeight: sec ? 700 : undefined }}>
           {n.c.name}
         </text>
@@ -2269,7 +2270,7 @@ function Community({ onOpenChar }) {
                 {coarse && <circle cx={n.x} cy={n.y} r={26} fill="transparent" />}
                 <circle cx={n.x} cy={n.y} r={hi ? 19 : 15.5} fill={T.panel}
                   stroke={fc(n.f)} strokeWidth={hi ? 2 : 1.3} strokeDasharray={dead ? "3 3" : "none"} />
-                <text x={n.x} y={n.y + 3.5} textAnchor="middle"
+                <text x={n.x} y={n.y + 3.5} textAnchor="middle" lang={en ? "zh" : undefined}
                   style={{ fontFamily: gName, fontSize: n.c.name.length > 3 ? 8 : n.c.name.length > 2 ? 9.5 : 11, fill: T.ink }}>
                   {n.c.name}
                 </text>
