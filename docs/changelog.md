@@ -2,6 +2,14 @@
 
 ## 2026-11-25
 
+### 加检查工作流（CI）
+
+- 新增 `.github/workflows/checks.yml`：每个 PR、每次推到 main 自动跑五项——`check-data`、oxlint（`--max-warnings 12`，警告多于基线即不过；`--format github`，警告直接标在 PR 的改动行上）、`node scripts/font-chars.js --check`、`npm run build`、`npm run check:history`（用 runner 自带 Google Chrome，`CHROME_PATH=/usr/bin/google-chrome`）。各项 `if: !cancelled()`，一项不过其余照跑；同一分支新提交进来即取消旧的那次；只读权限，与 `deploy.yml` 各跑各的，不挡部署。
+- 缘起：此前合并前后都没有独立检查，PR 里的检查结果只是作者（或 Claude）自报；部署只跑 `npm ci` 与 `build`。最怕字体子集：站内写进表外之字，构建照样成功，线上那几个字悄悄回落系统字体，`check-data` 只报警告。
+- `scripts/font-chars.js` 加 `--check`：只查不写，有表外之字即列出、给出改法并 exit 1；不带参数时照旧补表。只查字符表，不查子集字体本身——表里有而子集未重裁的字（如「纽」一类俟库外重裁者）此项不报。
+- README「检查与构建」补一段说明。
+- 验证：本地按工作流逐项跑过（check-data 无错；oxlint 12 条、`--max-warnings 11` 时 exit 1；`--check` 无缺字 exit 0，临时塞入两个表外字 exit 1 且字符表未被改写；build 通过；`CHROME_PATH=/usr/bin/google-chrome` 下 check:history 全合）；推上分支后在 GitHub 上实跑，结果见 PR。
+
 ### 行星图双核圈内年号拆两行、英文系名让开邻星；群像悬停关系字避让
 
 - **双核年号**：圈内年号原作一行（开元八年 — 永泰元年，宽 85；英文 Kaiyuan 8 – Yongtai 1，宽 75），圈在该高度只容 60 上下，首末二字压在圈线上，中英皆然。今拆作起止两行（「开元八年 —」「永泰元年」；英文「Kaiyuan 8 –」「Yongtai 1」，字号 7.5 → 8），名、生卒随之上移（名 CY − 7 → − 12，生卒 + 10 → + 3，年号 + 15、+ 25）。按字框量，中文各行四角距圆心最远 34.9（圈内沿 38.8）；英文版汉字名之字框偏高，量得 39.1，截图看字在圈内。

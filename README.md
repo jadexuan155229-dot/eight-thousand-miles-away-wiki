@@ -18,6 +18,10 @@ npm run lint
 npm run build
 ```
 
+每个 PR、每次推到 main，GitHub Actions 都会自动跑一遍（`.github/workflows/checks.yml`）：资料（`check-data`）、代码（oxlint，警告以 12 条为基线，多出即不过）、字体子集（`node scripts/font-chars.js --check`，有字符表外之字即不过）、构建、前进后退（`check:history`）。任一项不过，PR 页底部显示红叉，点进去看是哪一项；各项互不连坐，一次看全。它与部署各跑各的，不挡部署。
+
+警告真减少了，可把 `checks.yml` 里的 `--max-warnings 12` 一并调低。
+
 ## 字体子集
 
 汇文明朝、汇文正楷、京华老宋三枚字体都只带站内用到的字（`scripts/font-subset-chars.txt`），表外之字会回落系统字体。写进新字（新录文库正文、新增人物事件）后若 `check-data` 报「字體子集」警告，跑一次：
