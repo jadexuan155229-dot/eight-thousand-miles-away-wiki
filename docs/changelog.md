@@ -4,7 +4,7 @@
 
 ### 加检查工作流（CI）
 
-- 新增 `.github/workflows/checks.yml`：每个 PR、每次推到 main 自动跑五项——`check-data`、oxlint（`--max-warnings 12`，警告多于基线即不过；`--format github`，警告直接标在 PR 的改动行上）、`node scripts/font-chars.js --check`、`npm run build`、`npm run check:history`（用 runner 自带 Google Chrome，`CHROME_PATH=/usr/bin/google-chrome`）。各项 `if: !cancelled()`，一项不过其余照跑；同一分支新提交进来即取消旧的那次；只读权限，与 `deploy.yml` 各跑各的，不挡部署。
+- 新增 `.github/workflows/checks.yml`：每个 PR、每次推到 main 自动跑五项——`check-data`、oxlint（`--max-warnings 12`，警告多于基线即不过；`--format github`，警告直接标在 PR 的改动行上）、`node scripts/font-chars.js --check`、`npm run build`、`npm run check:history`（用 runner 自带 Google Chrome，`CHROME_PATH=/usr/bin/google-chrome`）。用 `actions/checkout@v5`、`actions/setup-node@v5`（以 Node 24 运行；初版照 `deploy.yml` 用 v4，GitHub 提示 Node 20 已弃用，同日改）。各项 `if: !cancelled()`，一项不过其余照跑；同一分支新提交进来即取消旧的那次；只读权限，与 `deploy.yml` 各跑各的，不挡部署。
 - 缘起：此前合并前后都没有独立检查，PR 里的检查结果只是作者（或 Claude）自报；部署只跑 `npm ci` 与 `build`。最怕字体子集：站内写进表外之字，构建照样成功，线上那几个字悄悄回落系统字体，`check-data` 只报警告。
 - `scripts/font-chars.js` 加 `--check`：只查不写，有表外之字即列出、给出改法并 exit 1；不带参数时照旧补表。只查字符表，不查子集字体本身——表里有而子集未重裁的字（如「纽」一类俟库外重裁者）此项不报。
 - README「检查与构建」补一段说明。
