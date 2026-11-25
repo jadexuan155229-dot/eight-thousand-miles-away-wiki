@@ -1071,6 +1071,34 @@ body {
   text-indent: 0 !important;
   overflow-wrap: anywhere;
 }
+/* 頁籤一層（wiki.jsx .nav-tabs）：平時不成盒，頁籤照舊直接排在 nav 的 flex 裡 */
+.nav-tabs {
+  display: contents;
+}
+/* 手機英文：八個頁籤加三枚按鈕要折四行，正文到 366px 才開始。頁籤改作一行橫滑，右緣漸隱示意尚有；
+   左右留白讓首末項可滑出漸隱區；三枚按鈕另起一行。中文頁籤短，不受此條 */
+@media (max-width: 599px) {
+  .nav-en .nav-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    /* 左右俱漸隱：左伸 24px 入頁頭留白、內補 24px，未滑時首項不入漸隱區 */
+    width: calc(100% + 24px);
+    margin-left: -24px;
+    padding-left: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-right: 32px;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 36px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 36px), transparent);
+  }
+  .nav-en .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-en .nav-tabs > button {
+    flex: none;
+    padding: 8px 12px !important;
+  }
+}
 .translation-scope {
   max-width: 1080px;
   margin: 16px auto 0;

@@ -2982,6 +2982,21 @@ export default function Wiki({ onOpenLanding }) {
     else window.location.hash = h;
   };
   const tab = route.tab;
+  /* 手機英文導航橫滑時，當前頁籤滑入視野（只動橫向，不捲頁面） */
+  const navTabsRef = useRef(null);
+  useEffect(() => {
+    const fit = () => {
+      const box = navTabsRef.current;
+      if (!box || box.scrollWidth <= box.clientWidth) return;
+      const on = box.querySelector('[aria-current="page"]');
+      if (!on) return;
+      const b = box.getBoundingClientRect(), o = on.getBoundingClientRect();
+      if (o.left < b.left + 24) box.scrollLeft += o.left - (b.left + 24); /* 左緣 24px 亦漸隱 */
+      else if (o.right > b.right - 36) box.scrollLeft += o.right - (b.right - 36); /* 右緣 36px 為漸隱區 */
+    };
+    fit();
+    document.fonts?.ready.then(fit); /* 字體到位後寬度會變，再對一次 */
+  }, [tab, locale, phoneHead]);
   const openChar = route.char ? byId[route.char] || null : null; /* 壞 id 鏈接：不開彈窗、不作報錯 */
   const setTab = (k) => nav({ tab: k });
   const setOpenChar = (c) => nav({ char: c ? c.id : null });
@@ -3022,12 +3037,16 @@ export default function Wiki({ onOpenLanding }) {
         </div>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
           {/* About 只在英文導航：向英文讀者交代唐代背景與剑三來源，中文讀者不需要 */}
+          {/* 頁籤另包一層 .nav-tabs：桌面與中文 display: contents，排版一如其舊；
+              手機英文（< 600px）作一行橫滑，右緣漸隱，「卷首／語言／紙色」另起一行（見 index.css） */}
+          <div className="nav-tabs" ref={navTabsRef}>
           {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
-            <button key={k} onClick={() => setTab(k)}
+            <button key={k} onClick={() => setTab(k)} aria-current={tab === k || (k === "chars" && tab === "posts") ? "page" : undefined}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
             </button>
           ))}
+          </div>
           {/* 回卷首：重開入站定場（landing.jsx），印形以應「入卷」朱印 */}
           {onOpenLanding && (
             <button onClick={onOpenLanding} title={t("回到卷首")}
