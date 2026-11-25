@@ -2069,33 +2069,67 @@ function Planetary({ onOpenChar }) {
         )}
         {layout.bridge.map((n) => renderNode(n, t("閔 {a} · 程 {b}", { a: n.a, b: n.b })))}
         {layout.farNodes.map((n) => renderNode(n, null, true))}
-        {/* 弦線之字：畫在星圈之上（位置見 chordPath）。次星三角之字常駐，懸停他人時隨線淡去 */}
-        {[
-          ...secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => [key, hover ? 0.2 : 0.85, 9.5]),
-          ...chordPairs.map((key) => [key, 1, 10]),
-        ].map(([key, op, fs]) => {
-          const [a, b] = key.split("|"), rs = RELS_BY_PAIR.get(key), pr = primaryRel(rs);
-          const { lx, ly } = chordPath(a, b);
-          return (
-            <text key={"cl" + key} x={lx} y={ly + 3.5} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: fs, fill: relColor(pr.t), opacity: op, ...haloText }}>{relLabel(rs)}</text>
-          );
-        })}
-        {/* 懸停一星：其核線上標出與該核之諸條關係（無則註「僅同事」）。標於兩圈之間的線段中點 */}
-        {hover && [
-          ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.filter((n) => n.c.id === hover).map((n) => [n, k]))),
-          ...layout.bridge.filter((n) => n.c.id === hover).flatMap((n) => [[n, 0], [n, 1]]),
-        ].map(([n, k]) => {
-          const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)) || [], pr = primaryRel(rs);
-          const dx = n.x - CX[k], dy = n.y - CY, dl = Math.hypot(dx, dy) || 1;
-          const f = (47 + (dl - 47 - n.r) / 2) / dl;
-          return (
-            <text key={"sl" + n.c.id + k} x={CX[k] + dx * f} y={CY + dy * f + 3.5} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: 10.5, fill: pr ? relColor(pr.t) : T.muted, ...haloText }}>
-              {rs.length ? relLabel(rs) : t("僅同事")}
+        {/* 弦線之字（位置見 chordPath；次星三角之字常駐，懸停他人時隨線淡去）與懸停一星時核線上之字（兩圈之間的線段中點）。
+            兩組合排：英文多類關係（Physician & patient · Service on campaign）於「·」「/」處折兩行；
+            先放者佔位，後放者撞上即上下挪一格（至多兩格），無處可挪方留原位——懸停時英文長字互疊即由此 */}
+        {(() => {
+          const items = [
+            ...secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => [key, hover ? 0.2 : 0.85, 9.5]),
+            ...chordPairs.map((key) => [key, 1, 10]),
+          ].map(([key, op, fs]) => {
+            const [a, b] = key.split("|"), rs = RELS_BY_PAIR.get(key), pr = primaryRel(rs);
+            const { lx, ly } = chordPath(a, b);
+            return { id: "cl" + key, x: lx, y: ly + 3.5, text: relLabel(rs), fs, fill: relColor(pr.t), op };
+          });
+          if (hover) {
+            for (const [n, k] of [
+              ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.filter((n) => n.c.id === hover).map((n) => [n, k]))),
+              ...layout.bridge.filter((n) => n.c.id === hover).flatMap((n) => [[n, 0], [n, 1]]),
+            ]) {
+              const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)) || [], pr = primaryRel(rs);
+              const dx = n.x - CX[k], dy = n.y - CY, dl = Math.hypot(dx, dy) || 1;
+              const f = (47 + (dl - 47 - n.r) / 2) / dl;
+              items.push({ id: "sl" + n.c.id + k, x: CX[k] + dx * f, y: CY + dy * f + 3.5, text: rs.length ? relLabel(rs) : t("僅同事"), fs: 10.5, fill: pr ? relColor(pr.t) : T.muted, op: 1 });
+            }
+          }
+          const split = (str) => {
+            if (!en || str.length <= 26) return [str];
+            const cuts = [...str.matchAll(/ [·/] /g)].map((m) => m.index);
+            if (!cuts.length) return [str];
+            const c = cuts.reduce((p, q) => (Math.abs(q - str.length / 2) < Math.abs(p - str.length / 2) ? q : p));
+            return [str.slice(0, c + 2), str.slice(c + 3)];
+          };
+          const wOf = (str, fs) => measureText(str, fs, gUI);
+          const over = (a, q) => a.l < q.r && a.r > q.l && a.t < q.b && a.b > q.t;
+          /* 先佔位：懸停之星自己名下那行「名 · 共見數」（renderNode 所畫） */
+          const placed = [];
+          const hv = hover && allStars.find((q) => q.c.id === hover);
+          if (hv) {
+            const inRing = layout.rings.flatMap((sr) => sr.flatMap((ring) => ring.nodes)).find((q) => q.c.id === hover);
+            const inBridge = layout.bridge.find((q) => q.c.id === hover);
+            const cnt = inRing ? t("共 {n} 事", { n: inRing.n }) : inBridge ? t("閔 {a} · 程 {b}", { a: inBridge.a, b: inBridge.b }) : null;
+            const str = [hasEnName(locale, hv.c) && charName(locale, hv.c), cnt].filter(Boolean).join(" · ");
+            if (str) { const w = wOf(str, 10.5), y = hv.y + hv.r + 3 + 15; placed.push({ l: hv.x - w / 2, r: hv.x + w / 2, t: y - 9, b: y + 3 }); }
+          }
+          /* 星圈亦避：挪位時先找既不壓字亦不壓星者，無則只避字，再無則留原位 */
+          const stars = allStars.map((q) => ({ l: q.x - q.r, r: q.x + q.r, t: q.y - q.r, b: q.y + q.r }));
+          for (const it of items) {
+            it.lines = split(it.text);
+            const w = Math.max(...it.lines.map((l) => wOf(l, it.fs))), lh = it.fs * 1.2, h = lh * it.lines.length;
+            const boxAt = (y) => ({ l: it.x - w / 2, r: it.x + w / 2, t: y - it.fs * 0.85, b: y - it.fs * 0.85 + h });
+            const step = h + 2;
+            const ys = [0, step, -step, 2 * step, -2 * step].map((d) => it.y + d);
+            const free = (yy, withStars) => !placed.some((q) => over(boxAt(yy), q)) && (!withStars || !stars.some((q) => over(boxAt(yy), q)));
+            const y = free(it.y, false) ? it.y : ys.find((yy) => free(yy, true)) ?? ys.find((yy) => free(yy, false)) ?? it.y;
+            it.y = y; it.lh = lh; placed.push(boxAt(y));
+          }
+          return items.map((it) => (
+            <text key={it.id} x={it.x} y={it.y} textAnchor="middle"
+              style={{ fontFamily: gUI, fontSize: it.fs, fill: it.fill, opacity: it.op, ...haloText }}>
+              {it.lines.length === 1 ? it.lines[0] : it.lines.map((l, i) => <tspan key={i} x={it.x} dy={i ? it.lh : 0}>{l}</tspan>)}
             </text>
-          );
-        })}
+          ));
+        })()}
         </g>
       </svg>
       {en ? (
@@ -2266,6 +2300,18 @@ function Chip({ active, onClick, label, fontFamily = gUI }) {
       {label}
     </button>
   );
+}
+
+/* 量字寬（SVG 用戶單位＝字號單位）：以 canvas 照實際字族量，英文拉丁字面已由 latin-faces 接管，量出即所見 */
+let measureCtx = null;
+function measureText(str, fs, family) {
+  try {
+    measureCtx = measureCtx || document.createElement("canvas").getContext("2d");
+    measureCtx.font = `${fs}px ${family}`;
+    return measureCtx.measureText(str).width;
+  } catch {
+    return [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? fs : fs * 0.56), 0);
+  }
 }
 
 /* 檢索框內「查」字小方標：純視覺標識，不可點——配合外層 position:relative 容器與 input 左側讓位 padding 使用 */
