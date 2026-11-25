@@ -6,6 +6,8 @@
      - 直接執行：把站內用到而表中沒有的字補進字符表（只增不刪）
        node scripts/font-chars.js
        ——平常不必單跑，npm run fonts 第一步即此，第二步重裁子集。
+     - 只查不寫：有表外之字即列出並以 exit 1 退出（CI 用，見 .github/workflows/checks.yml）
+       node scripts/font-chars.js --check
      - check-data 引用 missingFontChars() 報缺字警告。
    字符表格式：全部字元去重、按碼位排序後連成一串（含換行符）。
    註釋裡的字也一併收入：多帶幾個字形無害，漏一個則顯形。
@@ -57,6 +59,10 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const missing = missingFontChars();
   if (!missing.length) {
     console.log("font-chars：站內用字盡在字符表，無須補字");
+  } else if (process.argv.includes("--check")) {
+    console.error(`font-chars：站內用字 ${missing.length} 個不在字符表（${missing.join("")}），明朝、正楷、老宋處將回落系統字體。`);
+    console.error("改法：跑 npm run fonts（補字符表並重裁子集），提交字符表與 src/assets/fonts/ 下變動的字體；或換用表內之字。");
+    process.exit(1);
   } else {
     const all = [...new Set([...listChars(), ...missing])].sort(byCodePoint);
     writeFileSync(CHAR_LIST, all.join(""));

@@ -1,0 +1,57 @@
+# 检查：每个 PR、每次推到 main 都跑一遍，结果见 PR 页底部与 Actions 页。
+# 与部署（deploy.yml）各跑各的，不挡部署；任一项不过即红叉，其余各项照跑，便于一次看全。
+#   资料     npm run check-data              （有错即不过；警告只列出）
+#   代码     oxlint，警告以 12 条为基线        （多于 12 条即不过；改基线须改下面的 --max-warnings）
+#   字体子集  node scripts/font-chars.js --check（站内有字符表外之字即不过，改法见 README「字体子集」）
+#   构建     npm run build
+#   前进后退  npm run check:history            （用 runner 自带的 Google Chrome）
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch: # 允许在 Actions 页手动触发
+
+permissions:
+  contents: read
+
+# 同一分支有新提交进来，即取消旧的那次
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5 # v5 起以 Node 24 运行（v4 为 Node 20，GitHub 已弃用）
+      - uses: actions/setup-node@v5 # 同上
+        with:
+          node-version: 22
+          cache: npm
+      - id: install
+        run: npm ci
+
+      - name: 资料（check-data）
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run -s check-data
+
+      - name: 代码（oxlint，基线 12 条警告）
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx oxlint --max-warnings 12 --format github
+
+      - name: 字体子集（font-chars --check）
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node scripts/font-chars.js --check
+
+      - name: 构建（build）
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run -s build
+
+      - name: 前进后退（check:history）
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run -s check:history
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
