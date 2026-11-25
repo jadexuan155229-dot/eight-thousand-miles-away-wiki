@@ -2112,16 +2112,21 @@ function Planetary({ onOpenChar }) {
             const str = [hasEnName(locale, hv.c) && charName(locale, hv.c), cnt].filter(Boolean).join(" · ");
             if (str) { const w = wOf(str, 10.5), y = hv.y + hv.r + 3 + 15; placed.push({ l: hv.x - w / 2, r: hv.x + w / 2, t: y - 9, b: y + 3 }); }
           }
-          /* 星圈亦避：挪位時先找既不壓字亦不壓星者，無則只避字，再無則留原位 */
+          /* 星圈亦避，原位同查（審查 P2：原先原位只查字，僅壓星者從不試挪）。取位次序：
+             原位字星俱清 → 他位字星俱清 → 原位不壓字 → 他位不壓字 → 原位。
+             原位已避字而只壓星、又無字星俱清之處者，留原位，不為避星挪到只避字處 */
           const stars = allStars.map((q) => ({ l: q.x - q.r, r: q.x + q.r, t: q.y - q.r, b: q.y + q.r }));
           for (const it of items) {
             it.lines = split(it.text);
             const w = Math.max(...it.lines.map((l) => wOf(l, it.fs))), lh = it.fs * 1.2, h = lh * it.lines.length;
             const boxAt = (y) => ({ l: it.x - w / 2, r: it.x + w / 2, t: y - it.fs * 0.85, b: y - it.fs * 0.85 + h });
             const step = h + 2;
-            const ys = [0, step, -step, 2 * step, -2 * step].map((d) => it.y + d);
+            const alt = [step, -step, 2 * step, -2 * step].map((d) => it.y + d);
             const free = (yy, withStars) => !placed.some((q) => over(boxAt(yy), q)) && (!withStars || !stars.some((q) => over(boxAt(yy), q)));
-            const y = free(it.y, false) ? it.y : ys.find((yy) => free(yy, true)) ?? ys.find((yy) => free(yy, false)) ?? it.y;
+            const y = free(it.y, true) ? it.y
+              : alt.find((yy) => free(yy, true))
+              ?? (free(it.y, false) ? it.y : alt.find((yy) => free(yy, false)))
+              ?? it.y;
             it.y = y; it.lh = lh; placed.push(boxAt(y));
           }
           return items.map((it) => (
