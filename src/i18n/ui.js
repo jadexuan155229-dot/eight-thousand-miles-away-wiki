@@ -86,6 +86,7 @@ const en = {
   /* ---------- 行星關係圖 ---------- */
   蒼雲線: 'Cangyun line', 天策線: 'Tiance line', 無門派: 'No faction',
   '虛線諸環：與本系之核共見事數': 'Dotted rings: events shared with that system’s centre',
+  淡弧: 'Faint arcs', '次星三人之間的關係（常駐）': 'ties among the secondary stars', // 英文再長即壓朗迪恩、鲁雅；「常駐」由淡弧入圖例自明
   內軌: 'Inner orbit', 中軌: 'Middle orbit', 外軌: 'Outer orbit', 遠軌: 'Far orbit',
   '共見 ≥6 事': '6 or more shared events', '共見 3–5 事': '3–5 shared events', '共見 1–2 事': '1–2 shared events',
   '與兩核俱無共見（作淡圓點）': 'none shared (faint dots)',
