@@ -1493,6 +1493,28 @@ function usePanZoom(w, h) {
   return { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef };
 }
 
+/* 語義縮放（行星、群像兩圖）：放大時位置照放、圈與字不跟著變大，圈距拉開、細節漸清——同輿圖。
+   唯窄屏全圖先已縮至三成上下，圈字若一概不放，則永不可讀；故圈字先隨縮放長大，
+   長到桌面原大（屏上與 viewBox 等比）即止，此後只拉開圈距。
+   c ＝ 反縮放係數：min(1, 1 / (幅面實寬／viewBox 寬 × k))；k＝1 時 c＝1，與舊圖一樣。 */
+function useRenderScale(ref, vbW) {
+  const [s, setS] = useState(1);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const read = () => { const w = el.getBoundingClientRect().width; if (w) setS(w / vbW); };
+    read();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(read);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ref, vbW]);
+  return s;
+}
+/* 以 (x, y) 為錨反縮放：位置隨圖，大小不隨；c＝1 時不加 transform */
+const counterScale = (c, x, y) => (c === 1 ? undefined : `translate(${x} ${y}) scale(${c}) translate(${-x} ${-y})`);
+const dashC = (d, c) => (d && d !== "none" ? d.split(/\s+/).map((v) => +v * c).join(" ") : d);
+
 /* 縮放三鈕：放大／縮小／復位，三幅圖共用 */
 function ZoomBtns({ view, zoomBy, reset }) {
   const locale = useLocale();
@@ -1615,6 +1637,8 @@ function Planetary({ onOpenChar }) {
   const en = locale === "en";
   const [hover, setHover] = useState(null);
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(PW, PH);
+  const vs = useRenderScale(wheelElRef, PW);
+  const cz = Math.min(1, 1 / (vs * view.k)); /* 語義縮放之反縮放係數（見 useRenderScale）；不名 c，免與人物 c 相遮 */
   const coarse = useCoarsePointer();
   const narrow = useNarrow();
   /* 圖例同類亮起。keyPin：點選（滑鼠點、觸屏輕觸、鍵盤 Enter／空格）所定、常亮至再點或 Esc；
@@ -1832,7 +1856,7 @@ function Planetary({ onOpenChar }) {
   ];
   const starGap = (x, y, skip) => {
     let g = Infinity;
-    for (const q of allStars) if (!skip.includes(q.c.id)) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - q.r - (q.c.belong.length > 1 ? 4 : 0));
+    for (const q of allStars) if (!skip.includes(q.c.id)) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - (q.r + (q.c.belong.length > 1 ? 4 : 0)) * cz);
     return g;
   };
   const chordPath = (a, b) => {
@@ -1854,14 +1878,64 @@ function Planetary({ onOpenChar }) {
     }
     return { d: `M ${p1.x} ${p1.y} Q ${best.cx} ${best.cy} ${p2.x} ${p2.y}`, lx: lab.x, ly: lab.y };
   };
+  /* 遠軌門派署名之位置與角度：外列圓心 + 圓徑 + 留白（後二者隨語義縮放）；沿真切線書寫，正規至 ±90° 免字倒懸 */
+  const farLabelAt = (run) => {
+    const { rx, ry } = layout.FAR;
+    const LAB = layout.LANE + (FAR_R + 17) * cz;
+    const am = layout.farAng(run.i0 + run.i1);
+    const lx = PW / 2 + (rx + LAB) * Math.cos(am), ly = CY + (ry + LAB) * Math.sin(am);
+    let rot = (Math.atan2((ry + LAB) * Math.cos(am), -(rx + LAB) * Math.sin(am)) * 180) / Math.PI;
+    if (rot > 90) rot -= 180; else if (rot < -90) rot += 180;
+    return { lx, ly, rot };
+  };
+  /* 英文名標籤（英文界面）：圈下一行，放得下才標。先次星、後橋星、再按共見數多寡、遠軌殿後；
+     不壓諸星（含雙色外環）、雙核之字、兩塊圖例與已標之名。按反縮放後之尺寸計，故越放大標得越多。
+     中文界面圈內即漢字，不另標 */
+  const { nameShown, nameBoxes } = useMemo(() => {
+    const shown = new Set(), boxes = [];
+    if (!en) return { nameShown: shown, nameBoxes: boxes };
+    const ringNodes = layout.rings.flatMap((sr) => sr.flatMap((ring) => ring.nodes));
+    const score = (n) => (SECONDARY_IDS.has(n.c.id) ? 1e6 : 0) + (n.a != null ? n.a + n.b + 1000 : n.n ?? -1);
+    const cands = [...ringNodes, ...layout.bridge, ...layout.farNodes].sort((p, q) => score(q) - score(p));
+    const over = (p, q) => p.l < q.r && p.r > q.l && p.t < q.b && p.b > q.t;
+    const blocks = [
+      ...allStars.map((q) => { const r = (q.r + (q.c.belong.length > 1 ? 4 : 0)) * cz; return { id: q.c.id, box: { l: q.x - r, r: q.x + r, t: q.y - r, b: q.y + r } }; }),
+      ...CX.flatMap((x) => [
+        { id: "", box: { l: x - 55 * cz, r: x + 55 * cz, t: CY - 78 * cz, b: CY - 59 * cz } }, /* 核頂「Cangyun line」 */
+        { id: "", box: { l: x - 50 * cz, r: x + 50 * cz, t: CY + 49 * cz, b: CY + 68 * cz } }, /* 核下英文名 */
+      ]),
+      /* 遠軌門派署名（斜書）：沿字向取一串小方塊近似 */
+      ...layout.farRuns.filter((run) => run.i1 - run.i0 >= 2).flatMap((run) => {
+        const { lx, ly, rot } = farLabelAt(run), str = run.f ? facName(locale, run.f) : t("無門派");
+        const half = (measureText(str, 9.5, gUI) + str.length * 0.76) * cz / 2, hs = 6 * cz;
+        const ux = Math.cos((rot * Math.PI) / 180), uy = Math.sin((rot * Math.PI) / 180);
+        const out = [];
+        for (let d = -half; d <= half + 0.01; d += hs) out.push({ id: "", box: { l: lx + ux * d - hs, r: lx + ux * d + hs, t: ly + uy * d - hs, b: ly + uy * d + hs } });
+        return out;
+      }),
+      /* 兩塊圖例（實測英文版外框：左上 273×100、左下 262×110，各留二三像素） */
+      { id: "", box: { l: 28 - 2 * cz, r: 28 + 276 * cz, t: 40 - 15 * cz, b: 40 + 88 * cz } },
+      { id: "", box: { l: 28 - 5 * cz, r: 28 + 262 * cz, t: PH - 100 - 15 * cz, b: PH - 100 + 98 * cz } },
+    ];
+    for (const n of cands) {
+      const nm = charName(locale, n.c);
+      const w = measureText(nm, 10, gUI) * cz, y = n.y + (n.r + 13) * cz;
+      const box = { l: n.x - w / 2, r: n.x + w / 2, t: y - 8 * cz, b: y + 3 * cz };
+      if (blocks.some((bk) => bk.id !== n.c.id && over(box, bk.box))) continue;
+      shown.add(n.c.id); boxes.push({ id: n.c.id, box }); blocks.push({ id: n.c.id, box });
+    }
+    return { nameShown: shown, nameBoxes: boxes };
+  }, [en, cz, locale, layout]); // eslint-disable-line react-hooks/exhaustive-deps -- allStars、CX、PH 皆由 layout 定
+  /* 懸停時：與懸停者有弦線者之名照常，其餘淡去 */
+  const nameKeep = new Set(hover ? [hover, ...chordPairs.flatMap((k) => k.split("|"))] : []);
   const relLabel = (rs) => rs.map((r) => relName(locale, r.t)).join(en ? " / " : "／");
-  const haloText = { paintOrder: "stroke", stroke: T.bg, strokeWidth: 3, strokeLinejoin: "round" };
+  const haloText = { paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 * cz, strokeLinejoin: "round" };
 
   /* 星核與節點皆以渲染函數呼之（理同輿圖 renderSpot：內嵌元件逢懸停重繪即卸載重掛，吞去 click） */
   const renderStar = (k) => {
     const c = byId[CENTERS_META[k].id];
     return (
-      <g key={"star" + k} style={{ cursor: "pointer" }} onClick={() => { if (movedRef.current > 5) return; onOpenChar(c); }}>
+      <g key={"star" + k} style={{ cursor: "pointer" }} transform={counterScale(cz, CX[k], CY)} onClick={() => { if (movedRef.current > 5) return; onOpenChar(c); }}>
         <title>{hasEnName(locale, c) ? `${charName(locale, c)} ${c.name}` : c.name}</title>
         <text x={CX[k]} y={CY - 66} textAnchor="middle"
           style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: en ? "0.12em" : "0.45em" }}>
@@ -1890,6 +1964,7 @@ function Planetary({ onOpenChar }) {
     const fs = sec ? 13.5 : nodeFontSize(n.c.name.length, n.r, dim);
     return (
       <g key={n.c.id} id={`orb-${n.c.id}`} style={{ cursor: "pointer" }} opacity={keyLit && !keyLit.has(n.c.id) ? 0.22 : 1}
+        transform={counterScale(cz, n.x, n.y)}
         onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
         onMouseLeave={() => { if (!coarse) setHover((h) => (h === n.c.id ? null : h)); /* 只清自己：免離 A 晚於入 B 時把 B 清掉 */ }}
         /* 觸屏無懸停：首觸牽出其關係弧，再觸方開檔案 */
@@ -1913,6 +1988,13 @@ function Planetary({ onOpenChar }) {
         </text>
         {/* 共見數改懸停始現：四十條同級灰字常駐，鋪成一層霧而已；
             其量今由徑與線寬並載，欲知確數者懸停（觸屏首觸）即得。 */}
+        {/* 英文名常標（放得下才標，見 nameShown）；懸停時讓位於下行「名 · 共見數」。不接指針 */}
+        {en && !hi && nameShown.has(n.c.id) && hasEnName(locale, n.c) && (
+          <text x={n.x} y={n.y + n.r + 13} textAnchor="middle"
+            style={{ fontFamily: gUI, fontSize: 10, fill: T.muted, opacity: hover && !nameKeep.has(n.c.id) ? 0.3 : 1, pointerEvents: "none", paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5, strokeLinejoin: "round" }}>
+            {charName(locale, n.c)}
+          </text>
+        )}
         {(countLabel || hasEnName(locale, n.c)) && hi && (
           <text x={n.x} y={n.y + r0 + 15} textAnchor="middle"
             style={{ fontFamily: gUI, fontSize: 10.5, fill: T.accent, pointerEvents: "none" /* 同上：說明行壓到鄰星時不擋其懸停 */ }}>
@@ -1938,25 +2020,20 @@ function Planetary({ onOpenChar }) {
         {(() => {
           const { rx, ry } = layout.FAR, PAD = 0.012;
           const pt = (a, dr) => [PW / 2 + (rx + dr) * Math.cos(a), CY + (ry + dr) * Math.sin(a)];
-          const LAB = layout.LANE + FAR_R + 17; /* 外列圓心 + 圓徑 + 留白 */
           return layout.farRuns.map((run) => {
             const a0 = layout.farAng(2 * run.i0 - 1) + PAD, a1 = layout.farAng(2 * run.i1 + 1) - PAD;
             const sweep = ((a1 - a0) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
             const [x0, y0] = pt(a0, 0), [x1, y1] = pt(a1, 0);
             const col = fc(run.f);
-            const am = layout.farAng(run.i0 + run.i1);
-            const [lx, ly] = pt(am, LAB);
-            /* 切向：橢圓非圓，須用真切線 (-rx·sin, ry·cos)；正規至 ±90° 免字倒懸 */
-            let rot = (Math.atan2((ry + LAB) * Math.cos(am), -(rx + LAB) * Math.sin(am)) * 180) / Math.PI;
-            if (rot > 90) rot -= 180; else if (rot < -90) rot += 180;
+            const { lx, ly, rot } = farLabelAt(run);
             return (
               <g key={"fr" + run.i0}>
                 <path d={`M ${x0} ${y0} A ${rx} ${ry} 0 ${sweep > Math.PI ? 1 : 0} 1 ${x1} ${y1}`}
-                  fill="none" stroke={col} strokeWidth={1.2} strokeDasharray="2 5" opacity={0.5} />
+                  fill="none" stroke={col} strokeWidth={1.2 * cz} strokeDasharray={dashC("2 5", cz)} opacity={0.5} />
                 {run.i1 - run.i0 >= 2 && (
                   <text x={lx} y={ly} textAnchor="middle" dominantBaseline="central"
                     transform={`rotate(${rot.toFixed(2)} ${lx.toFixed(1)} ${ly.toFixed(1)})`}
-                    style={{ fontFamily: gUI, fontSize: 9.5, fill: fcText(run.f), opacity: 0.75, letterSpacing: "0.08em" }}>
+                    style={{ fontFamily: gUI, fontSize: 9.5 * cz, fill: fcText(run.f), opacity: 0.75, letterSpacing: "0.08em" }}>
                     {run.f ? facName(locale, run.f) : t("無門派")}
                   </text>
                 )}
@@ -1968,14 +2045,14 @@ function Planetary({ onOpenChar }) {
         {layout.RINGS.map((ring, ri) => (
           <g key={ri}>
             {[0, 1].map((k) => (
-              <circle key={k} cx={CX[k]} cy={CY} r={ring.r} fill="none" stroke={T.line} strokeDasharray="2 5" />
+              <circle key={k} cx={CX[k]} cy={CY} r={ring.r} fill="none" stroke={T.line} strokeWidth={cz} strokeDasharray={dashC("2 5", cz)} />
             ))}
           </g>
         ))}
         {/* 圖例：軌道之義。舊法每環之名於兩核頭頂各書一遍，六字之中三為重出，
             又正壓十二點鐘方向之星體；今並歸幅左之空處，環上不再有壓字。
             此隅在遠軌橢圓之外，四環由內而外以縮進示之。 */}
-        <g transform="translate(28, 40)">
+        <g transform={`translate(28, 40)${cz === 1 ? "" : ` scale(${cz})`}`}>
           <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>{t("虛線諸環：與本系之核共見事數")}</text>
           {[...layout.RINGS.map((r) => [r.label, r.note]), ["遠軌", "與兩核俱無共見（作淡圓點）"]].map(([nm, note], i) => (
             <text key={nm} x={i * 8} y={20 + i * 15} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>
@@ -1997,7 +2074,7 @@ function Planetary({ onOpenChar }) {
             作 role=button 並報 aria-pressed，寫法同余波之譜線行。透明底塊補足字與色線間之空隙，兼作焦點框 */}
         {/* 英文版：類名長於二字，改作三欄三行，整塊上移六像素（玛奈丽在其上方，仍有餘隙）；
             寬仍收在 x 215 以內。提示語不入圖——圖下說明已有，題字旁放不下 */}
-        <g transform={`translate(28, ${en ? PH - 100 : PH - 94})`}>
+        <g transform={`translate(28, ${en ? PH - 100 : PH - 94})${cz === 1 ? "" : ` scale(${cz})`}`}>
           <text x={0} y={0} style={{ fontFamily: gUI, fontSize: 11, fill: T.muted }}>{t("線色：兩人之關係")}</text>
           {!en && <text x={96} y={0} style={{ fontFamily: gUI, fontSize: 9.5, fill: T.faint }}>{coarse ? t("輕觸一類即亮") : t("懸停即亮，點選常亮")}</text>}
           {(en ? [
@@ -2044,31 +2121,31 @@ function Planetary({ onOpenChar }) {
           }
           return (
             <line key={n.c.id + "l" + k} x1={CX[k]} y1={CY} x2={n.x} y2={n.y}
-              stroke={stroke} strokeWidth={linkW(cnt)} strokeDasharray={dash ? "6 4" : undefined} opacity={op} />
+              stroke={stroke} strokeWidth={linkW(cnt) * cz} strokeDasharray={dash ? dashC("6 4", cz) : undefined} opacity={op} />
           );
         })}
         {/* 次星三角：常駐淡畫，懸停其中一人時讓位於懸停弦線 */}
         {secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => {
           const [a, b] = key.split("|"), pr = primaryRel(RELS_BY_PAIR.get(key));
           return (
-            <path key={"sec" + key} d={chordPath(a, b).d} fill="none" stroke={relColor(pr.t)} strokeWidth={1.4}
-              strokeDasharray={pr.da ? "5 4" : undefined} opacity={hover ? 0.15 : 0.6} />
+            <path key={"sec" + key} d={chordPath(a, b).d} fill="none" stroke={relColor(pr.t)} strokeWidth={1.4 * cz}
+              strokeDasharray={pr.da ? dashC("5 4", cz) : undefined} opacity={hover ? 0.15 : 0.6} />
           );
         })}
         {/* 懸停弦線：星體間之關係，一對一弧 */}
         {chordPairs.map((key) => {
           const [a, b] = key.split("|"), pr = primaryRel(RELS_BY_PAIR.get(key));
           return (
-            <path key={"ch" + key} d={chordPath(a, b).d} fill="none" stroke={relColor(pr.t)} strokeWidth={1.3}
-              strokeDasharray={pr.da ? "5 4" : "none"} opacity={0.9} />
+            <path key={"ch" + key} d={chordPath(a, b).d} fill="none" stroke={relColor(pr.t)} strokeWidth={1.3 * cz}
+              strokeDasharray={pr.da ? dashC("5 4", cz) : "none"} opacity={0.9} />
           );
         })}
         {/* 圖例同類亮起之弦線：核線以外的同類關係，不標字（多者至四十餘對，標字成霧）；色一律取所指之類 */}
         {keyPairs.map((key) => {
           const [a, b] = key.split("|"), m = keyHit(RELS_BY_PAIR.get(key));
           return (
-            <path key={"kc" + key} d={chordPath(a, b).d} fill="none" stroke={keyCol} strokeWidth={1.4}
-              strokeDasharray={m.da ? "5 4" : undefined} opacity={0.85} />
+            <path key={"kc" + key} d={chordPath(a, b).d} fill="none" stroke={keyCol} strokeWidth={1.4 * cz}
+              strokeDasharray={m.da ? dashC("5 4", cz) : undefined} opacity={0.85} />
           );
         })}
         {renderStar(0)}
@@ -2093,7 +2170,7 @@ function Planetary({ onOpenChar }) {
           ].map(([key, op, fs]) => {
             const [a, b] = key.split("|"), rs = RELS_BY_PAIR.get(key), pr = primaryRel(rs);
             const { lx, ly } = chordPath(a, b);
-            return { id: "cl" + key, x: lx, y: ly + 3.5, text: relLabel(rs), fs, fill: relColor(pr.t), op };
+            return { id: "cl" + key, x: lx, y: ly + 3.5 * cz, text: relLabel(rs), fs: fs * cz, fill: relColor(pr.t), op };
           });
           if (hover) {
             for (const [n, k] of [
@@ -2102,8 +2179,8 @@ function Planetary({ onOpenChar }) {
             ]) {
               const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)) || [], pr = primaryRel(rs);
               const dx = n.x - CX[k], dy = n.y - CY, dl = Math.hypot(dx, dy) || 1;
-              const f = (47 + (dl - 47 - n.r) / 2) / dl;
-              items.push({ id: "sl" + n.c.id + k, x: CX[k] + dx * f, y: CY + dy * f + 3.5, text: rs.length ? relLabel(rs) : t("僅同事"), fs: 10.5, fill: pr ? relColor(pr.t) : T.muted, op: 1 });
+              const f = (47 * cz + (dl - (47 + n.r) * cz) / 2) / dl;
+              items.push({ id: "sl" + n.c.id + k, x: CX[k] + dx * f, y: CY + dy * f + 3.5 * cz, text: rs.length ? relLabel(rs) : t("僅同事"), fs: 10.5 * cz, fill: pr ? relColor(pr.t) : T.muted, op: 1 });
             }
           }
           const split = (str) => {
@@ -2123,17 +2200,20 @@ function Planetary({ onOpenChar }) {
             const inBridge = layout.bridge.find((q) => q.c.id === hover);
             const cnt = inRing ? t("共 {n} 事", { n: inRing.n }) : inBridge ? t("閔 {a} · 程 {b}", { a: inBridge.a, b: inBridge.b }) : null;
             const str = [hasEnName(locale, hv.c) && charName(locale, hv.c), cnt].filter(Boolean).join(" · ");
-            if (str) { const w = wOf(str, 10.5), y = hv.y + hv.r + 3 + 15; placed.push({ l: hv.x - w / 2, r: hv.x + w / 2, t: y - 9, b: y + 3 }); }
+            if (str) { const w = wOf(str, 10.5 * cz), y = hv.y + (hv.r + 3 + 15) * cz; placed.push({ l: hv.x - w / 2, r: hv.x + w / 2, t: y - 9 * cz, b: y + 3 * cz }); }
           }
           /* 星圈亦避，原位同查（審查 P2：原先原位只查字，僅壓星者從不試挪）。取位次序：
              原位字星俱清 → 他位字星俱清 → 原位不壓字 → 他位不壓字 → 原位。
              原位已避字而只壓星、又無字星俱清之處者，留原位，不為避星挪到只避字處 */
-          const stars = allStars.map((q) => ({ l: q.x - q.r, r: q.x + q.r, t: q.y - q.r, b: q.y + q.r }));
+          const stars = [
+            ...allStars.map((q) => ({ l: q.x - q.r * cz, r: q.x + q.r * cz, t: q.y - q.r * cz, b: q.y + q.r * cz })),
+            ...nameBoxes.filter((bx) => bx.id !== hover).map((bx) => bx.box), /* 英文名標籤亦須避開 */
+          ];
           for (const it of items) {
             it.lines = split(it.text);
             const w = Math.max(...it.lines.map((l) => wOf(l, it.fs))), lh = it.fs * 1.2, h = lh * it.lines.length;
             const boxAt = (y) => ({ l: it.x - w / 2, r: it.x + w / 2, t: y - it.fs * 0.85, b: y - it.fs * 0.85 + h });
-            const step = h + 2;
+            const step = h + 2 * cz;
             const alt = [step, -step, 2 * step, -2 * step].map((d) => it.y + d);
             const free = (yy, withStars) => !placed.some((q) => over(boxAt(yy), q)) && (!withStars || !stars.some((q) => over(boxAt(yy), q)));
             const y = free(it.y, true) ? it.y
@@ -2189,6 +2269,8 @@ function Community({ onOpenChar }) {
   const [Y, setY] = useState(765);
   const [hover, setHover] = useState(null);
   const { view, zoomBy, reset, handlers, gestureStyle, movedRef, wheelElRef } = usePanZoom(1120, 1050);
+  const vs = useRenderScale(wheelElRef, 1120);
+  const cz = Math.min(1, 1 / (vs * view.k)); /* 語義縮放（見 useRenderScale） */
   const coarse = useCoarsePointer();
   const { nodes, pos, centers } = useMemo(() => {
     const groups = {};
@@ -2225,6 +2307,31 @@ function Community({ onOpenChar }) {
     return { nodes, pos, centers };
   }, []);
   const active = RELATIONS.filter((r) => pos[r.a] && pos[r.b] && relActive(r, Y));
+  const hoverNbr = new Set(hover ? active.filter((r) => r.a === hover || r.b === hover).flatMap((r) => [r.a, r.b]) : []);
+  /* 英文名標籤（英文界面）：圈下一行，放得下才標；按當年在場關係數多寡排先後，已歿者殿後；
+     不壓諸圈、門派群名與已標之名。越放大標得越多 */
+  const nameShown = useMemo(() => {
+    const shown = new Set();
+    if (!en) return shown;
+    const deg = {};
+    for (const r of active) { deg[r.a] = (deg[r.a] || 0) + 1; deg[r.b] = (deg[r.b] || 0) + 1; }
+    const live = nodes.filter((n) => !(n.c.birth != null && n.c.birth > Y));
+    const dead = (n) => n.c.death != null && Y > n.c.death;
+    const cands = [...live].sort((p, q) => (dead(p) - dead(q)) || ((deg[q.c.id] || 0) - (deg[p.c.id] || 0)));
+    const over = (p, q) => p.l < q.r && p.r > q.l && p.t < q.b && p.b > q.t;
+    const R = 15.5 * cz;
+    const blocks = [
+      ...live.map((n) => ({ id: n.c.id, box: { l: n.x - R, r: n.x + R, t: n.y - R, b: n.y + R } })),
+      ...centers.map((g) => { const w = measureText(g.f === "其他" ? t(g.f) : facName(locale, g.f), 12, gUI) * cz, y = g.gy - g.cr - 10 * cz; return { id: "", box: { l: g.gx - w / 2, r: g.gx + w / 2, t: y - 10 * cz, b: y + 3 * cz } }; }),
+    ];
+    for (const n of cands) {
+      const w = measureText(charName(locale, n.c), 10, gUI) * cz, y = n.y + 29 * cz;
+      const box = { l: n.x - w / 2, r: n.x + w / 2, t: y - 8 * cz, b: y + 3 * cz };
+      if (blocks.some((bk) => bk.id !== n.c.id && over(box, bk.box))) continue;
+      shown.add(n.c.id); blocks.push({ id: n.c.id, box });
+    }
+    return shown;
+  }, [en, cz, Y, locale, nodes, centers]); // eslint-disable-line react-hooks/exhaustive-deps -- active 由 Y 定
 
   return (
     <div>
@@ -2249,8 +2356,8 @@ function Community({ onOpenChar }) {
           <rect x={-4000} y={-4000} width={9000} height={9000} fill="transparent"
             onClick={() => { if (movedRef.current > 5) return; setHover(null); }} />
           {centers.map((g) => (
-            <text key={g.f} x={g.gx} y={g.gy - g.cr - 10} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: en ? 12 : 13, fill: fcText(g.f), letterSpacing: en ? "0.04em" : "0.3em", opacity: 0.8 }}>
+            <text key={g.f} x={g.gx} y={g.gy - g.cr - 10 * cz} textAnchor="middle"
+              style={{ fontFamily: gUI, fontSize: (en ? 12 : 13) * cz, fill: fcText(g.f), letterSpacing: en ? "0.04em" : "0.3em", opacity: 0.8 }}>
               {g.f === "其他" ? t(g.f) : facName(locale, g.f)}
             </text>
           ))}
@@ -2263,12 +2370,12 @@ function Community({ onOpenChar }) {
               <g key={i}>
                 <line x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
                   stroke={posth ? T.accent : relColor(r.t)}
-                  strokeWidth={hi ? 1.8 : 1}
-                  strokeDasharray={posth ? "2 5" : r.da ? "6 4" : "none"}
+                  strokeWidth={(hi ? 1.8 : 1) * cz}
+                  strokeDasharray={dashC(posth ? "2 5" : r.da ? "6 4" : "none", cz)}
                   opacity={dim ? 0.07 : posth ? 0.5 : hi ? 1 : 0.45} />
                 {hi && (
-                  <text x={(p1.x + p2.x) / 2} y={(p1.y + p2.y) / 2 - 4} textAnchor="middle"
-                    style={{ fontFamily: gUI, fontSize: 10.5, fill: posth ? T.accent : relColor(r.t) }}>
+                  <text x={(p1.x + p2.x) / 2} y={(p1.y + p2.y) / 2 - 4 * cz} textAnchor="middle"
+                    style={{ fontFamily: gUI, fontSize: 10.5 * cz, fill: posth ? T.accent : relColor(r.t), pointerEvents: "none" }}>
                     {relName(locale, r.t)}{posth ? t("（歿後）") : ""}
                   </text>
                 )}
@@ -2280,27 +2387,33 @@ function Community({ onOpenChar }) {
             const dead = n.c.death != null && Y > n.c.death;
             const hi = hover === n.c.id;
             return (
-              <g key={n.c.id} style={{ cursor: "pointer" }} opacity={dead ? 0.38 : 1}
+              <g key={n.c.id} id={`com-${n.c.id}`} style={{ cursor: "pointer" }} opacity={dead ? 0.38 : 1}
+                transform={counterScale(cz, n.x, n.y)}
                 onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
-                onMouseLeave={() => { if (!coarse) setHover(null); }}
+                onMouseLeave={() => { if (!coarse) setHover((h) => (h === n.c.id ? null : h)); }}
                 /* 觸屏無懸停：首觸顯其關係諸邊，再觸方開檔案 */
                 onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); return; } onOpenChar(n.c); }}>
                 {/* 觸屏加大點選域：節點在窄屏上實徑僅數像素，另置一透明圓承接手指 */}
                 <title>{hasEnName(locale, n.c) ? `${charName(locale, n.c)} ${n.c.name}` : n.c.name}</title>
                 {coarse && <circle cx={n.x} cy={n.y} r={26} fill="transparent" />}
+                {/* 感應範圍恆為原徑（同行星圖）：懸停放大之圈與圈內之字不接指針 */}
+                <circle cx={n.x} cy={n.y} r={15.5} fill="transparent" />
                 <circle cx={n.x} cy={n.y} r={hi ? 19 : 15.5} fill={T.panel}
-                  stroke={fc(n.f)} strokeWidth={hi ? 2 : 1.3} strokeDasharray={dead ? "3 3" : "none"} />
+                  stroke={fc(n.f)} strokeWidth={hi ? 2 : 1.3} strokeDasharray={dead ? "3 3" : "none"} style={{ pointerEvents: "none" }} />
                 <text x={n.x} y={n.y + 3.5} textAnchor="middle" lang={en ? "zh" : undefined}
-                  style={{ fontFamily: gName, fontSize: n.c.name.length > 3 ? 8 : n.c.name.length > 2 ? 9.5 : 11, fill: T.ink }}>
+                  style={{ fontFamily: gName, fontSize: n.c.name.length > 3 ? 8 : n.c.name.length > 2 ? 9.5 : 11, fill: T.ink, pointerEvents: "none" }}>
                   {n.c.name}
                 </text>
-                {/* 英文名不入小圈（圈徑十五像素），懸停時標於圈下 */}
-                {hi && hasEnName(locale, n.c) && (
-                  <text x={n.x} y={n.y + 33} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.accent, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 }}>{charName(locale, n.c)}</text>
+                {/* 英文名：放得下者常標於圈下（見 nameShown）；懸停時稍大、作主色 */}
+                {hasEnName(locale, n.c) && (hi || nameShown.has(n.c.id)) && (
+                  <text x={n.x} y={n.y + (hi ? 33 : 29)} textAnchor="middle"
+                    style={{ fontFamily: gUI, fontSize: hi ? 10.5 : 10, fill: hi ? T.accent : T.muted, opacity: hover && !hi && !hoverNbr.has(n.c.id) ? 0.3 : 1, pointerEvents: "none", paintOrder: "stroke", stroke: T.bg, strokeWidth: hi ? 3 : 2.5, strokeLinejoin: "round" }}>{charName(locale, n.c)}</text>
                 )}
               </g>
             );
           })}
+          {/* 懸停之星複畫於諸星之上（同行星圖），名下英文名不被後畫之鄰星蓋住 */}
+          {hover && <use href={`#com-${hover}`} style={{ pointerEvents: "none" }} />}
           </g>
         </svg>
       </div>
