@@ -1891,7 +1891,7 @@ function Planetary({ onOpenChar }) {
     return (
       <g key={n.c.id} style={{ cursor: "pointer" }} opacity={keyLit && !keyLit.has(n.c.id) ? 0.22 : 1}
         onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
-        onMouseLeave={() => { if (!coarse) setHover(null); }}
+        onMouseLeave={() => { if (!coarse) setHover((h) => (h === n.c.id ? null : h)); /* 只清自己：免離 A 晚於入 B 時把 B 清掉 */ }}
         /* 觸屏無懸停：首觸牽出其關係弧，再觸方開檔案 */
         onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); setKeyPin(null); return; } onOpenChar(n.c); }}>
         <title>{hasEnName(locale, n.c) ? `${charName(locale, n.c)} ${n.c.name}` : n.c.name}</title>
@@ -1911,7 +1911,7 @@ function Planetary({ onOpenChar }) {
             其量今由徑與線寬並載，欲知確數者懸停（觸屏首觸）即得。 */}
         {(countLabel || hasEnName(locale, n.c)) && hi && (
           <text x={n.x} y={n.y + r0 + 15} textAnchor="middle"
-            style={{ fontFamily: gUI, fontSize: 10.5, fill: T.accent }}>
+            style={{ fontFamily: gUI, fontSize: 10.5, fill: T.accent, pointerEvents: "none" /* 同上：說明行壓到鄰星時不擋其懸停 */ }}>
             {[hasEnName(locale, n.c) && charName(locale, n.c), countLabel].filter(Boolean).join(" · ")}
           </text>
         )}
@@ -2129,9 +2129,11 @@ function Planetary({ onOpenChar }) {
               ?? it.y;
             it.y = y; it.lh = lh; placed.push(boxAt(y));
           }
+          /* 字只供看，不接指針（pointer-events: none）：字畫在星圈之上，若接指針，鼠標落到字上即算離開該星，
+             懸停清空、字隨之消失、指針又回到星上——閃一下即滅，且鄰星收不到懸停（程凯一側英文長字最甚） */
           return items.map((it) => (
             <text key={it.id} x={it.x} y={it.y} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: it.fs, fill: it.fill, opacity: it.op, ...haloText }}>
+              style={{ fontFamily: gUI, fontSize: it.fs, fill: it.fill, opacity: it.op, pointerEvents: "none", ...haloText }}>
               {it.lines.length === 1 ? it.lines[0] : it.lines.map((l, i) => <tspan key={i} x={it.x} dy={i ? it.lh : 0}>{l}</tspan>)}
             </text>
           ));
