@@ -1869,7 +1869,7 @@ function Planetary({ onOpenChar }) {
         </text>
         <circle cx={CX[k]} cy={CY} r={40} fill={T.panel} stroke={T.accent} strokeWidth={2.4} />
         <circle cx={CX[k]} cy={CY} r={47} fill="none" stroke={T.accent} strokeWidth={0.7} opacity={0.5} />
-        <text x={CX[k]} y={CY - 7} textAnchor="middle" style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
+        <text x={CX[k]} y={CY - 7} textAnchor="middle" lang={en ? "zh" : undefined} style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
         <text x={CX[k]} y={CY + 10} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
         <text x={CX[k]} y={CY + 24} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 7.5 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} – ${englishEraOf(c.death)}` : `${eraOf(c.birth)} — ${eraOf(c.death)}`}</text>
         {/* 英文名：雙核圈大，名下另起一行；其餘星圈小，英文名只入懸停（見 renderNode） */}
@@ -1902,7 +1902,8 @@ function Planetary({ onOpenChar }) {
           <circle cx={n.x} cy={n.y} r={r0 + 4} fill="none" stroke={fc(n.c.belong[1])}
             strokeWidth={sec ? 1 : 0.8} opacity={soft ? 0.35 : 0.7} />
         )}
-        <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle"
+        {/* 圈內作漢字名（英文名入懸停）；英文界面下標 lang="zh"，讀屏按中文念 */}
+        <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle" lang={en ? "zh" : undefined}
           style={{ fontFamily: gName, fontSize: fs, fill: soft ? T.muted : T.ink, fontWeight: sec ? 700 : undefined }}>
           {n.c.name}
         </text>
@@ -2069,33 +2070,72 @@ function Planetary({ onOpenChar }) {
         )}
         {layout.bridge.map((n) => renderNode(n, t("閔 {a} · 程 {b}", { a: n.a, b: n.b })))}
         {layout.farNodes.map((n) => renderNode(n, null, true))}
-        {/* 弦線之字：畫在星圈之上（位置見 chordPath）。次星三角之字常駐，懸停他人時隨線淡去 */}
-        {[
-          ...secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => [key, hover ? 0.2 : 0.85, 9.5]),
-          ...chordPairs.map((key) => [key, 1, 10]),
-        ].map(([key, op, fs]) => {
-          const [a, b] = key.split("|"), rs = RELS_BY_PAIR.get(key), pr = primaryRel(rs);
-          const { lx, ly } = chordPath(a, b);
-          return (
-            <text key={"cl" + key} x={lx} y={ly + 3.5} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: fs, fill: relColor(pr.t), opacity: op, ...haloText }}>{relLabel(rs)}</text>
-          );
-        })}
-        {/* 懸停一星：其核線上標出與該核之諸條關係（無則註「僅同事」）。標於兩圈之間的線段中點 */}
-        {hover && [
-          ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.filter((n) => n.c.id === hover).map((n) => [n, k]))),
-          ...layout.bridge.filter((n) => n.c.id === hover).flatMap((n) => [[n, 0], [n, 1]]),
-        ].map(([n, k]) => {
-          const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)) || [], pr = primaryRel(rs);
-          const dx = n.x - CX[k], dy = n.y - CY, dl = Math.hypot(dx, dy) || 1;
-          const f = (47 + (dl - 47 - n.r) / 2) / dl;
-          return (
-            <text key={"sl" + n.c.id + k} x={CX[k] + dx * f} y={CY + dy * f + 3.5} textAnchor="middle"
-              style={{ fontFamily: gUI, fontSize: 10.5, fill: pr ? relColor(pr.t) : T.muted, ...haloText }}>
-              {rs.length ? relLabel(rs) : t("僅同事")}
+        {/* 弦線之字（位置見 chordPath；次星三角之字常駐，懸停他人時隨線淡去）與懸停一星時核線上之字（兩圈之間的線段中點）。
+            兩組合排：英文多類關係（Physician & patient · Service on campaign）於「·」「/」處折兩行；
+            先放者佔位，後放者撞上即上下挪一格（至多兩格），無處可挪方留原位——懸停時英文長字互疊即由此 */}
+        {(() => {
+          const items = [
+            ...secPairs.filter((key) => !keyHi && !(hover && key.split("|").includes(hover))).map((key) => [key, hover ? 0.2 : 0.85, 9.5]),
+            ...chordPairs.map((key) => [key, 1, 10]),
+          ].map(([key, op, fs]) => {
+            const [a, b] = key.split("|"), rs = RELS_BY_PAIR.get(key), pr = primaryRel(rs);
+            const { lx, ly } = chordPath(a, b);
+            return { id: "cl" + key, x: lx, y: ly + 3.5, text: relLabel(rs), fs, fill: relColor(pr.t), op };
+          });
+          if (hover) {
+            for (const [n, k] of [
+              ...layout.rings.flatMap((sysRings, k) => sysRings.flatMap((ring) => ring.nodes.filter((n) => n.c.id === hover).map((n) => [n, k]))),
+              ...layout.bridge.filter((n) => n.c.id === hover).flatMap((n) => [[n, 0], [n, 1]]),
+            ]) {
+              const rs = RELS_BY_PAIR.get(pairKey(n.c.id, CENTERS_META[k].id)) || [], pr = primaryRel(rs);
+              const dx = n.x - CX[k], dy = n.y - CY, dl = Math.hypot(dx, dy) || 1;
+              const f = (47 + (dl - 47 - n.r) / 2) / dl;
+              items.push({ id: "sl" + n.c.id + k, x: CX[k] + dx * f, y: CY + dy * f + 3.5, text: rs.length ? relLabel(rs) : t("僅同事"), fs: 10.5, fill: pr ? relColor(pr.t) : T.muted, op: 1 });
+            }
+          }
+          const split = (str) => {
+            if (!en || str.length <= 26) return [str];
+            const cuts = [...str.matchAll(/ [·/] /g)].map((m) => m.index);
+            if (!cuts.length) return [str];
+            const c = cuts.reduce((p, q) => (Math.abs(q - str.length / 2) < Math.abs(p - str.length / 2) ? q : p));
+            return [str.slice(0, c + 2), str.slice(c + 3)];
+          };
+          const wOf = (str, fs) => measureText(str, fs, gUI);
+          const over = (a, q) => a.l < q.r && a.r > q.l && a.t < q.b && a.b > q.t;
+          /* 先佔位：懸停之星自己名下那行「名 · 共見數」（renderNode 所畫） */
+          const placed = [];
+          const hv = hover && allStars.find((q) => q.c.id === hover);
+          if (hv) {
+            const inRing = layout.rings.flatMap((sr) => sr.flatMap((ring) => ring.nodes)).find((q) => q.c.id === hover);
+            const inBridge = layout.bridge.find((q) => q.c.id === hover);
+            const cnt = inRing ? t("共 {n} 事", { n: inRing.n }) : inBridge ? t("閔 {a} · 程 {b}", { a: inBridge.a, b: inBridge.b }) : null;
+            const str = [hasEnName(locale, hv.c) && charName(locale, hv.c), cnt].filter(Boolean).join(" · ");
+            if (str) { const w = wOf(str, 10.5), y = hv.y + hv.r + 3 + 15; placed.push({ l: hv.x - w / 2, r: hv.x + w / 2, t: y - 9, b: y + 3 }); }
+          }
+          /* 星圈亦避，原位同查（審查 P2：原先原位只查字，僅壓星者從不試挪）。取位次序：
+             原位字星俱清 → 他位字星俱清 → 原位不壓字 → 他位不壓字 → 原位。
+             原位已避字而只壓星、又無字星俱清之處者，留原位，不為避星挪到只避字處 */
+          const stars = allStars.map((q) => ({ l: q.x - q.r, r: q.x + q.r, t: q.y - q.r, b: q.y + q.r }));
+          for (const it of items) {
+            it.lines = split(it.text);
+            const w = Math.max(...it.lines.map((l) => wOf(l, it.fs))), lh = it.fs * 1.2, h = lh * it.lines.length;
+            const boxAt = (y) => ({ l: it.x - w / 2, r: it.x + w / 2, t: y - it.fs * 0.85, b: y - it.fs * 0.85 + h });
+            const step = h + 2;
+            const alt = [step, -step, 2 * step, -2 * step].map((d) => it.y + d);
+            const free = (yy, withStars) => !placed.some((q) => over(boxAt(yy), q)) && (!withStars || !stars.some((q) => over(boxAt(yy), q)));
+            const y = free(it.y, true) ? it.y
+              : alt.find((yy) => free(yy, true))
+              ?? (free(it.y, false) ? it.y : alt.find((yy) => free(yy, false)))
+              ?? it.y;
+            it.y = y; it.lh = lh; placed.push(boxAt(y));
+          }
+          return items.map((it) => (
+            <text key={it.id} x={it.x} y={it.y} textAnchor="middle"
+              style={{ fontFamily: gUI, fontSize: it.fs, fill: it.fill, opacity: it.op, ...haloText }}>
+              {it.lines.length === 1 ? it.lines[0] : it.lines.map((l, i) => <tspan key={i} x={it.x} dy={i ? it.lh : 0}>{l}</tspan>)}
             </text>
-          );
-        })}
+          ));
+        })()}
         </g>
       </svg>
       {en ? (
@@ -2235,7 +2275,7 @@ function Community({ onOpenChar }) {
                 {coarse && <circle cx={n.x} cy={n.y} r={26} fill="transparent" />}
                 <circle cx={n.x} cy={n.y} r={hi ? 19 : 15.5} fill={T.panel}
                   stroke={fc(n.f)} strokeWidth={hi ? 2 : 1.3} strokeDasharray={dead ? "3 3" : "none"} />
-                <text x={n.x} y={n.y + 3.5} textAnchor="middle"
+                <text x={n.x} y={n.y + 3.5} textAnchor="middle" lang={en ? "zh" : undefined}
                   style={{ fontFamily: gName, fontSize: n.c.name.length > 3 ? 8 : n.c.name.length > 2 ? 9.5 : 11, fill: T.ink }}>
                   {n.c.name}
                 </text>
@@ -2266,6 +2306,18 @@ function Chip({ active, onClick, label, fontFamily = gUI }) {
       {label}
     </button>
   );
+}
+
+/* 量字寬（SVG 坐標單位，與字號同）：以 canvas 照實際字族量，英文拉丁字面已由 latin-faces 接管，量出即所見 */
+let measureCtx = null;
+function measureText(str, fs, family) {
+  try {
+    measureCtx = measureCtx || document.createElement("canvas").getContext("2d");
+    measureCtx.font = `${fs}px ${family}`;
+    return measureCtx.measureText(str).width;
+  } catch {
+    return [...str].reduce((w, ch) => w + (ch.charCodeAt(0) > 0xff ? fs : fs * 0.56), 0);
+  }
 }
 
 /* 檢索框內「查」字小方標：純視覺標識，不可點——配合外層 position:relative 容器與 input 左側讓位 padding 使用 */
@@ -2769,10 +2821,19 @@ function GeoMap({ onOpenChar }) {
                   })}
                   {t.locLabels.map(([loc, g]) => {
                     const [x, y] = P(g);
+                    /* 同地多次停駐（閔方城雁門關一帶十餘次）：逾三次者收作「首兩次 … 末次（共 n 次）」，
+                       懸停或選中該地（或懸停此注）展開全部 */
+                    const v = en ? g.visits.map((x) => x.replace(/起/g, visitStart)) : g.visits;
+                    const sep = en ? ", " : "、";
+                    const full = v.length <= 3 || hover === loc || sel === loc;
+                    const label = full ? v.join(sep)
+                      : `${v[0]}${sep}${v[1]}${en ? " … " : "……"}${v[v.length - 1]}${en ? ` (${v.length} stops)` : `（${v.length} 次）`}`;
                     return (
                       <text key={loc} x={x + 6 / view.k} y={y + (15 + t.ti * 11) / view.k}
+                        onMouseEnter={() => { if (!coarse && v.length > 3) setHover(loc); }}
+                        onMouseLeave={() => { if (!coarse) setHover((h) => (h === loc ? null : h)); }}
                         style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: tc, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
-                        {en ? g.visits.join(", ").replace(/起/g, visitStart) : g.visits.join("、")}
+                        {label}
                       </text>
                     );
                   })}
@@ -2973,6 +3034,21 @@ export default function Wiki({ onOpenLanding }) {
     else window.location.hash = h;
   };
   const tab = route.tab;
+  /* 手機英文導航橫滑時，當前頁籤滑入視野（只動橫向，不捲頁面） */
+  const navTabsRef = useRef(null);
+  useEffect(() => {
+    const fit = () => {
+      const box = navTabsRef.current;
+      if (!box || box.scrollWidth <= box.clientWidth) return;
+      const on = box.querySelector('[aria-current="page"]');
+      if (!on) return;
+      const b = box.getBoundingClientRect(), o = on.getBoundingClientRect();
+      if (o.left < b.left + 24) box.scrollLeft += o.left - (b.left + 24); /* 左緣 24px 亦漸隱 */
+      else if (o.right > b.right - 36) box.scrollLeft += o.right - (b.right - 36); /* 右緣 36px 為漸隱區 */
+    };
+    fit();
+    document.fonts?.ready.then(fit); /* 字體到位後寬度會變，再對一次 */
+  }, [tab, locale, phoneHead]);
   const openChar = route.char ? byId[route.char] || null : null; /* 壞 id 鏈接：不開彈窗、不作報錯 */
   const setTab = (k) => nav({ tab: k });
   const setOpenChar = (c) => nav({ char: c ? c.id : null });
@@ -3013,12 +3089,16 @@ export default function Wiki({ onOpenLanding }) {
         </div>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
           {/* About 只在英文導航：向英文讀者交代唐代背景與剑三來源，中文讀者不需要 */}
+          {/* 頁籤另包一層 .nav-tabs：桌面與中文 display: contents，排版一如其舊；
+              手機英文（< 600px）作一行橫滑，右緣漸隱，「卷首／語言／紙色」另起一行（見 index.css） */}
+          <div className="nav-tabs" ref={navTabsRef}>
           {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
-            <button key={k} onClick={() => setTab(k)}
+            <button key={k} onClick={() => setTab(k)} aria-current={tab === k || (k === "chars" && tab === "posts") ? "page" : undefined}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
             </button>
           ))}
+          </div>
           {/* 回卷首：重開入站定場（landing.jsx），印形以應「入卷」朱印 */}
           {onOpenLanding && (
             <button onClick={onOpenLanding} title={t("回到卷首")}

@@ -2619,7 +2619,7 @@ export const RELATIONS = [
    武陵一帶（俟作者定）。 */
 export const LOC_COORDS = {
   /* —— 北疆核心 —— */
-  "雁门关":      { x: 660, y: 243, kind: "city", la: "e" },
+  "雁门关":      { x: 660, y: 243, kind: "city", la: "w" }, /* 2026-11-25 由 e 改 w：免與河北-范阳互壓 */
   "雁塔":        { x: 638, y: 222, kind: "sect", la: "w", note: "蒼雲自設關外哨塔" },
   "霸刀山庄":    { x: 686, y: 262, kind: "sect", la: "e" },
   "云州-云中":   { x: 674, y: 216, kind: "city", la: "e" },
@@ -2634,16 +2634,16 @@ export const LOC_COORDS = {
   "长安":        { x: 599, y: 354, kind: "city", la: "s" },
   "新丰":        { x: 605, y: 351, kind: "city", la: "n", note: "许秋生乡里；天宝七载省入会昌、更名昭应，华清宫所在" },
   "洛阳":        { x: 653, y: 345, kind: "city", la: "e" },
-  "天策府/北邙山": { x: 645, y: 327, kind: "sect", la: "w" },
+  "天策府/北邙山": { x: 645, y: 327, kind: "sect", la: "n" }, /* 2026-11-25 由 w 改 n：免壓宁州、凤翔、潼关 */
   "嵩山-少林寺": { x: 668, y: 356, kind: "sect", la: "e" },
   "河阳":        { x: 665, y: 330, kind: "city", la: "e" },
-  "潼关":        { x: 622, y: 348, kind: "city", la: "n" },
+  "潼关":        { x: 622, y: 348, kind: "city", la: "s" }, /* 2026-11-25 由 n 改 s：免壓宁州、天策府 */
   "陕州":        { x: 641, y: 358, kind: "city", la: "s", note: "天宝间称陕郡，乾元元年复为陕州；崤函锁钥，长安东门户，太原仓与三门漕运所在" },
   "蒲州":        { x: 628, y: 332, kind: "city", la: "e" },
   "同州":        { x: 610, y: 336, kind: "city", la: "w", note: "冯翊郡" },
   "河东-绛州":   { x: 632, y: 314, kind: "city", la: "n" },
-  "上党郡":      { x: 663, y: 308, kind: "city", la: "e" },
-  "凤翔":        { x: 571, y: 344, kind: "city", la: "n" },
+  "上党郡":      { x: 663, y: 308, kind: "city", la: "n" }, /* 2026-11-25 由 e 改 n：免壓邺城 */
+  "凤翔":        { x: 571, y: 344, kind: "city", la: "w" }, /* 2026-11-25 由 n 改 w：免壓邠州、天策府 */
   "邠州":        { x: 586, y: 334, kind: "city", la: "n" },
   "宁州":        { x: 590, y: 320, kind: "city", la: "e" },
   "灵武":        { x: 559, y: 268, kind: "city", la: "w" },
