@@ -1906,8 +1906,9 @@ function Planetary({ onOpenChar }) {
             strokeWidth={sec ? 1 : 0.8} opacity={soft ? 0.35 : 0.7} style={{ pointerEvents: "none" }} />
         )}
         {/* 圈內作漢字名（英文名入懸停）；英文界面下標 lang="zh"，讀屏按中文念 */}
+        {/* 名字亦不接指針（審查 P2）：字若因回退字體或字號估算略溢圈緣，溢出處不應擴大感應範圍；圈內之字下即感應圈，照常命中 */}
         <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle" lang={en ? "zh" : undefined}
-          style={{ fontFamily: gName, fontSize: fs, fill: soft ? T.muted : T.ink, fontWeight: sec ? 700 : undefined }}>
+          style={{ fontFamily: gName, fontSize: fs, fill: soft ? T.muted : T.ink, fontWeight: sec ? 700 : undefined, pointerEvents: "none" }}>
           {n.c.name}
         </text>
         {/* 共見數改懸停始現：四十條同級灰字常駐，鋪成一層霧而已；
