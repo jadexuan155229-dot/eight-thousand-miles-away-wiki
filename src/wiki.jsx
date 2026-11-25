@@ -1901,7 +1901,7 @@ function Planetary({ onOpenChar }) {
     const blocks = [
       ...allStars.map((q) => { const r = (q.r + (q.c.belong.length > 1 ? 4 : 0)) * cz; return { id: q.c.id, box: { l: q.x - r, r: q.x + r, t: q.y - r, b: q.y + r } }; }),
       ...CX.flatMap((x) => [
-        { id: "", box: { l: x - 55 * cz, r: x + 55 * cz, t: CY - 78 * cz, b: CY - 59 * cz } }, /* 核頂「Cangyun line」 */
+        { id: "", box: { l: x - 50 * cz, r: x + 50 * cz, t: CY - 76 * cz, b: CY - 56 * cz } }, /* 核頂「Cangyun line」 */
         { id: "", box: { l: x - 50 * cz, r: x + 50 * cz, t: CY + 49 * cz, b: CY + 68 * cz } }, /* 核下英文名 */
       ]),
       /* 遠軌門派署名（斜書）：沿字向取一串小方塊近似 */
@@ -1937,15 +1937,19 @@ function Planetary({ onOpenChar }) {
     return (
       <g key={"star" + k} style={{ cursor: "pointer" }} transform={counterScale(cz, CX[k], CY)} onClick={() => { if (movedRef.current > 5) return; onOpenChar(c); }}>
         <title>{hasEnName(locale, c) ? `${charName(locale, c)} ${c.name}` : c.name}</title>
-        <text x={CX[k]} y={CY - 66} textAnchor="middle"
-          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: en ? "0.12em" : "0.45em" }}>
+        {/* 核頂系名：英文字長，原 0.12em 字距、CY − 66 處左右擦著靳沉白、许秋生、边赛远之圈；收字距、下移三像素即讓開。中文不變 */}
+        <text x={CX[k]} y={en ? CY - 63 : CY - 66} textAnchor="middle"
+          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: en ? "0.05em" : "0.45em" }}>
           {t(CENTERS_META[k].tag)}
         </text>
         <circle cx={CX[k]} cy={CY} r={40} fill={T.panel} stroke={T.accent} strokeWidth={2.4} />
         <circle cx={CX[k]} cy={CY} r={47} fill="none" stroke={T.accent} strokeWidth={0.7} opacity={0.5} />
-        <text x={CX[k]} y={CY - 7} textAnchor="middle" lang={en ? "zh" : undefined} style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
-        <text x={CX[k]} y={CY + 10} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
-        <text x={CX[k]} y={CY + 24} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 7.5 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} – ${englishEraOf(c.death)}` : `${eraOf(c.birth)} — ${eraOf(c.death)}`}</text>
+        {/* 圈內四行：名、生卒、年號兩行。年號原作一行（开元八年 — 永泰元年，寬 85），圈在該高度只容 60 上下，
+            首末二字壓在圈線上；今拆作起止兩行，諸行上移，每行四角俱在圈內 */}
+        <text x={CX[k]} y={CY - 12} textAnchor="middle" lang={en ? "zh" : undefined} style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
+        <text x={CX[k]} y={CY + 3} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
+        <text x={CX[k]} y={CY + 15} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 8 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} –` : `${eraOf(c.birth)} —`}</text>
+        <text x={CX[k]} y={CY + 25} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 8 : 8.5, fill: T.faint }}>{en ? englishEraOf(c.death) : eraOf(c.death)}</text>
         {/* 英文名：雙核圈大，名下另起一行；其餘星圈小，英文名只入懸停（見 renderNode） */}
         {hasEnName(locale, c) && <text x={CX[k]} y={CY + 62} textAnchor="middle" style={{ fontFamily: gName, fontSize: 12, fill: T.muted }}>{charName(locale, c)}</text>}
       </g>
@@ -2369,6 +2373,57 @@ function Community({ onOpenChar }) {
     }
     return shown;
   }, [en, cz, Y, locale, nodes, centers]); // eslint-disable-line react-hooks/exhaustive-deps -- active 由 Y 定
+  /* 懸停之關係字：舊時各字放在連線正中、畫在諸星之下，閔方城一類關係多者字疊字、又被星圈蓋住。
+     今同一對多條關係併作一行（按原次序，斜線分隔，同行星圖；英文逾 26 字元於近中之「 · 」「 / 」處折行）；
+     沿連線自中點向兩端滑動取位，每處另試上下各挪一至三行。取位次序：不壓他字、諸星之圈與英文名 →
+     不壓他字、不壓懸停者之圈與名 → 不壓他字 → 不壓懸停者 → 中點。短連線先排（可滑之處少） */
+  const relLabels = (() => {
+    if (!hover || !pos[hover]) return [];
+    const byPeer = new Map();
+    for (const r of active) {
+      if (r.a !== hover && r.b !== hover) continue;
+      const peer = r.a === hover ? r.b : r.a;
+      if (!byPeer.has(peer)) byPeer.set(peer, []);
+      byPeer.get(peer).push(r);
+    }
+    const H = pos[hover];
+    const over = (p, q) => p.l < q.r && p.r > q.l && p.t < q.b && p.b > q.t;
+    const live = nodes.filter((n) => !(n.c.birth != null && n.c.birth > Y));
+    const circles = live.map((n) => { const r = (n.c.id === hover ? 19 : 15.5) * cz; return { id: n.c.id, l: n.x - r, r: n.x + r, t: n.y - r, b: n.y + r }; });
+    const names = !en ? [] : live.filter((n) => hasEnName(locale, n.c) && (n.c.id === hover || (hoverNbr.has(n.c.id) && nameShown.has(n.c.id)))).map((n) => {
+      const hi = n.c.id === hover, fs = hi ? 10.5 : 10, w = measureText(charName(locale, n.c), fs, gUI) * cz, y = n.y + (hi ? 33 : 29) * cz;
+      return { id: n.c.id, l: n.x - w / 2, r: n.x + w / 2, t: y - 8 * cz, b: y + 3 * cz };
+    });
+    const own = [...circles, ...names].filter((q) => q.id === hover);
+    const split = (str) => {
+      if (!en || str.length <= 26) return [str];
+      const cuts = [...str.matchAll(/ [·/] /g)].map((m) => m.index);
+      if (!cuts.length) return [str];
+      const c = cuts.reduce((p, q) => (Math.abs(q - str.length / 2) < Math.abs(p - str.length / 2) ? q : p));
+      return [str.slice(0, c + 2), str.slice(c + 3)];
+    };
+    const items = [...byPeer].map(([peer, rs]) => {
+      const P = pos[peer];
+      const text = rs.map((r) => relName(locale, r.t) + (relPosthumous(r, Y) ? t("（歿後）") : "")).join(en ? " / " : "／");
+      return { id: peer, P, text, fill: relPosthumous(rs[0], Y) ? T.accent : relColor(rs[0].t), d: Math.hypot(P.x - H.x, P.y - H.y) };
+    }).sort((p, q) => p.d - q.d);
+    const placed = [], out = [];
+    for (const it of items) {
+      const lines = split(it.text), lh = 10.5 * 1.2 * cz;
+      const w = Math.max(...lines.map((l) => measureText(l, 10.5, gUI))) * cz, h = lh * lines.length;
+      const at = (f, dy) => { const x = H.x + (it.P.x - H.x) * f, y = H.y + (it.P.y - H.y) * f - 4 * cz + dy; return { x, y, box: { l: x - w / 2 - cz, r: x + w / 2 + cz, t: y - 9 * cz, b: y - 9 * cz + h + cz } }; };
+      const fs = [0.5, 0.44, 0.56, 0.38, 0.62, 0.32, 0.68, 0.26, 0.74, 0.2, 0.8, 0.14, 0.86, 0.08, 0.92];
+      const step = h + 2 * cz;
+      const cands = [0, -1, 1, -2, 2, -3, 3].flatMap((k) => fs.map((f) => at(f, k * step)));
+      const clearText = (c) => !placed.some((q) => over(c.box, q));
+      const clearOwn = (c) => !own.some((q) => over(c.box, q));
+      const pick = cands.find((c) => clearText(c) && !circles.some((q) => over(c.box, q)) && !names.some((q) => over(c.box, q)))
+        ?? cands.find((c) => clearText(c) && clearOwn(c)) ?? cands.find(clearText) ?? cands.find(clearOwn) ?? cands[0];
+      placed.push(pick.box);
+      out.push({ id: it.id, x: pick.x, y: pick.y, lines, lh, fill: it.fill });
+    }
+    return out;
+  })();
 
   return (
     <div>
@@ -2410,12 +2465,6 @@ function Community({ onOpenChar }) {
                   strokeWidth={(hi ? 1.8 : 1) * cz}
                   strokeDasharray={dashC(posth ? "2 5" : r.da ? "6 4" : "none", cz)}
                   opacity={dim ? 0.07 : posth ? 0.5 : hi ? 1 : 0.45} />
-                {hi && (
-                  <text x={(p1.x + p2.x) / 2} y={(p1.y + p2.y) / 2 - 4 * cz} textAnchor="middle"
-                    style={{ fontFamily: gUI, fontSize: 10.5 * cz, fill: posth ? T.accent : relColor(r.t), pointerEvents: "none" }}>
-                    {relName(locale, r.t)}{posth ? t("（歿後）") : ""}
-                  </text>
-                )}
               </g>
             );
           })}
@@ -2451,6 +2500,15 @@ function Community({ onOpenChar }) {
           })}
           {/* 懸停之星複畫於諸星之上（同行星圖），名下英文名不被後畫之鄰星蓋住 */}
           {hover && <use href={`#com-${hover}`} style={{ pointerEvents: "none" }} />}
+          {/* 懸停之關係字（見 relLabels）：畫在諸星之上，底色描邊，不接指針 */}
+          <g data-rel-labels="">
+            {relLabels.map((L) => (
+              <text key={L.id} x={L.x} y={L.y} textAnchor="middle"
+                style={{ fontFamily: gUI, fontSize: 10.5 * cz, fill: L.fill, pointerEvents: "none", paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 * cz, strokeLinejoin: "round" }}>
+                {L.lines.length === 1 ? L.lines[0] : L.lines.map((l, i) => <tspan key={i} x={L.x} dy={i ? L.lh : 0}>{l}</tspan>)}
+              </text>
+            ))}
+          </g>
           </g>
         </svg>
       </div>
