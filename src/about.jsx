@@ -73,7 +73,7 @@ export default function About({ onNav }) {
 
       <H>About the English edition</H>
       <P>
-        The English edition is being built in stages. The interface is in English throughout; profiles and the chronology are being translated a character at a time, beginning with the people at the centre of the work, and anything not yet translated appears in the original Chinese. The novel itself is not being translated for now.
+        The English edition was built in stages, and everything except the novel is now in English: the interface, every character profile written so far, the full chronology, the Posts charts and the Aftershocks. The profiles of the six people at the centre of the work have been reviewed line by line by the author; the rest is a working translation, with names and terms checked but the wording not yet reviewed line by line. The novel itself is not being translated for now, and the library shows it in the original Chinese.
       </P>
       <P>
         Names are given in pinyin, family name first. Not everyone in the archive is Han Chinese, though. Where the Chinese characters only write down a name from another language, the person appears under that name: the Persian Rādīn, the Miao Nyax Vos, the Japanese Hayashi Kyōya. Where someone holds a Chinese name as well as another, the profile gives the second alongside it, as an original Persian name or a Japanese reading. The sects are named on one consistent scheme (Wanhua Valley, the Tiance Command, the Beggars’ Guild and so on). Official titles follow Charles O. Hucker, <I>A Dictionary of Official Titles in Imperial China</I> (1985).
