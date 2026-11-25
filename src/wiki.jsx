@@ -2769,10 +2769,19 @@ function GeoMap({ onOpenChar }) {
                   })}
                   {t.locLabels.map(([loc, g]) => {
                     const [x, y] = P(g);
+                    /* 同地多次停駐（閔方城雁門關一帶十餘次）：逾三次者收作「首兩次 … 末次（共 n 次）」，
+                       懸停或選中該地（或懸停此注）展開全部 */
+                    const v = en ? g.visits.map((x) => x.replace(/起/g, visitStart)) : g.visits;
+                    const sep = en ? ", " : "、";
+                    const full = v.length <= 3 || hover === loc || sel === loc;
+                    const label = full ? v.join(sep)
+                      : `${v[0]}${sep}${v[1]}${en ? " … " : "……"}${v[v.length - 1]}${en ? ` (${v.length} stops)` : `（${v.length} 次）`}`;
                     return (
                       <text key={loc} x={x + 6 / view.k} y={y + (15 + t.ti * 11) / view.k}
+                        onMouseEnter={() => { if (!coarse && v.length > 3) setHover(loc); }}
+                        onMouseLeave={() => { if (!coarse) setHover((h) => (h === loc ? null : h)); }}
                         style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: tc, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
-                        {en ? g.visits.join(", ").replace(/起/g, visitStart) : g.visits.join("、")}
+                        {label}
                       </text>
                     );
                   })}
