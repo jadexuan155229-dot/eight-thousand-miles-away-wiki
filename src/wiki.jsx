@@ -2446,12 +2446,16 @@ function GeoMap({ onOpenChar }) {
   const rOf = (n) => Math.min(3.5 + 2.0 * Math.sqrt(n), 32); /* 環徑緩放，防北疆巨核吞鄰 */
   /* 看動線時：動線所經之地為前景，其餘點位退作底圖——環、名俱淡，名字收起（「地名全顯」照開）；
      動線所經者不論事數多少皆標名。懸停、選中者照常提亮。中英同 */
-  const routeMode = tracks.length > 0;
+  /* 聚焦以「實有路線」為準，不以「選了人」為準：僅當年模式下，所選之人當年無落點，路線為空，不應淡去全圖（審查 P2）。
+     路線只按時間篩，地圖計數另受門派、人物、檢索篩選；路線所經而計數為 0 者，仍按路線上的點照亮，先於 n === 0 判（審查 P2） */
   const onRoute = useMemo(() => new Set(tracks.flatMap((tk) => tk.stays.map((s) => s.loc))), [tracks]);
+  const routeMode = onRoute.size > 0;
   const spotDim = (name, n) => {
-    if (n === 0) return 0.18;
-    if (sel === name || hover === name) return 1;
-    if (routeMode && !onRoute.has(name)) return 0.16;
+    const lit = sel === name || hover === name;
+    if (routeMode && onRoute.has(name)) return lit || !(hover || sel) ? 1 : 0.45;
+    if (n === 0) return 0.18; /* 以下同未看動線時，唯路線外者淡至 0.16 */
+    if (lit) return 1;
+    if (routeMode) return 0.16;
     return hover || sel ? 0.45 : 1;
   };
   const offBoxes = { "西": { x: 34, y: 300 }, "東": { x: 966, y: 300 } };
@@ -2579,7 +2583,7 @@ function GeoMap({ onOpenChar }) {
           const y = b.y + i * 24;
           const seg = spots.m[nm] ? Object.entries(spots.m[nm].tally).sort((a, c) => c[1] - a[1])[0] : null;
           return (
-            <g key={nm} style={{ cursor: n > 0 ? "pointer" : "default", opacity: n > 0 && !(routeMode && !onRoute.has(nm) && !isSel && !isHov) ? 1 : 0.35 }}
+            <g key={nm} style={{ cursor: n > 0 ? "pointer" : "default", opacity: (routeMode && onRoute.has(nm)) || (n > 0 && (!routeMode || isSel || isHov)) ? 1 : 0.35 }}
               onMouseEnter={() => { if (!coarse) setHover(nm); }}
               onMouseLeave={() => { if (!coarse) setHover(null); }}
               onClick={() => { if (movedRef.current > 5) return; if (n > 0) setSel(sel === nm ? null : nm); }}>
