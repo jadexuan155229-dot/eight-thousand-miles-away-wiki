@@ -14,13 +14,14 @@ import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
 import About from "./about";
-import { grantsOf, tenureFac, tenuresOf, tenureSpan } from "./posts-data";
-import { tenureTitleTx, tenureNoteTx, grantTx } from "./i18n/posts-content";
+import { grantsOf, tenureFac, tenuresOf } from "./posts-data";
+import { tenureTitleTx, tenureNoteTx, grantTx, tenureSpanText } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
 import { shockTitle, modeText } from "./i18n/echoes.en";
 import { useLocale, useSetLocale, useT } from "./i18n/locale";
 import { eventCountText, libraryCountText } from "./i18n/ui";
-import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage, nameItems, nameItemsEn, namesText, hasCourtesyLine } from "./i18n/content";
+import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage, nameItems, nameItemsEn, namesText, hasCourtesyLine, enMatcher } from "./i18n/content";
+import { placeLabelSideEn } from "./i18n/places.en";
 import { Zh, Tx } from "./i18n/zh";
 import { TIER1 } from "./i18n/tiers";
 import { CourtesyLine } from "./i18n/names";
@@ -177,8 +178,8 @@ function lifespanFor(locale, c) {
   if (c.birth == null && c.death == null) return "Dates not yet recorded";
   return `${lifespanYearsEn(c)} (${lifespanEraEn(c)})`;
 }
-/* 任期起止：英文界面下「（约）」作 approx.、長橫作連接號 */
-const tenureSpanFor = (locale, x) => (locale === "en" ? tenureSpan(x).replace(/（约）/g, " (approx.)").replace("—", "–") : tenureSpan(x));
+/* 任期起止：英文界面下「（约）」作 approx.、長橫作連接號；與編制圖（posts.jsx）共用，見 posts-content.js */
+const tenureSpanFor = tenureSpanText;
 /* 英文月份：唐历為陰历，從漢学通例作序數（the tenth month），不換作公历月名 */
 const ORD = ["", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
 const monthEn = (m) => `${ORD[m]} month`;
@@ -701,7 +702,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       <ChipName c={o} />
                       <span style={{ color: relColor(r.t), marginLeft: 8, fontSize: 11 }}>{en && /[\u4e00-\u9fff]/.test(relEn) ? <Zh>{relEn}</Zh> : relEn}</span>
                       <span style={{ color: T.faint, marginLeft: 6, fontSize: 10.5 }}>
-                        {r.y0 ?? "？"}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("殁后")}` : ""}
+                        {r.y0 ?? (en ? "?" : "？")}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("殁后")}` : ""}
                       </span>
                     </button>
                   );
@@ -983,8 +984,8 @@ function Timeline({ onOpenChar, onOpenEcho }) {
   const sections = useMemo(() => {
     const kw = q.trim();
     /* 英文界面：中文原文照查，另查英文译名、译題、年號（不分大小寫） */
-    const kwl = kw.toLowerCase();
-    const enHit = (str) => en && !!str && str.toLowerCase().includes(kwl);
+    const enM = enMatcher(kw); /* 不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），見 content.js */
+    const enHit = (str) => en && !!str && enM(str);
     const hit = (e) =>
       kw === "" ||
       e.title.includes(kw) ||
@@ -2269,7 +2270,7 @@ function Chip({ active, onClick, label, fontFamily = gUI }) {
 
 /* 檢索框內「查」字小方標：純視覺標識，不可點——配合外層 position:relative 容器與 input 左側讓位 padding 使用 */
 const SearchTag = ({ fontFamily = gUI }) => (
-  <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily, borderRadius: "3px", pointerEvents: "none" }}>查</span>
+  <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily, borderRadius: "3px", pointerEvents: "none" }} aria-hidden="true">查</span>
 );
 
 const NOLOC_KEY = "__noloc__"; /* 無地點事件之內部鍵 */
@@ -2349,8 +2350,8 @@ function GeoMap({ onOpenChar }) {
   /* 篩選謂詞與年表同構：門派兩級（含族屬傘）、人物、檢索 */
   const shown = useMemo(() => {
     const kw = q.trim();
-    const kwl = kw.toLowerCase();
-    const enHit = (str) => en && !!str && str.toLowerCase().includes(kwl);
+    const enM = enMatcher(kw); /* 不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），見 content.js */
+    const enHit = (str) => en && !!str && enM(str);
     const hit = (e) =>
       kw === "" ||
       e.title.includes(kw) ||
@@ -2494,9 +2495,10 @@ function GeoMap({ onOpenChar }) {
           <circle cx={c.x} cy={c.y} r={3.2 / z} fill={n > 0 ? T.ink : T.faint} stroke={T.bg} strokeWidth={0.8 / z} />
         ) : null}
         {(allLabels || n >= Math.max(1, Math.ceil(3 / z)) || isSel || isHov) && (() => {
-          const off = { n: [0, -r - 7 / z], s: [0, r + 15 / z], e: [r + 6 / z, 4 / z], w: [-r - 6 / z, 4 / z] }[c.la || "e"];
+          const la = (en && placeLabelSideEn[name]) || c.la; /* 英文地名長，密處另定方位（places.en.js） */
+          const off = { n: [0, -r - 7 / z], s: [0, r + 15 / z], e: [r + 6 / z, 4 / z], w: [-r - 6 / z, 4 / z] }[la || "e"];
           return (
-            <text x={c.x + off[0]} y={c.y + off[1]} textAnchor={c.la === "e" ? "start" : c.la === "w" ? "end" : "middle"}
+            <text x={c.x + off[0]} y={c.y + off[1]} textAnchor={la === "e" ? "start" : la === "w" ? "end" : "middle"}
               style={{ fontFamily: gUI, fontSize: (isSel || isHov ? 12.5 : 11) / z, fill: isSel || isHov ? T.ink : T.muted, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / z }}>
               {pn(name)}{n > 0 ? ` ${n}` : ""}
             </text>
@@ -2560,6 +2562,8 @@ function GeoMap({ onOpenChar }) {
 
   const selCoord = sel && sel !== NOLOC_KEY ? LOC_COORDS[sel] : null;
   const startMark = t("（起）");
+  /* 駐點注「序·年起」之「起」：須在動線 map 之外取英译——map 內 t 被動線遮蔽（見下），在內調 t() 即崩 */
+  const visitStart = t("起");
 
   return (
     <div>
@@ -2726,7 +2730,7 @@ function GeoMap({ onOpenChar }) {
                     return (
                       <text key={loc} x={x + 6 / view.k} y={y + (15 + t.ti * 11) / view.k}
                         style={{ fontFamily: gUI, fontSize: 9.5 / view.k, fill: tc, paintOrder: "stroke", stroke: T.bg, strokeWidth: 2.5 / view.k }}>
-                        {en ? g.visits.join(", ").replace(/起/g, t("起")) : g.visits.join("、")}
+                        {en ? g.visits.join(", ").replace(/起/g, visitStart) : g.visits.join("、")}
                       </text>
                     );
                   })}
@@ -2932,20 +2936,22 @@ export default function Wiki({ onOpenLanding }) {
 
   const factions = ["全部", ...new Set(CHARACTERS.flatMap((c) => c.belong))];
   /* 英文界面：另查英文名、表字、稱號、出身（不分大小寫）；中文照查 */
-  const ql = q.toLowerCase();
-  const enHit = (str) => en && !!str && str.toLowerCase().includes(ql);
+  const qt = q.trim();
+  const enM = enMatcher(qt); /* 不分大小寫、不計變音符（Rādīn 打作 Radin 亦中），見 content.js */
+  const enHit = (str) => en && !!str && enM(str);
   const shown = CHARACTERS.filter(
     (c) => {
       const tr = charEn(locale, c.id);
       return (faction === "全部" || c.belong.includes(faction)) &&
-      (q === "" ||
-        c.name.includes(q) ||
-        namesText(c).includes(q) ||
-        (c.epithet || "").includes(q) ||
-        (c.hao || "").includes(q) ||
-        (c.pin || "").includes(q) ||
-        (c.birthplace || "").includes(q) ||
-        enHit(tr?.name) || enHit(tr?.zi) || enHit(tr?.hao) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
+      (qt === "" ||
+        c.name.includes(qt) ||
+        namesText(c).includes(qt) ||
+        (c.epithet || "").includes(qt) ||
+        (c.hao || "").includes(qt) ||
+        (c.pin || "").includes(qt) ||
+        (c.birthplace || "").includes(qt) ||
+        enHit(tr?.name) || enHit(tr?.name?.replace(/\s+/g, "")) || /* minfangcheng 連寫亦中 */
+        enHit(tr?.zi) || enHit(tr?.hao) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
         (en && nameItemsEn(c).some(([, v]) => enHit(v))));
     }
   );
@@ -3014,7 +3020,9 @@ export default function Wiki({ onOpenLanding }) {
             <div style={{ marginBottom: 20 }}>
               <span style={{ position: "relative", display: "inline-block" }}>
                 <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("檢索姓名、表字、概覽、品評")}
-                  style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 13, fontFamily: "HuiwenZhengKai", padding: "6px 12px 6px 34px", outline: "none", minWidth: en ? 360 : 220 }} />
+                  style={{ background: T.panel, border: `1px solid ${T.line}`, borderRadius: "3px", color: T.ink, fontSize: 13, fontFamily: "HuiwenZhengKai", padding: "6px 12px 6px 34px", outline: "none",
+                    /* 英文占位語長，框放寬；窄屏以視口為限（main 左右各 24），不然撐出橫向捲動，連帶卷首、檔案彈窗一併右偏 */
+                    ...(en ? { boxSizing: "border-box", minWidth: "min(408px, calc(100vw - 48px))" } : { minWidth: 220 }) }} />
                 <SearchTag fontFamily="HuiwenZhengKai" />
               </span>
             </div>

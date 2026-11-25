@@ -5,6 +5,7 @@
 // Every field is optional and falls back to the Chinese on its own, so a character can be
 // translated in stages (name first, then profile rows, then anecdotes):
 //   name, zi, hao, epithet, birthplace     strings
+//   readerNote                             string: the library margin note (only where the Chinese has one)
 //   gloss                                  { passages: [{ work, section, quote }], explanation } or a string
 //   names                                  { 汉名: '…' } — English for a Chinese-script entry of c.names
 //                                          (Latin-script entries such as 本名 Rukh are used as they are)
@@ -21,7 +22,7 @@
 export const charactersEn = {
   lvdingyi: {
     name: 'Lü Dingyi',
-    zi: 'Yaoxian (爻先)',
+    zi: 'Yaoxian',
     // An interpretive subtitle, not a translation of a verified classical quotation.
     epithet: "The Weight of a Clerk's Pen",
     birthplace: 'Fengzhou (Jiuyuan Commandery), Guannei Circuit',
@@ -455,7 +456,7 @@ export const charactersEn = {
     },
   }, // 李庭泽
   yujia: { name: 'Yu Jia', zi: 'Lubin' }, // 虞嘉
-  bailin: { name: 'Bai Lin', zi: 'Qishang' }, // 白霖
+  bailin: { name: 'Bai Lin', zi: 'Qishang', birthplace: 'Yuhang county, Hangzhou, Jiangnan East Circuit' }, // 白霖
   chengqian: {
     name: 'Cheng Qian',
     zi: 'Sizheng',
@@ -1254,6 +1255,7 @@ export const charactersEn = {
     epithet: 'Split the Stone: Green Within',
     hao: 'the Inquisitor',
     birthplace: 'a village below Mount Taibai (the Qinling), Guannei Circuit',
+    readerNote: 'A senior member of the Lingxue Pavilion’s Jishu Bureau.', // 文庫頁邊批注短文案，同官职身份首句
     gloss: 'He saw the moss creeping green over the rocks on the mountain and reckoned that inside they were green too, and would stay so: “so I have long held the green within”. Even if you split the stone, it is green at heart, the same inside and out, never changing. The two seal-script characters on his waist token look like a picture, as if he had painted his life onto it; Gao Qian’s verdict: “That’s far too much like a person’s name… too honest a heart, really.”',
     profile: {
       '官职身份': 'A senior member of the Lingxue Pavilion’s Jishu Bureau. Correspondence, intelligence analysis, inquiry and interrogation: he was good at all of it. He helped manage rewards and punishments for the Pavilion’s disciples, and most of the Bureau’s training and interrogation methods were drawn up or improved by him, so that his colleagues called him “the Inquisitor”, and in jest “Minister Gao”. He once ran intelligence and often went into the Main Pavilion, with the ear of the throne itself; after the false charges of 745 he went back to inside work, keeping the Qianqiu Tower and in charge of the rolls, death benefits and records; in 739–741 he was asked to go to the Tiance Command’s Heavenly Slayer Corps to teach interrogation and the endurance of torture.',

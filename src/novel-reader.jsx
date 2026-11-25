@@ -4,7 +4,8 @@ import { NOVELS, FLAT, loadTexts } from "./novel";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { useLocale, useT } from "./i18n/locale";
-import { charEn, charName, hasEnName, facName, novelTitle, nameItems, hasCourtesyLine } from "./i18n/content";
+import { charEn, charName, hasEnName, facName, novelTitle, nameItems, hasCourtesyLine, charField, profileRow } from "./i18n/content";
+import { Zh } from "./i18n/zh";
 import { CourtesyLine } from "./i18n/names";
 
 const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
@@ -85,6 +86,7 @@ function splitCharTerms(s, keyBase, onCharClick, activeKey) {
    firstHitRef：全文首個命中 span 之 ref，供檢索結果點入後平滑滾動定位 */
 function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh = 2.1, pal = T }) {
   const t = useT();
+  const locale = useLocale();
   if (!text) {
     return <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.faint, padding: "36px 0", letterSpacing: "0.15em" }}>{t("正文待錄。")}</div>;
   }
@@ -116,7 +118,8 @@ function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh
     );
     gap = false;
   });
-  return <div>{out}</div>;
+  /* 正文暫不译（T3）：英文界面下原樣中文，標 lang="zh"（讀屏、斷行按中文）；不掛 zh-src，字體行距一如中文 */
+  return <div lang={locale === "en" ? "zh" : undefined}>{out}</div>;
 }
 
 const navBtn = () => ({
@@ -197,10 +200,20 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
   const lineInk = noteInk(accent, paper ? 0 : 0.25, paper ? 0.7 : 0.5);
   /* 批注文案：人工編輯之 readerNote 優先、原樣不截斷（長度作者自控，卡有 maxHeight+內滾兜底）；
      缺此字段則回退 profile「官职身份」段摘要 */
+  const en = locale === "en";
   const note = (c.readerNote || "").trim();
   const intro = ((c.profile && c.profile[0] && c.profile[0][1]) || "").trim();
-  const brief = note || (intro.length > 110 ? `${intro.slice(0, 110)}……` : intro);
-  const years = c.birth || c.death ? `${c.birth ?? "？"} – ${c.death ?? "？"}` : "";
+  /* 英文：readerNote 有英译用英译；否則取英文「官职身份」，約 220 字符處於詞界截斷；俱無方回落中文 */
+  const noteEn = en ? (charEn(locale, c.id)?.readerNote || "").trim() : "";
+  const [introEn, introZh] = en ? profileRow(locale, c, "官职身份", intro) : [intro, false];
+  const clipEn = (s) => (s.length > 220 ? `${s.slice(0, s.lastIndexOf(" ", 220) > 120 ? s.lastIndexOf(" ", 220) : 220).replace(/[,;:]$/, "")}…` : s);
+  const [brief, briefZh] = !en ? [note || (intro.length > 110 ? `${intro.slice(0, 110)}……` : intro), false]
+    : noteEn ? [noteEn, false]
+    : !introZh && introEn ? [clipEn(introEn.trim()), false]
+    : [note || (intro.length > 110 ? `${intro.slice(0, 110)}……` : intro), true];
+  /* 生卒：英文同檔案卡（720–765；卒年不詳留空，不寫問號） */
+  const years = c.birth || c.death ? (en ? `${c.birth ?? "?"}–${c.death ?? ""}` : `${c.birth ?? "？"} – ${c.death ?? "？"}`) : "";
+  const [bp, bpZh] = c.birthplace ? charField(locale, c, "birthplace") : ["", false];
   return (
     <>
       {pos && pos.leader && (
@@ -226,7 +239,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
           padding: "14px 16px 16px", animation: pos ? "nvl-note-in .18s ease-out" : "none",
         }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-          <span style={{ fontFamily: "HuiwenMingChao", fontSize: 17, fontWeight: 700, color: T.ink }}>{c.name}</span>
+          <span lang={en ? "zh" : undefined} style={{ fontFamily: "HuiwenMingChao", fontSize: 17, fontWeight: 700, color: T.ink }}>{c.name}</span>
           {hasEnName(locale, c) && <span lang="en" style={{ fontFamily: "HuiwenMingChao", fontSize: 13, color: T.muted }}>{charName(locale, c)}</span>}
           {nameItems(c).length > 0 && hasCourtesyLine(locale, c) && <span style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.muted }}><CourtesyLine c={c} /></span>}
           {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>{charEn(locale, c.id)?.hao ? `“${charEn(locale, c.id).hao}”` : `「${c.hao}」`}</span>}
@@ -237,10 +250,10 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
           ))}
         </div>
         {years && (
-          <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.faint, marginTop: 8 }}>{years}{c.birthplace ? ` · ${c.birthplace}` : ""}</div>
+          <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.faint, marginTop: 8 }}>{years}{bp ? <> · {bpZh ? <Zh>{bp}</Zh> : bp}</> : ""}</div>
         )}
         {brief && (
-          <p style={{ fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, lineHeight: 1.9, margin: "10px 0 0", textIndent: "2em" }}>{brief}</p>
+          <p lang={en && briefZh ? "zh" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, lineHeight: en && !briefZh ? 1.6 : 1.9, margin: "10px 0 0", textIndent: en && !briefZh ? 0 : "2em" }}>{brief}</p>
         )}
       </aside>
     </>
@@ -419,8 +432,9 @@ export default function NovelReader({ path, onNav }) {
     const kl = k.toLowerCase();
     const out = [];
     for (const f of FLAT) {
-      const titleHit = [f.novel.tag, f.novel.title, f.group && f.group.title, f.ch.title]
-        .some((t) => t && t.toLowerCase().includes(kl));
+      /* 題名：中文原題照查；英文界面另查英文題名（Climbing the Tower、Opening、Chapter 1） */
+      const titles = [f.novel.tag, f.novel.title, f.group && f.group.title, f.ch.title].filter(Boolean);
+      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => t.toLowerCase().includes(kl));
       const text = (texts && f.ch.file && texts[f.ch.file]) || "";
       const tl = text.toLowerCase();
       let n = 0, first = -1, at = 0, p;
@@ -438,7 +452,7 @@ export default function NovelReader({ path, onNav }) {
       out.push({ f, n, snip });
     }
     return out;
-  }, [q, texts]);
+  }, [q, texts, en]); // eslint-disable-line react-hooks/exhaustive-deps -- nt 隨 locale，en 已列
 
   const cur = sel ? byPath[sel] : null;
   const idx = cur ? FLAT.findIndex((f) => f.path === sel) : -1;
@@ -523,11 +537,11 @@ export default function NovelReader({ path, onNav }) {
             padding: "6px 8px 7px 10px", cursor: "pointer",
           })}>
           <div style={{ fontFamily: "HuiwenMingChao", fontSize: 10.5, color: T.faint }}>
-            {bt(f.novel.tag)}{f.group ? ` ${nt(f.group.title)}` : ""}{n > 1 ? t(" · 命中 {n} 处", { n }) : ""}
+            {en ? `${nt(f.novel.tag)}${f.group ? ` · ${nt(f.group.title)}` : ""}` : `${bt(f.novel.tag)}${f.group ? ` ${nt(f.group.title)}` : ""}`}{n > 1 ? t(" · 命中 {n} 处", { n }) : ""}
           </div>
           <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12.5, color: T.ink, lineHeight: 1.6, marginTop: 1 }}>{nt(f.ch.title)}</div>
           {snip && (
-            <div style={{ fontFamily: "HuiwenMingChao", fontSize: 11, color: T.muted, lineHeight: 1.8, marginTop: 3 }}>
+            <div lang={en ? "zh" : undefined} style={{ fontFamily: "HuiwenMingChao", fontSize: 11, color: T.muted, lineHeight: 1.8, marginTop: 3 }}>
               {snip.pre}<span style={{ color: T.accent }}>{snip.hit}</span>{snip.post}
             </div>
           )}
@@ -555,7 +569,7 @@ export default function NovelReader({ path, onNav }) {
           onCompositionEnd={(e) => { setIsComposing(false); setInputValue(e.currentTarget.value); setQ(e.currentTarget.value); }}
           placeholder={t("检索书目、篇章")}
           style={{ display: "block", width: "100%", background: T.panel, border: `1px solid ${T.line}`, color: T.ink, fontSize: 12.5, fontFamily: "HuiwenZhengKai", padding: "5px 10px 5px 32px", outline: "none", borderRadius: "3px" }} />
-        <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily: "HuiwenZhengKai", borderRadius: "3px", pointerEvents: "none" }}>查</span>
+        <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily: "HuiwenZhengKai", borderRadius: "3px", pointerEvents: "none" }} aria-hidden="true">查</span>
       </div>
       {q.trim() !== "" ? <SearchResults /> : <Tree />}
     </div>
