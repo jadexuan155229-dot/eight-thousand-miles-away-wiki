@@ -2444,6 +2444,16 @@ function GeoMap({ onOpenChar }) {
     [trackSel, tmode, tyear]
   );
   const rOf = (n) => Math.min(3.5 + 2.0 * Math.sqrt(n), 32); /* 環徑緩放，防北疆巨核吞鄰 */
+  /* 看動線時：動線所經之地為前景，其餘點位退作底圖——環、名俱淡，名字收起（「地名全顯」照開）；
+     動線所經者不論事數多少皆標名。懸停、選中者照常提亮。中英同 */
+  const routeMode = tracks.length > 0;
+  const onRoute = useMemo(() => new Set(tracks.flatMap((tk) => tk.stays.map((s) => s.loc))), [tracks]);
+  const spotDim = (name, n) => {
+    if (n === 0) return 0.18;
+    if (sel === name || hover === name) return 1;
+    if (routeMode && !onRoute.has(name)) return 0.16;
+    return hover || sel ? 0.45 : 1;
+  };
   const offBoxes = { "西": { x: 34, y: 300 }, "東": { x: 966, y: 300 } };
   const offNames = { "西": [], "東": [] };
   Object.entries(LOC_COORDS).forEach(([name, c]) => { if (c.kind === "off") offNames[c.dir].push(name); });
@@ -2461,7 +2471,7 @@ function GeoMap({ onOpenChar }) {
     const r = rOf(Math.max(n, 1)) / z;
     const segs = d ? Object.entries(d.tally).sort((a, b) => b[1] - a[1]) : [];
     const segTotal = segs.reduce((s, [, v]) => s + v, 0) + (d ? d.none : 0);
-    const dim = n === 0 ? 0.18 : (hover || sel) && !isSel && !isHov ? 0.45 : 1;
+    const dim = spotDim(name, n);
     let acc = 0;
     return (
       <g key={name} style={{ cursor: n > 0 ? "pointer" : "default", opacity: dim, transition: "opacity .15s" }}
@@ -2506,7 +2516,9 @@ function GeoMap({ onOpenChar }) {
     const c = LOC_COORDS[name];
     if (!c || c.kind === "off") return false;
     const n = spots.m[name]?.n || 0;
-    return allLabels || n >= Math.max(1, Math.ceil(3 / view.k)) || sel === name || hover === name;
+    if (allLabels || sel === name || hover === name) return true;
+    if (routeMode) return onRoute.has(name);
+    return n >= Math.max(1, Math.ceil(3 / view.k));
   };
   const labelOrder = Object.keys(LOC_COORDS).filter(spotLabelShown).sort((a, b) => {
     const top = (nm) => (sel === nm || hover === nm ? 1 : 0);
@@ -2518,7 +2530,7 @@ function GeoMap({ onOpenChar }) {
     const isSel = sel === name, isHov = hover === name;
     const z = view.k;
     const r = rOf(Math.max(n, 1)) / z;
-    const dim = n === 0 ? 0.18 : (hover || sel) && !isSel && !isHov ? 0.45 : 1;
+    const dim = spotDim(name, n);
     const la = (en && placeLabelSideEn[name]) || c.la; /* 英文地名長，密處另定方位（places.en.js） */
     const off = { n: [0, -r - 7 / z], s: [0, r + 15 / z], e: [r + 6 / z, 4 / z], w: [-r - 6 / z, 4 / z] }[la || "e"];
     return (
@@ -2567,7 +2579,7 @@ function GeoMap({ onOpenChar }) {
           const y = b.y + i * 24;
           const seg = spots.m[nm] ? Object.entries(spots.m[nm].tally).sort((a, c) => c[1] - a[1])[0] : null;
           return (
-            <g key={nm} style={{ cursor: n > 0 ? "pointer" : "default", opacity: n > 0 ? 1 : 0.35 }}
+            <g key={nm} style={{ cursor: n > 0 ? "pointer" : "default", opacity: n > 0 && !(routeMode && !onRoute.has(nm) && !isSel && !isHov) ? 1 : 0.35 }}
               onMouseEnter={() => { if (!coarse) setHover(nm); }}
               onMouseLeave={() => { if (!coarse) setHover(null); }}
               onClick={() => { if (movedRef.current > 5) return; if (n > 0) setSel(sel === nm ? null : nm); }}>
