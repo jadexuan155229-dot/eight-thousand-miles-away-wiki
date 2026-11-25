@@ -2494,17 +2494,41 @@ function GeoMap({ onOpenChar }) {
         ) : c.kind === "city" ? (
           <circle cx={c.x} cy={c.y} r={3.2 / z} fill={n > 0 ? T.ink : T.faint} stroke={T.bg} strokeWidth={0.8 / z} />
         ) : null}
-        {(allLabels || n >= Math.max(1, Math.ceil(3 / z)) || isSel || isHov) && (() => {
-          const la = (en && placeLabelSideEn[name]) || c.la; /* 英文地名長，密處另定方位（places.en.js） */
-          const off = { n: [0, -r - 7 / z], s: [0, r + 15 / z], e: [r + 6 / z, 4 / z], w: [-r - 6 / z, 4 / z] }[la || "e"];
-          return (
-            <text x={c.x + off[0]} y={c.y + off[1]} textAnchor={la === "e" ? "start" : la === "w" ? "end" : "middle"}
-              style={{ fontFamily: gUI, fontSize: (isSel || isHov ? 12.5 : 11) / z, fill: isSel || isHov ? T.ink : T.muted, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / z }}>
-              {pn(name)}{n > 0 ? ` ${n}` : ""}
-            </text>
-          );
-        })()}
       </g>
+    );
+  };
+
+  /* 地名標籤另成一層，畫在全部點位之上：舊時標籤在各點自己的 <g> 裡，後畫之環蓋住先畫之名，
+     關中、河東一帶（长安、潼关、天策府）名字壓在鄰環底下；今諸環畫完再畫諸名，名字的底色描邊截斷環線。
+     層內次序：小地先、大地後，懸停與選中者最後——兩名相疊時，事多者與正看者在上。
+     透明度、懸停、點選與點位同步（滑過名字一樣點亮該地） */
+  const spotLabelShown = (name) => {
+    const c = LOC_COORDS[name];
+    if (!c || c.kind === "off") return false;
+    const n = spots.m[name]?.n || 0;
+    return allLabels || n >= Math.max(1, Math.ceil(3 / view.k)) || sel === name || hover === name;
+  };
+  const labelOrder = Object.keys(LOC_COORDS).filter(spotLabelShown).sort((a, b) => {
+    const top = (nm) => (sel === nm || hover === nm ? 1 : 0);
+    return top(a) - top(b) || (spots.m[a]?.n || 0) - (spots.m[b]?.n || 0);
+  });
+  const renderSpotLabel = (name) => {
+    const c = LOC_COORDS[name];
+    const n = spots.m[name]?.n || 0;
+    const isSel = sel === name, isHov = hover === name;
+    const z = view.k;
+    const r = rOf(Math.max(n, 1)) / z;
+    const dim = n === 0 ? 0.18 : (hover || sel) && !isSel && !isHov ? 0.45 : 1;
+    const la = (en && placeLabelSideEn[name]) || c.la; /* 英文地名長，密處另定方位（places.en.js） */
+    const off = { n: [0, -r - 7 / z], s: [0, r + 15 / z], e: [r + 6 / z, 4 / z], w: [-r - 6 / z, 4 / z] }[la || "e"];
+    return (
+      <text key={name} x={c.x + off[0]} y={c.y + off[1]} textAnchor={la === "e" ? "start" : la === "w" ? "end" : "middle"}
+        onMouseEnter={() => { if (!coarse) setHover(name); }}
+        onMouseLeave={() => { if (!coarse) setHover(null); }}
+        onClick={() => { if (movedRef.current > 5) return; if (n > 0) setSel(isSel ? null : name); }}
+        style={{ cursor: n > 0 ? "pointer" : "default", opacity: dim, transition: "opacity .15s", fontFamily: gUI, fontSize: (isSel || isHov ? 12.5 : 11) / z, fill: isSel || isHov ? T.ink : T.muted, paintOrder: "stroke", stroke: T.bg, strokeWidth: 3 / z }}>
+        {pn(name)}{n > 0 ? ` ${n}` : ""}
+      </text>
     );
   };
 
@@ -2685,6 +2709,8 @@ function GeoMap({ onOpenChar }) {
             {/* 泛稱面先繪（襯底），點位後繪 */}
             {Object.keys(LOC_COORDS).filter((nm) => LOC_COORDS[nm].kind === "region").map((nm) => renderSpot(nm))}
             {Object.keys(LOC_COORDS).filter((nm) => LOC_COORDS[nm].kind === "city" || LOC_COORDS[nm].kind === "sect").map((nm) => renderSpot(nm))}
+            {/* 地名標籤層（見 renderSpotLabel）：諸環之上、動線之下 */}
+            {labelOrder.map((nm) => renderSpotLabel(nm))}
             {/* 第二期：人物動線 —— 弧線僅表先後曾在，非循此路行；虛線段居間有無地點之事 */}
             {tracks.map((trk) => {
               const t = trk; /* 此處 t 為動線（舊名照留，免改下文諸處）；译字改用 startMark */
@@ -2909,6 +2935,9 @@ export default function Wiki({ onOpenLanding }) {
   const setLocale = useSetLocale();
   const en = locale === "en";
   const [skin, setSkin] = useSkin();
+  const phoneHead = useNarrow(600); /* 英文版說明在手機上收起（見頁頭下） */
+  const [scopeOpen, setScopeOpen] = useState(false);
+  const inlineLink = { font: "inherit", color: T.accent, background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline", textDecorationColor: `${T.accent}66`, textUnderlineOffset: 3 };
   const t = useT();
   /* 路由：哈希為唯一事實源（見 router.js 體例）。寫入即改哈希，
      hashchange（含瀏覽器前進後退）回灌 state；nav 同步 setHash 一份，
@@ -2992,10 +3021,11 @@ export default function Wiki({ onOpenLanding }) {
       </header>
 
       {/* 英文版進度說明：數目由覆蓋層實算（i18n/content.js coverage），译一人、译一事，此處自動更新 */}
+      {/* 手機上英文導航已折三行，說明再佔四五行，正文要到半屏以下才開始：窄屏（< 600）只出一句，點「Details」展開全文 */}
       {en && <p className="translation-scope" lang="en" style={{ color: T.muted }}>
-        {t("英文版說明", COVERAGE)}
-        {tab !== "about" && <>{" "}<button type="button" onClick={() => setTab("about")}
-          style={{ font: "inherit", color: T.accent, background: "none", border: "none", padding: 0, cursor: "pointer", textDecoration: "underline", textDecorationColor: `${T.accent}66`, textUnderlineOffset: 3 }}>{t("初來者请看")}</button></>}
+        {phoneHead && !scopeOpen ? t("英文版說明短") : t("英文版說明", COVERAGE)}
+        {tab !== "about" && (!phoneHead || scopeOpen) && <>{" "}<button type="button" onClick={() => setTab("about")} style={inlineLink}>{t("初來者请看")}</button></>}
+        {phoneHead && <>{scopeOpen ? " · " : " "}<button type="button" aria-expanded={scopeOpen} onClick={() => setScopeOpen((o) => !o)} style={inlineLink}>{scopeOpen ? t("收起") : t("詳情")}</button></>}
       </p>}
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>
         {(tab === "chars" || tab === "posts") && (
