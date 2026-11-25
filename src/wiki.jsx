@@ -1889,18 +1889,21 @@ function Planetary({ onOpenChar }) {
     const sec = SECONDARY_IDS.has(n.c.id);
     const fs = sec ? 13.5 : nodeFontSize(n.c.name.length, n.r, dim);
     return (
-      <g key={n.c.id} style={{ cursor: "pointer" }} opacity={keyLit && !keyLit.has(n.c.id) ? 0.22 : 1}
+      <g key={n.c.id} id={`orb-${n.c.id}`} style={{ cursor: "pointer" }} opacity={keyLit && !keyLit.has(n.c.id) ? 0.22 : 1}
         onMouseEnter={() => { if (!coarse) setHover(n.c.id); }}
         onMouseLeave={() => { if (!coarse) setHover((h) => (h === n.c.id ? null : h)); /* 只清自己：免離 A 晚於入 B 時把 B 清掉 */ }}
         /* 觸屏無懸停：首觸牽出其關係弧，再觸方開檔案 */
         onClick={() => { if (movedRef.current > 5) return; if (coarse && hover !== n.c.id) { setHover(n.c.id); setKeyPin(null); return; } onOpenChar(n.c); }}>
         <title>{hasEnName(locale, n.c) ? `${charName(locale, n.c)} ${n.c.name}` : n.c.name}</title>
         {coarse && <circle cx={n.x} cy={n.y} r={30} fill="transparent" />}
+        {/* 感應範圍恆為原徑（下一圈透明）：懸停時圈放大三四像素只是看的，不接指針，
+            免緊挨的鄰星（遠軌曼冉、央馨一類）圓心被放大之圈蓋住、滑過去收不到懸停 */}
+        <circle cx={n.x} cy={n.y} r={n.r} fill="transparent" />
         <circle cx={n.x} cy={n.y} r={r0} fill={soft ? T.bg : T.panel} stroke={fc(n.c.belong[0])}
-          strokeWidth={soft ? 1.2 : sec ? 2.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} />
+          strokeWidth={soft ? 1.2 : sec ? 2.2 : 1.6} strokeOpacity={soft ? 0.55 : 1} style={{ pointerEvents: "none" }} />
         {n.c.belong.length > 1 && (
           <circle cx={n.x} cy={n.y} r={r0 + 4} fill="none" stroke={fc(n.c.belong[1])}
-            strokeWidth={sec ? 1 : 0.8} opacity={soft ? 0.35 : 0.7} />
+            strokeWidth={sec ? 1 : 0.8} opacity={soft ? 0.35 : 0.7} style={{ pointerEvents: "none" }} />
         )}
         {/* 圈內作漢字名（英文名入懸停）；英文界面下標 lang="zh"，讀屏按中文念 */}
         <text x={n.x} y={n.y + (sec ? 5 : 4)} textAnchor="middle" lang={en ? "zh" : undefined}
@@ -1978,6 +1981,12 @@ function Planetary({ onOpenChar }) {
               {t(nm)}{en ? "  " : "　"}{t(note)}
             </text>
           ))}
+          {/* 次星三角（岚川云、陆晚月、陆羽鸣之間三條淡弧）不懸停亦在，讀者每問其故，於此註明。
+              本應入左下「線」之圖例，然英文版左下已抵幅底、上有唐煦玛奈丽，無行可加；此處下距叶曙兮尚有一行 */}
+          <path d="M0 80 Q8 74 16 80" fill="none" stroke={T.muted} strokeWidth={1.4} opacity={0.6} />
+          <text x={20} y={83} style={{ fontFamily: gUI, fontSize: 10.5, fill: T.faint }}>
+            {t("淡弧")}{en ? "\u2003" : "　"}{t("次星三人之間的關係（常駐）")}
+          </text>
         </g>
         {/* 圖例：線之義。與左上之軌道圖例上下相對——左上說環，左下說線。
             關係色例舊在圖下、隔著一段說明，看圖時須上下翻找；今入圖內，同在縮放層中，隨圖平移。
@@ -2070,6 +2079,9 @@ function Planetary({ onOpenChar }) {
         )}
         {layout.bridge.map((n) => renderNode(n, t("閔 {a} · 程 {b}", { a: n.a, b: n.b })))}
         {layout.farNodes.map((n) => renderNode(n, null, true))}
+        {/* 懸停之星以 <use> 複畫一份於諸星之上：名下說明行（名 · 共見數）原會被後畫之鄰星蓋住一截（懸停狄元恪，連朔壓之）。
+            不挪原節點——挪則卸載重掛，正點選時會吞去 click（見 renderNode 上注）；複本 pointer-events: none，事件仍歸原節點 */}
+        {hover && <use href={`#orb-${hover}`} style={{ pointerEvents: "none" }} />}
         {/* 弦線之字（位置見 chordPath；次星三角之字常駐，懸停他人時隨線淡去）與懸停一星時核線上之字（兩圈之間的線段中點）。
             兩組合排：英文多類關係（Physician & patient · Service on campaign）於「·」「/」處折兩行；
             先放者佔位，後放者撞上即上下挪一格（至多兩格），無處可挪方留原位——懸停時英文長字互疊即由此 */}
