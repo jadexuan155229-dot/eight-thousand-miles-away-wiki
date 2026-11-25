@@ -95,6 +95,16 @@ export function novelTitle(locale, zh) {
 }
 export const hasNovelTitle = (locale, zh) => EN(locale) && novelTitle(locale, zh) !== zh;
 
+/* ---------- 英文檢索 ----------
+   英文讀者多半打不出 ü、ā、ō：Lu Dingyi 須中 Lü Dingyi，Radin 中 Rādīn，Kyoya 中 Kyōya；
+   拼音輸入法慣以 v 代 ü（lv、nv）亦認；曲撇號與直撇號互通（Chang'an／Chang’an）。
+   enMatcher(查詢) 返回 (字串) => 是否命中；查詢空則恆真。 */
+const foldEn = (s) => s.normalize("NFD").replace(/\p{M}/gu, "").replace(/[\u2018\u2019\u02bc]/g, "'").toLowerCase();
+export function enMatcher(q) {
+  const k = foldEn(q.trim()).replace(/\b([ln])v/g, "$1u");
+  return (s) => !k || (!!s && foldEn(s).includes(k));
+}
+
 /* ---------- 覆蓋計數（頁頭說明、check-data 共用） ---------- */
 export function coverage(CHARACTERS, EVENTS) {
   const ids = new Set(CHARACTERS.map((c) => c.id));
@@ -103,6 +113,8 @@ export function coverage(CHARACTERS, EVENTS) {
     characters: CHARACTERS.length,
     names: tr.filter(([, x]) => has(x.name)).length,
     profiles: tr.filter(([, x]) => x.profile && Object.values(x.profile).some(has)).length,
+    /* 中文檔案有正文者（楼皓、虞嘉、白霖三人至今無正文）：頁頭說明以此為分母 */
+    written: CHARACTERS.filter((c) => (c.profile || []).some(([, v]) => has(v))).length,
     events: EVENTS.length,
     eventTitles: EVENTS.filter((e) => has(eventsEn[e.title])).length,
   };

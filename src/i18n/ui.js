@@ -23,9 +23,12 @@ const en = {
   門派: 'Faction', 全部: 'All', 待核: 'Draft',
   中文原文: 'Chinese original',
   未译註: 'Not yet translated: shown in the original Chinese.',
-  英文版說明: ({ profiles, characters, eventTitles, events }) =>
-    `English edition in progress. The interface is in English; so far ${profiles} of ${characters} character profiles and ${eventTitles} of ${events} chronology entries have been translated. Everything else appears in the original Chinese.`,
-  '檢索姓名、表字、概覽、品評': 'Search names, courtesy names, epithets, appraisals',
+  /* 數目由覆蓋層實算。舊稿末句說「其餘皆中文」，今余波、編制、任期皆已译完，唯文庫正文（T3）仍是中文，故改說實情 */
+  英文版說明: ({ profiles, written, eventTitles, events }) => {
+    const all = (n, of, what) => (n === of ? `all ${of} ${what}` : `${n} of ${of} ${what}`);
+    return `English edition in progress. The interface, ${all(profiles, written, 'character profiles written so far')}, ${all(eventTitles, events, 'chronology entries')}, the Posts charts and the Aftershocks are in English, mostly as working translations. The library’s prose is still in the original Chinese.`;
+  },
+  '檢索姓名、表字、概覽、品評': 'Search names, courtesy names, epithets, birthplaces', // 英文檢索實查姓名、名號、稱號、出身；品評是一字印，英文查不著，不提
   '無合於此檢索之檔案。': 'No profiles match this search.',
 
   /* ---------- 人物檔案 ---------- */

@@ -266,7 +266,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             return (
               <Fragment key={e.who}>
               <g style={{ cursor: "pointer", outline: "none" }}
-                role="button" tabIndex={0} aria-pressed={!!on} aria-label={`${tr?.name || c.name}：${modeText(locale, e.mode)}${e.draft ? `（${t("待核")}）` : ""}`}
+                role="button" tabIndex={0} aria-pressed={!!on} aria-label={locale === "en" ? `${tr?.name || c.name}: ${modeText(locale, e.mode)}${e.draft ? ` (${t("待核")})` : ""}` : `${c.name}：${e.mode}${e.draft ? "（待核）" : ""}`}
                 onClick={() => onRoute({ shock: shock.id, who: on ? null : e.who })}
                 onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); onRoute({ shock: shock.id, who: on ? null : e.who }); } }}
                 onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setFocusWho(e.who); }}
@@ -357,7 +357,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
           {hover && hover.shock === shock.id && (() => {
             const [htxt, hzh] = arcNoteText(locale, hover.n.note);
             const lines = locale === "en" && !hzh ? wrapWords(htxt, 44) : wrapText(htxt, 24);
-            const date = nodeText(hover.n) + (hover.n.card ? `　${t("年表以外")}·${srcLabel(hover.n, locale)}` : "");
+            const date = nodeText(hover.n) + (hover.n.card ? (locale === "en" ? `\u2003${t("年表以外")} · ${srcLabel(hover.n, locale)}` : `　${t("年表以外")}·${srcLabel(hover.n, locale)}`) : "");
             const bw = Math.max(textW(date, 11.5), ...lines.map((l) => textW(l, 12))) + 22;
             const bh = 26 + lines.length * 17;
             const bx = Math.max(8, Math.min(hover.x - 14, W - 8 - bw));
@@ -410,7 +410,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 {t("查看檔案")}
               </button>
             </div>
-            <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 24, color: T.ink, letterSpacing: "0.06em", margin: "14px 0 4px" }}>{selected.mode}</div>
+            <div lang={locale === "en" ? "zh" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 24, color: T.ink, letterSpacing: "0.06em", margin: "14px 0 4px" }}>{selected.mode}</div>
             {locale === "en" && <div style={{ fontStyle: "italic", fontSize: 15, color: T.muted, marginBottom: 4 }}>{modeText(locale, selected.mode)}</div>}
             <div style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.faint, letterSpacing: "0.15em", margin: "16px 0 6px" }}>{t("回響節點")}</div>
             {selected.arc.map((n, i) => (

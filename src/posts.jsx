@@ -4,7 +4,7 @@ import { FACTIONS, POSTS, TENURES, tenureFac, tenureSpan, tenureTitle } from "./
 import { T, tone } from "./theme";
 import { useLocale, useT } from "./i18n/locale";
 import { charName, facName } from "./i18n/content";
-import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx, tenureNoteTx, tenureSrcTx } from "./i18n/posts-content";
+import { postLabelTx, postHintTx, groupTx, markTx, tenureTitleTx, tenureNoteTx, tenureSrcTx, tenureSpanText } from "./i18n/posts-content";
 
 /* ============================================================
    編制 (posts.jsx) —— 门派职位 × 年份的任期图（苍云、天策、唐军，顶上切换）
@@ -44,7 +44,7 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
   const en = locale === "en";
   const t_ = useT();
   /* 任期起止：英文界面下「（约）」作 approx.、長橫作連接號（同檔案卡任職履歷） */
-  const spanOf = (t) => (en ? tenureSpan(t).replace(/（约）/g, " (approx.)").replace("—", "–") : tenureSpan(t));
+  const spanOf = (t) => tenureSpanText(locale, t);
   /* 悬停与键盘焦点分开记：{ i, x, y }（i 为 TENURES 下标；x、y 相对外框）。浮签先看鼠标，鼠标移走就退回焦点那一段，
      免得鼠标扫过就把键盘打开的浮签关掉；Esc 两个都收 */
   const [hov, setHov] = useState(null);

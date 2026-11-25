@@ -1,6 +1,6 @@
 import { postsEn, groupsEn, ranksEn, marksEn, honoursEn } from "./posts.en";
 import { tenureNotesEn } from "./tenures.en";
-import { POST_FULL, tenureTitle, grantLabel } from "../posts-data";
+import { POST_FULL, tenureTitle, tenureSpan, grantLabel } from "../posts-data";
 
 /* ============================================================
    編制英译查表（posts-content.js）：皆返回 [文字, 是否回落中文]，同 content.js 之 charField。
@@ -21,6 +21,11 @@ export function tenureTitleTx(locale, t) {
   if (t.rank) return pick(ranksEn[t.rank], t.rank);
   return pick(postsEn[t.post]?.full, POST_FULL[t.post]);
 }
+
+/* 任期起止（檔案「任職履歷」與編制圖浮簽、讀屏標籤共用）：英文作 745.9–760.10，（约）作 (approx.)，
+   起年不詳之全角問號作半角 */
+export const tenureSpanText = (locale, t) =>
+  EN(locale) ? tenureSpan(t).replace(/（约）/g, " (approx.)").replace("—", "–").replace(/？/g, "?") : tenureSpan(t);
 
 /* 勳散：(追赠)官；勳；散（品）。任一項無英译即整條回落中文 */
 export function grantTx(locale, g) {
