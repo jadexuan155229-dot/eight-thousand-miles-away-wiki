@@ -1901,7 +1901,7 @@ function Planetary({ onOpenChar }) {
     const blocks = [
       ...allStars.map((q) => { const r = (q.r + (q.c.belong.length > 1 ? 4 : 0)) * cz; return { id: q.c.id, box: { l: q.x - r, r: q.x + r, t: q.y - r, b: q.y + r } }; }),
       ...CX.flatMap((x) => [
-        { id: "", box: { l: x - 55 * cz, r: x + 55 * cz, t: CY - 78 * cz, b: CY - 59 * cz } }, /* 核頂「Cangyun line」 */
+        { id: "", box: { l: x - 50 * cz, r: x + 50 * cz, t: CY - 76 * cz, b: CY - 56 * cz } }, /* 核頂「Cangyun line」 */
         { id: "", box: { l: x - 50 * cz, r: x + 50 * cz, t: CY + 49 * cz, b: CY + 68 * cz } }, /* 核下英文名 */
       ]),
       /* 遠軌門派署名（斜書）：沿字向取一串小方塊近似 */
@@ -1937,15 +1937,19 @@ function Planetary({ onOpenChar }) {
     return (
       <g key={"star" + k} style={{ cursor: "pointer" }} transform={counterScale(cz, CX[k], CY)} onClick={() => { if (movedRef.current > 5) return; onOpenChar(c); }}>
         <title>{hasEnName(locale, c) ? `${charName(locale, c)} ${c.name}` : c.name}</title>
-        <text x={CX[k]} y={CY - 66} textAnchor="middle"
-          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: en ? "0.12em" : "0.45em" }}>
+        {/* 核頂系名：英文字長，原 0.12em 字距、CY − 66 處左右擦著靳沉白、许秋生、边赛远之圈；收字距、下移三像素即讓開。中文不變 */}
+        <text x={CX[k]} y={en ? CY - 63 : CY - 66} textAnchor="middle"
+          style={{ fontFamily: gUI, fontSize: 11.5, fill: fcText(c.belong[0]), letterSpacing: en ? "0.05em" : "0.45em" }}>
           {t(CENTERS_META[k].tag)}
         </text>
         <circle cx={CX[k]} cy={CY} r={40} fill={T.panel} stroke={T.accent} strokeWidth={2.4} />
         <circle cx={CX[k]} cy={CY} r={47} fill="none" stroke={T.accent} strokeWidth={0.7} opacity={0.5} />
-        <text x={CX[k]} y={CY - 7} textAnchor="middle" lang={en ? "zh" : undefined} style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
-        <text x={CX[k]} y={CY + 10} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
-        <text x={CX[k]} y={CY + 24} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 7.5 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} – ${englishEraOf(c.death)}` : `${eraOf(c.birth)} — ${eraOf(c.death)}`}</text>
+        {/* 圈內四行：名、生卒、年號兩行。年號原作一行（开元八年 — 永泰元年，寬 85），圈在該高度只容 60 上下，
+            首末二字壓在圈線上；今拆作起止兩行，諸行上移，每行四角俱在圈內 */}
+        <text x={CX[k]} y={CY - 12} textAnchor="middle" lang={en ? "zh" : undefined} style={{ fontFamily: gName, fontSize: 16, fill: T.ink, fontWeight: 700 }}>{c.name}</text>
+        <text x={CX[k]} y={CY + 3} textAnchor="middle" style={{ fontFamily: gUI, fontSize: 10.5, fill: T.muted }}>{c.birth} {en ? "–" : "—"} {c.death}</text>
+        <text x={CX[k]} y={CY + 15} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 8 : 8.5, fill: T.faint }}>{en ? `${englishEraOf(c.birth)} –` : `${eraOf(c.birth)} —`}</text>
+        <text x={CX[k]} y={CY + 25} textAnchor="middle" style={{ fontFamily: gUI, fontSize: en ? 8 : 8.5, fill: T.faint }}>{en ? englishEraOf(c.death) : eraOf(c.death)}</text>
         {/* 英文名：雙核圈大，名下另起一行；其餘星圈小，英文名只入懸停（見 renderNode） */}
         {hasEnName(locale, c) && <text x={CX[k]} y={CY + 62} textAnchor="middle" style={{ fontFamily: gName, fontSize: 12, fill: T.muted }}>{charName(locale, c)}</text>}
       </g>
