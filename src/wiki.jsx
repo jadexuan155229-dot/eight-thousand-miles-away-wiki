@@ -3187,7 +3187,9 @@ function HeaderMenu({ id, label, hint, options, value, onChange, locale }) {
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps -- 只在開合時聚焦一次，選項與值變動不重跑
   const close = (refocus) => { setOpen(false); if (refocus) btnRef.current?.focus({ preventScroll: true }); };
   const pick = (v) => {
-    if (v === value) { close(true); return; }
+    /* 選中現值也通知一聲（換膚同值即返，無副作用）：換英文載入期間再選「中文」，語言此時仍是中文，
+       須藉此取消那次尚未完成的切換（見 use-language.js 之 want） */
+    if (v === value) { close(true); onChange(v); return; }
     headerMenuRefocus = id;
     setOpen(false);
     onChange(v);
