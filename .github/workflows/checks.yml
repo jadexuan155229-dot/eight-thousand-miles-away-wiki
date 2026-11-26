@@ -1,5 +1,5 @@
 # 检查：每个 PR、每次推到 main 都跑一遍，结果见 PR 页底部与 Actions 页。
-# 与部署（deploy.yml）各跑各的，不挡部署；任一项不过即红叉，其余各项照跑，便于一次看全。
+# 与部署（deploy.yml）各跑各的，不挡部署（部署自己另跑一次 check-data，资料有错即不发布）；任一项不过即红叉，其余各项照跑，便于一次看全。
 #   资料     npm run check-data              （有错即不过；警告只列出）
 #   代码     oxlint，警告以 12 条为基线        （多于 12 条即不过；改基线须改下面的 --max-warnings）
 #   字体子集  node scripts/font-chars.js --check（站内有字符表外之字即不过，改法见 README「字体子集」）

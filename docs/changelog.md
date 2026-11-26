@@ -2,6 +2,12 @@
 
 ## 2026-11-26
 
+### 部署工作流：诸 action 升到 Node 24 版，发布前先过 check-data
+
+- **缘起**：`checks.yml` 11-25 已升到 `checkout@v5`、`setup-node@v5`，`deploy.yml` 漏了，仍是 v4；另三个 Pages action（`configure-pages@v5`、`upload-pages-artifact@v3`、`deploy-pages@v4`）也是 Node 20 版。GitHub 已于 2026 年 9 月停供 Node 20，这几个现在是被强制改用 Node 24 跑的，迟早出事。部署此前也不查资料，只 `npm ci` 加 `build`：资料有错（悬空的人物 id 之类）照样构建成功、照样上线。
+- **改法**：`checkout@v5`、`setup-node@v5`（与 checks.yml 同）、`configure-pages@v6`、`upload-pages-artifact@v5`、`deploy-pages@v5`，皆以 Node 24 运行。`upload-pages-artifact` 自 v4 起不收点开头的文件，`dist/` 里本无此类。build 前加一步 `npm run -s check-data`：有错即不发布，线上保持上一版；只有警告照常发布。代码、字体子集、前进后退三项仍只在 checks.yml 里跑、不挡部署（`check:history` 要起浏览器，偶有不稳，不宜挡发布）。README「检查与构建」、checks.yml 头注随改。
+- 验证：YAML 解析无误；本地在 `wiki-data.js` 临时塞一个不存在的人物 id，`check-data` 退出码 1（试后复原）。部署本身要合并到 main 后才会跑，届时看 Actions 页首次部署是否绿。
+
 ### 档案弹窗：对话框语义与焦点
 
 - **缘起**：档案弹窗无 `role="dialog"`，读屏只当是页面末尾多出一段，axe 报窗内 23–24 处「不在地标内」（`region`）；开窗后焦点仍留在 body，键盘读者须从页首 Tab 进窗，关窗后焦点也不回原卡。文库批注卡原已是 `role="dialog"`。
