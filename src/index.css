@@ -1,11 +1,10 @@
 /* 汇文正楷、汇文明朝、京华老宋三枚字体的 @font-face 不在此：按字频切片后共八十余条、百余 KB，
    另成一表 assets/fonts/cjk-faces.css（scripts/subset-fonts.py 生成），由 main.jsx 动态载入，不挡首屏 */
 
-/* 英文襯線（自托管，OFL，見 assets/fonts/Literata-OFL.txt）：只帶拉丁字，約五十 KB。
-   作英文字族棧中系統字之後、Georgia／Times 之前的保底——Mac 仍見 Iowan、Palatino、Baskerville，
-   Windows 仍見 Palatino Linotype，安卓與 Linux 等無此諸體者落到這裡，不再掉到 Times。
-   英文界面下另以同檔覆寫三枚中文字體的拉丁字（見 i18n/latin-faces.js）。
-   瀏覽器只在頁面真用到這些字時才下載，中文界面不載。 */
+/* 英文襯線（自托管，OFL，見 assets/fonts/Literata-OFL.txt）：只帶拉丁字，約五十 KB，可變字重帶真粗體、真斜體。
+   英文檔案卡、彈窗正文、導航、頁頭說明皆用此一枚（2026-11-26 起不再先找讀者本機的 Iowan、Palatino、
+   Baskerville、Georgia：原先各平台所見不同）。英文界面下另以同檔覆寫明朝、老宋兩枚中文字體的拉丁字，
+   正楷之位配 Alegreya（見 i18n/latin-faces.js）。瀏覽器只在頁面真用到這些字時才下載，中文界面不載。 */
 @font-face {
   font-family: "Literata EN";
   src: url("./assets/fonts/Literata-latin-wght-normal.woff2") format("woff2");
@@ -890,7 +889,7 @@ body {
   animation: cy-breathe 3.6s ease-in-out infinite;
 }
 /* 英文卷首：題名橫排四行、右對齊，仍居右側一列；副題豎排側轉；印文橫排。
-   字族沿用汇文正楷／明朝之名，英文界面下其拉丁字由 i18n/latin-faces.js 覆寫為 Iowan／Literata */
+   字族沿用汇文正楷／明朝之名，英文界面下其拉丁字由 i18n/latin-faces.js 覆寫為 Alegreya／Literata */
 .cy-landing--en .cy-titlecol {
   align-items: flex-end;
   gap: 3.2vh;
@@ -1051,7 +1050,7 @@ body {
   .header-menu-list { animation: none; }
 }
 .nav-en button {
-  font-family: Georgia, "Literata EN", "Songti SC", serif !important;
+  font-family: "Literata EN", "Songti SC", serif !important;
   letter-spacing: normal !important;
   text-indent: 0 !important;
   overflow-wrap: anywhere;
@@ -1088,12 +1087,12 @@ body {
   max-width: 1080px;
   margin: 16px auto 0;
   padding: 0 24px;
-  font: 13px/1.6 Georgia, "Literata EN", "Songti SC", serif;
+  font: 13px/1.6 "Literata EN", "Songti SC", serif;
 }
 /* 英文界面下所有檔案卡皆掛 profile-en（標目、生卒、門派隨界面為英文）；中文界面諸卡不受影響。
    尚未译出而回落中文的字段標 zh-src（i18n/zh.jsx）：英文字族覆寫不及之，仍用其內聯的中文字體與字距。 */
 .profile-en {
-  --profile-latin-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "Literata EN", Georgia, "Songti SC", serif;
+  --profile-latin-serif: "Literata EN", "Songti SC", serif;
 }
 .profile-en div:not(.zh-src):not(.zh-src *),
 .profile-en button:not(.zh-src *),
@@ -1126,10 +1125,9 @@ body {
   font-synthesis: none;
   line-height: 1.65 !important;
 }
-/* The previous Iowan/Palatino stack was already weight 400. Use a finer
-   system serif for detail prose rather than requesting a nonexistent light face. */
+/* 彈窗正文：原先先找本機 Baskerville，今與檔案卡同用 Literata EN（2026-11-26） */
 .profile-en .char-modal-scroll .profile-prose {
-  --profile-latin-serif: Baskerville, "Literata EN", "Times New Roman", Times, "Songti SC", serif;
+  --profile-latin-serif: "Literata EN", "Songti SC", serif;
   font-weight: 400;
 }
 .profile-en.texture-test-sm .profile-lifespan-years,
