@@ -656,7 +656,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       {facs.length > 1 && <span style={{ marginRight: 8, fontSize: 11, color: T.faint }}>{facName(locale, tenureFac(x))}</span>}
                       {titleZh ? <Zh>{title}</Zh> : title}
                       {x.kind !== "正授" && <span style={{ marginLeft: 8, fontSize: 11, color: T.muted, border: `1px ${x.kind === "差遣" ? "solid" : "dashed"} ${T.line}`, padding: "0 6px", borderRadius: 3 }}>{t(x.kind)}</span>}
-                      {x.draft && <span title={note || undefined} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
+                      {x.draft && <span title={note || undefined} style={{ marginLeft: 8, fontSize: 10.5, color: T.sealTagInk, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       {(how || end) && (
                         <div style={{ fontSize: 12.5, color: T.muted, lineHeight: 1.75 }}>
                           {how && piece(how, howZh)}
@@ -678,7 +678,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? t("（约）") : ""}</div>
                       <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>
                         {(([txt, z]) => (z ? <Zh>{txt}</Zh> : txt))(grantTx(locale, g))}
-                        {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
+                        {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.sealTagInk, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       </div>
                     </div>
                   ))}
@@ -736,7 +736,8 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       style={{ fontSize: 12.5, fontFamily: "HuiwenZhengKai", color: T.ink, background: T.panelHi, border: `1px ${r.da ? "dashed" : "solid"} ${relColor(r.t)}88`, padding: "4px 10px", borderRadius: "3px", cursor: "pointer", textAlign: "left" }}>
                       <ChipName c={o} />
                       <span style={{ color: relColor(r.t), marginLeft: 8, fontSize: 11 }}>{en && /[\u4e00-\u9fff]/.test(relEn) ? <Zh>{relEn}</Zh> : relEn}</span>
-                      <span style={{ color: T.faint, marginLeft: 6, fontSize: 10.5 }}>
+                      {/* 關係鈕底為 panelHi，淡墨在此只 3.67:1，欲達 4.5:1 即與次墨同色——故直用次墨（2026-11-26） */}
+                      <span style={{ color: T.muted, marginLeft: 6, fontSize: 10.5 }}>
                         {r.y0 ?? (en ? "?" : "？")}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("殁后")}` : ""}
                       </span>
                     </button>
@@ -776,7 +777,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       <div style={{ fontSize: 11, color: T.faint }}>{sh.year}.{sh.month} · {shockTitle(locale, sh)}</div>
                       <div style={{ fontSize: 14, color: T.ink, marginTop: 2 }}>
                         {modeText(locale, x.mode)}
-                        {x.draft && <span title={t("起草待核：作者尚未逐行核定")} style={{ marginLeft: 8, fontSize: 10.5, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
+                        {x.draft && <span title={t("起草待核：作者尚未逐行核定")} style={{ marginLeft: 8, fontSize: 10.5, color: T.sealTagInk, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
                       </div>
                     </button>
                   );
@@ -915,7 +916,7 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
   const titleZh = en && title === e.title;
   return (
     <div style={{ position: "relative", padding: "0 0 24px 26px", fontFamily: "HuiwenZhengKai" }}>
-      <div style={{ position: "absolute", left: -5, top: 7, width: 9, height: 9, background: showYear ? T.accent : T.faint, transform: "rotate(45deg)" }} />
+      <div style={{ position: "absolute", left: -5, top: 7, width: 9, height: 9, background: showYear ? T.accent : T.faintLine, transform: "rotate(45deg)" }} />
       {showYear && (
         <div style={{ position: "absolute", left: -66, top: 1, fontFamily: "HuiwenZhengKai", fontSize: 16, color: T.accent, width: 48, textAlign: "right" }}>{e.year}</div>
       )}
@@ -938,7 +939,7 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
         )}
         {shocks.map((shock) => (
           <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={t("余波：{title}——此事笼罩之人与其记忆方式", { title: shockTitle(locale, shock) })}
-            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.seal, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>{t("余波")}{shocks.length > 1 ? (en ? `: ${shockTitle(locale, shock).split(": ").pop()}` : `·${shock.title.split("·").pop()}`) : ""} ›</button>
+            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.sealTagInk, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>{t("余波")}{shocks.length > 1 ? (en ? `: ${shockTitle(locale, shock).split(": ").pop()}` : `·${shock.title.split("·").pop()}`) : ""} ›</button>
         ))}
         {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>{t("门派未标")}</span>}
         {e.fac.map((f) => (
@@ -2799,7 +2800,7 @@ function GeoMap({ onOpenChar }) {
         onMouseLeave={() => { if (!coarse) setHover(null); }}
         onClick={() => { if (movedRef.current > 5) return; if (n > 0) setSel(isSel ? null : name); }}>
         {c.kind === "region" && (
-          <ellipse cx={c.x} cy={c.y} rx={c.rx} ry={c.ry} fill={segs[0] ? fc(segs[0][0]) : T.faint} opacity={0.10}
+          <ellipse cx={c.x} cy={c.y} rx={c.rx} ry={c.ry} fill={segs[0] ? fc(segs[0][0]) : T.faintLine} opacity={0.10}
             transform={c.rot ? `rotate(${c.rot} ${c.x} ${c.y})` : undefined} stroke={T.line} strokeDasharray="3 4" vectorEffect="non-scaling-stroke" />
         )}
         {n > 0 && segTotal > 0 && (segs.length + (d.none ? 1 : 0)) > 1 ? (
@@ -2822,7 +2823,7 @@ function GeoMap({ onOpenChar }) {
           <rect x={c.x - 4 / z} y={c.y - 4 / z} width={8 / z} height={8 / z} transform={`rotate(45 ${c.x} ${c.y})`}
             fill={n > 0 ? T.panelHi : T.bg} stroke={isSel || isHov ? T.accent : T.muted} strokeWidth={1.2 / z} />
         ) : c.kind === "city" ? (
-          <circle cx={c.x} cy={c.y} r={3.2 / z} fill={n > 0 ? T.ink : T.faint} stroke={T.bg} strokeWidth={0.8 / z} />
+          <circle cx={c.x} cy={c.y} r={3.2 / z} fill={n > 0 ? T.ink : T.faintLine} stroke={T.bg} strokeWidth={0.8 / z} />
         ) : null}
       </g>
     );
@@ -3031,8 +3032,8 @@ function GeoMap({ onOpenChar }) {
               onClick={() => { if (movedRef.current > 5) return; setHoverSeg(null); }} />
             {/* 底圖：示意手繪 */}
             <path d={GEO_BASE.coast} fill="none" stroke={T.muted} strokeWidth={1.3} opacity={0.55} vectorEffect="non-scaling-stroke" />
-            <path d={GEO_BASE.north} fill="none" stroke={T.faint} strokeWidth={1} strokeDasharray="6 5" opacity={0.6} vectorEffect="non-scaling-stroke" />
-            <path d={GEO_BASE.tubo} fill="none" stroke={T.faint} strokeWidth={1} strokeDasharray="6 5" opacity={0.6} vectorEffect="non-scaling-stroke" />
+            <path d={GEO_BASE.north} fill="none" stroke={T.faintLine} strokeWidth={1} strokeDasharray="6 5" opacity={0.6} vectorEffect="non-scaling-stroke" />
+            <path d={GEO_BASE.tubo} fill="none" stroke={T.faintLine} strokeWidth={1} strokeDasharray="6 5" opacity={0.6} vectorEffect="non-scaling-stroke" />
             <path d={GEO_BASE.huanghe} fill="none" stroke={T.river} strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
             <path d={GEO_BASE.changjiang} fill="none" stroke={T.river} strokeWidth={1.4} opacity={0.55} vectorEffect="non-scaling-stroke" />
             {GEO_BASE.labels.map((l) => (
@@ -3366,10 +3367,10 @@ export default function Wiki({ onOpenLanding }) {
             </button>
           ))}
           </div>
-          {/* 回卷首：重開入站定場（landing.jsx），印形以應「入卷」朱印 */}
+          {/* 回卷首：重開入站定場（landing.jsx），印形以應「入卷」朱印——玄墨下反白作實底朱印，紙上紅框紅字（見 theme.js sealBtnInk） */}
           {onOpenLanding && (
             <button onClick={onOpenLanding} title={t("回到卷首")}
-              style={{ fontFamily: "JingHuaLaoSong", fontSize: 13, padding: "5px 10px", marginLeft: 12, alignSelf: "center", background: "none", border: `1px solid ${T.seal}`, borderRadius: 3, color: T.seal, cursor: "pointer", letterSpacing: "0.2em", textIndent: "0.2em" }}>
+              style={{ fontFamily: "JingHuaLaoSong", fontSize: 13, padding: "5px 10px", marginLeft: 12, alignSelf: "center", background: T.xSealBtnBg, border: `1px solid ${T.seal}`, borderRadius: 3, color: T.sealBtnInk, cursor: "pointer", letterSpacing: "0.2em", textIndent: "0.2em" }}>
               {t("卷首")}
             </button>
           )}

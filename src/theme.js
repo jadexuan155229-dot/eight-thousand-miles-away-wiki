@@ -5,7 +5,7 @@ export const serif = '"Songti SC","Noto Serif SC","Noto Serif CJK SC","SimSun",s
 
 /* ══ 皮膚 ══════════════════════════════════════════════════════════════
    兩套色板，鍵名一一對應：
-     玄墨 night —— 原深色底，數值一字未改；
+     玄墨 night —— 原深色底；2026-11-26 為小字對比度改淡墨、高亮底上之字，另立 faintLine、sealTagInk 等鍵（見下）；
      素紙 paper —— 米白宣紙底，取敦煌配色「焦糖栗子泥」五色：
        焦糖栗 #7B3C1B（原圖標作 #26081c，係誤標；此為取樣實色）→ 全站高亮
        石綠   #7C8D56 → 選區、河道
@@ -23,10 +23,16 @@ export const serif = '"Songti SC","Noto Serif SC","Noto Serif CJK SC","SimSun",s
    T 只放十六進位色（可拼透明度者）；整串 rgba、陰影之類另置 T 的 x 開頭諸鍵，不可再拼。 */
 const NIGHT = {
   bg: "#15181D", panel: "#1D2229", panelHi: "#232A33", line: "#2E3640",
-  ink: "#E7E2D6", muted: "#8B94A0", faint: "#5B6470",
+  ink: "#E7E2D6", muted: "#8B94A0",
+  faint: "#78818E",     /* 淡墨（字）：原 #5B6470 對頁底僅 2.97:1，同色相提明度至 4.5:1（2026-11-26） */
+  faintLine: "#5B6470", /* 淡墨之線、點（年表同年之菱、輿圖空點、邊界虛線）：不作字，留原色 */
   accent: "#B5442D", /* 全站高亮：橘红 */
   seal: "#A13B4B",   /* 品評印章：復古胭脂紅，別於高亮橘紅與天策暗紅 */
-  onAccent: "#E7E2D6", /* 高亮底、印底上的字 */
+  /* 印紅作字，深底上提不得（提亮即發粉發橘；此深之紅縱在純黑上亦只到 3.4:1），故改換載體、印紅不動：
+     有框之標籤（作者按、待核、余波）框留印紅、字用次墨；「卷首」反白作朱印；無框之印紅字照舊 */
+  sealTagInk: "#8B94A0",  /* 印紅框標籤之字：同 muted（muted 若改，此處隨改） */
+  sealBtnInk: "#EEE9DD",  /* 「卷首」朱印之字（同 onAccent） */
+  onAccent: "#EEE9DD", /* 高亮底、印底上的字：原 #E7E2D6 對高亮底 4.24:1，略提至 4.5:1 */
   neutral: "#3A424D",  /* 門派未標之類的中性條 */
   onBar: "#15181D",    /* 編制圖實授色帶上的字 */
   river: "#5B7A93",    /* 輿圖河道 */
@@ -39,12 +45,15 @@ const NIGHT = {
   xWashLift: "0 8px 24px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.045)",
   xScrollThumb: "#5B6470", xScrollThumbHi: "#788493", xScrollTrack: "#171B21",
   xScrollTrackSoft: "rgba(255,255,255,0.035)",
+  xSealBtnBg: "#A13B4B", /* 「卷首」朱印之底（同 seal） */
 };
 const PAPER = {
   bg: "#F1E9DA", panel: "#F8F3E8", panelHi: "#F8EAD4", line: "#D6C4A8",
   ink: "#2D221A", muted: "#6E5D4D", faint: "#958370",
+  faintLine: "#958370",
   accent: "#8B401E", /* 焦糖栗：取樣實色 #7B3C1B 略提一分明度，作高亮不致發悶 */
   seal: "#A13B4B",   /* 胭脂印不換：紙上鈐朱，本是原物 */
+  sealTagInk: "#A13B4B", sealBtnInk: "#A13B4B", /* 紙上印紅作字本已達標，標籤、卷首照舊紅框紅字 */
   onAccent: "#F6EFE2",
   neutral: "#A7A39D",
   onBar: "#2D221A",
@@ -58,6 +67,7 @@ const PAPER = {
   xWashLift: "0 6px 18px rgba(92,62,32,0.12), 0 0 0 1px rgba(188,150,116,0.28)",
   xScrollThumb: "#C9B394", xScrollThumbHi: "#BC9674", xScrollTrack: "#EAE0CD",
   xScrollTrackSoft: "rgba(120,90,60,0.06)",
+  xSealBtnBg: "transparent",
 };
 export const SKINS = { night: NIGHT, paper: PAPER };
 export const SKIN_KEY = "cy-skin";
