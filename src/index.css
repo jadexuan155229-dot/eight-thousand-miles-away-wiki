@@ -1273,6 +1273,27 @@ html[data-skin="paper"] .tl-sec-head[data-stuck] {
   background-blend-mode: multiply, multiply, multiply;
   box-shadow: 0 6px 10px -9px rgba(92, 62, 32, 0.35);
 }
+/* 年表段名按鈕（wiki.jsx Timeline）：只為鍵盤展收，外觀與舊時的 span 一般無二——
+   樣式全歸零，字族、字號、字色由內聯給出；指標隨段首（空段為預設箭頭）。焦點框取全站高亮色 */
+.tl-sec-toggle {
+  all: unset;
+  cursor: inherit;
+}
+.tl-sec-toggle:focus-visible {
+  outline: 1px solid var(--sec-focus);
+  outline-offset: 3px;
+}
+
+/* 檔案彈窗正文層（wiki.jsx DetailPanel）：開窗時程式移焦於此，以便方向鍵捲讀；此層即整個窗體，不另描框 */
+.char-modal-scroll:focus {
+  outline: none;
+}
+
+/* 人物小卡（wiki.jsx CharCard）：鍵盤聚焦時描一道內框，不出卡緣、不壓鄰卡；滑鼠點選不出框（:focus-visible 之常例） */
+.char-card:focus-visible {
+  outline: 2px solid var(--card-focus);
+  outline-offset: -2px;
+}
 
 /* 門派底紋：玄墨下是暗底上的淺灰剪影，素紙下改作淡墨印痕。
    走 mask 的諸派共用一色；圖片直出的四派（岑荃、藥宗、段氏、唐軍）另議，

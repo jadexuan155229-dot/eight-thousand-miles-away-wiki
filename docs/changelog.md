@@ -2,6 +2,36 @@
 
 ## 2026-11-26
 
+### vite 升 8.1.7；删 Vite 模板遗留图
+
+- **缘起**：`npm audit` 报高危 4 项，皆出自 vite 8.1.4 一支（vite 自身在 8.0.0–8.1.5 之列，连带 postcss、nanoid、source-map-js）。只涉构建工具，线上静态站无风险，但修起来只是一条命令。
+- **改法**：vite 升到 8.1.7（`^8.1.7`），postcss 8.5.33、nanoid 3.3.20、source-map-js 1.2.4 随锁文件更新；`npm audit` 0 项。`npm audit fix` 默认会一路抬到 8.4.0（rolldown 也随之换代），跨三个小版本，不取，只取补丁版。另删 `src/assets/` 下 `hero.png`、`react.svg`、`vite.svg`：建项目时 Vite 模板所带，全库无一处引用，也不进构建。
+- 验证：同一份源码分别以 vite 8.1.4、8.1.7 构建，`dist/` 167 个文件逐字节相同；check-data 无错；oxlint 12；font-chars 无须补字；check:history 全合。
+
+### 部署工作流：诸 action 升到 Node 24 版，发布前先过 check-data
+
+- **缘起**：`checks.yml` 11-25 已升到 `checkout@v5`、`setup-node@v5`，`deploy.yml` 漏了，仍是 v4；另三个 Pages action（`configure-pages@v5`、`upload-pages-artifact@v3`、`deploy-pages@v4`）也是 Node 20 版。GitHub 已于 2026 年 9 月停供 Node 20，这几个现在是被强制改用 Node 24 跑的，迟早出事。部署此前也不查资料，只 `npm ci` 加 `build`：资料有错（悬空的人物 id 之类）照样构建成功、照样上线。
+- **改法**：`checkout@v5`、`setup-node@v5`（与 checks.yml 同）、`configure-pages@v6`、`upload-pages-artifact@v5`、`deploy-pages@v5`，皆以 Node 24 运行。`upload-pages-artifact` 自 v4 起不收点开头的文件，`dist/` 里本无此类。build 前加一步 `npm run -s check-data`：有错即不发布，线上保持上一版；只有警告照常发布。代码、字体子集、前进后退三项仍只在 checks.yml 里跑、不挡部署（`check:history` 要起浏览器，偶有不稳，不宜挡发布）。README「检查与构建」、checks.yml 头注随改。
+- 验证：YAML 解析无误；本地在 `wiki-data.js` 临时塞一个不存在的人物 id，`check-data` 退出码 1（试后复原）。部署本身要合并到 main 后才会跑，届时看 Actions 页首次部署是否绿。
+
+### 档案弹窗：对话框语义与焦点
+
+- **缘起**：档案弹窗无 `role="dialog"`，读屏只当是页面末尾多出一段，axe 报窗内 23–24 处「不在地标内」（`region`）；开窗后焦点仍留在 body，键盘读者须从页首 Tab 进窗，关窗后焦点也不回原卡。文库批注卡原已是 `role="dialog"`。
+- **改法**（`wiki.jsx` DetailPanel）：
+  - 窗体加 `role="dialog"`、`aria-modal="true"`、`aria-labelledby`（指向姓名）。
+  - 开窗时记下触发之物（多为人物小卡），把焦点移进正文层（`.char-modal-scroll`，`tabIndex=-1`，方向键、翻页键即可卷读；此层即整个窗体，不另描框）；关窗（×、Esc、点背景）交还触发之物。窗内点关系、同事换人不算开合，触发之物照旧。自图上之星、深链直达者无可交还，关后焦点留在页面。
+  - Tab 不出窗：末一可聚焦之物再 Tab 回首一，首一（或正文层）Shift+Tab 回末一。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；build 通过；check:history 全合。中英各：Enter 开闵方城，`aria-labelledby` 读出姓名，焦点在正文层，PageDown 卷动正文 0 → 677、背后页面不动；连按 Tab 在窗内回环（68 个可聚焦之物，出窗 0 次），Shift+Tab 自首回末；窗内换到关山再 Esc，焦点回闵方城小卡；点背景关闭同；鼠标开关后焦点回卡而不出框。开窗时 axe `region` 由 23（英文 24）降到 0（英文余 1，为页头英文版说明，与弹窗无关）、`aria-dialog-name` 0。逐像素比对同上条（48 张，最大差 1 灰阶）。
+
+### 人物小卡、年表段首可用键盘
+
+- **缘起**：逐页查「可点而键盘够不着」之物（axe 不报此类）：人物档案页 124 张小卡是 `div` 加 `onClick`，不能聚焦——只用键盘或读屏的读者打不开任何一份档案；年表 13 个段首同病，展不开。编制、余波、文库三页原已全数可达。
+- **改法**：
+  - 小卡加 `role="button"`、`tabIndex=0`，Enter／空格开档案（空格挡下页面滚动）。不改作 `<button>`：卡内是整段排版，按钮的预设样式会动版面。键盘聚焦时描一道 2px 内框（全站高亮色，`outline-offset: -2px`，不出卡缘、不压邻卡）；鼠标点选不出框。
+  - 年表段名由 `<span>` 改作原生 `<button>`（`.tl-sec-toggle`，样式以 `all: unset` 全归零，字族、字号、字色照旧内联），带 `aria-expanded`。按钮自身不挂 `onClick`：键盘触发的 click 冒泡到段首原有的 `onClick`，鼠标点段首任一处与键盘同走一条路，不双触。空段 `tabIndex=-1`、`aria-disabled`，不入 Tab 序；段首箭头 `aria-hidden`。
+  - 舆图、行星图、群像图上的点仍不可聚焦：信息在档案里都有，另案。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；build 通过；check:history 全合。中英各以键盘走一遍：页首连按 Tab 到首张小卡（中 46 下、英 48 下），focus-visible 成立，再 Tab 到下一张；Enter、空格开档案，空格不滚页；鼠标点卡照常开、不出框；年表段名 Enter 展开／收起、空格展开，鼠标点段名与点段首他处各切一次（不双触），空段不入 Tab 序；axe `nested-interactive`、`button-name` 0。与 main 逐像素比对（中英 × 玄墨、素纸 × 桌面 1440、手机 390 × 档案、年表〔展开一段〕、闵方城与吕定仪弹窗、年表上的弹窗、编制，共 48 张整页截图）：最大差 1 灰阶。
+
 ### 凌雪阁门派色调回红调：彼岸花红
 
 - **缘起**：作者看色卡，嫌玄墨下凌雪阁紫调太浓。原色凝血玄绛 #811A50 色相 354°（OKLCH），已过正红往洋红、紫一侧；此前为与天策拉开，由 #7D2440（5°）再往冷挪过一次。凌雪阁本是红调门派，服饰饰品有彼岸花之色，作者要调回红调、与现有诸红分得开即可。

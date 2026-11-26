@@ -1,5 +1,8 @@
 # 部署到 GitHub Pages：push 到 main 即自动 build 并发布 dist。
 # 站点在项目子路径下（<user>.github.io/eight-thousand-miles-away-wiki/），base 已在 vite.config.js 配好。
+# 发布前先跑 check-data：资料有错（悬空的人物 id、坏掉的关系之类）即不发布，线上保持上一版。
+# 其余检查（代码、字体子集、前进后退）只在 checks.yml 里跑，不挡部署。
+# 诸 action 皆用以 Node 24 运行之版本（GitHub 已于 2026 年 9 月停供 Node 20）。
 name: Deploy to GitHub Pages
 
 on:
@@ -22,15 +25,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: 资料（check-data，有错即不发布）
+        run: npm run -s check-data
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5 # v4 起不收点开头的文件；dist 里本无此类
         with:
           path: dist
 
@@ -42,4 +47,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
