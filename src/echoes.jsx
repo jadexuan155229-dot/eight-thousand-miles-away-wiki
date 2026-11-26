@@ -170,7 +170,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
     <div lang={locale === "en" ? "en" : "zh"}>
       <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12, marginBottom: 6 }}>
         <h2 style={{ fontFamily: "HuiwenZhengKai", fontSize: 22, fontWeight: 700, letterSpacing: "0.08em", margin: 0 }}>{t("余波")}</h2>
-        <span title={t("層註")} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.seal, border: `1px solid ${T.seal}88`, padding: "0 7px", borderRadius: 3, letterSpacing: "0.15em" }}>{t("作者按")}</span>
+        <span title={t("層註")} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.sealTagInk, border: `1px solid ${T.seal}88`, padding: "0 7px", borderRadius: 3, letterSpacing: "0.15em" }}>{t("作者按")}</span>
       </div>
       <p style={{ fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.muted, lineHeight: 1.9, maxWidth: 700, margin: "0 0 20px" }}>
         {locale === "en" ? t("導語") : "几场笼罩多人的事件。每个人按与它的距离安放，各以自己的方式记住它——点一个名字，看此事在其后岁月里怎样重新浮出。本层为作者按，与事实层分声。"}
@@ -398,7 +398,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
               {selected.draft && (
-                <span title={locale === "en" ? t("待核註") : "起草待核：作者尚未逐行核定"} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.seal, border: `1px dashed ${T.seal}88`, padding: "0 7px", borderRadius: 3, letterSpacing: "0.15em" }}>{t("待核")}</span>
+                <span title={locale === "en" ? t("待核註") : "起草待核：作者尚未逐行核定"} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.sealTagInk, border: `1px dashed ${T.seal}88`, padding: "0 7px", borderRadius: 3, letterSpacing: "0.15em" }}>{t("待核")}</span>
               )}
               <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted }}>
                 {bandLabel(locale, shock.id, selected.band, band ? band[1] : selected.stance)}
