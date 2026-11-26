@@ -145,7 +145,7 @@ def ranges(cps):
 def subset_to(src, unicodes, out_path, flavor):
     opts = subset.Options()
     opts.flavor = flavor
-    font = TTFont(src)
+    font = TTFont(src, recalcTimestamp=False)  # 不改 head 之修改时间：同样的字裁出同样的文件，重跑不生差异
     sub = subset.Subsetter(options=opts)
     sub.populate(unicodes=unicodes)
     sub.subset(font)
