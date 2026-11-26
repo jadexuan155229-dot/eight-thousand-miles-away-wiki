@@ -296,12 +296,20 @@ function CharCard({ c, onOpen }) {
   const main = c.belong[0];
   const evCount = EVENTS.filter((e) => e.chars.includes(c.id)).length;
   const tt = isTextureTest(c);
+  /* 鍵盤可達：Tab 聚焦、Enter／空格開檔案（空格須擋下頁面滾動）。不改作 <button>：
+     卡內是整段排版，按鈕的預設樣式與行內格式化上下文會動到版面；焦點框見 index.css .char-card */
+  const onKey = (e) => {
+    if (e.target !== e.currentTarget) return;
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(c); }
+  };
   return (
     <div
+      role="button" tabIndex={0}
       onClick={() => onOpen(c)}
-      className={`cursor-pointer flex${tt ? " texture-test-sm" : ""}${en ? " profile-en" : ""}`}
+      onKeyDown={onKey}
+      className={`char-card cursor-pointer flex${tt ? " texture-test-sm" : ""}${en ? " profile-en" : ""}`}
       lang={en ? "en" : "zh"}
-      style={{ background: T.panel, borderTop: `3px solid ${fc(main)}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `1px solid ${T.line}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", ...(tt ? ttVars(main) : null) }}
+      style={{ background: T.panel, borderTop: `3px solid ${fc(main)}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `1px solid ${T.line}`, padding: "16px 14px 14px 16px", gap: 12, transition: "background .15s", fontFamily: "HuiwenZhengKai", "--card-focus": T.accent, ...(tt ? ttVars(main) : null) }}
       onMouseEnter={(e) => (e.currentTarget.style.background = T.panelHi)}
       onMouseLeave={(e) => (e.currentTarget.style.background = T.panel)}
     >
@@ -1273,8 +1281,12 @@ function Timeline({ onOpenChar, onOpenEcho }) {
                     scrollMarginTop: narrow ? 46 : 4,
                   }}>
                   <div className="flex items-baseline flex-wrap" style={{ gap: 10 }}>
-                    <span style={{ color: T.accent, fontSize: 12, width: 13, display: "inline-block" }}>{open ? "▾" : "▸"}</span>
-                    <span style={{ fontFamily: "HuiwenMingChao", fontSize: 15.5, color: T.ink }}>{secLabel(locale, s)}</span>
+                    <span aria-hidden="true" style={{ color: T.accent, fontSize: 12, width: 13, display: "inline-block" }}>{open ? "▾" : "▸"}</span>
+                    {/* 段名作原生按鈕供鍵盤展收：自身不掛 onClick，Enter／空格所生之 click 冒泡到段首 div 的 onClick，
+                        故滑鼠點段首任一處與鍵盤觸發同走一條路、不會雙觸。樣式全歸零（index.css .tl-sec-toggle），版面不動 */}
+                    <button type="button" className="tl-sec-toggle" aria-expanded={open}
+                      tabIndex={empty ? -1 : undefined} aria-disabled={empty || undefined}
+                      style={{ fontFamily: "HuiwenMingChao", fontSize: 15.5, color: T.ink, "--sec-focus": T.accent }}>{secLabel(locale, s)}</button>
                     <span style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.muted }}>
                       {secYears(s)} · {empty ? t("無事") : evCount(locale, t, s.evs.length)}
                     </span>
