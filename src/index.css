@@ -1,20 +1,5 @@
-@font-face {
-  font-family: "HuiwenZhengKai";
-  src: url("./assets/fonts/HuiwenZhengKai.subset.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "HuiwenMingChao";
-  src: url("./assets/fonts/HuiwenMingChao.subset.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "JingHuaLaoSong";
-  src: url("./assets/fonts/JingHuaLaoSong.subset.woff2") format("woff2");
-  font-display: swap;
-}
+/* 汇文正楷、汇文明朝、京华老宋三枚字体的 @font-face 不在此：按字频切片后共八十余条、百余 KB，
+   另成一表 assets/fonts/cjk-faces.css（scripts/subset-fonts.py 生成），由 main.jsx 动态载入，不挡首屏 */
 
 /* 英文襯線（自托管，OFL，見 assets/fonts/Literata-OFL.txt）：只帶拉丁字，約五十 KB。
    作英文字族棧中系統字之後、Georgia／Times 之前的保底——Mac 仍見 Iowan、Palatino、Baskerville，
