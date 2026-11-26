@@ -19,6 +19,7 @@ const en = {
   關閉檔案: 'Close profile', 站內導航: 'Main navigation', 關閉: 'Close',
   關於: 'About',
   初來者请看: 'New here? Read about the work and its world →',
+  年份: 'Year', // 群像、輿圖年份滑杆之讀屏名
   英文版說明短: 'English edition in progress.', 詳情: 'Details', // 手機上收起的一句與展開鈕
   檔案一覽: 'Profiles', 編制: 'Posts',
   門派: 'Faction', 全部: 'All', 待核: 'Draft',

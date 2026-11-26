@@ -2434,7 +2434,9 @@ function Community({ onOpenChar }) {
         {PHASES.map(([label, y]) => (
           <Chip key={label} active={Y === y} onClick={() => setY(y)} label={t(label)} />
         ))}
+        {/* 讀屏：無標籤時只念「滑杆 765」；補名「年份」，值念作「765（永泰元年）」 */}
         <input type="range" min={730} max={765} value={Y} onChange={(e) => setY(+e.target.value)}
+          aria-label={t("年份")} aria-valuetext={en ? `${Y} (${englishEraOf(Y)})` : `${Y}（${eraOf(Y)}）`}
           style={{ flex: 1, minWidth: 180, accentColor: T.accent }} />
         <span style={{ fontFamily: gUI, fontSize: 16, color: T.accent, minWidth: 170, textAlign: "right" }}>
           {en ? `${Y} (${englishEraOf(Y)})` : `${Y}（${eraOf(Y)}）`}
@@ -2949,6 +2951,7 @@ function GeoMap({ onOpenChar }) {
         {tmode !== "all" && (
           <>
             <input type="range" min={YR.min} max={YR.max} value={tyear} onChange={(e) => setTyear(+e.target.value)}
+              aria-label={t("年份")} aria-valuetext={`${tyear}${eraOf(tyear) ? (en ? ` (${englishEraOf(tyear)})` : `（${eraOf(tyear)}）`) : ""}`}
               style={{ width: 280, accentColor: T.accent, verticalAlign: "middle" }} />
             <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: T.ink }}>
               {tyear}
