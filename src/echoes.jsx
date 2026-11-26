@@ -4,8 +4,8 @@ import { SHOCKS, ECHOES } from "./echoes-data";
 import { T, tone } from "./theme";
 
 const fc = (f) => tone(fcRaw(f)); /* 門派色隨膚調，見 theme.js tone */
-import { characterTranslation } from "./i18n/characters.en";
-import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi, stanceText, stanceNoteText, arcNoteText } from "./i18n/echoes.en";
+import { charEn as characterTranslation } from "./i18n/content";
+import { shockTitle, shockGist, shockAxis, bandLabel, modeText, echoUi, stanceText, stanceNoteText, arcNoteText } from "./i18n/echoes-tx";
 import { Tx } from "./i18n/zh";
 
 /* ============================================================

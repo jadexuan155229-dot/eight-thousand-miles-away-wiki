@@ -49,6 +49,27 @@ function novelMentions() {
   }
 }
 
+// 英文頁預載英文大表塊（src/i18n/en-bulk.js）：英文大表另成一塊、只在英文界面動態載入，
+// 但直達英文頁時須等它載完才繪製；不預載則主包下完、執行到 import() 才去取，兩段串行。
+// 構建時找出該塊之檔名，在 en/index.html 頭部補一條 modulepreload，與主包並行下載。中文頁不加。
+function preloadEnBulk() {
+  let base = '/'
+  return {
+    name: 'preload-en-bulk',
+    apply: 'build',
+    configResolved(c) { base = c.base },
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (!ctx.bundle || !/[\\/]en[\\/]index\.html$/.test(ctx.filename)) return
+        const chunk = Object.values(ctx.bundle).find((c) => c.type === 'chunk' && c.facadeModuleId?.endsWith('/src/i18n/en-bulk-data.js'))
+        if (!chunk) return
+        return [{ tag: 'link', attrs: { rel: 'modulepreload', crossorigin: true, href: base + chunk.fileName }, injectTo: 'head' }]
+      },
+    },
+  }
+}
+
 // https://vite.dev/config/
 // base：部署到 GitHub Pages 项目站（<user>.github.io/eight-thousand-miles-away-wiki/）时，
 // 站点在子路径下，资产须带此前缀，否则从根请求全部 404。
@@ -56,7 +77,7 @@ function novelMentions() {
 // （見 src/i18n/use-language.js）。英文另立一頁，是為了讓鏈接預覽讀到英文 meta 與 lang。
 export default defineConfig({
   base: '/eight-thousand-miles-away-wiki/',
-  plugins: [react(), novelMentions()],
+  plugins: [react(), novelMentions(), preloadEnBulk()],
   build: {
     rollupOptions: {
       input: {

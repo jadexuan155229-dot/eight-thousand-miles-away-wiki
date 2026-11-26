@@ -1,6 +1,17 @@
 # 更新记录
 
-## 2026-11-25
+## 2026-11-26
+
+### 英文大表拆出主包，只在英文界面载入
+
+- **缘起**：主包 1.74 MB（gzip 696 KB），其中英文覆盖层五张大表——档案 `characters.en.js` 279 KB、年表 `events.en.js` 404 KB、余波 `echoes.en.js` 114 KB、任期 `tenures.en.js` 30 KB、编制 `posts.en.js` 21 KB——中文读者也要全数下载、解析。慢 4G 手机上首屏约 4.7 秒，卡在 JS。
+- **改法**：
+  - 新增 `src/i18n/en-bulk.js`：五表以 `let` 导出（初为空表），`loadEnBulk()` 动态载入 `en-bulk-data.js`（转导五个 `.en.js`），载入后就地换值。ES 模块导出是活绑定，`content.js`、`posts-content.js` 诸查表函数照旧直接取用，调用处一处不改；未载时查表一律回落中文。
+  - `echoes.en.js` 只存数据，查表函数移到 `echoes-tx.js`（读活绑定）；`characters.en.js` 的 `characterTranslation` 删去，余波页改用同义的 `charEn`。`check-data` 等脚本照旧直读各 `.en.js`，不受影响。
+  - 直达英文页：`main.jsx` 等此块载完才绘制，免先闪一屏回落的中文；`vite.config.js` 加一个小插件，构建时只在 `en/index.html` 头部补该块的 `modulepreload`，与主包并行下载。站内由中文换英文、或前进后退回到英文条目：`use-language.js` 先载此块，载完才换（其间界面、网址都还是中文）；载不下来也照换，逐处回落中文。
+  - 英文版说明的计数（`coverage`）原在 `wiki.jsx` 模块载入时算，改为绘制时算、表载后存起。
+- **量**：主包 1745 → 935 KB（gzip 696 → 353 KB），英文块 811 KB（gzip 343 KB）。慢 4G 手机（1.6 Mbps、150 ms、CPU 降速 4 倍）：中文卷首 FCP 4.7 → 2.8 秒、中文档案 4.6 → 3.0 秒；英文卷首 4.7 → 4.8 秒、英文档案 4.8 → 4.9 秒（字节不变，并行下载，持平）。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；check:history 全合；中文页不请求英文块；直达英文档案弹窗首次绘制即英文；中文换英文后弹窗为英文、换回中文正常；中英各页点击扫一遍无报错；与 main 截图逐像素比对（中文档案、弹窗、年表、编制、余波，英文档案、弹窗、年表、编制、余波、舆图、About）：差异逾 40 灰阶之像素 0。
 
 ### 加检查工作流（CI）
 

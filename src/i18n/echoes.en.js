@@ -981,19 +981,4 @@ export const arcNotesEn = {
   "梦里长城圮塌：「以后的人，找不到好石头了吗？」——「就是这样的赤诚和英勇，使得世上有一日不必再有长城。」（《塞上蕊》）": "In the dream the Great Wall fallen in: “Can’t the people who come after find good stone any more?” — “It is just such sincerity and courage that will one day mean the world needs no Great Wall.”",
 };
 
-const look = (map) => (locale, zh) => {
-  if (!zh || locale !== "en") return [zh, false];
-  const e = map[zh];
-  return e == null || e === "" ? [zh, true] : [e, false];
-};
-/* 皆回 [文字, 是否回落]，可直接交 <Tx> */
-export const stanceText = look(stancesEn);
-export const stanceNoteText = look(stanceNotesEn);
-export const arcNoteText = look(arcNotesEn);
-
-export const shockTitle = (locale, s) => locale === "en" ? shocksEn[s.id]?.title ?? s.title : s.title;
-export const shockGist = (locale, s) => locale === "en" ? shocksEn[s.id]?.gist ?? s.gist : s.gist;
-export const shockAxis = (locale, s) => locale === "en" ? shocksEn[s.id]?.axis ?? s.axis : s.axis;
-export const bandLabel = (locale, shockId, key, zh) => locale === "en" ? bandsEn[shockId]?.[key] ?? zh : zh;
-export const modeText = (locale, mode) => locale === "en" ? echoModesEn[mode] ?? mode : mode;
-export const echoUi = (locale, key) => locale === "en" ? echoUiEn[key] ?? key : key;
+/* 查表函數在 echoes-tx.js（讀 en-bulk.js 懶載之表）：本檔只存數據，僅經 en-bulk-data.js 進英文塊 */

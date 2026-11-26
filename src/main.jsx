@@ -2,6 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { readLanguage } from './i18n/use-language'
+import { loadEnBulk } from './i18n/en-bulk'
 
 /* 開發期錯誤浮層：手機上無從開控制台，未捕獲之錯只見白屏。
    此層把錯誤與堆棧直接印在頁面上，便於真機點檢。僅 DEV，不入打包。 */
@@ -37,8 +39,11 @@ if (import.meta.env.DEV) {
   )
 }
 
-createRoot(document.getElementById('root')).render(
+const start = () => createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
   </StrictMode>,
 )
+/* 英文頁：先等英文大表載完再繪製（en-bulk.js），免先閃一屏回落的中文；載不下來也照常繪製（逐處回落中文） */
+if (readLanguage() === 'en') loadEnBulk().then(start, start)
+else start()

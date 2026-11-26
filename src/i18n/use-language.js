@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { setLatinFaces } from './latin-faces';
+import { enBulkReady, loadEnBulk } from './en-bulk';
 
 /* ============================================================
    語言由網址定（use-language.js）
@@ -34,15 +35,21 @@ export function languageHref(locale) {
 }
 
 export function useLanguage() {
-  const [locale, setLocale] = useState(readLanguage);
+  const [locale, setRaw] = useState(readLanguage);
+  /* 換到英文須先載英文大表（en-bulk.js，首次約二三百 KB）：載完才換，其間界面、網址都還是中文，
+     三者始終一致；載不下來也照換（逐處回落中文）。換回中文不必等 */
+  const setLocale = useCallback((next) => {
+    if (next === 'en' && !enBulkReady) loadEnBulk().then(() => setRaw('en'), () => setRaw('en'));
+    else setRaw(next);
+  }, []);
   /* 拉丁字表須在繪製前就位，免英文頁先閃一下中文字體的拉丁字 */
   useLayoutEffect(() => { setLatinFaces(locale === 'en'); }, [locale]);
   /* 前進後退：網址為準 */
   useEffect(() => {
-    const onPop = () => setLocale(readLanguage());
+    const onPop = () => setLocale(readLanguage()); /* 退回英文條目而表未載：載完才換，其間短暫是英文網址、中文界面 */
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
-  }, []);
+  }, [setLocale]); /* setLocale 恆定（useCallback 依赖為空），此效應只掛一次 */
   useEffect(() => {
     const lang = locale === 'en' ? 'en' : 'zh';
     document.documentElement.lang = lang;

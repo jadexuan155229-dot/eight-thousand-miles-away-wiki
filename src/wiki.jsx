@@ -17,13 +17,14 @@ import About from "./about";
 import { grantsOf, tenureFac, tenuresOf } from "./posts-data";
 import { tenureTitleTx, tenureNoteTx, grantTx, tenureSpanText } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
-import { shockTitle, modeText } from "./i18n/echoes.en";
+import { shockTitle, modeText } from "./i18n/echoes-tx";
 import { useLocale, useSetLocale, useT } from "./i18n/locale";
 import { eventCountText, libraryCountText } from "./i18n/ui";
 import { charEn, charName, hasEnName, charField, profileRow, listField, facName, placeName, relName, eventTitle, novelTitle, coverage, nameItems, nameItemsEn, namesText, hasCourtesyLine, enMatcher } from "./i18n/content";
 import { placeLabelSideEn } from "./i18n/places.en";
 import { Zh, Tx } from "./i18n/zh";
 import { TIER1 } from "./i18n/tiers";
+import { enBulkReady } from "./i18n/en-bulk";
 import { CourtesyLine } from "./i18n/names";
 
 /* ============================================================
@@ -111,7 +112,9 @@ const CENTERS_META = [
 ];
 const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
 /* 英译覆蓋數：覆蓋層為靜態模組，算一次即可（頁頭英文版說明用） */
-const COVERAGE = coverage(CHARACTERS, EVENTS);
+/* 英文版說明之計數：英文大表懶載（en-bulk.js），故不在模塊載入時算；英文界面繪製時表已載，算一次存起 */
+let coverageMemo = null;
+const coverageNow = () => coverageMemo || (enBulkReady ? (coverageMemo = coverage(CHARACTERS, EVENTS)) : coverage(CHARACTERS, EVENTS));
 const sortEvents = (a, b) =>
   a.year - b.year || (a.month ?? 0) - (b.month ?? 0) || (a.seq ?? "").localeCompare(b.seq ?? "");
 
@@ -3342,7 +3345,7 @@ export default function Wiki({ onOpenLanding }) {
       {/* 英文版進度說明：數目由覆蓋層實算（i18n/content.js coverage），译一人、译一事，此處自動更新 */}
       {/* 手機上英文導航已折三行，說明再佔四五行，正文要到半屏以下才開始：窄屏（< 600）只出一句，點「Details」展開全文 */}
       {en && <p className="translation-scope" lang="en" style={{ color: T.muted }}>
-        {phoneHead && !scopeOpen ? t("英文版說明短") : t("英文版說明", COVERAGE)}
+        {phoneHead && !scopeOpen ? t("英文版說明短") : t("英文版說明", coverageNow())}
         {tab !== "about" && (!phoneHead || scopeOpen) && <>{" "}<button type="button" onClick={() => setTab("about")} style={inlineLink}>{t("初來者请看")}</button></>}
         {phoneHead && <>{scopeOpen ? " · " : " "}<button type="button" aria-expanded={scopeOpen} onClick={() => setScopeOpen((o) => !o)} style={inlineLink}>{scopeOpen ? t("收起") : t("詳情")}</button></>}
       </p>}

@@ -35,7 +35,7 @@ npm run fonts
 
 ## 英文版
 
-英文在 <https://jadexuan155229-dot.github.io/eight-thousand-miles-away-wiki/en/>，语言由网址定。英文是叠在中文之上的覆盖层（`src/i18n/`），数据层一字不动，未译之处回落中文。分级、机制、待审清单见 [英文版说明](docs/english-edition.md)。
+英文在 <https://jadexuan155229-dot.github.io/eight-thousand-miles-away-wiki/en/>，语言由网址定。英文是叠在中文之上的覆盖层（`src/i18n/`），数据层一字不动，未译之处回落中文。覆盖层里的五张大表（档案、年表、余波、编制、任期，共八百余 KB）另成一块，只在英文界面才下载（`src/i18n/en-bulk.js`），中文读者不必下载。分级、机制、待审清单见 [英文版说明](docs/english-edition.md)。
 
 ```bash
 npm run i18n:stamp                         # 人物新译后盖戳（中文原文短哈希）
