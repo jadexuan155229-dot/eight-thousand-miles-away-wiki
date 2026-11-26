@@ -736,7 +736,8 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       style={{ fontSize: 12.5, fontFamily: "HuiwenZhengKai", color: T.ink, background: T.panelHi, border: `1px ${r.da ? "dashed" : "solid"} ${relColor(r.t)}88`, padding: "4px 10px", borderRadius: "3px", cursor: "pointer", textAlign: "left" }}>
                       <ChipName c={o} />
                       <span style={{ color: relColor(r.t), marginLeft: 8, fontSize: 11 }}>{en && /[\u4e00-\u9fff]/.test(relEn) ? <Zh>{relEn}</Zh> : relEn}</span>
-                      <span style={{ color: T.faint, marginLeft: 6, fontSize: 10.5 }}>
+                      {/* 關係鈕底為 panelHi，淡墨在此只 3.67:1，欲達 4.5:1 即與次墨同色——故直用次墨（2026-11-26） */}
+                      <span style={{ color: T.muted, marginLeft: 6, fontSize: 10.5 }}>
                         {r.y0 ?? (en ? "?" : "？")}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("殁后")}` : ""}
                       </span>
                     </button>

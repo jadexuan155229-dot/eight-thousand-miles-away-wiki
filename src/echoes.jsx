@@ -307,9 +307,9 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
                 <text x={it.dead ? 34 : 20} y={cy - 2} fontFamily="JingHuaLaoSong" fontSize="15" fill={on ? T.ink : T.muted}>{tr?.name || c.name}</text>
                 {/* 起草待核：行首姓名后一枚小标，与「作者定」之行区分 */}
                 {e.draft && (
-                  <text x={(it.dead ? 34 : 20) + textW(tr?.name || c.name, 15) + 8} y={cy - 3} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.seal} fillOpacity="0.85">{t("待核")}</text>
+                  <text x={(it.dead ? 34 : 20) + textW(tr?.name || c.name, 15) + 8} y={cy - 3} fontFamily="HuiwenZhengKai" fontSize="10" fill={T.seal}>{t("待核")}</text>
                 )}
-                <text x={it.dead ? 34 : 20} y={cy + 14} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={on ? T.ink : T.muted} fillOpacity={on ? 0.95 : 0.8}>{modeText(locale, e.mode)}</text>
+                <text x={it.dead ? 34 : 20} y={cy + 14} fontFamily="HuiwenZhengKai" fontSize="12.5" fill={on ? T.ink : T.muted} fillOpacity={on ? 0.95 : 1}>{modeText(locale, e.mode)}</text>
                 {/* 选中行：字直接落在点下 */}
                 {on && selLabels.labels.map((L, k) => {
                   const ly = it.y + ROW_H + 6 + L.lane * LANE_H + 9;
@@ -373,7 +373,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
               </g>
             );
           })()}
-          <text x={W - 12} y={H - 4} textAnchor="end" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint} fillOpacity="0.7">{shockAxis(locale, shock)}　↓</text>
+          <text x={W - 12} y={H - 4} textAnchor="end" fontFamily="HuiwenZhengKai" fontSize="10" fill={T.faint}>{shockAxis(locale, shock)}　↓</text>
         </svg>
       </div>
 
