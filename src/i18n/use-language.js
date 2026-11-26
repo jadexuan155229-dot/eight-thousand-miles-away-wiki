@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { setLatinFaces } from './latin-faces';
+import { enBulkReady, loadEnBulk } from './en-bulk';
 
 /* ============================================================
    語言由網址定（use-language.js）
@@ -34,15 +35,27 @@ export function languageHref(locale) {
 }
 
 export function useLanguage() {
-  const [locale, setLocale] = useState(readLanguage);
+  const [locale, setRaw] = useState(readLanguage);
+  /* 換到英文須先載英文大表（en-bulk.js，首次約二三百 KB）：載完才換，其間界面、網址都還是中文，
+     三者始終一致；載不下來也照換（逐處回落中文）。換回中文不必等。
+     want 記最後一次所求之語言：載入期間若又經菜單或後退換回中文，載完時已非所求，不再換成英文
+     （審查 P2：原先載完必換，會把已切回中文的界面翻成英文，語言同步又把網址改回 /en/） */
+  const want = useRef(locale);
+  const setLocale = useCallback((next) => {
+    want.current = next;
+    if (next === 'en' && !enBulkReady) {
+      const done = () => { if (want.current === 'en') setRaw('en'); };
+      loadEnBulk().then(done, done);
+    } else setRaw(next);
+  }, []);
   /* 拉丁字表須在繪製前就位，免英文頁先閃一下中文字體的拉丁字 */
   useLayoutEffect(() => { setLatinFaces(locale === 'en'); }, [locale]);
   /* 前進後退：網址為準 */
   useEffect(() => {
-    const onPop = () => setLocale(readLanguage());
+    const onPop = () => setLocale(readLanguage()); /* 退回英文條目而表未載：載完才換，其間短暫是英文網址、中文界面 */
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
-  }, []);
+  }, [setLocale]); /* setLocale 恆定（useCallback 依赖為空），此效應只掛一次 */
   useEffect(() => {
     const lang = locale === 'en' ? 'en' : 'zh';
     document.documentElement.lang = lang;

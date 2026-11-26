@@ -5,11 +5,11 @@
    回落之處在 HTML 中以 <Zh>（zh.jsx）包起，標 lang="zh"、class="zh-src"，
    英文字族覆寫不及之（見 index.css「英文界面」一節）。SVG 文字只回字串，不包。
    ============================================================ */
-import { charactersEn } from "./characters.en";
+/* 檔案、年表兩大表經 en-bulk.js 懶載（英文界面才下載）；門派、地名、關係、文庫四小表照舊隨主包 */
+import { charactersEn, eventsEn } from "./en-bulk";
 import { factionsEn } from "./factions.en";
 import { placesEn } from "./places.en";
 import { relationsEn } from "./relations.en";
-import { eventsEn } from "./events.en";
 import { novelEn } from "./novel.en";
 
 const EN = (locale) => locale === "en";

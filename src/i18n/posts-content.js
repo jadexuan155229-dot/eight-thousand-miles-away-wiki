@@ -1,5 +1,4 @@
-import { postsEn, groupsEn, ranksEn, marksEn, honoursEn } from "./posts.en";
-import { tenureNotesEn } from "./tenures.en";
+import { postsEn, groupsEn, ranksEn, marksEn, honoursEn, tenureNotesEn } from "./en-bulk"; /* 懶載，見 en-bulk.js */
 import { POST_FULL, tenureTitle, tenureSpan, grantLabel } from "../posts-data";
 
 /* ============================================================

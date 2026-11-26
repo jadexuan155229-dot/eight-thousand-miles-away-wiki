@@ -1,6 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import App from './App.jsx'
+import { readLanguage } from './i18n/use-language'
+import { loadEnBulk } from './i18n/en-bulk'
+
 /* 三枚中文字体按字频切片的 @font-face 表（百余 KB，见 scripts/subset-fonts.py）：动态载入，
    另成一个 CSS 块，不并入挡首屏的 index.css；页上文字照旧 font-display: swap，表到即按片下载 */
 import('./assets/fonts/cjk-faces.css').then(() => {
@@ -9,7 +13,6 @@ import('./assets/fonts/cjk-faces.css').then(() => {
   const el = document.getElementById('latin-faces')
   if (el) document.head.appendChild(el)
 })
-import App from './App.jsx'
 
 /* 開發期錯誤浮層：手機上無從開控制台，未捕獲之錯只見白屏。
    此層把錯誤與堆棧直接印在頁面上，便於真機點檢。僅 DEV，不入打包。 */
@@ -45,8 +48,11 @@ if (import.meta.env.DEV) {
   )
 }
 
-createRoot(document.getElementById('root')).render(
+const start = () => createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
   </StrictMode>,
 )
+/* 英文頁：先等英文大表載完再繪製（en-bulk.js），免先閃一屏回落的中文；載不下來也照常繪製（逐處回落中文） */
+if (readLanguage() === 'en') loadEnBulk().then(start, start)
+else start()

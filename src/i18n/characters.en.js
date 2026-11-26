@@ -1806,4 +1806,3 @@ export const charactersEn = {
     ],
   }, // 离朱
 };
-export const characterTranslation = (locale, id) => locale === 'en' ? charactersEn[id] ?? null : null;
