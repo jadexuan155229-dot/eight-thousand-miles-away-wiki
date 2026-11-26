@@ -2,6 +2,12 @@
 
 ## 2026-11-26
 
+### vite 升 8.1.7；删 Vite 模板遗留图
+
+- **缘起**：`npm audit` 报高危 4 项，皆出自 vite 8.1.4 一支（vite 自身在 8.0.0–8.1.5 之列，连带 postcss、nanoid、source-map-js）。只涉构建工具，线上静态站无风险，但修起来只是一条命令。
+- **改法**：vite 升到 8.1.7（`^8.1.7`），postcss 8.5.33、nanoid 3.3.20、source-map-js 1.2.4 随锁文件更新；`npm audit` 0 项。`npm audit fix` 默认会一路抬到 8.4.0（rolldown 也随之换代），跨三个小版本，不取，只取补丁版。另删 `src/assets/` 下 `hero.png`、`react.svg`、`vite.svg`：建项目时 Vite 模板所带，全库无一处引用，也不进构建。
+- 验证：同一份源码分别以 vite 8.1.4、8.1.7 构建，`dist/` 167 个文件逐字节相同；check-data 无错；oxlint 12；font-chars 无须补字；check:history 全合。
+
 ### 部署工作流：诸 action 升到 Node 24 版，发布前先过 check-data
 
 - **缘起**：`checks.yml` 11-25 已升到 `checkout@v5`、`setup-node@v5`，`deploy.yml` 漏了，仍是 v4；另三个 Pages action（`configure-pages@v5`、`upload-pages-artifact@v3`、`deploy-pages@v4`）也是 Node 20 版。GitHub 已于 2026 年 9 月停供 Node 20，这几个现在是被强制改用 Node 24 跑的，迟早出事。部署此前也不查资料，只 `npm ci` 加 `build`：资料有错（悬空的人物 id 之类）照样构建成功、照样上线。
