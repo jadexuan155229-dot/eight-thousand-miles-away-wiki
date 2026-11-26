@@ -1,6 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+/* 三枚中文字体按字频切片的 @font-face 表（百余 KB，见 scripts/subset-fonts.py）：动态载入，
+   另成一个 CSS 块，不并入挡首屏的 index.css；页上文字照旧 font-display: swap，表到即按片下载 */
+import('./assets/fonts/cjk-faces.css').then(() => {
+  /* 英文界面另有拉丁字面（i18n/latin-faces.js），须定义在此表之后方能优先；
+     表若晚到（开发服务器下即如此），把拉丁字面挪回最后 */
+  const el = document.getElementById('latin-faces')
+  if (el) document.head.appendChild(el)
+})
 import App from './App.jsx'
 
 /* 開發期錯誤浮層：手機上無從開控制台，未捕獲之錯只見白屏。

@@ -31,7 +31,14 @@ pip install fonttools brotli   # 首次
 npm run fonts
 ```
 
-它先把站内用字补进字符表，再从 git 历史取出完整字体、重裁三枚子集，然后提交字符表和 `src/assets/fonts/` 下变动的字体文件即可。
+它先把站内用字补进字符表，再从 git 历史取出完整字体、重裁三枚子集，然后提交字符表和 `src/assets/fonts/` 下变动的文件即可（约五分钟）。
+
+三枚字体按字频切成若干片（`src/assets/fonts/cjk/`，每枚 28 片上下），每片一条带 `unicode-range` 的 `@font-face`（`src/assets/fonts/cjk-faces.css`，脚本生成，勿手改），浏览器只下页上用到的那几片：中文版首访由 6.7 MB 字体降到 1 MB 上下。切法存于 `scripts/font-slices.json`；平常补字只追加到各字体的末片，已有各片不变。站上用字大变（比如新录大量文库正文）之后，可按实测用字整套重切：
+
+```bash
+node scripts/font-usage.js                   # 逐页打开站点，记三枚字体各在几页上用到哪些字（需本机 Chrome，约七分钟）
+python3 scripts/subset-fonts.py --reslice    # 据此整套重切
+```
 
 ## 英文版
 
