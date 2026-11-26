@@ -1284,6 +1284,11 @@ html[data-skin="paper"] .tl-sec-head[data-stuck] {
   outline-offset: 3px;
 }
 
+/* 檔案彈窗正文層（wiki.jsx DetailPanel）：開窗時程式移焦於此，以便方向鍵捲讀；此層即整個窗體，不另描框 */
+.char-modal-scroll:focus {
+  outline: none;
+}
+
 /* 人物小卡（wiki.jsx CharCard）：鍵盤聚焦時描一道內框，不出卡緣、不壓鄰卡；滑鼠點選不出框（:focus-visible 之常例） */
 .char-card:focus-visible {
   outline: 2px solid var(--card-focus);

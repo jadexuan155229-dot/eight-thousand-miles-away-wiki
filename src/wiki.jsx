@@ -401,6 +401,29 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [c, onClose]);
+  /* 焦點：開啟時記下觸發之物（多為人物小卡）、把焦點移進檔案正文（可滾之層，方向鍵、翻頁鍵即可捲讀）；
+     關閉時交還觸發之物。窗內換人（點關係、同事）不算開合，觸發之物照舊。
+     自圖上之星、深鏈直達者無可交還（觸發時焦點在 body），關後焦點留在頁面 */
+  const isOpen = !!c;
+  const dialogRef = useRef(null);
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    const a = document.activeElement;
+    const opener = a instanceof HTMLElement && a !== document.body ? a : null;
+    scrollRef.current?.focus({ preventScroll: true });
+    return () => { if (opener?.isConnected) opener.focus({ preventScroll: true }); };
+  }, [isOpen]);
+  /* Tab 不出窗：末一可聚焦之物再 Tab 回到首一，首一（或正文層）Shift+Tab 回到末一 */
+  const trapTab = (e) => {
+    if (e.key !== "Tab" || !dialogRef.current) return;
+    const items = [...dialogRef.current.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+      .filter((el) => el.getClientRects().length > 0);
+    if (items.length === 0) { e.preventDefault(); return; }
+    const first = items[0], last = items[items.length - 1], at = document.activeElement;
+    if (e.shiftKey && (at === first || at === scrollRef.current || !dialogRef.current.contains(at))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (at === last || !dialogRef.current.contains(at))) { e.preventDefault(); first.focus(); }
+  };
   /* 見於文庫：正文以本名精確計數（表字、別號短而易誤中，不入檢索）；
      僅列有命中之章。計數於構建期預算（見 vite.config.js 之 virtual:novel-mentions），
      故正文已切為懶加載塊、不入主包，此面板仍不需拉正文即秒出。
@@ -518,7 +541,8 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
   return (
     <div className="fixed inset-0 flex items-center justify-center" style={{ background: T.xBackdrop, zIndex: 50, padding: 20 }} onClick={() => { setShowAll(false); onClose(); }}>
       {/* 宣紙肌理試驗：範圍見上方 isTextureTest，樣式全在 index.css 同名段 */}
-      <div className={`${tt ? "texture-test" : ""}${en ? " profile-en" : ""}`} lang={en ? "en" : "zh"} onClick={(e) => e.stopPropagation()} style={{ ...(tt ? ttVars(c.belong[0]) : null), background: T.panel, border: `1px solid ${T.line}`, maxWidth: 700, width: "100%", maxHeight: "86vh", position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column" }}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="char-dialog-name" onKeyDown={trapTab}
+        className={`${tt ? "texture-test" : ""}${en ? " profile-en" : ""}`} lang={en ? "en" : "zh"} onClick={(e) => e.stopPropagation()} style={{ ...(tt ? ttVars(c.belong[0]) : null), background: T.panel, border: `1px solid ${T.line}`, maxWidth: 700, width: "100%", maxHeight: "86vh", position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column" }}>
         {factionMark && (
           <div className={`faction-watermark faction-watermark--${factionMark}`} aria-hidden="true">
             {/* 藥宗自定義灰度：feColorMatrix 藍通道負權重，使黃（低藍）亮於白（高藍），
@@ -532,7 +556,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             )}
           </div>
         )}
-        <div className="char-modal-scroll" style={{ overflowY: "auto", minHeight: 0, padding: "28px 32px 32px", position: "relative", zIndex: 1, fontFamily: "HuiwenZhengKai", "--profile-accent": profileAccent, "--profile-accent-soft": profileAccentSoft, "--profile-accent-hover": profileAccentHover }}>
+        <div ref={scrollRef} tabIndex={-1} className="char-modal-scroll" style={{ overflowY: "auto", minHeight: 0, padding: "28px 32px 32px", position: "relative", zIndex: 1, fontFamily: "HuiwenZhengKai", "--profile-accent": profileAccent, "--profile-accent-soft": profileAccentSoft, "--profile-accent-hover": profileAccentHover }}>
         {/* 人物檔案彈窗縱向滾動條深色化：僅作用於 .char-modal-scroll，不及全站；
             thumb 取門派派生色（--profile-accent-soft/hover，自容器內聯變量注入），track 維持深灰透明 */}
         <style>{`
@@ -556,7 +580,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
             金線漸變由 index.css 的「檔案行線」規則一併罩到它身上，不必在此重複一道；
             兩線相距僅三十餘像素，並出則刺目。馬翊、程凱等無稱號者，此線正補其位 */}
         <div className={`flex items-baseline flex-wrap profile-heading${tt && !c.epithet ? " tt-rule" : ""}`} style={{ gap: tt ? 14 : 12, paddingRight: 70 }}>
-          <span className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 30, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}><NameLine c={c} locale={locale} /></span>
+          <span id="char-dialog-name" className="profile-name" style={{ fontFamily: "HuiwenMingChao", fontSize: 30, color: T.ink, fontWeight: 400, fontSynthesis: "none" }}><NameLine c={c} locale={locale} /></span>
           {nameItems(c).length > 0 && hasCourtesyLine(locale, c) && <span className="profile-courtesy" style={{ fontFamily: "HuiwenMingChao", fontSize: 15, color: T.muted, marginLeft: tt ? 6 : 0 }}><CourtesyText c={c} /></span>}
           {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 13, color: T.faint }}>{tr?.hao ? `“${tr.hao}”` : <Zh>「{c.hao}」</Zh>}</span>}
         </div>
