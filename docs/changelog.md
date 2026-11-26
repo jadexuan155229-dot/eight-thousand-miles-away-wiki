@@ -2,6 +2,18 @@
 
 ## 2026-11-26
 
+### 英文版字体定为 Literata + Alegreya，各平台一致
+
+- **缘起**：英文界面的拉丁字原先先找读者本机字体——Mac 见 Iowan Old Style（档案弹窗正文见 Baskerville），Windows 见 Palatino Linotype，安卓、Linux 两样皆无，落到自托管的 Literata；导航与页头说明则先找 Georgia，卷首地图上的地名先找 Iowan、Palatino，再落 Georgia。同一页，各人所见不同。作者看过四套候选在真站上的对比截图，定 B 套。
+- **改法**：
+  - `src/i18n/latin-faces.js`：三枚中文字体之拉丁字面不再列本机字体（`local()`），一律自托管：正楷之位（卷首题名、页面大标题、节题、余波引言、About 正文、编制图人名）配 **Alegreya**；明朝、老宋之位（界面、按钮、图上标签、年表）配 **Literata**。
+  - 新增 `Alegreya-latin-400-normal.woff2`（23 KB）、`Alegreya-latin-ext-400-normal.woff2`（20 KB，带长音符之名才下）及 `Alegreya-OFL.txt`（取自 @fontsource/alegreya 5.3.0，OFL-1.1）。
+  - `index.css`：英文档案卡、弹窗正文、英文导航、页头说明四处字族栈去掉 Iowan、Palatino、Book Antiqua、Baskerville、Georgia、Times，直接用 `Literata EN`。档案卡这一路本是可变字重、带真斜体的 Literata EN，粗体、斜体照旧是真的；卡上称号（如 *The Golden Body of the Snow Ridge*）显示为 Literata 真斜体，比对比页里那版（机器倾斜）窄而秀。
+  - `landing.jsx`：卷首地图上的英文地名改用 `Literata EN`。画布不会自己触发字体下载，也不会在字到后换字，故画完之后再以 `document.fonts.load` 请三种字号，字到后重画一次。
+  - 粗体：三枚中文字体之拉丁字面仍不带字重描述符，粗体仍由浏览器合成。同族另立 `font-weight: 700` 一面实测会使粗体汉字找不到同重之面、落到系统黑体，故不可行；要真粗体须另起英文字族、改动各处内联字族，暂不做。
+- **量**：英文各页拉丁字下载 74–169 KB（年表、余波 74，舆图 116，卷首、群像、档案 169，About 94），各检一次，此后走缓存；中文界面不下载。原先在 Mac、Windows 上用本机字体，这些是新增；安卓、Linux 原已下载 Literata，只多 Alegreya 23 KB。
+- 验证：check-data 无错；oxlint 12（基线不变）；font-chars 无须补字；vite build 通过；check:history 全合。英文卷首、群像、档案、年表、编制、余波六处与对比页 B 套逐像素比对：年表、编制、余波差异 0，卷首差在地图地名（原为系统衬线，今为 Literata），群像、档案差在称号（真斜体）。地名重画：Literata 人为延迟 5 秒，字到后画布确有更新。中文档案、群像、年表、编制、余波、About 与 main 比对：差异最大 2 灰阶，肉眼无别。
+
 ### 英文大表拆出主包，只在英文界面载入
 
 - **缘起**：主包 1.74 MB（gzip 696 KB），其中英文覆盖层五张大表——档案 `characters.en.js` 279 KB、年表 `events.en.js` 404 KB、余波 `echoes.en.js` 114 KB、任期 `tenures.en.js` 30 KB、编制 `posts.en.js` 21 KB——中文读者也要全数下载、解析。慢 4G 手机上首屏约 4.7 秒，卡在 JS。

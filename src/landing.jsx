@@ -40,9 +40,11 @@ const PIECE_LA = { 雁门关: "e", 潼关: "n", 睢阳: "n" };
 
 /* 英文卷首：地图上的道名、城名改英文（地名表定名，见 i18n/places.en.js）。
    畫布繪字在模組層函數裡，故以此旗標傳入；定場一次只掛一份，掛載時由組件設定。
-   畫布不走 DOM 字體加載，英文用系統襯線（與英文檔案卡同棧），免得字未載到便先畫了回退字 */
+   英文地名用自托管的 Literata EN（與英文檔案卡同一枚，各平台所見一致）。畫布不觸發字體下載：
+   先照畫一遍（回退字），字到後由定場 effect 重畫（見 build 之後的 fonts.load） */
 let LANDING_EN = false;
-const LATIN = '"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif';
+const LATIN = '"Literata EN",serif';
+const LATIN_FONTS = ['italic 14px "Literata EN"', '600 13.5px "Literata EN"', '11.5px "Literata EN"'];
 
 function mulberry32(a) {
   return function () {
@@ -865,6 +867,11 @@ export default function Landing({ onEnter }) {
     };
 
     build();
+    /* 英文地名之字到後重畫一次（畫布不會自己換字）；字已在緩存則立即完成 */
+    let alive = true;
+    if (LANDING_EN && document.fonts?.load) {
+      Promise.all(LATIN_FONTS.map((f) => document.fonts.load(f, "Taiyuan"))).then(() => { if (alive) build(); }, () => {});
+    }
     wrap.addEventListener("pointermove", onMove);
     wrap.addEventListener("pointerdown", onMove);
     wrap.addEventListener("wheel", stopWheel, { passive: false });
@@ -872,6 +879,7 @@ export default function Landing({ onEnter }) {
     window.addEventListener("resize", onResize);
     if (!reduced) raf = requestAnimationFrame(loop);
     return () => {
+      alive = false;
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeTimer);
       wrap.removeEventListener("pointermove", onMove);
