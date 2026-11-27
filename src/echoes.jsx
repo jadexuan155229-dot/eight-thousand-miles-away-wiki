@@ -210,8 +210,9 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       </div>
 
       <div ref={chartRef} style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="img" onMouseLeave={() => setHover(null)}
+        <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="group" onMouseLeave={() => setHover(null)}
           aria-label={`${shockTitle(locale, shock)} — ${shockAxis(locale, shock)}`}>
+          {/* 圖作 role="group"（不作 img）：img 之內諸物對讀屏一律隱去，圖上每行、「跳至回響詳情」皆是按鈕，須讀得到 */}
           {/* 年刻度 */}
           {ticks.map((yr) => {
             const major = yr % 5 === 0;

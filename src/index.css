@@ -1289,6 +1289,28 @@ html[data-skin="paper"] .tl-sec-head[data-stuck] {
   outline: none;
 }
 
+/* 跳至正文（wiki.jsx）：平時移出畫面，聚焦才現於左上角；色由內聯給出。正文區、人物列表受程式移焦，不另描框
+   （下一下 Tab 即落在首張小卡上，小卡自有焦點框） */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  z-index: 60;
+  padding: 6px 14px;
+  border-radius: 3px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: none;
+}
+main:focus,
+[data-skip-target]:focus {
+  outline: none;
+}
+
 /* 人物小卡（wiki.jsx CharCard）：鍵盤聚焦時描一道內框，不出卡緣、不壓鄰卡；滑鼠點選不出框（:focus-visible 之常例） */
 .char-card:focus-visible {
   outline: 2px solid var(--card-focus);
