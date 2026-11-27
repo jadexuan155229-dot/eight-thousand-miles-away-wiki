@@ -17,8 +17,9 @@ import { enBulkReady, loadEnBulk } from './en-bulk';
 
 const BASE = import.meta.env.BASE_URL; /* '/eight-thousand-miles-away-wiki/' */
 export const EN_PATH = `${BASE}en/`;
-const TITLE = {
-  zh: '八千里路 · Eight Thousand Miles Away | 人山人海 · 档案',
+/* 站名（網頁標題之底）：站內各頁由 wiki.jsx 加上頁名、人名，見其「網頁標題隨頁」一節 */
+export const TITLE = {
+  zh: '八千里路 · Eight Thousand Miles Away | 人山人海 · 檔案',
   en: 'Eight Thousand Miles Away | Characters: Archive',
 };
 
@@ -59,7 +60,7 @@ export function useLanguage() {
   useEffect(() => {
     const lang = locale === 'en' ? 'en' : 'zh';
     document.documentElement.lang = lang;
-    document.title = TITLE[lang];
+    /* 網頁標題由站內（wiki.jsx）按頁設，換語言時隨之換；站內未掛時（英文定場等表）用 HTML 裡寫死的站名 */
     if (readLanguage() !== locale) {
       try { window.history.replaceState(window.history.state, '', languageHref(locale)); }
       catch { /* 沙箱或 file:// 下改不了地址：只在內存裡換語言 */ }

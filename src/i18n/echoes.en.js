@@ -152,7 +152,7 @@ export const bandsEn = {
 };
 
 export const echoUiEn = {
-  余波: "Aftershocks",
+  餘波: "Aftershocks",
   作者按: "Author’s gloss",
   所系之事: "Events that bear on them",
   震源: "Shock",

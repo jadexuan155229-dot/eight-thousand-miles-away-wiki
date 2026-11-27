@@ -143,15 +143,16 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
             {charName(locale, byId[w])}
           </button>
         ))}
+        {/* 圖例屬界面，用繁體（作者 2026-11-27 定）；條上、詳情裡的任期類別名屬數據，照原樣 */}
         <span style={{ color: T.faint }}>|</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, background: NEUTRAL }} />{en ? "appointed" : "正授、署理"}</span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, border: `1px dashed ${T.muted}` }} />{en ? "acting / concurrent / no title" : "代领、兼领、充任、停职、无名目"}</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, border: `1px dashed ${T.muted}` }} />{en ? "acting / concurrent / no title" : "代領、兼領、充任、停職、無名目"}</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 3, borderRadius: 2, background: T.muted }} />{en ? "campaign command" : "出征差遣"}</span>
       </div>
 
       <div style={{ overflowX: "auto", background: T.panel, border: `1px solid ${T.line}`, borderRadius: 3 }}>
         <svg viewBox={`0 0 ${W} ${H}`} style={{ display: "block", minWidth: 760, width: "100%", height: "auto" }} role="group"
-          aria-label={en ? `${facName(locale, F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}编制任期图，${Y0}—${Y1}。每段任期是一个按钮，可打开档案`} onMouseLeave={() => setHov(null)}>
+          aria-label={en ? `${facName(locale, F.id)} posts, ${Y0}–${Y1}. Each tenure is a button that opens the profile.` : `${F.id}編制任期圖，${Y0}—${Y1}。每段任期是一個按鈕，可打開檔案`} onMouseLeave={() => setHov(null)}>
           <defs>
             {/* 起点不明／在任至卷末：色带在左右缘渐隐 */}
             <linearGradient id="posts-fade-l" x1="0" x2="1"><stop offset="0" stopColor={T.panel} stopOpacity="1" /><stop offset="1" stopColor={T.panel} stopOpacity="0" /></linearGradient>
@@ -269,7 +270,7 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
               {t.draft && <span style={{ color: T.seal, marginLeft: 8 }}>{t_("待核")}</span>}</div>
             {[[t_("上　"), tenureNoteTx(locale, t.how)], [t_("下　"), tenureNoteTx(locale, t.end)]].map(([k, [s, z]]) => s && <div key={k}><span style={{ color: T.faint }}>{k}</span><span lang={z ? "zh" : undefined}>{s}</span></div>)}
             {(([s, z]) => s && <div lang={z ? "zh" : undefined} style={{ color: T.muted }}>{s}</div>)(tenureNoteTx(locale, t.note))}
-            <div style={{ color: T.faint, fontSize: 11.5 }}>{t_("依据：")}{tenureSrcTx(locale, t.src)}</div>
+            <div style={{ color: T.faint, fontSize: 11.5 }}>{t_("依據：")}{tenureSrcTx(locale, t.src)}</div>
           </div>
         );
       })()}

@@ -33,7 +33,7 @@ export default function About({ onNav }) {
       <h1 style={{ fontFamily: "HuiwenMingChao", fontSize: 30, fontWeight: 400, margin: "4px 0 18px" }}>About this archive</h1>
 
       <P>
-        <I>Eight Thousand Miles Away</I> (<Zh>八千里路</Zh>) is a long work of fiction written in Chinese. This site is its working archive: the people, dated events, places and relationships the stories are built on, set out so that they can be explored rather than read in order. The archive’s own name is <I>Characters: Archive</I> (<Zh>人山人海 · 档案</Zh>); the manuscript at its centre is <I>The Soldier, the Assassin and the Physician</I> (<Zh>士兵、杀手和大夫</Zh>).
+        <I>Eight Thousand Miles Away</I> (<Zh>八千里路</Zh>) is a long work of fiction written in Chinese. This site is its working archive: the people, dated events, places and relationships the stories are built on, set out so that they can be explored rather than read in order. The archive’s own name is <I>Characters: Archive</I> (<Zh>人山人海 · 檔案</Zh>); the manuscript at its centre is <I>The Soldier, the Assassin and the Physician</I> (<Zh>士兵、杀手和大夫</Zh>).
       </P>
 
       <H>A Tang setting</H>
