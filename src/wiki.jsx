@@ -3385,8 +3385,17 @@ export default function Wiki({ onOpenLanding }) {
     }
   );
 
+  /* 跳至正文：鍵盤讀者自頁首 Tab 的第一站（平時不顯，聚焦才現）。站以 #/… 作路由，不能用 <a href="#main">，
+     故作按鈕、直接移焦：人物檔案頁跳到人物小卡之前（越過頁頭與三十餘個篩選鈕），他頁跳到正文起首 */
+  const mainRef = useRef(null);
+  const skipToContent = () => {
+    const m = mainRef.current; if (!m) return;
+    (m.querySelector("[data-skip-target]") || m).focus();
+  };
   return (
     <div className="site-root" style={{ minHeight: "100vh", backgroundColor: T.bg, color: T.ink, padding: "0 0 60px" }}>
+      <button type="button" className="skip-link" onClick={skipToContent}
+        style={{ background: T.panel, color: T.ink, border: `1px solid ${T.accent}`, fontFamily: "HuiwenZhengKai" }}>{t("跳至正文")}</button>
       <header style={{ borderBottom: `1px solid ${T.line}`, padding: "34px 28px 22px", display: "flex", alignItems: "flex-end", gap: 20, flexWrap: "wrap" }}>
         <div>
           {/* 題頭：英文界面上行作英文站名與年代；「人山人海 · 檔案」英文作 Characters: Archive（作者 2026-11-22 定），冒號同中文之點著朱 */}
@@ -3431,7 +3440,7 @@ export default function Wiki({ onOpenLanding }) {
         {tab !== "about" && (!phoneHead || scopeOpen) && <>{" "}<button type="button" onClick={() => setTab("about")} style={inlineLink}>{t("初來者請看")}</button></>}
         {phoneHead && <>{scopeOpen ? " · " : " "}<button type="button" aria-expanded={scopeOpen} onClick={() => setScopeOpen((o) => !o)} style={inlineLink}>{scopeOpen ? t("收起") : t("詳情")}</button></>}
       </p>}
-      <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>
+      <main ref={mainRef} tabIndex={-1} style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>
         {(tab === "chars" || tab === "posts") && (
           /* 人物檔案的兩個子視圖：檔案一覽／編制（任職圖） */
           <div role="group" aria-label={t("人物檔案")} style={{ display: "flex", gap: 6, marginBottom: 18 }}>
@@ -3460,7 +3469,7 @@ export default function Wiki({ onOpenLanding }) {
                 <SearchTag fontFamily="HuiwenZhengKai" />
               </span>
             </div>
-            <div className="char-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", columnGap: 14 }}>
+            <div className="char-grid" data-skip-target tabIndex={-1} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", columnGap: 14 }}>
               {shown.map((c) => (
                 <CharCard key={c.id} c={c} onOpen={setOpenChar} />
               ))}

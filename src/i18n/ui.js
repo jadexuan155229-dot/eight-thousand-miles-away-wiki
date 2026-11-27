@@ -11,6 +11,7 @@
 const pl = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 
 const en = {
+  跳至正文: 'Skip to content',
   /* ---------- 導航與通用 ---------- */
   人物檔案: 'Characters', 事件年表: 'Timeline', 山河輿圖: 'Map',
   行星關係圖: 'Orbital Relations', 群像網絡: 'Character Network', 餘波: 'Aftershocks', 文庫: 'Library',
