@@ -143,9 +143,10 @@ export default function Posts({ onOpenChar, fac = "苍云", onFac }) {
             {charName(locale, byId[w])}
           </button>
         ))}
+        {/* 圖例屬界面，用繁體（作者 2026-11-27 定）；條上、詳情裡的任期類別名屬數據，照原樣 */}
         <span style={{ color: T.faint }}>|</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, background: NEUTRAL }} />{en ? "appointed" : "正授、署理"}</span>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, border: `1px dashed ${T.muted}` }} />{en ? "acting / concurrent / no title" : "代领、兼领、充任、停职、无名目"}</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 9, borderRadius: 2, border: `1px dashed ${T.muted}` }} />{en ? "acting / concurrent / no title" : "代領、兼領、充任、停職、無名目"}</span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><span style={{ width: 18, height: 3, borderRadius: 2, background: T.muted }} />{en ? "campaign command" : "出征差遣"}</span>
       </div>
 

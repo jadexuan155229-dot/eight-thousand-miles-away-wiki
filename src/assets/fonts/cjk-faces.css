@@ -166,7 +166,7 @@
   font-family: "HuiwenMingChao";
   src: url("./cjk/HuiwenMingChao-27.woff2") format("woff2");
   font-display: swap;
-  unicode-range: U+5B78, U+7C60, U+8ACB, U+8B6F, U+9E37, U+9EBC, U+9EC3, U+9F4A;
+  unicode-range: U+5B78, U+7C60, U+8ACB, U+8B6F, U+9818, U+9E37, U+9EBC, U+9EC3, U+9F4A;
 }
 @font-face {
   font-family: "HuiwenZhengKai";
@@ -334,7 +334,7 @@
   font-family: "HuiwenZhengKai";
   src: url("./cjk/HuiwenZhengKai-27.woff2") format("woff2");
   font-display: swap;
-  unicode-range: U+5B78, U+7C60, U+8ACB, U+8B6F, U+9E37, U+9EBC, U+9EC3, U+9F4A;
+  unicode-range: U+5B78, U+7C60, U+8ACB, U+8B6F, U+9818, U+9E37, U+9EBC, U+9EC3, U+9F4A;
 }
 @font-face {
   font-family: "JingHuaLaoSong";
@@ -502,5 +502,5 @@
   font-family: "JingHuaLaoSong";
   src: url("./cjk/JingHuaLaoSong-27.woff2") format("woff2");
   font-display: swap;
-  unicode-range: U+5B78, U+7C60, U+8ACB, U+8B6F, U+9E37, U+9EBC, U+9EC3, U+9F4A;
+  unicode-range: U+5B78, U+7C60, U+8ACB, U+8B6F, U+9818, U+9E37, U+9EBC, U+9EC3, U+9F4A;
 }
