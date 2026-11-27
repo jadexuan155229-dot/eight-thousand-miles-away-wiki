@@ -9,6 +9,7 @@ const fcText = (f) => toneText(fcRaw(f));
 /* 族屬／地屬類標籤（年表、輿圖兩處篩選共用）：顯式常量，運行時與實有標籤求交集（無事者不顯示）；增刪改此行即可 */
 const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
 import { parseRoute, routeHash } from "./router";
+import { TITLE as SITE_TITLE } from "./i18n/use-language";
 import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
 import { SEAL_SVG_FILE } from "./seals";
@@ -3337,6 +3338,26 @@ export default function Wiki({ onOpenLanding }) {
     document.fonts?.ready.then(fit); /* 字體到位後寬度會變，再對一次 */
   }, [tab, locale, phoneHead]);
   const openChar = route.char ? byId[route.char] || null : null; /* 壞 id 鏈接：不開彈窗、不作報錯 */
+  /* 網頁標題隨頁：瀏覽器分頁、歷史、書籤裡分得出是哪一頁、哪一人。
+     體例：「人名 · 頁名 | 站名」，文庫為「【線】卷 · 章 · 文庫」，餘波為「震源 · 餘波」，編制為「門派 · 編制」；
+     檔案首頁（無彈窗）用全站名。頁名屬界面、用繁體；人名、章名、門派名屬數據，照原樣（簡體） */
+  useEffect(() => {
+    const site = en ? "Eight Thousand Miles Away" : "八千里路";
+    const parts = [];
+    if (openChar) parts.push(charName(locale, openChar));
+    if (tab === "novel" && route.novelPath) {
+      const f = FLAT.find((x) => x.path === route.novelPath);
+      const nt = (zh) => novelTitle(locale, zh);
+      if (f) parts.push(en ? `${nt(f.novel.tag)} · ${f.group ? `${nt(f.group.title)} · ` : ""}${nt(f.ch.title)}` : `【${f.novel.tag}】${f.group ? `${f.group.title} · ` : ""}${f.ch.title}`);
+    }
+    if (tab === "echoes" && route.shock) {
+      const sh = SHOCKS.find((x) => x.id === route.shock);
+      if (sh) parts.push(shockTitle(locale, sh));
+    }
+    if (tab === "posts" && route.fac) parts.push(facName(locale, route.fac));
+    const page = { chars: "人物檔案", posts: "編制", timeline: "事件年表", map: "山河輿圖", network: "行星關係圖", community: "群像網絡", echoes: "餘波", novel: "文庫", about: "關於" }[tab];
+    document.title = tab === "chars" && parts.length === 0 ? SITE_TITLE[en ? "en" : "zh"] : `${[...parts, t(page)].join(" · ")} | ${site}`;
+  }, [tab, openChar, route.novelPath, route.shock, route.fac, locale]); // eslint-disable-line react-hooks/exhaustive-deps -- en、t 皆由 locale 定
   const setTab = (k) => nav({ tab: k });
   const setOpenChar = (c) => nav({ char: c ? c.id : null });
   const [faction, setFaction] = useState("全部");
