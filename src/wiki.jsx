@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
 import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, getSkin, dimAccent, BAND_DARK } from "./theme";
 
@@ -6,6 +6,8 @@ import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, 
 const fc = (f) => tone(fcRaw(f));
 /* 門派色作字時用此（素紙下守 3:1，見 theme.js toneText）；框線、色條仍用 fc */
 const fcText = (f) => toneText(fcRaw(f));
+/* 族屬／地屬類標籤（年表、輿圖兩處篩選共用）：顯式常量，運行時與實有標籤求交集（無事者不顯示）；增刪改此行即可 */
+const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
 import { parseRoute, routeHash } from "./router";
 import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
@@ -988,8 +990,6 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     []
   );
 
-  /* 族屬／地屬類標籤：顯式常量，運行時與實有標籤求交集（無事者不顯示）；增刪改此行即可 */
-  const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
   /* 一級標籤：事件 fac 標籤 ∪ 涉事人物所屬門派（鮮卑、靺鞨等無事件標籤者由後者補入）。
      計數為成員包含式：事件標籤含 f，或涉事人物隸屬 f。 */
   const facList = useMemo(() => {
@@ -1102,7 +1102,8 @@ function Timeline({ onOpenChar, onOpenEcho }) {
   const toggle = (key) =>
     setExpanded((prev) => {
       const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   const monthKeysOf = (s) => {
@@ -1125,7 +1126,8 @@ function Timeline({ onOpenChar, onOpenEcho }) {
   const toggleMonth = (gk) =>
     setExpandedMonths((prev) => {
       const next = new Set(prev);
-      next.has(gk) ? next.delete(gk) : next.add(gk);
+      if (next.has(gk)) next.delete(gk);
+      else next.add(gk);
       return next;
     });
   const expandAll = () => {
@@ -1671,6 +1673,7 @@ function nodeFontSize(len, r, dim) {
    點小一像素，橢圓即可矮三十，而餘隙反持平（7.9px，舊 8.0px）；
    餘者出自三環與雙星間距同比略縮。W/H 立為常量，viewBox 與手勢層共讀，免二處失步。 */
 const PW = 1200, PH = 760, PCX = [360, 840], PCY = PH / 2, FAR_R = 14;
+const CX = PCX, CY = PCY; /* 行星圖內通用之短名 */
 function Planetary({ onOpenChar }) {
   const locale = useLocale();
   const t = useT();
@@ -1689,7 +1692,6 @@ function Planetary({ onOpenChar }) {
   const [keyFocus, setKeyFocus] = useState(null);
   const keyHi = hover ? null : keyHover ?? keyPin;
   const toggleKey = (id) => { setHover(null); setKeyPin((p) => (p === id ? null : id)); };
-  const CX = PCX, CY = PCY;
   const layout = useMemo(() => {
     const counts = CENTERS_META.map((m) => coCountsFor(m.id));
     /* 外軌收至 218：兩核相距 500，舊值 248 令兩系外軌之間僅餘四像素，
@@ -2630,7 +2632,7 @@ function GeoMap({ onOpenChar }) {
     for (const e of EVENTS) { if (e.year < mn) mn = e.year; if (e.year > mx) mx = e.year; }
     return { min: mn, max: mx };
   }, []);
-  const inTime = (e) => tmode === "all" || (tmode === "cum" ? e.year <= tyear : e.year === tyear);
+  const inTime = useCallback((e) => tmode === "all" || (tmode === "cum" ? e.year <= tyear : e.year === tyear), [tmode, tyear]);
   const [hoverSeg, setHoverSeg] = useState(null); /* 悬停動線段：{ti,i,x,y,w,...}，浮出繫此段之事 */
   useEffect(() => { setHoverSeg(null); }, [trackSel, tmode, tyear]);
   const narrow = useNarrow(920);
@@ -2642,7 +2644,6 @@ function GeoMap({ onOpenChar }) {
       ),
     []
   );
-  const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
   const facList = useMemo(() => {
     const set = new Set();
     for (const e of EVENTS) {
@@ -2687,7 +2688,7 @@ function GeoMap({ onOpenChar }) {
         ? facList.ethnic.some(({ f }) => e.fac.includes(f) || e.chars.some((id) => byId[id].belong.includes(f)))
         : e.fac.includes(fsel) || e.chars.some((id) => byId[id].belong.includes(fsel)));
     return EVENTS.filter((e) => (who === "all" || e.chars.includes(who)) && byFaction(e) && hit(e) && inTime(e)).sort(sortEvents);
-  }, [who, fsel, q, facList, tmode, tyear, en, locale]);
+  }, [who, fsel, q, facList, inTime, en, locale]);
 
   /* 聚合：每地一點，計數、門派色分佈隨篩選重算；一事多地各計一次（與檢索「地點命中」同理） */
   const spots = useMemo(() => {
@@ -2758,7 +2759,7 @@ function GeoMap({ onOpenChar }) {
         });
         return { id, ti, color: TRACK_COLORS[ti % TRACK_COLORS.length], stays, locLabels: Object.entries(byLoc) }; /* 原色：此 memo 不隨膚重算，取用處再 tone() */
       }),
-    [trackSel, tmode, tyear]
+    [trackSel, tmode, inTime]
   );
   const rOf = (n) => Math.min(3.5 + 2.0 * Math.sqrt(n), 32); /* 環徑緩放，防北疆巨核吞鄰 */
   /* 看動線時：動線所經之地為前景，其餘點位退作底圖——環、名俱淡，名字收起（「地名全顯」照開）；

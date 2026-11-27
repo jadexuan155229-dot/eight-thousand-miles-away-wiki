@@ -18,9 +18,7 @@ npm run lint
 npm run build
 ```
 
-每个 PR、每次推到 main，GitHub Actions 都会自动跑一遍（`.github/workflows/checks.yml`）：资料（`check-data`）、代码（oxlint，警告以 12 条为基线，多出即不过）、字体子集（`node scripts/font-chars.js --check`，有字符表外之字即不过）、构建、前进后退（`check:history`）。任一项不过，PR 页底部显示红叉，点进去看是哪一项；各项互不连坐，一次看全。它与部署各跑各的，不挡部署；部署（`.github/workflows/deploy.yml`）自己在构建前再跑一次 `check-data`，资料有错即不发布，线上保持上一版。
-
-警告真减少了，可把 `checks.yml` 里的 `--max-warnings 12` 一并调低。
+每个 PR、每次推到 main，GitHub Actions 都会自动跑一遍（`.github/workflows/checks.yml`）：资料（`check-data`）、代码（oxlint，零警告，有一条即不过）、字体子集（`node scripts/font-chars.js --check`，有字符表外之字即不过）、构建、前进后退（`check:history`）。任一项不过，PR 页底部显示红叉，点进去看是哪一项；各项互不连坐，一次看全。它与部署各跑各的，不挡部署；部署（`.github/workflows/deploy.yml`）自己在构建前再跑一次 `check-data`，资料有错即不发布，线上保持上一版。
 
 ## 字体子集
 
