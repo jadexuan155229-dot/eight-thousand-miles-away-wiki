@@ -692,7 +692,7 @@ function paintMap(cv, w, h, g, dpr) {
 const DARK = 0.94;      /* 掩暗層底色不透明度：留 6% 微透，暗中略見山河輪廓 */
 const TRAIL_MS = 1500;  /* 燭光行過之處，墨色徐徐合攏的時長 */
 
-export default function Landing({ onEnter }) {
+export default function Landing({ onEnter, canEnter = true }) {
   /* 英文界面：題字、印文、副題仍作中文（屬作品之題，英译待作者定，見 docs/english-edition.md）；
      讀屏標籤與操作提示改英文——提示是告诉人怎么進站的，不能只有中文 */
   const locale = useLocale();
@@ -717,14 +717,20 @@ export default function Landing({ onEnter }) {
     doneRef.current = true;
     onEnter();
   };
+  /* 站內未備（英文大表未到，見 App.jsx）：先記下讀者要入卷，備即入；其間指標轉作等待 */
+  const canEnterRef = useRef(canEnter);
+  canEnterRef.current = canEnter;
+  const [waitEnter, setWaitEnter] = useState(false);
   const enter = () => {
     if (leavingRef.current) return;
+    if (!canEnterRef.current) { setWaitEnter(true); return; }
     leavingRef.current = true;
     try { sessionStorage.setItem("cy-landing-seen", "1"); } catch { /* 私隱模式讀寫不得，無妨 */ }
     setLeaving(true);
     window.setTimeout(finish, 2400); /* 兜底：transitionend 不至也要放行 */
   };
   enterRef.current = enter;
+  useEffect(() => { if (canEnter && waitEnter) enterRef.current?.(); }, [canEnter, waitEnter]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -895,6 +901,8 @@ export default function Landing({ onEnter }) {
       ref={wrapRef}
       className={"cy-landing" + (en ? " cy-landing--en" : "") + (leaving ? " cy-landing--leave" : "")}
       lang={en ? "en" : "zh"}
+      style={waitEnter && !leaving ? { cursor: "progress" } : undefined}
+      aria-busy={waitEnter && !leaving ? true : undefined}
       onTransitionEnd={(e) => { if (leavingRef.current && e.target === wrapRef.current) finish(); }}
       aria-label={t("入站定場：八千里路")}
     >
