@@ -13,18 +13,18 @@ const pl = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 const en = {
   /* ---------- 導航與通用 ---------- */
   人物檔案: 'Characters', 事件年表: 'Timeline', 山河輿圖: 'Map',
-  行星關係圖: 'Orbital Relations', 群像網絡: 'Character Network', 余波: 'Aftershocks', 文庫: 'Library',
+  行星關係圖: 'Orbital Relations', 群像網絡: 'Character Network', 餘波: 'Aftershocks', 文庫: 'Library',
   卷首: 'Opening', 回到卷首: 'Return to opening',
   語言: 'Language', 紙色: 'Theme', 玄墨: 'Ink', 素紙: 'Paper',
   關閉檔案: 'Close profile', 站內導航: 'Main navigation', 關閉: 'Close',
   關於: 'About',
-  初來者请看: 'New here? Read about the work and its world →',
+  初來者請看: 'New here? Read about the work and its world →',
   年份: 'Year', // 群像、輿圖年份滑杆之讀屏名
   英文版說明短: 'English edition in progress.', 詳情: 'Details', // 手機上收起的一句與展開鈕
   檔案一覽: 'Profiles', 編制: 'Posts',
   門派: 'Faction', 全部: 'All', 待核: 'Draft',
   中文原文: 'Chinese original',
-  未译註: 'Not yet translated: shown in the original Chinese.',
+  未譯註: 'Not yet translated: shown in the original Chinese.',
   /* 數目由覆蓋層實算。舊稿末句說「其餘皆中文」，今余波、編制、任期皆已译完，唯文庫正文（T3）仍是中文，故改說實情 */
   英文版說明: ({ profiles, written, eventTitles, events }) => {
     const all = (n, of, what) => (n === of ? `all ${of} ${what}` : `${n} of ${of} ${what}`);
@@ -37,19 +37,19 @@ const en = {
   生卒: 'Lifespan', 出身: 'Birthplace', 事件: 'Events', 字: 'Courtesy name',
   /* 名號標籤（wiki-data.js 之 names，見 i18n/content.js）；中文读法只見於英文覆蓋層之 alt */
   本名: 'Original name', 波斯语名: 'Persian name', 日文读法: 'Japanese reading', 汉名: 'Chinese name', 中文读法: 'Chinese reading',
-  字号待补: 'Courtesy name not yet recorded', 门派待补: 'Faction not yet recorded',
-  品评: 'One-character appraisal',
+  字號待補: 'Courtesy name not yet recorded', 門派待補: 'Faction not yet recorded',
+  品評: 'One-character appraisal',
   名字訓詁: 'Name and allusions', 檔案: 'Profile',
   官职身份: 'Position & background', 体貌特征: 'Appearance & health', 性格: 'Personality',
   偶像: 'Influences', 武学: 'Martial arts', 随身物件: 'Personal possessions', 喜好: 'Interests', 专擅: 'Expertise',
   任職履歷: 'Posts held', 在編制圖中看: 'See on the posts chart', '勳、散': 'Merit grade and prestige rank',
-  '（约）': ' (approx.)',
+  '（約）': ' (approx.)',
   個人軼事: 'Anecdotes', 高光: 'Highlight', 收起: 'Hide',
   '展開其餘 {n} 條': ({ n }) => `Show ${n} more`,
   '關係（自關係庫）': 'Relationships (from the relationship database)',
-  殁后: 'posthumous',
+  歿後: 'posthumous',
   '同事人物（共見事件計數）': 'Co-occurring characters (shared event counts)',
-  所系之事: 'Events that bear on them',
+  所繫之事: 'Events that bear on them',
   '起草待核：作者尚未逐行核定': 'Drafted, not yet reviewed line by line by the author.',
   '繫年事件（依 年·月·序號）': 'Dated events (by year · month · sequence)',
   '事件庫中暫無此人繫年條目。': 'No dated events for this character yet.',
@@ -64,16 +64,16 @@ const en = {
   無事: 'no events',
   全部展開: 'Expand all', 全部收起: 'Collapse all', 全展: 'Expand', 全收: 'Collapse',
   收起諸月: 'Collapse months', 展開諸月: 'Expand months',
-  月份未标: 'Month not recorded', 月份未標: 'Month not recorded',
-  '族属/地属 {n}': 'Peoples & regions {n}', '族属/地属 · 标签': 'Peoples & regions · tags', '【族属/地属】': 'Peoples & regions',
-  门派未标: 'Faction not marked', '门派未标 {n}': 'Faction not marked {n}', '门派未标：{n}': 'Faction not marked: {n}',
-  '未标事件 · 人物': 'Unmarked events · people', '{f} · 人物': '{f} · people',
+  月份未標: 'Month not recorded',
+  '族屬/地屬 {n}': 'Peoples & regions {n}', '族屬/地屬 · 標籤': 'Peoples & regions · tags', '【族屬/地屬】': 'Peoples & regions',
+  門派未標: 'Faction not marked', '門派未標 {n}': 'Faction not marked {n}', '門派未標：{n}': 'Faction not marked: {n}',
+  '未標事件 · 人物': 'Unmarked events · people', '{f} · 人物': '{f} · people',
   此標籤下無入事人物檔案: 'No profiled character appears in events under this tag.',
   '檢索事名、人物、地點、門派、紀年': 'Search events, people, places, factions, eras',
   '無合於此檢索之事。': 'No events match this search.',
   增補: 'Supplement',
   '採自人設文檔，尚未錄入 Notion 事件庫': 'Taken from the character documents; not yet in the Notion event database',
-  '余波：{title}——此事笼罩之人与其记忆方式': 'Aftershocks: {title}. Who it hangs over, and how each remembers it',
+  '餘波：{title}——此事籠罩之人與其記憶方式': 'Aftershocks: {title}. Who it hangs over, and how each remembers it',
 
   /* ---------- 圖幅通用 ---------- */
   門派色例: 'Faction colours', '{n} 色': ({ n }) => `(${n})`,
@@ -124,19 +124,19 @@ const en = {
   '當前篩選下此地無事。': 'No events here under the current filters.',
 
   /* ---------- 編制 ---------- */
-  '上　': 'In: ', '下　': 'Out: ', '依据：': 'Sources: ',
+  '上　': 'In: ', '下　': 'Out: ', '依據：': 'Sources: ',
 
   /* ---------- 文庫 ---------- */
-  文庫目錄: 'Contents', '检索书目、篇章': 'Search titles and chapters',
+  文庫目錄: 'Contents', '檢索書目、篇章': 'Search titles and chapters',
   自目錄擇章而入: 'Choose a chapter from the contents.',
   '凡 {n} 線 · 閱讀位置自動保存': ({ n }) => `${pl(n, 'storyline')} · your place is saved automatically`,
   卷: 'part', '{n} 字': ({ n }) => `${n.toLocaleString('en')} characters`,
-  ' · 命中 {n} 处': ({ n }) => ` · ${pl(n, 'match', 'matches')}`,
-  未检得相关文字: 'No matching text.',
-  '正文待錄。': 'Text not yet entered.', '正文载入中……': 'Loading text…',
-  阅读设置: 'Reading settings', 字号: 'Size', 行距: 'Spacing', 底色: 'Page', 素纸: 'Paper',
-  紧: 'Tight', 常: 'Normal', 疏: 'Loose', 恢复默认: 'Reset',
-  '{name} 档案批注': '{name}: profile note',
+  ' · 命中 {n} 處': ({ n }) => ` · ${pl(n, 'match', 'matches')}`,
+  未檢得相關文字: 'No matching text.',
+  '正文待錄。': 'Text not yet entered.', '正文載入中……': 'Loading text…',
+  閱讀設置: 'Reading settings', 字號: 'Size', 行距: 'Spacing', 底色: 'Page', /* 素紙見上（紙色選單） */
+  緊: 'Tight', 常: 'Normal', 疏: 'Loose', 恢復默認: 'Reset',
+  '{name} 檔案批註': '{name}: profile note',
 
   /* ---------- 定場 ---------- */
   '入站定場：八千里路': 'Opening scene: Eight Thousand Miles Away',
@@ -162,8 +162,14 @@ const en = {
   文庫正文說明: 'Original Chinese text. Names in the text open a short profile note.',
 };
 
+/* 界面一律繁體、數據保持簡體（作者 2026-11-27 定）。數據裡的詞兼作界面標目者——檔案八目、名號標籤——
+   數據原樣不動（諸處以之為鍵），只在中文界面顯示時轉作繁體；英文照查上表 */
+const ZH_SHOW = {
+  官职身份: '官職身份', 体貌特征: '體貌特徵', 武学: '武學', 随身物件: '隨身物件', 专擅: '專擅',
+  汉名: '漢名', 波斯语名: '波斯語名', 日文读法: '日文讀法', 中文读法: '中文讀法',
+};
 export function translateUI(locale, key, vars) {
-  const v = locale === 'en' ? en[key] ?? key : key;
+  const v = locale === 'en' ? en[key] ?? key : ZH_SHOW[key] ?? key;
   if (typeof v === 'function') return v(vars || {});
   return vars ? v.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : v;
 }
@@ -173,4 +179,4 @@ export const eventCountText = (locale, count) => locale === 'en'
   ? pl(count, 'dated event') : `繫年 ${count} 事`;
 export const libraryCountText = (locale, count, kind) => locale === 'en'
   ? (kind === 'chapters' ? pl(count, 'chapter') : pl(count, 'mention'))
-  : `${count} ${kind === 'chapters' ? '章' : '处'}`;
+  : `${count} ${kind === 'chapters' ? '章' : '處'}`;

@@ -33,7 +33,7 @@ const wc = (t) => (t ? t.replace(/\s/g, "").length : 0);
    素紙僅作用於正文紙面（正文欄＋翻頁按鈕）——章題、目錄、頁頭維持全站深色 */
 const VIEW_KEY = "cangyun-wenku-view";
 const FS_STEPS = [13.5, 14.5, 15.5, 17, 18.5];
-const LH_STEPS = [["紧", 1.8], ["常", 2.1], ["疏", 2.4]];
+const LH_STEPS = [["緊", 1.8], ["常", 2.1], ["疏", 2.4]];
 const VIEW_DEFAULT = { fs: 2, lh: 1, theme: "dark" };
 const readView = () => {
   try {
@@ -230,7 +230,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
           animation: "nvl-note-in .18s ease-out",
         }} />
       )}
-      <aside ref={cardRef} role="dialog" aria-label={t("{name} 档案批注", { name: charName(locale, c) })}
+      <aside ref={cardRef} role="dialog" aria-label={t("{name} 檔案批註", { name: charName(locale, c) })}
         style={{
           position: "fixed", zIndex: 30, width: Math.min(NOTE_W, window.innerWidth - 2 * NOTE_EDGE),
           left: pos ? pos.left : 0, top: pos ? pos.top : 0, visibility: pos ? "visible" : "hidden",
@@ -245,7 +245,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
           {c.hao && <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>{charEn(locale, c.id)?.hao ? `“${charEn(locale, c.id).hao}”` : `「${c.hao}」`}</span>}
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
-          {(c.belong.length ? c.belong : ["门派待补"]).map((f) => (
+          {(c.belong.length ? c.belong : ["門派待補"]).map((f) => (
             <span key={f} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}55`, padding: "1px 8px", borderRadius: 2 }}>{c.belong.length ? facName(locale, f) : t(f)}</span>
           ))}
         </div>
@@ -528,7 +528,7 @@ export default function NovelReader({ path, onNav }) {
   const SearchResults = () => (
     <div>
       {results.length === 0 && (
-        <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.faint, padding: "14px 8px", letterSpacing: "0.1em" }}>{t("未检得相关文字")}</div>
+        <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.faint, padding: "14px 8px", letterSpacing: "0.1em" }}>{t("未檢得相關文字")}</div>
       )}
       {results.map(({ f, n, snip }) => (
         <button key={f.path} onClick={() => openResult(f.path)}
@@ -538,7 +538,7 @@ export default function NovelReader({ path, onNav }) {
             padding: "6px 8px 7px 10px", cursor: "pointer",
           })}>
           <div style={{ fontFamily: "HuiwenMingChao", fontSize: 10.5, color: T.faint }}>
-            {en ? `${nt(f.novel.tag)}${f.group ? ` · ${nt(f.group.title)}` : ""}` : `${bt(f.novel.tag)}${f.group ? ` ${nt(f.group.title)}` : ""}`}{n > 1 ? t(" · 命中 {n} 处", { n }) : ""}
+            {en ? `${nt(f.novel.tag)}${f.group ? ` · ${nt(f.group.title)}` : ""}` : `${bt(f.novel.tag)}${f.group ? ` ${nt(f.group.title)}` : ""}`}{n > 1 ? t(" · 命中 {n} 處", { n }) : ""}
           </div>
           <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12.5, color: T.ink, lineHeight: 1.6, marginTop: 1 }}>{nt(f.ch.title)}</div>
           {snip && (
@@ -568,7 +568,7 @@ export default function NovelReader({ path, onNav }) {
           onChange={(e) => { setInputValue(e.target.value); if (!isComposing) setQ(e.target.value); }}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={(e) => { setIsComposing(false); setInputValue(e.currentTarget.value); setQ(e.currentTarget.value); }}
-          placeholder={t("检索书目、篇章")}
+          placeholder={t("檢索書目、篇章")}
           style={{ display: "block", width: "100%", background: T.panel, border: `1px solid ${T.line}`, color: T.ink, fontSize: 12.5, fontFamily: "HuiwenZhengKai", padding: "5px 10px 5px 32px", outline: "none", borderRadius: "3px" }} />
         <span style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 18, display: "flex", alignItems: "center", justifyContent: "center", background: T.accent, color: T.onAccent, fontSize: 11, fontFamily: "HuiwenZhengKai", borderRadius: "3px", pointerEvents: "none" }} aria-hidden="true">查</span>
       </div>
@@ -637,14 +637,14 @@ export default function NovelReader({ path, onNav }) {
                 <div ref={bodyColRef} style={{ maxWidth: bodyMaxWidth, paddingTop: 16, ...(narrow || paper ? null : { marginLeft: "auto", marginRight: "auto" }) }}>
                   {/* Aa 閱讀設置：行容器兼點外關閉判界；浮卡隨全站皮膚，不隨閱讀底色（浮於紙面之上） */}
                   <div ref={viewRef} style={{ display: "flex", justifyContent: "flex-end", position: "relative", marginBottom: 4 }}>
-                    <button onClick={() => setViewOpen((o) => !o)} title={t("阅读设置")} aria-label={t("阅读设置")}
+                    <button onClick={() => setViewOpen((o) => !o)} title={t("閱讀設置")} aria-label={t("閱讀設置")}
                       style={{ fontSize: 12, fontFamily: serif, color: pal.faint, background: "none", border: `1px solid ${pal.line}`, borderRadius: 3, padding: "2px 9px", cursor: "pointer" }}>
                       Aa
                     </button>
                     {viewOpen && (
                       <div style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 24, width: 236, background: T.panel, border: `1px solid ${T.line}`, boxShadow: T.xShadow, padding: "12px 14px 10px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={rowLabel()}>{t("字号")}</span>
+                          <span style={rowLabel()}>{t("字號")}</span>
                           <button onClick={() => setView((v) => ({ ...v, fs: Math.max(0, v.fs - 1) }))} disabled={view.fs === 0} style={stepBtn(view.fs === 0)}>A−</button>
                           <span style={{ fontSize: 9, letterSpacing: 3, color: T.muted, flex: 1, textAlign: "center" }}>
                             {FS_STEPS.map((_, i) => (i <= view.fs ? "●" : "○")).join("")}
@@ -660,19 +660,19 @@ export default function NovelReader({ path, onNav }) {
                         {!paperSkin && (
                           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 10 }}>
                             <span style={rowLabel()}>{t("底色")}</span>
-                            {[["dark", "玄墨"], ["paper", "素纸"]].map(([k, name]) => (
+                            {[["dark", "玄墨"], ["paper", "素紙"]].map(([k, name]) => (
                               <button key={k} onClick={() => setView((v) => ({ ...v, theme: k }))} style={chipBtn(view.theme === k)}>{t(name)}</button>
                             ))}
                           </div>
                         )}
                         <div style={{ textAlign: "right", marginTop: 10 }}>
-                          <button onClick={() => setView({ ...VIEW_DEFAULT })} style={{ fontSize: 11, fontFamily: serif, color: T.faint, background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline dotted" }}>{t("恢复默认")}</button>
+                          <button onClick={() => setView({ ...VIEW_DEFAULT })} style={{ fontSize: 11, fontFamily: serif, color: T.faint, background: "none", border: "none", cursor: "pointer", padding: 0, textDecoration: "underline dotted" }}>{t("恢復默認")}</button>
                         </div>
                       </div>
                     )}
                   </div>
                   {cur.ch.file && texts === null
-                    ? <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.faint, padding: "36px 0", letterSpacing: "0.15em" }}>{t("正文载入中……")}</div>
+                    ? <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.faint, padding: "36px 0", letterSpacing: "0.15em" }}>{t("正文載入中……")}</div>
                     : <Body text={textOf(cur.ch)} hl={q.trim() || null} firstHitRef={firstHitEl} onCharClick={openPeek} activeCharKey={peek ? peek.key : null}
                         fs={FS_STEPS[view.fs]} lh={LH_STEPS[view.lh][1]} pal={pal} />}
                 </div>

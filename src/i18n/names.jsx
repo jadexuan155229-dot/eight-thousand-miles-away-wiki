@@ -10,9 +10,9 @@ export function CourtesyLine({ c }) {
   const t = useT();
   if (locale !== "en") {
     const items = nameItems(c);
-    return items.length ? items.map(([k, v]) => `${k} ${v}`).join(" · ") : t("字号待补");
+    return items.length ? items.map(([k, v]) => `${t(k)} ${v}`).join(" · ") : t("字號待補"); /* 標籤經 t 轉繁（ui.js ZH_SHOW），名號本身是數據，照原樣 */
   }
-  if (nameItems(c).length === 0) return t("字号待补");
+  if (nameItems(c).length === 0) return t("字號待補");
   return nameItemsEn(c).map(([k, v, zh], i) => (
     <span key={k}>{i > 0 && " · "}{t(k)}: {zh ? <Zh>{v}</Zh> : v}</span>
   ));

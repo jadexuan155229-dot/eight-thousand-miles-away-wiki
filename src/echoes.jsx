@@ -51,7 +51,7 @@ const LANE_H = 17, LABEL_FS = 11;
 function srcLabel(n, locale) {
   const en = locale === "en";
   if (/（《[^》]+》）$/.test(n.note)) return en ? "manuscript" : "文稿";
-  if (/（关系）$/.test(n.note)) return en ? "relations" : "关系";
+  if (/（关系）$/.test(n.note)) return en ? "relations" : "關係";
   return en ? "profile" : "卡";
 }
 
@@ -169,7 +169,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
   return (
     <div lang={locale === "en" ? "en" : "zh"}>
       <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12, marginBottom: 6 }}>
-        <h2 style={{ fontFamily: "HuiwenZhengKai", fontSize: 22, fontWeight: 700, letterSpacing: "0.08em", margin: 0 }}>{t("余波")}</h2>
+        <h2 style={{ fontFamily: "HuiwenZhengKai", fontSize: 22, fontWeight: 700, letterSpacing: "0.08em", margin: 0 }}>{t("餘波")}</h2>
         <span title={t("層註")} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, color: T.sealTagInk, border: `1px solid ${T.seal}88`, padding: "0 7px", borderRadius: 3, letterSpacing: "0.15em" }}>{t("作者按")}</span>
       </div>
       <p style={{ fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.muted, lineHeight: 1.9, maxWidth: 700, margin: "0 0 20px" }}>
@@ -335,11 +335,11 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
               {/* 选中行之后：「回响详情 ↓」入口（见 detailRef 一段）。画在整行感应层之上，点之不触发取消选中 */}
               {on && (() => {
                 const jx = it.dead ? 34 : 20, jy = it.y + ROW_H + 6 + 9;
-                const label = locale === "en" ? "Echoes below" : "回响详情";
+                const label = locale === "en" ? "Echoes below" : "回響詳情";
                 const jw = textW(label, 11.5) + 30;
                 return (
                   <g role="button" tabIndex={0} style={{ cursor: "pointer", outline: "none" }}
-                    aria-label={locale === "en" ? `Jump to ${selName}'s echoes, below the chart` : `跳至${selName}的回响详情（在图下）`}
+                    aria-label={locale === "en" ? `Jump to ${selName}'s echoes, below the chart` : `跳至${selName}的回響詳情（在圖下）`}
                     onClick={goDetail}
                     onKeyDown={(ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); goDetail(); } }}
                     onFocus={(ev) => { if (ev.target.matches(":focus-visible")) setJumpFocus(true); }}
@@ -379,12 +379,12 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
 
       {/* 图例 */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 8, fontFamily: "HuiwenZhengKai", fontSize: 11.5, color: T.faint }}>
-        <span>● {locale === "en" ? "from the chronology" : "年表条目"}</span>
-        <span>○ {locale === "en" ? "outside the chronology (profiles, relations, manuscript)" : "年表以外（人物卡、关系、文稿）"}</span>
+        <span>● {locale === "en" ? "from the chronology" : "年表條目"}</span>
+        <span>○ {locale === "en" ? "outside the chronology (profiles, relations, manuscript)" : "年表以外（人物卡、關係、文稿）"}</span>
         <span>◌ {t("無定年")}</span>
         {rows.some((e) => e.draft) && <span style={{ color: T.seal }}>{t("待核")}{locale === "en" ? ": not yet reviewed by the author" : "：作者尚未逐行核定"}</span>}
-        <span>{locale === "en" ? "Hover a point to see what it is, and who else it reached that month." : "悬停一点：看它是什么事，以及同月还落在谁身上"}</span>
-        <span>{locale === "en" ? "Click a row: their echoes open below the chart ↓" : "点选一行：回响展开在图下 ↓"}</span>
+        <span>{locale === "en" ? "Hover a point to see what it is, and who else it reached that month." : "懸停一點：看它是什麼事，以及同月還落在誰身上"}</span>
+        <span>{locale === "en" ? "Click a row: their echoes open below the chart ↓" : "點選一行：回響展開在圖下 ↓"}</span>
       </div>
 
       {/* 选中一行：展开其回响 */}
@@ -394,7 +394,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
         const tr = characterTranslation(locale, c.id);
         const band = shock.bands.find(([k]) => k === selected.band);
         return (
-          <section ref={detailRef} tabIndex={-1} aria-label={locale === "en" ? `${selName}: echoes` : `${selName}的回响`} style={{ outline: "none", scrollMarginTop: 16, marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
+          <section ref={detailRef} tabIndex={-1} aria-label={locale === "en" ? `${selName}: echoes` : `${selName}的回響`} style={{ outline: "none", scrollMarginTop: 16, marginTop: 18, padding: "18px 22px", background: T.panel, borderTop: `1px solid ${T.line}`, borderRight: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}`, borderLeft: `3px solid ${col}`, borderRadius: 3 }}>
             <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
               <span style={{ fontFamily: "JingHuaLaoSong", fontSize: 19, color: T.ink }}>{tr?.name || c.name}</span>
               {selected.draft && (
@@ -425,7 +425,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 16 }}>
               <button type="button" onClick={backToChart} style={{ fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted, background: "none", border: `1px solid ${T.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" }}>
                 {/* 上箭头不在字体子集中（↓ 在）：以 ↓ 倒转代之，字形亦与浮签之箭头一致 */}
-                <span aria-hidden="true" style={{ display: "inline-block", transform: "rotate(180deg)", color: T.accent, marginRight: 6 }}>↓</span>{locale === "en" ? "Back to the chart" : "回到图上"}
+                <span aria-hidden="true" style={{ display: "inline-block", transform: "rotate(180deg)", color: T.accent, marginRight: 6 }}>↓</span>{locale === "en" ? "Back to the chart" : "回到圖上"}
               </button>
             </div>
           </section>
@@ -436,7 +436,7 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
       <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
         {selected ? (locale === "en"
           ? `${selName}'s echoes are open below the chart. Press Tab to reach “Echoes below”.`
-          : `${selName}的回响已在图下展开；按 Tab 至「回响详情」可直达。`) : ""}
+          : `${selName}的回響已在圖下展開；按 Tab 至「回響詳情」可直達。`) : ""}
       </span>
 
       {/* 详情在图下之浮签（见 detailRef 一段） */}

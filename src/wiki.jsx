@@ -223,7 +223,7 @@ function Seal({ ch, size = 15, svg }) {
      不套 .seal-stamp 的紅底／肌理／缺口；img 絕對定位鋪滿，縮放不參與排版 */
   if (svg) {
     return (
-      <span className="seal-svg-shell" style={box} title={t("品评")}>
+      <span className="seal-svg-shell" style={box} title={t("品評")}>
         <span style={{ fontSize: `${chScale}em`, visibility: "hidden" }}>{ch}</span>
         <img className="seal-svg" src={`${import.meta.env.BASE_URL}images/seals/${svg}`} alt=""
           style={{ transform: `translateY(${SEAL_SVG_NUDGE_Y}px) scale(${sm ? SEAL_SVG_SCALE.sm : SEAL_SVG_SCALE.lg})` }} />
@@ -234,7 +234,7 @@ function Seal({ ch, size = 15, svg }) {
     <span className={SEAL_FONT_VARIANT === "b" ? "seal-stamp seal-stamp--li" : "seal-stamp"}
       data-size={sm ? "sm" : "lg"} style={{
       ...box, color: T.onAccent, backgroundColor: T.seal,
-    }} title={t("品评")}><span className="seal-stamp-ch" style={{ fontSize: `${chScale}em` }}>{ch}</span></span>
+    }} title={t("品評")}><span className="seal-stamp-ch" style={{ fontSize: `${chScale}em` }}>{ch}</span></span>
   );
 }
 
@@ -370,7 +370,7 @@ function FacTags({ belong, style }) {
   return (
     <div className="flex flex-wrap" style={{ gap: 6, ...style }}>
       {(belong.length ? belong : [null]).map((f) => (
-        <span key={f ?? "none"} style={{ fontSize: 11, color: fcText(f ?? "门派待补"), border: `1px solid ${fc(f ?? "门派待补")}55`, padding: "1px 7px", borderRadius: "3px" }}>{f ? facName(locale, f) : t("门派待补")}</span>
+        <span key={f ?? "none"} style={{ fontSize: 11, color: fcText(f ?? "門派待補"), border: `1px solid ${fc(f ?? "門派待補")}55`, padding: "1px 7px", borderRadius: "3px" }}>{f ? facName(locale, f) : t("門派待補")}</span>
       ))}
     </div>
   );
@@ -385,7 +385,7 @@ function ChipName({ c }) {
 /* 英文界面下某區塊整段回落中文時，於區塊標題旁注一小籤 */
 function ZhNote() {
   const t = useT();
-  return <span className="zh-note" title={t("未译註")} style={{ marginLeft: 8, fontSize: 10.5, letterSpacing: 0, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>{t("中文原文")}</span>;
+  return <span className="zh-note" title={t("未譯註")} style={{ marginLeft: 8, fontSize: 10.5, letterSpacing: 0, color: T.faint, border: `1px solid ${T.line}`, padding: "0 5px", borderRadius: 3 }}>{t("中文原文")}</span>;
 }
 
 /* ---------------- 詳情面板 ---------------- */
@@ -677,7 +677,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                   <div style={{ fontSize: 11.5, color: T.faint, fontFamily: "HuiwenZhengKai", marginBottom: 2 }}>{t("勳、散")}</div>
                   {gs.map((g, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, padding: "3px 0" }}>
-                      <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? t("（约）") : ""}</div>
+                      <div style={{ width: 118, flexShrink: 0, fontSize: 12, color: T.accent, fontFamily: "HuiwenZhengKai" }}>{g.m ? `${g.y}.${g.m}` : g.y}{g.approx ? t("（約）") : ""}</div>
                       <div className="profile-prose" style={{ flex: 1, fontFamily: "HuiwenZhengKai", fontSize: 13.5, color: T.ink, lineHeight: 1.8 }}>
                         {(([txt, z]) => (z ? <Zh>{txt}</Zh> : txt))(grantTx(locale, g))}
                         {g.draft && <span title={g.note} style={{ marginLeft: 8, fontSize: 10.5, color: T.sealTagInk, border: `1px dashed ${T.seal}88`, padding: "0 5px", borderRadius: 3 }}>{t("待核")}</span>}
@@ -740,7 +740,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
                       <span style={{ color: relColor(r.t), marginLeft: 8, fontSize: 11 }}>{en && /[\u4e00-\u9fff]/.test(relEn) ? <Zh>{relEn}</Zh> : relEn}</span>
                       {/* 關係鈕底為 panelHi，淡墨在此只 3.67:1，欲達 4.5:1 即與次墨同色——故直用次墨（2026-11-26） */}
                       <span style={{ color: T.muted, marginLeft: 6, fontSize: 10.5 }}>
-                        {r.y0 ?? (en ? "?" : "？")}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("殁后")}` : ""}
+                        {r.y0 ?? (en ? "?" : "？")}{r.y1 != null && r.y1 !== r.y0 ? `${en ? "–" : "—"}${r.y1}` : ""}{r.ph ? ` · ${t("歿後")}` : ""}
                       </span>
                     </button>
                   );
@@ -769,7 +769,7 @@ function DetailPanel({ c, onClose, onOpenChar, onOpenNovel, onOpenEcho, onOpenPo
           if (!mine.length) return null;
           return (
             <div style={{ marginTop: 24 }}>
-              <SectionLabel>{t("所系之事")}</SectionLabel>
+              <SectionLabel>{t("所繫之事")}</SectionLabel>
               <div className="flex flex-wrap" style={{ gap: 8 }}>
                 {mine.map((x) => {
                   const sh = SHOCKS.find((q) => q.id === x.shock);
@@ -902,7 +902,7 @@ function FacBand({ segs, none, height = 4, maxWidth }) {
       {segs.map(([f, n]) => (
         <div key={f} style={{ flexGrow: n, flexBasis: 0, background: fc(f) }} title={`${facName(locale, f)}${locale === "en" ? ": " : "："}${n}`} />
       ))}
-      {none > 0 && <div style={{ flexGrow: none, flexBasis: 0, background: T.neutral }} title={t("门派未标：{n}", { n: none })} />}
+      {none > 0 && <div style={{ flexGrow: none, flexBasis: 0, background: T.neutral }} title={t("門派未標：{n}", { n: none })} />}
     </div>
   );
 }
@@ -924,7 +924,7 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
       )}
       <div className="flex items-baseline flex-wrap" style={{ gap: 8 }}>
         <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12.5, color: T.muted, minWidth: 52 }}>
-          {e.month != null ? (en ? monthEn(e.month) : `${e.month} 月`) : t("月份未标")}
+          {e.month != null ? (en ? monthEn(e.month) : `${e.month} 月`) : t("月份未標")}
         </span>
         {showYear && (
           <span style={{ fontFamily: "HuiwenZhengKai", fontSize: 12, color: T.muted }}>
@@ -940,10 +940,10 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
           <span style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: tone("#C9A15C"), border: `1px solid ${tone("#C9A15C")}55`, padding: "0 6px", borderRadius: "3px" }} title={t("採自人設文檔，尚未錄入 Notion 事件庫")}>{t("增補")}</span>
         )}
         {shocks.map((shock) => (
-          <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={t("余波：{title}——此事笼罩之人与其记忆方式", { title: shockTitle(locale, shock) })}
-            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.sealTagInk, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>{t("余波")}{shocks.length > 1 ? (en ? `: ${shockTitle(locale, shock).split(": ").pop()}` : `·${shock.title.split("·").pop()}`) : ""} ›</button>
+          <button key={shock.id} onClick={() => onOpenEcho(shock.id)} title={t("餘波：{title}——此事籠罩之人與其記憶方式", { title: shockTitle(locale, shock) })}
+            style={{ fontSize: 11, fontFamily: "HuiwenZhengKai", color: T.sealTagInk, background: "none", border: `1px solid ${T.seal}66`, padding: "0 7px", borderRadius: "3px", lineHeight: "16px", cursor: "pointer" }}>{t("餘波")}{shocks.length > 1 ? (en ? `: ${shockTitle(locale, shock).split(": ").pop()}` : `·${shock.title.split("·").pop()}`) : ""} ›</button>
         ))}
-        {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>{t("门派未标")}</span>}
+        {e.fac.length === 0 && <span style={{ fontSize: 11, color: T.faint, border: `1px dashed ${T.faint}`, padding: "0 6px", borderRadius: "3px" }}>{t("門派未標")}</span>}
         {e.fac.map((f) => (
           <span key={f} style={{ fontSize: 11, color: fcText(f), border: `1px solid ${fc(f)}44`, padding: "0 6px", borderRadius: "3px" }}>{facName(locale, f)}</span>
         ))}
@@ -1250,15 +1250,15 @@ function Timeline({ onOpenChar, onOpenEcho }) {
               <Chip
                 active={fsel === ETH_GROUP || isEthnic(fsel)}
                 onClick={() => { setFsel(ETH_GROUP); setWho("all"); }}
-                label={t("族属/地属 {n}", { n: facList.ethnicUnion })} fontFamily="JingHuaLaoSong" />
+                label={t("族屬/地屬 {n}", { n: facList.ethnicUnion })} fontFamily="JingHuaLaoSong" />
             )}
             {facList.none > 0 && (
-              <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(NONE_FAC); setWho("all"); }} label={t("门派未标 {n}", { n: facList.none })} fontFamily="JingHuaLaoSong" />
+              <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(NONE_FAC); setWho("all"); }} label={t("門派未標 {n}", { n: facList.none })} fontFamily="JingHuaLaoSong" />
             )}
           </div>
           {(fsel === ETH_GROUP || isEthnic(fsel)) && (
             <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: isEthnic(fsel) ? 10 : 18, paddingLeft: 4, borderLeft: `2px solid ${T.line}` }}>
-              <span style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.faint, margin: "0 4px" }}>{t("族属/地属 · 标签")}</span>
+              <span style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.faint, margin: "0 4px" }}>{t("族屬/地屬 · 標籤")}</span>
               {facList.ethnic.map(({ f, n }) => (
                 <Chip key={f} active={fsel === f}
                   onClick={() => { setFsel((prev) => (prev === f ? ETH_GROUP : f)); setWho("all"); }}
@@ -1269,7 +1269,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
           {fsel !== "all" && fsel !== ETH_GROUP && (
             <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 18, paddingLeft: 4, borderLeft: `2px solid ${T.line}` }}>
               <span style={{ fontSize: 11, fontFamily: "JingHuaLaoSong", color: T.faint, margin: "0 4px" }}>
-                {fsel === NONE_FAC ? t("未标事件 · 人物") : t("{f} · 人物", { f: facName(locale, fsel) })}
+                {fsel === NONE_FAC ? t("未標事件 · 人物") : t("{f} · 人物", { f: facName(locale, fsel) })}
               </span>
               {subPersons.map((id) => (
                 <Chip key={id} active={who === id} onClick={() => setWho((prev) => (prev === id ? "all" : id))} label={charName(locale, byId[id])} fontFamily="JingHuaLaoSong" />
@@ -1605,7 +1605,7 @@ function ellipseAngles(rx, ry, n) {
    「门派未标」一項落到 fc 的中立灰回退，與圖中無門派者同色，非為虛設。 */
 const FACTION_KEY_LIST = (() => {
   const n = {};
-  for (const c of CHARACTERS) for (const f of (c.belong.length ? c.belong : ["门派未标"])) n[f] = (n[f] || 0) + 1;
+  for (const c of CHARACTERS) for (const f of (c.belong.length ? c.belong : ["門派未標"])) n[f] = (n[f] || 0) + 1;
   return Object.entries(n).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 })();
 function FactionKey() {
@@ -1624,7 +1624,7 @@ function FactionKey() {
             <span key={f} className="flex items-center" style={{ gap: 5, fontSize: 11.5, fontFamily: gUI, color: T.muted }}>
               {/* 作圈而非實心塊：與圖中星體之描邊同其形，一望即知所指 */}
               <span style={{ width: 10, height: 10, borderRadius: "50%", background: T.panel, border: `1.6px solid ${fc(f)}`, flex: "0 0 auto" }} />
-              {f === "门派未标" ? t(f) : facName(locale, f)}<span style={{ color: T.faint }}>{n}</span>
+              {f === "門派未標" ? t(f) : facName(locale, f)}<span style={{ color: T.faint }}>{n}</span>
             </span>
           ))}
         </div>
@@ -2951,10 +2951,10 @@ function GeoMap({ onOpenChar }) {
         ))}
         {facList.ethnic.length > 0 && (
           <Chip active={fsel === ETH_GROUP || facList.ethnic.some((x) => x.f === fsel)}
-            onClick={() => { setFsel(fsel === ETH_GROUP ? "all" : ETH_GROUP); setWho("all"); }} label={t("【族属/地属】")} fontFamily="JingHuaLaoSong" />
+            onClick={() => { setFsel(fsel === ETH_GROUP ? "all" : ETH_GROUP); setWho("all"); }} label={t("【族屬/地屬】")} fontFamily="JingHuaLaoSong" />
         )}
         {facList.none > 0 && (
-          <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(fsel === NONE_FAC ? "all" : NONE_FAC); setWho("all"); }} label={t("门派未标 {n}", { n: facList.none })} fontFamily="JingHuaLaoSong" />
+          <Chip active={fsel === NONE_FAC} onClick={() => { setFsel(fsel === NONE_FAC ? "all" : NONE_FAC); setWho("all"); }} label={t("門派未標 {n}", { n: facList.none })} fontFamily="JingHuaLaoSong" />
         )}
       </div>
       {/* 族屬傘形展開之次級標籤 */}
@@ -2967,7 +2967,7 @@ function GeoMap({ onOpenChar }) {
       )}
       {facList.ethnic.some((x) => x.f === fsel) && (
         <div className="flex flex-wrap items-center" style={{ gap: 6, marginBottom: 8 }}>
-          <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("【族属/地属】")} ·</span>
+          <span style={{ fontSize: 11.5, fontFamily: "JingHuaLaoSong", color: T.faint }}>{t("【族屬/地屬】")} ·</span>
           <Chip active={true} onClick={() => setFsel(ETH_GROUP)} label={facName(locale, fsel)} fontFamily="JingHuaLaoSong" />
         </div>
       )}
@@ -3379,7 +3379,7 @@ export default function Wiki({ onOpenLanding }) {
           {/* 頁籤另包一層 .nav-tabs：桌面與中文 display: contents，排版一如其舊；
               手機英文（< 600px）作一行橫滑，右緣漸隱，「卷首／語言／紙色」另起一行（見 index.css） */}
           <div className="nav-tabs" ref={navTabsRef}>
-          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "余波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
+          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "餘波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
             <button key={k} onClick={() => setTab(k)} aria-current={tab === k || (k === "chars" && tab === "posts") ? "page" : undefined}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
@@ -3407,7 +3407,7 @@ export default function Wiki({ onOpenLanding }) {
       {/* 手機上英文導航已折三行，說明再佔四五行，正文要到半屏以下才開始：窄屏（< 600）只出一句，點「Details」展開全文 */}
       {en && <p className="translation-scope" lang="en" style={{ color: T.muted }}>
         {phoneHead && !scopeOpen ? t("英文版說明短") : t("英文版說明", coverageNow())}
-        {tab !== "about" && (!phoneHead || scopeOpen) && <>{" "}<button type="button" onClick={() => setTab("about")} style={inlineLink}>{t("初來者请看")}</button></>}
+        {tab !== "about" && (!phoneHead || scopeOpen) && <>{" "}<button type="button" onClick={() => setTab("about")} style={inlineLink}>{t("初來者請看")}</button></>}
         {phoneHead && <>{scopeOpen ? " · " : " "}<button type="button" aria-expanded={scopeOpen} onClick={() => setScopeOpen((o) => !o)} style={inlineLink}>{scopeOpen ? t("收起") : t("詳情")}</button></>}
       </p>}
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 24px 0" }}>

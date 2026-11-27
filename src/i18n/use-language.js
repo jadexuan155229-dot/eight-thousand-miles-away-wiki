@@ -18,7 +18,7 @@ import { enBulkReady, loadEnBulk } from './en-bulk';
 const BASE = import.meta.env.BASE_URL; /* '/eight-thousand-miles-away-wiki/' */
 export const EN_PATH = `${BASE}en/`;
 const TITLE = {
-  zh: '八千里路 · Eight Thousand Miles Away | 人山人海 · 档案',
+  zh: '八千里路 · Eight Thousand Miles Away | 人山人海 · 檔案',
   en: 'Eight Thousand Miles Away | Characters: Archive',
 };
 
