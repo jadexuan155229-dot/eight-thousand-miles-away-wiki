@@ -399,7 +399,8 @@ export default function NovelReader({ path, onNav }) {
   const toggle = (key) =>
     setExpanded((prev) => {
       const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   /* 選章 = 寫路由 + 收抽屜 + 回頁首（自檢索結果入章時不回頁首，改滾至命中處）；

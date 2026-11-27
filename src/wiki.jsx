@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
 import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, getSkin, dimAccent, BAND_DARK } from "./theme";
 
@@ -6,6 +6,8 @@ import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, 
 const fc = (f) => tone(fcRaw(f));
 /* 門派色作字時用此（素紙下守 3:1，見 theme.js toneText）；框線、色條仍用 fc */
 const fcText = (f) => toneText(fcRaw(f));
+/* 族屬／地屬類標籤（年表、輿圖兩處篩選共用）：顯式常量，運行時與實有標籤求交集（無事者不顯示）；增刪改此行即可 */
+const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
 import { parseRoute, routeHash } from "./router";
 import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
@@ -988,8 +990,6 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     []
   );
 
-  /* 族屬／地屬類標籤：顯式常量，運行時與實有標籤求交集（無事者不顯示）；增刪改此行即可 */
-  const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
   /* 一級標籤：事件 fac 標籤 ∪ 涉事人物所屬門派（鮮卑、靺鞨等無事件標籤者由後者補入）。
      計數為成員包含式：事件標籤含 f，或涉事人物隸屬 f。 */
   const facList = useMemo(() => {
@@ -1102,7 +1102,8 @@ function Timeline({ onOpenChar, onOpenEcho }) {
   const toggle = (key) =>
     setExpanded((prev) => {
       const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   const monthKeysOf = (s) => {
@@ -1125,7 +1126,8 @@ function Timeline({ onOpenChar, onOpenEcho }) {
   const toggleMonth = (gk) =>
     setExpandedMonths((prev) => {
       const next = new Set(prev);
-      next.has(gk) ? next.delete(gk) : next.add(gk);
+      if (next.has(gk)) next.delete(gk);
+      else next.add(gk);
       return next;
     });
   const expandAll = () => {
@@ -1671,6 +1673,160 @@ function nodeFontSize(len, r, dim) {
    點小一像素，橢圓即可矮三十，而餘隙反持平（7.9px，舊 8.0px）；
    餘者出自三環與雙星間距同比略縮。W/H 立為常量，viewBox 與手勢層共讀，免二處失步。 */
 const PW = 1200, PH = 760, PCX = [360, 840], PCY = PH / 2, FAR_R = 14;
+const CX = PCX, CY = PCY; /* 行星圖內通用之短名 */
+/* 行星圖布局：諸環、橋星、遠軌之位，純由數據（人物、事件、關係）而定，不讀狀態、不量字，
+   兩種語言、兩膚皆同。原為組件內 useMemo（無所依），每切進此頁即重算一遍——慢手機（CPU 降速 4 倍）上
+   約三百毫秒；今模塊內只算一次，再進即取現成（2026-11-27）。所返諸物只讀，取用處不得改寫。 */
+let PLANETARY_LAYOUT = null;
+function planetaryLayout() {
+  if (PLANETARY_LAYOUT) return PLANETARY_LAYOUT;
+  PLANETARY_LAYOUT = (() => {
+  const counts = CENTERS_META.map((m) => coCountsFor(m.id));
+  /* 外軌收至 218：兩核相距 500，舊值 248 令兩系外軌之間僅餘四像素，
+     而唯一之橋星恰坐此夾縫。今中縫得六十四像素，橋星圓周不再壓兩圈虛線。
+     maxSpan 為扇面上限（圈之幾分）：讓道於雙星之間的橋區，而讓多讓寡因環而異——
+     橋線所經在外，故外環讓足 0.27 圈，內環去核近、不涉其事，讓 0.21 即可。
+     此一鬆，蒼雲系內軌九人之封頂星距由 53.5px 昇至 58px，全幅最緊處遂不復在此。 */
+  const RINGS = [
+    { label: "內軌", note: "共見 ≥6 事", r: 102, maxSpan: 0.79, test: (n) => n >= 6 },
+    { label: "中軌", note: "共見 3–5 事", r: 163, maxSpan: 0.76, test: (n) => n >= 3 && n <= 5 },
+    { label: "外軌", note: "共見 1–2 事", r: 211, maxSpan: 0.73, test: (n) => n >= 1 && n <= 2 },
+  ];
+  const centerIds = CENTERS_META.map((m) => m.id);
+  const shared = [], far = [], sys = [[], []];
+  for (const c of CHARACTERS) {
+    if (centerIds.includes(c.id)) continue;
+    const a = counts[0][c.id] || 0, b = counts[1][c.id] || 0;
+    if (Math.min(a, b) >= 2) shared.push({ c, a, b });
+    else if (a === 0 && b === 0) far.push(c);
+    else if (a >= b) sys[0].push({ c, n: a });
+    else sys[1].push({ c, n: b });
+  }
+  shared.sort((x, y) => y.a + y.b - (x.a + x.b));
+  /* 各系星體：面向外側展開，避讓雙星之間的橋區。
+     扇面不再一概鋪滿——舊法無論幾人皆攤足 0.73 圈，故蒼雲系中軌二人相隔
+     四百餘像素、天策系內軌一人獨佔一環，環環看去皆空。今按人數定扇面：
+     星距恒取 GAP，扇面即 n·GAP/r，逾本環之 maxSpan 則封頂（僅蒼雲系內軌
+     九人觸頂，星距 58px）。餘者一律 72px，環之弧長遂自成人數之量度。 */
+  const GAP = 72;
+  const rings = sys.map((members, k) => {
+    const outward = k === 0 ? Math.PI : 0;
+    return RINGS.map((ring, ri) => {
+      const ms = members
+        .filter((m) => ring.test(m.n))
+        .sort((x, y) => (x.c.belong[0] || "").localeCompare(y.c.belong[0] || "") || y.n - x.n);
+      /* 次星圈大，於環上按其多出之徑多佔一份弧長；無次星之環，權皆為一，與舊法全同 */
+      const W = ms.map((m) => (SECONDARY_IDS.has(m.c.id) ? 1 + (2 * (SEC_R - orbitR(m.n))) / GAP : 1));
+      const tot = W.reduce((a, b) => a + b, 0);
+      const span = Math.min(Math.PI * 2 * ring.maxSpan, (tot * GAP) / ring.r);
+      const start = outward - span / 2 + ri * 0.22;
+      let acc = 0;
+      return {
+        ...ring,
+        nodes: ms.map((m, i) => {
+          const ang = start + ((acc + W[i] / 2) / tot) * span;
+          acc += W[i];
+          return { ...m, r: starR(m.c.id, orbitR(m.n)), x: CX[k] + ring.r * Math.cos(ang), y: CY + ring.r * Math.sin(ang), k, ringR: ring.r };
+        }),
+      };
+    });
+  });
+  /* 橋星：共見不偏者居雙星連線中央，縱向錯落；偏於一核者（及作者所定者，見 BRIDGE_SIDE）
+     此處先不落位，待諸星與遠軌俱定後再於所偏之核一側擇地（見下「偏側橋星」） */
+  const sideOf = (m) => (m.c.id in BRIDGE_SIDE ? BRIDGE_SIDE[m.c.id]
+    : Math.abs(m.b - m.a) / (m.a + m.b) >= 0.3 ? Math.sign(m.b - m.a) : 0);
+  const mid = shared.filter((m) => sideOf(m) === 0);
+  const bridge = mid.map((m, i) => ({
+    ...m, r: starR(m.c.id, BRIDGE_R), x: PW / 2, y: CY + (i - (mid.length - 1) / 2) * 72,
+  }));
+  /* 遠軌：環抱全系之橢圓。人多而環促——與兩核俱無共見者常逾七十，
+     舊法按等角平鋪，長軸兩端最近鄰僅二十九像素而圓徑四十，過半相疊。
+     今改等弧長取位，復令奇偶兩列內外錯開（LANE），同列間距倍之。
+     數為奇時末一枚落回中列，免首尾同列於接縫處相撞。 */
+  /* 徑略收（552→540 / 356→322）：橫者為軌外之門派署名讓出邊白，縱者為收幅面之高。 */
+  const FAR = { rx: 540, ry: 322 }, LANE = 16;
+  const sortedFar = far.sort((x, y) => (x.belong[0] || "").localeCompare(y.belong[0] || ""));
+  const nf = sortedFar.length;
+  /* 取兩倍之角：偶位為星體所居，奇位為兩星之間的半步，門派弧段即以半步為界 */
+  const angs2 = ellipseAngles(FAR.rx, FAR.ry, nf * 2);
+  const farAng = (i) => -Math.PI / 2 + angs2[((i % (nf * 2)) + nf * 2) % (nf * 2)];
+  const farNodes = sortedFar.map((c, i) => {
+    const ang = farAng(2 * i);
+    const d = nf % 2 === 1 && i === nf - 1 ? 0 : i % 2 ? LANE : -LANE;
+    return { c, r: starR(c.id, FAR_R), x: PW / 2 + (FAR.rx + d) * Math.cos(ang), y: CY + (FAR.ry + d) * Math.sin(ang) };
+  });
+  /* 次星微調：環分三層、層距僅五十至六十，次星圈大，按序落位時常恰夾在內外兩環的鄰星之間
+     （陆晚月居中軌，初落 63°，內有程锋 61°、外有陆南信 68°，僅隔 4px）。
+     故令其在本環上左右各容半步（GAP/2 弧長），取與全圖諸星最寬之一角；
+     計入雙門派之外圈（r+4）與兩核之外環（47）。不寫死角度，人物增減後自會重求。 */
+  {
+    const all = [
+      ...rings.flatMap((s) => s.flatMap((ring) => ring.nodes)), ...bridge, ...farNodes,
+      ...CX.map((x) => ({ x, y: CY, r: 47, c: { belong: [] } })),
+    ];
+    const outerR = (n) => n.r + (n.c.belong.length > 1 ? 4 : 0);
+    for (const n of all.filter((q) => q.ringR && SECONDARY_IDS.has(q.c.id))) {
+      const a0 = Math.atan2(n.y - CY, n.x - CX[n.k]), half = GAP / 2 / n.ringR;
+      let best = null;
+      for (let t = -half; t <= half + 1e-9; t += half / 48) {
+        const x = CX[n.k] + n.ringR * Math.cos(a0 + t), y = CY + n.ringR * Math.sin(a0 + t);
+        let g = Infinity;
+        for (const q of all) if (q !== n) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - outerR(n) - outerR(q));
+        if (!best || g > best.g + 1e-9) best = { g, x, y };
+      }
+      n.x = best.x; n.y = best.y;
+    }
+    /* 偏側橋星：落於所偏之核面向橋區之一側——軸線上下各 12°–60°、距核 125–150
+       （內軌與中軌之間；軸線左右各留一段給中列）。橋星雙繫兩核，靠向一側後其遠端之線
+       須橫越橋區，故擇地不只看與諸星之隙，並看：此處離他星之連線多遠、己之兩線離他星多遠。
+       三者取小，求其最大。依共見多寡依次落位，後落者計入先落者之線。
+       程凯面向橋區之下半（左下）有程骞、叶忱、叶添灯、陆羽鸣諸外軌星之放射線，無處不壓線，
+       故陈瑞和實落其左上；闵方城一側二人上下近乎對稱。 */
+    const segD = (px, py, x1, y1, x2, y2) => {
+      const dx = x2 - x1, dy = y2 - y1, L2 = dx * dx + dy * dy || 1;
+      const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / L2));
+      return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+    };
+    const sysNodes = rings.flatMap((s) => s.flatMap((ring) => ring.nodes));
+    for (const m of shared.filter((q) => sideOf(q) !== 0)) {
+      const k = sideOf(m) < 0 ? 0 : 1, axis = k === 0 ? 0 : Math.PI;
+      const me = { ...m, r: starR(m.c.id, BRIDGE_R) };
+      const lines = [
+        ...sysNodes.map((n) => [CX[n.k], CY, n.x, n.y]),
+        ...bridge.flatMap((n) => [[CX[0], CY, n.x, n.y], [CX[1], CY, n.x, n.y]]),
+      ];
+      const stars = [...all, ...bridge.filter((n) => !all.includes(n))];
+      let best = null;
+      for (let d = 125; d <= 150; d += 2.5) {
+        for (let deg = -60; deg <= 60; deg += 1) {
+          if (Math.abs(deg) < 12) continue;
+          const a = axis + (k === 0 ? 1 : -1) * (deg * Math.PI) / 180;
+          const x = CX[k] + d * Math.cos(a), y = CY + d * Math.sin(a);
+          let g = Infinity, gl = Infinity, gs = Infinity;
+          for (const q of stars) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - outerR(me) - outerR(q));
+          for (const L of lines) gl = Math.min(gl, segD(x, y, ...L) - outerR(me));
+          for (const q of stars) if (q.r < 47) for (const cx of CX) gs = Math.min(gs, segD(q.x, q.y, cx, CY, x, y) - outerR(q));
+          const sc = Math.min(g - 8, gl, gs);
+          if (!best || sc > best.sc) best = { sc, x, y };
+        }
+      }
+      bridge.push({ ...me, x: best.x, y: best.y });
+    }
+  }
+  /* 遠軌本已按門派排序、色塊天然成段，舊時軌線卻是通體一色的虛線，
+     七十七枚散點遂只讀作噪。今於軌線上按段著門派之色，逾三人者更署其名，
+     一環即分作二十四段——同色相鄰者為同門，不必逐一辨圈色。 */
+  const farRuns = [];
+  sortedFar.forEach((c, i) => {
+    const f = c.belong[0] || "";
+    const last = farRuns[farRuns.length - 1];
+    if (last && last.f === f) last.i1 = i;
+    else farRuns.push({ f, i0: i, i1: i });
+  });
+  return { rings, bridge, farNodes, farRuns, farAng, FAR, LANE, RINGS };
+  })();
+  return PLANETARY_LAYOUT;
+}
 function Planetary({ onOpenChar }) {
   const locale = useLocale();
   const t = useT();
@@ -1689,152 +1845,7 @@ function Planetary({ onOpenChar }) {
   const [keyFocus, setKeyFocus] = useState(null);
   const keyHi = hover ? null : keyHover ?? keyPin;
   const toggleKey = (id) => { setHover(null); setKeyPin((p) => (p === id ? null : id)); };
-  const CX = PCX, CY = PCY;
-  const layout = useMemo(() => {
-    const counts = CENTERS_META.map((m) => coCountsFor(m.id));
-    /* 外軌收至 218：兩核相距 500，舊值 248 令兩系外軌之間僅餘四像素，
-       而唯一之橋星恰坐此夾縫。今中縫得六十四像素，橋星圓周不再壓兩圈虛線。
-       maxSpan 為扇面上限（圈之幾分）：讓道於雙星之間的橋區，而讓多讓寡因環而異——
-       橋線所經在外，故外環讓足 0.27 圈，內環去核近、不涉其事，讓 0.21 即可。
-       此一鬆，蒼雲系內軌九人之封頂星距由 53.5px 昇至 58px，全幅最緊處遂不復在此。 */
-    const RINGS = [
-      { label: "內軌", note: "共見 ≥6 事", r: 102, maxSpan: 0.79, test: (n) => n >= 6 },
-      { label: "中軌", note: "共見 3–5 事", r: 163, maxSpan: 0.76, test: (n) => n >= 3 && n <= 5 },
-      { label: "外軌", note: "共見 1–2 事", r: 211, maxSpan: 0.73, test: (n) => n >= 1 && n <= 2 },
-    ];
-    const centerIds = CENTERS_META.map((m) => m.id);
-    const shared = [], far = [], sys = [[], []];
-    for (const c of CHARACTERS) {
-      if (centerIds.includes(c.id)) continue;
-      const a = counts[0][c.id] || 0, b = counts[1][c.id] || 0;
-      if (Math.min(a, b) >= 2) shared.push({ c, a, b });
-      else if (a === 0 && b === 0) far.push(c);
-      else if (a >= b) sys[0].push({ c, n: a });
-      else sys[1].push({ c, n: b });
-    }
-    shared.sort((x, y) => y.a + y.b - (x.a + x.b));
-    /* 各系星體：面向外側展開，避讓雙星之間的橋區。
-       扇面不再一概鋪滿——舊法無論幾人皆攤足 0.73 圈，故蒼雲系中軌二人相隔
-       四百餘像素、天策系內軌一人獨佔一環，環環看去皆空。今按人數定扇面：
-       星距恒取 GAP，扇面即 n·GAP/r，逾本環之 maxSpan 則封頂（僅蒼雲系內軌
-       九人觸頂，星距 58px）。餘者一律 72px，環之弧長遂自成人數之量度。 */
-    const GAP = 72;
-    const rings = sys.map((members, k) => {
-      const outward = k === 0 ? Math.PI : 0;
-      return RINGS.map((ring, ri) => {
-        const ms = members
-          .filter((m) => ring.test(m.n))
-          .sort((x, y) => (x.c.belong[0] || "").localeCompare(y.c.belong[0] || "") || y.n - x.n);
-        /* 次星圈大，於環上按其多出之徑多佔一份弧長；無次星之環，權皆為一，與舊法全同 */
-        const W = ms.map((m) => (SECONDARY_IDS.has(m.c.id) ? 1 + (2 * (SEC_R - orbitR(m.n))) / GAP : 1));
-        const tot = W.reduce((a, b) => a + b, 0);
-        const span = Math.min(Math.PI * 2 * ring.maxSpan, (tot * GAP) / ring.r);
-        const start = outward - span / 2 + ri * 0.22;
-        let acc = 0;
-        return {
-          ...ring,
-          nodes: ms.map((m, i) => {
-            const ang = start + ((acc + W[i] / 2) / tot) * span;
-            acc += W[i];
-            return { ...m, r: starR(m.c.id, orbitR(m.n)), x: CX[k] + ring.r * Math.cos(ang), y: CY + ring.r * Math.sin(ang), k, ringR: ring.r };
-          }),
-        };
-      });
-    });
-    /* 橋星：共見不偏者居雙星連線中央，縱向錯落；偏於一核者（及作者所定者，見 BRIDGE_SIDE）
-       此處先不落位，待諸星與遠軌俱定後再於所偏之核一側擇地（見下「偏側橋星」） */
-    const sideOf = (m) => (m.c.id in BRIDGE_SIDE ? BRIDGE_SIDE[m.c.id]
-      : Math.abs(m.b - m.a) / (m.a + m.b) >= 0.3 ? Math.sign(m.b - m.a) : 0);
-    const mid = shared.filter((m) => sideOf(m) === 0);
-    const bridge = mid.map((m, i) => ({
-      ...m, r: starR(m.c.id, BRIDGE_R), x: PW / 2, y: CY + (i - (mid.length - 1) / 2) * 72,
-    }));
-    /* 遠軌：環抱全系之橢圓。人多而環促——與兩核俱無共見者常逾七十，
-       舊法按等角平鋪，長軸兩端最近鄰僅二十九像素而圓徑四十，過半相疊。
-       今改等弧長取位，復令奇偶兩列內外錯開（LANE），同列間距倍之。
-       數為奇時末一枚落回中列，免首尾同列於接縫處相撞。 */
-    /* 徑略收（552→540 / 356→322）：橫者為軌外之門派署名讓出邊白，縱者為收幅面之高。 */
-    const FAR = { rx: 540, ry: 322 }, LANE = 16;
-    const sortedFar = far.sort((x, y) => (x.belong[0] || "").localeCompare(y.belong[0] || ""));
-    const nf = sortedFar.length;
-    /* 取兩倍之角：偶位為星體所居，奇位為兩星之間的半步，門派弧段即以半步為界 */
-    const angs2 = ellipseAngles(FAR.rx, FAR.ry, nf * 2);
-    const farAng = (i) => -Math.PI / 2 + angs2[((i % (nf * 2)) + nf * 2) % (nf * 2)];
-    const farNodes = sortedFar.map((c, i) => {
-      const ang = farAng(2 * i);
-      const d = nf % 2 === 1 && i === nf - 1 ? 0 : i % 2 ? LANE : -LANE;
-      return { c, r: starR(c.id, FAR_R), x: PW / 2 + (FAR.rx + d) * Math.cos(ang), y: CY + (FAR.ry + d) * Math.sin(ang) };
-    });
-    /* 次星微調：環分三層、層距僅五十至六十，次星圈大，按序落位時常恰夾在內外兩環的鄰星之間
-       （陆晚月居中軌，初落 63°，內有程锋 61°、外有陆南信 68°，僅隔 4px）。
-       故令其在本環上左右各容半步（GAP/2 弧長），取與全圖諸星最寬之一角；
-       計入雙門派之外圈（r+4）與兩核之外環（47）。不寫死角度，人物增減後自會重求。 */
-    {
-      const all = [
-        ...rings.flatMap((s) => s.flatMap((ring) => ring.nodes)), ...bridge, ...farNodes,
-        ...CX.map((x) => ({ x, y: CY, r: 47, c: { belong: [] } })),
-      ];
-      const outerR = (n) => n.r + (n.c.belong.length > 1 ? 4 : 0);
-      for (const n of all.filter((q) => q.ringR && SECONDARY_IDS.has(q.c.id))) {
-        const a0 = Math.atan2(n.y - CY, n.x - CX[n.k]), half = GAP / 2 / n.ringR;
-        let best = null;
-        for (let t = -half; t <= half + 1e-9; t += half / 48) {
-          const x = CX[n.k] + n.ringR * Math.cos(a0 + t), y = CY + n.ringR * Math.sin(a0 + t);
-          let g = Infinity;
-          for (const q of all) if (q !== n) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - outerR(n) - outerR(q));
-          if (!best || g > best.g + 1e-9) best = { g, x, y };
-        }
-        n.x = best.x; n.y = best.y;
-      }
-      /* 偏側橋星：落於所偏之核面向橋區之一側——軸線上下各 12°–60°、距核 125–150
-         （內軌與中軌之間；軸線左右各留一段給中列）。橋星雙繫兩核，靠向一側後其遠端之線
-         須橫越橋區，故擇地不只看與諸星之隙，並看：此處離他星之連線多遠、己之兩線離他星多遠。
-         三者取小，求其最大。依共見多寡依次落位，後落者計入先落者之線。
-         程凯面向橋區之下半（左下）有程骞、叶忱、叶添灯、陆羽鸣諸外軌星之放射線，無處不壓線，
-         故陈瑞和實落其左上；闵方城一側二人上下近乎對稱。 */
-      const segD = (px, py, x1, y1, x2, y2) => {
-        const dx = x2 - x1, dy = y2 - y1, L2 = dx * dx + dy * dy || 1;
-        const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / L2));
-        return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
-      };
-      const sysNodes = rings.flatMap((s) => s.flatMap((ring) => ring.nodes));
-      for (const m of shared.filter((q) => sideOf(q) !== 0)) {
-        const k = sideOf(m) < 0 ? 0 : 1, axis = k === 0 ? 0 : Math.PI;
-        const me = { ...m, r: starR(m.c.id, BRIDGE_R) };
-        const lines = [
-          ...sysNodes.map((n) => [CX[n.k], CY, n.x, n.y]),
-          ...bridge.flatMap((n) => [[CX[0], CY, n.x, n.y], [CX[1], CY, n.x, n.y]]),
-        ];
-        const stars = [...all, ...bridge.filter((n) => !all.includes(n))];
-        let best = null;
-        for (let d = 125; d <= 150; d += 2.5) {
-          for (let deg = -60; deg <= 60; deg += 1) {
-            if (Math.abs(deg) < 12) continue;
-            const a = axis + (k === 0 ? 1 : -1) * (deg * Math.PI) / 180;
-            const x = CX[k] + d * Math.cos(a), y = CY + d * Math.sin(a);
-            let g = Infinity, gl = Infinity, gs = Infinity;
-            for (const q of stars) g = Math.min(g, Math.hypot(x - q.x, y - q.y) - outerR(me) - outerR(q));
-            for (const L of lines) gl = Math.min(gl, segD(x, y, ...L) - outerR(me));
-            for (const q of stars) if (q.r < 47) for (const cx of CX) gs = Math.min(gs, segD(q.x, q.y, cx, CY, x, y) - outerR(q));
-            const sc = Math.min(g - 8, gl, gs);
-            if (!best || sc > best.sc) best = { sc, x, y };
-          }
-        }
-        bridge.push({ ...me, x: best.x, y: best.y });
-      }
-    }
-    /* 遠軌本已按門派排序、色塊天然成段，舊時軌線卻是通體一色的虛線，
-       七十七枚散點遂只讀作噪。今於軌線上按段著門派之色，逾三人者更署其名，
-       一環即分作二十四段——同色相鄰者為同門，不必逐一辨圈色。 */
-    const farRuns = [];
-    sortedFar.forEach((c, i) => {
-      const f = c.belong[0] || "";
-      const last = farRuns[farRuns.length - 1];
-      if (last && last.f === f) last.i1 = i;
-      else farRuns.push({ f, i0: i, i1: i });
-    });
-    return { rings, bridge, farNodes, farRuns, farAng, FAR, LANE, RINGS };
-  }, []);
+  const layout = planetaryLayout(); /* 純由數據而定、與狀態無涉，模塊內只算一次（見 planetaryLayout） */
 
   const pos = {};
   CENTERS_META.forEach((m, k) => { pos[m.id] = { x: CX[k], y: CY }; });
@@ -2306,6 +2317,85 @@ function Planetary({ onOpenChar }) {
 
 /* ---------------- 群像網絡：門派聚類 · 時間滑桿 ---------------- */
 const PHASES = [["壹 · 前史", 744], ["貳 · 亂前", 750], ["叁 · 亂中", 756], ["肆 · 主線", 762]];
+/* 群像網絡布局：分群、群心、星位與排斥鬆弛（二百餘輪），純由數據而定，中英同一布局（名框取兩者之寬者、
+   字寬按字數估，不量字）。原為組件內 useMemo（無所依），每切進此頁即重算——慢手機上約二百毫秒；
+   今模塊內只算一次（2026-11-27）。所返諸物只讀，取用處不得改寫。 */
+let COMMUNITY_LAYOUT = null;
+function communityLayout() {
+  if (COMMUNITY_LAYOUT) return COMMUNITY_LAYOUT;
+  COMMUNITY_LAYOUT = (() => {
+  const groups = {};
+  CHARACTERS.forEach((c) => {
+    const f = c.belong[0] || "其他";
+    (groups[f] = groups[f] || []).push(c);
+  });
+  const sorted = Object.keys(groups).sort((a, b) => groups[b].length - groups[a].length);
+  /* 苍云居中；外围门派按「大小相间」排列，使相邻群圆半径之和均匀，避免重叠 */
+  const periph = sorted.filter((f) => f !== "苍云");
+  const names = ["苍云"];
+  for (let i = 0, j = periph.length - 1; i <= j; i++, j--) {
+    names.push(periph[i]);
+    if (i !== j) names.push(periph[j]);
+  }
+  const CX0 = 560, CY0 = 535, GR = 382;
+  const pos = {}, nodes = [], centers = [];
+  names.forEach((f, gi) => {
+    const members = groups[f];
+    const central = f === "苍云";
+    const ga = -Math.PI / 2 + ((gi - 1) / (names.length - 1)) * Math.PI * 2;
+    const gx = central ? CX0 : CX0 + GR * Math.cos(ga);
+    const gy = central ? CY0 : CY0 + GR * Math.sin(ga);
+    const cr = 26 + Math.sqrt(members.length) * 26;
+    centers.push({ f, gx, gy, cr, n: members.length });
+    members.forEach((c, i) => {
+      const ang = i * 2.399963;
+      const rad = members.length === 1 ? 0 : cr * Math.sqrt((i + 0.6) / members.length);
+      const x = gx + rad * Math.cos(ang), y = gy + rad * Math.sin(ang);
+      nodes.push({ c, x, y, f });
+    });
+  });
+  /* 相鄰兩群之圓半徑和大於群心距，交界處圈會互疊：舊時十五對圓心相距不足一圈徑，
+     紐沃、秦徽幾為彭延思、陸靈全蓋，懸停不到；門派群名亦壓住十四圈。
+     今以排斥鬆弛分開：圓心距不足 MIN（懸停放大之圈亦不蓋鄰圈之心）者各退一半，
+     壓群名者推出名框；每輪微拉回原位，群形大致不變。名框取中英兩者之寬者，兩種界面同一佈局；
+     字寬按字數估（不待字體載入，每次結果一樣）。 */
+  const MIN = 38, R = 15.5;
+  const labBox = centers.map((g) => {
+    const enS = g.f === "其他" ? "Other" : facName("en", g.f);
+    const w = Math.max([...g.f].length * 13 * 1.3, enS.length * 12 * 0.6), y = g.gy - g.cr - 10;
+    return { l: g.gx - w / 2 - 3, r: g.gx + w / 2 + 3, t: y - 15, b: y + 6 };
+  });
+  const home = nodes.map((n) => [n.x, n.y]);
+  for (let it = 0; it < 600; it++) {
+    let bad = 0;
+    for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+      const p = nodes[i], q = nodes[j];
+      let dx = q.x - p.x, dy = q.y - p.y;
+      const d = Math.hypot(dx, dy);
+      if (d >= MIN) continue;
+      bad++;
+      if (d < 0.01) { dx = Math.cos(i + j); dy = Math.sin(i + j); } else { dx /= d; dy /= d; }
+      const m = (MIN - d) / 2 + 0.1;
+      p.x -= dx * m; p.y -= dy * m; q.x += dx * m; q.y += dy * m;
+    }
+    for (const n of nodes) for (const bx of labBox) {
+      const cx = Math.max(bx.l, Math.min(n.x, bx.r)), cy = Math.max(bx.t, Math.min(n.y, bx.b));
+      const dx = n.x - cx, dy = n.y - cy, d = Math.hypot(dx, dy);
+      if (d >= R) continue;
+      bad++;
+      if (d < 0.01) n.y = n.y - bx.t < bx.b - n.y ? bx.t - R - 0.1 : bx.b + R + 0.1; /* 圓心落在框內：自近邊推出 */
+      else { n.x = cx + (dx / d) * (R + 0.1); n.y = cy + (dy / d) * (R + 0.1); }
+      /* 久不收斂者多夾在上下兩個群名之間，上推下推皆入他框：另向橫邊滑出 */
+      if (it > 200) n.x += n.x < (bx.l + bx.r) / 2 ? -1.5 : 1.5;
+    }
+    if (!bad) break;
+    if (it < 150) nodes.forEach((n, k) => { n.x += (home[k][0] - n.x) * 0.02; n.y += (home[k][1] - n.y) * 0.02; });
+  }
+  nodes.forEach((n) => { pos[n.c.id] = { x: n.x, y: n.y }; });
+  return { nodes, pos, centers };
+  })();
+  return COMMUNITY_LAYOUT;
+}
 function Community({ onOpenChar }) {
   const locale = useLocale();
   const t = useT();
@@ -2316,77 +2406,7 @@ function Community({ onOpenChar }) {
   const vs = useRenderScale(wheelElRef, 1120);
   const cz = Math.min(1, 1 / (vs * view.k)); /* 語義縮放（見 useRenderScale） */
   const coarse = useCoarsePointer();
-  const { nodes, pos, centers } = useMemo(() => {
-    const groups = {};
-    CHARACTERS.forEach((c) => {
-      const f = c.belong[0] || "其他";
-      (groups[f] = groups[f] || []).push(c);
-    });
-    const sorted = Object.keys(groups).sort((a, b) => groups[b].length - groups[a].length);
-    /* 苍云居中；外围门派按「大小相间」排列，使相邻群圆半径之和均匀，避免重叠 */
-    const periph = sorted.filter((f) => f !== "苍云");
-    const names = ["苍云"];
-    for (let i = 0, j = periph.length - 1; i <= j; i++, j--) {
-      names.push(periph[i]);
-      if (i !== j) names.push(periph[j]);
-    }
-    const CX0 = 560, CY0 = 535, GR = 382;
-    const pos = {}, nodes = [], centers = [];
-    names.forEach((f, gi) => {
-      const members = groups[f];
-      const central = f === "苍云";
-      const ga = -Math.PI / 2 + ((gi - 1) / (names.length - 1)) * Math.PI * 2;
-      const gx = central ? CX0 : CX0 + GR * Math.cos(ga);
-      const gy = central ? CY0 : CY0 + GR * Math.sin(ga);
-      const cr = 26 + Math.sqrt(members.length) * 26;
-      centers.push({ f, gx, gy, cr, n: members.length });
-      members.forEach((c, i) => {
-        const ang = i * 2.399963;
-        const rad = members.length === 1 ? 0 : cr * Math.sqrt((i + 0.6) / members.length);
-        const x = gx + rad * Math.cos(ang), y = gy + rad * Math.sin(ang);
-        nodes.push({ c, x, y, f });
-      });
-    });
-    /* 相鄰兩群之圓半徑和大於群心距，交界處圈會互疊：舊時十五對圓心相距不足一圈徑，
-       紐沃、秦徽幾為彭延思、陸靈全蓋，懸停不到；門派群名亦壓住十四圈。
-       今以排斥鬆弛分開：圓心距不足 MIN（懸停放大之圈亦不蓋鄰圈之心）者各退一半，
-       壓群名者推出名框；每輪微拉回原位，群形大致不變。名框取中英兩者之寬者，兩種界面同一佈局；
-       字寬按字數估（不待字體載入，每次結果一樣）。 */
-    const MIN = 38, R = 15.5;
-    const labBox = centers.map((g) => {
-      const enS = g.f === "其他" ? "Other" : facName("en", g.f);
-      const w = Math.max([...g.f].length * 13 * 1.3, enS.length * 12 * 0.6), y = g.gy - g.cr - 10;
-      return { l: g.gx - w / 2 - 3, r: g.gx + w / 2 + 3, t: y - 15, b: y + 6 };
-    });
-    const home = nodes.map((n) => [n.x, n.y]);
-    for (let it = 0; it < 600; it++) {
-      let bad = 0;
-      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
-        const p = nodes[i], q = nodes[j];
-        let dx = q.x - p.x, dy = q.y - p.y;
-        const d = Math.hypot(dx, dy);
-        if (d >= MIN) continue;
-        bad++;
-        if (d < 0.01) { dx = Math.cos(i + j); dy = Math.sin(i + j); } else { dx /= d; dy /= d; }
-        const m = (MIN - d) / 2 + 0.1;
-        p.x -= dx * m; p.y -= dy * m; q.x += dx * m; q.y += dy * m;
-      }
-      for (const n of nodes) for (const bx of labBox) {
-        const cx = Math.max(bx.l, Math.min(n.x, bx.r)), cy = Math.max(bx.t, Math.min(n.y, bx.b));
-        const dx = n.x - cx, dy = n.y - cy, d = Math.hypot(dx, dy);
-        if (d >= R) continue;
-        bad++;
-        if (d < 0.01) n.y = n.y - bx.t < bx.b - n.y ? bx.t - R - 0.1 : bx.b + R + 0.1; /* 圓心落在框內：自近邊推出 */
-        else { n.x = cx + (dx / d) * (R + 0.1); n.y = cy + (dy / d) * (R + 0.1); }
-        /* 久不收斂者多夾在上下兩個群名之間，上推下推皆入他框：另向橫邊滑出 */
-        if (it > 200) n.x += n.x < (bx.l + bx.r) / 2 ? -1.5 : 1.5;
-      }
-      if (!bad) break;
-      if (it < 150) nodes.forEach((n, k) => { n.x += (home[k][0] - n.x) * 0.02; n.y += (home[k][1] - n.y) * 0.02; });
-    }
-    nodes.forEach((n) => { pos[n.c.id] = { x: n.x, y: n.y }; });
-    return { nodes, pos, centers };
-  }, []);
+  const { nodes, pos, centers } = communityLayout(); /* 同行星圖：模塊內只算一次（見 communityLayout） */
   const active = RELATIONS.filter((r) => pos[r.a] && pos[r.b] && relActive(r, Y));
   const hoverNbr = new Set(hover ? active.filter((r) => r.a === hover || r.b === hover).flatMap((r) => [r.a, r.b]) : []);
   /* 英文名標籤（英文界面）：圈下一行，放得下才標；按當年在場關係數多寡排先後，已歿者殿後；
@@ -2630,7 +2650,7 @@ function GeoMap({ onOpenChar }) {
     for (const e of EVENTS) { if (e.year < mn) mn = e.year; if (e.year > mx) mx = e.year; }
     return { min: mn, max: mx };
   }, []);
-  const inTime = (e) => tmode === "all" || (tmode === "cum" ? e.year <= tyear : e.year === tyear);
+  const inTime = useCallback((e) => tmode === "all" || (tmode === "cum" ? e.year <= tyear : e.year === tyear), [tmode, tyear]);
   const [hoverSeg, setHoverSeg] = useState(null); /* 悬停動線段：{ti,i,x,y,w,...}，浮出繫此段之事 */
   useEffect(() => { setHoverSeg(null); }, [trackSel, tmode, tyear]);
   const narrow = useNarrow(920);
@@ -2642,7 +2662,6 @@ function GeoMap({ onOpenChar }) {
       ),
     []
   );
-  const ETHNIC_TAGS = ["鲜卑", "羌", "奚人/狼牙", "靺鞨", "西域", "柔然", "南诏", "波斯", "苗疆"];
   const facList = useMemo(() => {
     const set = new Set();
     for (const e of EVENTS) {
@@ -2687,7 +2706,7 @@ function GeoMap({ onOpenChar }) {
         ? facList.ethnic.some(({ f }) => e.fac.includes(f) || e.chars.some((id) => byId[id].belong.includes(f)))
         : e.fac.includes(fsel) || e.chars.some((id) => byId[id].belong.includes(fsel)));
     return EVENTS.filter((e) => (who === "all" || e.chars.includes(who)) && byFaction(e) && hit(e) && inTime(e)).sort(sortEvents);
-  }, [who, fsel, q, facList, tmode, tyear, en, locale]);
+  }, [who, fsel, q, facList, inTime, en, locale]);
 
   /* 聚合：每地一點，計數、門派色分佈隨篩選重算；一事多地各計一次（與檢索「地點命中」同理） */
   const spots = useMemo(() => {
@@ -2758,7 +2777,7 @@ function GeoMap({ onOpenChar }) {
         });
         return { id, ti, color: TRACK_COLORS[ti % TRACK_COLORS.length], stays, locLabels: Object.entries(byLoc) }; /* 原色：此 memo 不隨膚重算，取用處再 tone() */
       }),
-    [trackSel, tmode, tyear]
+    [trackSel, tmode, inTime]
   );
   const rOf = (n) => Math.min(3.5 + 2.0 * Math.sqrt(n), 32); /* 環徑緩放，防北疆巨核吞鄰 */
   /* 看動線時：動線所經之地為前景，其餘點位退作底圖——環、名俱淡，名字收起（「地名全顯」照開）；

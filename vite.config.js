@@ -51,7 +51,9 @@ function novelMentions() {
 
 // 英文頁預載英文大表塊（src/i18n/en-bulk.js）：英文大表另成一塊、只在英文界面動態載入，
 // 但直達英文頁時須等它載完才繪製；不預載則主包下完、執行到 import() 才去取，兩段串行。
-// 構建時找出該塊之檔名，在 en/index.html 頭部補一條 modulepreload，與主包並行下載。中文頁不加。
+// 構建時找出該塊之檔名，在 en/index.html 頭部補一小段腳本，按需補一條 modulepreload，與主包並行下載。中文頁不加。
+// 按需：裸址首訪先顯定場（判斷同 src/landing-gate.js），定場不等大表，此時預載反與主包搶頻寬、拖慢首屏，
+// 故不預載，由 App.jsx 在主包跑起後續載；帶哈希深鏈或同會話再訪才預載。
 function preloadEnBulk() {
   let base = '/'
   return {
@@ -64,7 +66,9 @@ function preloadEnBulk() {
         if (!ctx.bundle || !/[\\/]en[\\/]index\.html$/.test(ctx.filename)) return
         const chunk = Object.values(ctx.bundle).find((c) => c.type === 'chunk' && c.facadeModuleId?.endsWith('/src/i18n/en-bulk-data.js'))
         if (!chunk) return
-        return [{ tag: 'link', attrs: { rel: 'modulepreload', crossorigin: true, href: base + chunk.fileName }, injectTo: 'head' }]
+        const href = JSON.stringify(base + chunk.fileName)
+        const js = `try{if(/#\\/./.test(location.hash)||sessionStorage.getItem('cy-landing-seen')){var l=document.createElement('link');l.rel='modulepreload';l.crossOrigin='';l.href=${href};document.head.appendChild(l)}}catch(e){}`
+        return [{ tag: 'script', children: js, injectTo: 'head-prepend' }]
       },
     },
   }

@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { wantLanding } from './landing-gate'
 import { readLanguage } from './i18n/use-language'
 import { loadEnBulk } from './i18n/en-bulk'
 
@@ -53,6 +54,7 @@ const start = () => createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
-/* 英文頁：先等英文大表載完再繪製（en-bulk.js），免先閃一屏回落的中文；載不下來也照常繪製（逐處回落中文） */
-if (readLanguage() === 'en') loadEnBulk().then(start, start)
+/* 英文頁：先等英文大表載完再繪製（en-bulk.js），免先閃一屏回落的中文；載不下來也照常繪製（逐處回落中文）。
+   唯裸址首訪先顯定場：定場不用大表，不必等——先繪製，大表由 App.jsx 續載，站內待表到才掛上 */
+if (readLanguage() === 'en' && !wantLanding()) loadEnBulk().then(start, start)
 else start()
