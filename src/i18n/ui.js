@@ -11,6 +11,7 @@
 const pl = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 
 const en = {
+  凡例: 'About', /* 中文末一籤；英文界面此籤作 關於 → About，不經此鍵，留此以備 */
   跳至正文: 'Skip to content',
   /* ---------- 導航與通用 ---------- */
   人物檔案: 'Characters', 事件年表: 'Timeline', 山河輿圖: 'Map',

@@ -17,6 +17,7 @@ import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
 import About from "./about";
+import Fanli from "./fanli";
 import { grantsOf, tenureFac, tenuresOf } from "./posts-data";
 import { tenureTitleTx, tenureNoteTx, grantTx, tenureSpanText } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
@@ -3355,7 +3356,7 @@ export default function Wiki({ onOpenLanding }) {
       if (sh) parts.push(shockTitle(locale, sh));
     }
     if (tab === "posts" && route.fac) parts.push(facName(locale, route.fac));
-    const page = { chars: "人物檔案", posts: "編制", timeline: "事件年表", map: "山河輿圖", network: "行星關係圖", community: "群像網絡", echoes: "餘波", novel: "文庫", about: "關於" }[tab];
+    const page = { chars: "人物檔案", posts: "編制", timeline: "事件年表", map: "山河輿圖", network: "行星關係圖", community: "群像網絡", echoes: "餘波", novel: "文庫", about: en ? "關於" : "凡例" }[tab];
     document.title = tab === "chars" && parts.length === 0 ? SITE_TITLE[en ? "en" : "zh"] : `${[...parts, t(page)].join(" · ")} | ${site}`;
   }, [tab, openChar, route.novelPath, route.shock, route.fac, locale]); // eslint-disable-line react-hooks/exhaustive-deps -- en、t 皆由 locale 定
   const setTab = (k) => nav({ tab: k });
@@ -3405,11 +3406,11 @@ export default function Wiki({ onOpenLanding }) {
           </h1>
         </div>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
-          {/* About 只在英文導航：向英文讀者交代唐代背景與剑三來源，中文讀者不需要 */}
+          {/* 末一籤按語言而異、同指 #/about：英文作 About（交代唐代背景與剑三來源），中文作「凡例」（說明站上體例，fanli.jsx） */}
           {/* 頁籤另包一層 .nav-tabs：桌面與中文 display: contents，排版一如其舊；
               手機英文（< 600px）作一行橫滑，右緣漸隱，「卷首／語言／紙色」另起一行（見 index.css） */}
           <div className="nav-tabs" ref={navTabsRef}>
-          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "餘波"], ["novel", "文庫"], ...(en ? [["about", "關於"]] : [])].map(([k, label]) => (
+          {[["chars", "人物檔案"], ["timeline", "事件年表"], ["map", "山河輿圖"], ["network", "行星關係圖"], ["community", "群像網絡"], ["echoes", "餘波"], ["novel", "文庫"], ["about", en ? "關於" : "凡例"]].map(([k, label]) => (
             <button key={k} onClick={() => setTab(k)} aria-current={tab === k || (k === "chars" && tab === "posts") ? "page" : undefined}
               style={{ fontFamily: "JingHuaLaoSong", fontSize: 15, padding: "8px 18px", background: "none", border: "none", borderBottom: tab === k || (k === "chars" && tab === "posts") ? `2px solid ${T.accent}` : "2px solid transparent", color: tab === k || (k === "chars" && tab === "posts") ? T.ink : T.muted, cursor: "pointer" }}>
               {t(label)}
@@ -3488,7 +3489,7 @@ export default function Wiki({ onOpenLanding }) {
             onRoute={(p) => nav({ shock: p.shock, who: p.who })}
             onOpenProfile={(id) => nav({ tab: "chars", char: id })} />
         )}
-        {tab === "about" && <About onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} />}
+        {tab === "about" && (en ? <About onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} /> : <Fanli onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} />)}
         {tab === "novel" && <NovelReader path={route.novelPath} onNav={(p, replace) => nav({ novelPath: p }, replace)} />}
       </main>
 
