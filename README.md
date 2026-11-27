@@ -1,6 +1,6 @@
 # 八千里路 · Eight Thousand Miles Away
 
-“人山人海 · 档案”：覆盖整个作品世界的人物档案、事件年表、山河舆图、关系网络和文库的综合资料站。项目从“苍云线”起步，现统一使用全作品品牌；作品内的阵营与故事线名称保持原样。
+“人山人海 · 檔案”：覆盖整个作品世界的人物档案、事件年表、山河舆图、关系网络和文库的综合资料站。项目从“苍云线”起步，现统一使用全作品品牌；作品内的阵营与故事线名称保持原样。
 
 - 技术名称：`eight-thousand-miles-away-wiki`
 - 目标仓库：<https://github.com/jadexuan155229-dot/eight-thousand-miles-away-wiki>
@@ -8,6 +8,8 @@
 - 全站界面：`src/wiki.jsx`；全站数据：`src/wiki-data.js`。
 
 目标地址在 GitHub 仓库改名并发布本次修改后生效，迁移步骤见 [项目重命名说明](docs/project-renaming.md)。
+
+工作文档（进度与体例、英译审稿清单、内容草稿）总目见 [docs/README.md](docs/README.md)。
 
 ## 检查与构建
 
