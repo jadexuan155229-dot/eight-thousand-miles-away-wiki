@@ -27,7 +27,7 @@ function App() {
      定場（夜景燭照）不隨膚，恆為原樣 */
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
-      {wikiReady && <Wiki onOpenLanding={() => setLanding(true)} />}
+      {wikiReady && <Wiki onOpenLanding={() => setLanding(true)} landingOpen={landing} />}
       {landing && <Landing canEnter={wikiReady} onEnter={() => setLanding(false)} />}
     </LocaleContext.Provider>
   )

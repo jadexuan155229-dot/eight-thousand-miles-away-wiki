@@ -261,7 +261,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
   );
 }
 
-export default function NovelReader({ path, onNav }) {
+export default function NovelReader({ path, onNav, seek, onSeeked }) {
   const narrow = useNarrow();
   /* 英文界面：目錄、設置、提示語作英文；章題「第一章」作 Chapter 1，故事線名與「定場」「序」待作者定，暫回落中文；
      正文不译（T3，見 docs/english-edition.md），故閱讀頁上方另注一行說明 */
@@ -426,13 +426,23 @@ export default function NovelReader({ path, onNav }) {
     pendingScroll.current = true;
     jump(path, false);
   };
+  /* 自全站檢索入章：本頁檢索框填上同一詞（目錄轉為命中列表、正文高亮），待正文到位後滾至首個命中處 */
   useEffect(() => {
-    if (pendingScroll.current) {
-      pendingScroll.current = false;
-      if (firstHitEl.current) firstHitEl.current.scrollIntoView({ behavior: "smooth", block: "center" });
-      else window.scrollTo({ top: 0, behavior: "smooth" }); /* 僅標題命中、正文無命中：回頁首 */
-    }
-  }, [sel]);
+    if (!seek) return;
+    setInputValue(seek.q);
+    setQ(seek.q);
+    pendingScroll.current = true;
+    onSeeked?.();
+  }, [seek]); // eslint-disable-line react-hooks/exhaustive-deps -- 只隨落點而動
+  /* 待滾：正文懶加載，未到則等（texts 入依存）；檢索詞同批更新（q 入依存）；
+     同章同詞再自全站檢索點入，諸值皆不變——seek 由有轉無（onSeeked 清落點）亦觸發一次 */
+  useEffect(() => {
+    if (!pendingScroll.current) return;
+    if (texts === null && byPath[sel]?.ch.file) return;
+    pendingScroll.current = false;
+    if (firstHitEl.current) firstHitEl.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    else window.scrollTo({ top: 0, behavior: "smooth" }); /* 僅標題命中、正文無命中：回頁首 */
+  }, [sel, texts, q, seek]);
 
   /* 全文檢索：字面匹配、不分英文大小寫、不作正則；每篇章至多一條結果 */
   const results = useMemo(() => {
