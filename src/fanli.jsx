@@ -16,12 +16,18 @@ const cn = (n) => (n <= 10 ? NUM[n - 1] : n < 20 ? `十${NUM[n - 11] ?? ""}` : `
 const H = ({ children }) => (
   <h2 style={{ fontFamily: "HuiwenMingChao", fontSize: 20, fontWeight: 400, color: T.ink, margin: "34px 0 12px", paddingBottom: 6, borderBottom: `1px solid ${T.line}`, letterSpacing: "0.08em" }}>{children}</h2>
 );
-/* 條目：條號懸於左（留三字寬、不折行，「二十七」亦一行），正文齊頭；條號連貫全篇，同古書凡例 */
+/* 條目：條號懸於左（留三字寬、不折行，「二十七」亦一行），正文齊頭；條號連貫全篇，同古書凡例。
+   每節一 <ol>、每條一 <li value>，有序列表之義；條號是條目的一部分，讀屏照讀（讀者引凡例即以條號，
+   「第十六條」）——不設 aria-hidden。列表符號不顯（list-style: none），故明設 role="list"：
+   Safari 遇無符號之列表會去其列表語義 */
+const List = ({ children }) => (
+  <ol role="list" style={{ listStyle: "none", margin: 0, padding: 0 }}>{children}</ol>
+);
 const Item = ({ n, children }) => (
-  <p style={{ display: "flex", gap: 12, margin: "0 0 12px", fontSize: 15.5, lineHeight: 1.8, color: T.ink }}>
-    <span aria-hidden="true" style={{ flex: "0 0 3.2em", whiteSpace: "nowrap", textAlign: "right", color: T.muted, fontFamily: "HuiwenMingChao" }}>{cn(n)}</span>
+  <li value={n} style={{ display: "flex", gap: 12, margin: "0 0 12px", fontSize: 15.5, lineHeight: 1.8, color: T.ink }}>
+    <span style={{ flex: "0 0 3.2em", whiteSpace: "nowrap", textAlign: "right", color: T.muted, fontFamily: "HuiwenMingChao" }}>{cn(n)}</span>
     <span style={{ flex: 1 }}>{children}</span>
-  </p>
+  </li>
 );
 /* 引數據原文：照原樣（簡體），淡一階以別於說明文字 */
 const Q = ({ children }) => <span style={{ color: T.muted }}>{children}</span>;
@@ -97,7 +103,7 @@ export default function Fanli({ onNav }) {
         <section key={title}>
           <H>{title}</H>
           {lead && <Lead>{lead}</Lead>}
-          {items.map(([k, it]) => <Item key={k} n={k}>{it}</Item>)}
+          <List>{items.map(([k, it]) => <Item key={k} n={k}>{it}</Item>)}</List>
         </section>
       ))}
     </article>
