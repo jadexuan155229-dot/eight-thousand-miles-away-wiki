@@ -1496,6 +1496,13 @@ html[data-skin="paper"] .texture-test-sm .items-baseline {
   overflow: hidden;
   animation: header-menu-in .14s ease-out;
 }
+/* 頭、狀態行、腳不隨結果多寡被擠扁：框為縱向 flex，諸子默認可縮，結果多時狀態行曾被壓到 14／21px，
+   字與下方分組名相疊、失敗時「重新載入」鈕被結果區蓋住點不到；只讓結果區（.ss-body）縮 */
+.ss-head,
+.ss-status,
+.ss-foot {
+  flex: none;
+}
 .ss-head {
   display: flex;
   align-items: center;
@@ -1538,8 +1545,24 @@ html[data-skin="paper"] .texture-test-sm .items-baseline {
   padding: 0 16px;
   min-height: 0;
 }
-.ss-status:not(:empty) {
+.ss-status.on {
   padding-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px; /* 窄屏「重新載入」折到次行時齊左，不帶縮進 */
+}
+.ss-retry {
+  background: none;
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-size: 11.5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ss-retry:focus-visible {
+  outline: 1px solid var(--ss-focus);
+  outline-offset: 2px;
 }
 .ss-body {
   overflow-y: auto;

@@ -7,7 +7,10 @@
    中文輸入法組詞期間只更新顯示、不觸發檢索，組詞時之 Enter 不當作前往。
    每類先出數條，餘者以「展開其餘 n 條」一項收起（亦為選項，Enter 即展開）。
    去處（onGo 之參數）由 Wiki 據之導航：人物開檔案彈窗，事件、地點、文庫章節各至其頁並定位。
-   文庫正文懶加載：首次打開時方拉 texts.js，未到之前文庫只查題名。
+   文庫正文懶加載：首次打開時方拉 texts.js，未到之前文庫只查題名，框上注「載入中」；
+   拉取失敗則明說「文庫只查了題名」並給「重新載入頁面」——不另設重試：瀏覽器把失敗的動態 import
+   記在模塊表裡，同一網址再 import 不再發請求（Chrome 實測）；最常見的失敗又是頁開著時站上已重新部署、
+   舊塊檔名已不存在，此時唯有重新載入整頁才取得到新塊。
    ============================================================ */
 import { useState, useEffect, useMemo, useRef } from "react";
 import { T } from "./theme";
@@ -155,16 +158,21 @@ export default function SiteSearch({ open, onClose, onGo }) {
       activate(cur);
     } else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); }
   };
-  /* Tab 不出框：輸入框 ↔ 關閉鈕 */
+  /* Tab 不出框：在框內諸可聚焦者（輸入框、關閉鈕，正文載入失敗時另有「重新載入」）間依序轉 */
   const trapTab = (e) => {
     if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); return; }
     if (e.key !== "Tab") return;
     e.preventDefault();
-    (document.activeElement === inputRef.current ? closeRef.current : inputRef.current)?.focus();
+    const fs = [...(dialogRef.current?.querySelectorAll("input, button") || [])];
+    if (fs.length === 0) return;
+    const i = fs.indexOf(document.activeElement);
+    fs[(i + (e.shiftKey ? -1 : 1) + fs.length) % fs.length].focus();
   };
 
   const hasQ = q.trim() !== "";
   const status = !hasQ ? "" : tooShort(q) ? t("再多打一兩個字母") : res && res.total > 0 ? t("{n} 條結果", { n: res.total }) : t("未檢得");
+  const searching = hasQ && !tooShort(q);
+  const sep = en ? " · " : "　";
   const fontOf = (s) => (en && !hasHan(s) ? EN_FONT : ZH_FONT);
 
   return (
@@ -185,9 +193,16 @@ export default function SiteSearch({ open, onClose, onGo }) {
           <button ref={closeRef} type="button" className="ss-close" onClick={close} aria-label={t("關閉")}
             style={{ color: T.muted, border: `1px solid ${T.line}`, fontFamily: en ? EN_FONT : ZH_FONT }}>Esc</button>
         </div>
-        <div className="ss-status" role="status" aria-live="polite" style={{ color: T.muted, fontFamily: en ? EN_FONT : ZH_FONT }}>
-          {status}
-          {hasQ && !texts && !textsFailed && !tooShort(q) && <span>{status ? (en ? " · " : "　") : ""}{t("文庫正文載入中……")}</span>}
+        <div className={status ? "ss-status on" : "ss-status"} style={{ color: T.muted, fontFamily: en ? EN_FONT : ZH_FONT }}>
+          <span role="status" aria-live="polite">
+            {status}
+            {searching && !texts && !textsFailed && <span>{sep}{t("文庫正文載入中……")}</span>}
+            {searching && textsFailed && <span style={{ color: T.ink }}>{sep}{t("文庫正文未能載入，文庫只查了章節題名。")}</span>}
+          </span>
+          {searching && textsFailed && (
+            <button type="button" className="ss-retry" onClick={() => window.location.reload()}
+              style={{ color: T.ink, border: `1px solid ${T.line}`, fontFamily: en ? EN_FONT : ZH_FONT }}>{t("重新載入頁面")}</button>
+          )}
         </div>
         <div className="ss-body">
           {!hasQ && (
