@@ -62,3 +62,4 @@ docs/ 里是写站过程中的工作文档：进度与体例、英译审稿清�
 | [tang-posts-draft.md](tang-posts-draft.md) | 唐军编制草稿一：程广、程钊、程铎，附程锋、程宇 |
 | [changshan-timeline-check.md](changshan-timeline-check.md) | 常山一线时间核对（756–758）：文稿、站内数据、史实三方对照 |
 | [wenku-margin-note.md](wenku-margin-note.md) | 文库页边批注：增补工作流 |
+| [fanli-review.md](fanli-review.md) | 凡例（中文 `#/about`）初稿待审清单 |
