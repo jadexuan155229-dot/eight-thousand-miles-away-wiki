@@ -13,11 +13,15 @@ import { TITLE as SITE_TITLE } from "./i18n/use-language";
 import { FLAT } from "./novel";
 import NOVEL_MENTIONS from "virtual:novel-mentions";
 import { SEAL_SVG_FILE } from "./seals";
+import { sortEvents, CN_MONTH, eraOf, ERA_NOTES, ERA_NOTES_EN, englishEraOf, eraZhToEn, eraOfYM } from "./era";
 import NovelReader from "./novel-reader";
 import Echoes from "./echoes";
 import Posts from "./posts";
 import About from "./about";
 import Fanli from "./fanli";
+/* 全站檢索框隨主包（gzip 約 5 KB）：曾另成一塊、閒時預取，但頁面初開即按 / 而塊未到時，框未掛上、
+   其間所打之字無處可落——為省 5 KB 留此邊角不值。文庫正文（115 KB）仍待首次打開時方拉 */
+import SiteSearch from "./site-search";
 import { grantsOf, tenureFac, tenuresOf } from "./posts-data";
 import { tenureTitleTx, tenureNoteTx, grantTx, tenureSpanText } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
@@ -30,6 +34,7 @@ import { Zh, Tx } from "./i18n/zh";
 import { TIER1 } from "./i18n/tiers";
 import { enBulkReady } from "./i18n/en-bulk";
 import { CourtesyLine } from "./i18n/names";
+import { zhIncludes } from "./i18n/t2s";
 
 /* ============================================================
    八千里路 · 人山人海 檔案 — 可視化站點原型 v4
@@ -119,57 +124,6 @@ const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
 /* 英文版說明之計數：英文大表懶載（en-bulk.js），故不在模塊載入時算；英文界面繪製時表已載，算一次存起 */
 let coverageMemo = null;
 const coverageNow = () => coverageMemo || (enBulkReady ? (coverageMemo = coverage(CHARACTERS, EVENTS)) : coverage(CHARACTERS, EVENTS));
-const sortEvents = (a, b) =>
-  a.year - b.year || (a.month ?? 0) - (b.month ?? 0) || (a.seq ?? "").localeCompare(b.seq ?? "");
-
-const CN = ["", "元", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "二十一", "二十二", "二十三", "二十四", "二十五", "二十六", "二十七", "二十八", "二十九", "三十"];
-const CN_MONTH = ["", "正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
-/* 年號紀年：體例遵庫中原文（「至德二年」「天宝四年」「开元二十六年」），用「年」不用「载」 */
-function eraOf(y) {
-  if (y == null) return "";
-  /* 713 前仅收录站内所需诸年（651—679 波斯史实线；680 陆危楼生、700 宣康生、702 朗迪恩生、707 立明教／陆南信生）。
-     按：674 上元元年为高宗年号，与肃宗上元（760）同号异代，eraOf 逐年返回，两不相扰。 */
-  const EARLY = { 651: "永徽二年", 654: "永徽五年", 661: "龙朔元年", 663: "龙朔三年", 674: "上元元年", 678: "仪凤三年", 679: "调露元年", 680: "永隆元年", 700: "久视元年", 702: "长安二年", 705: "神龙元年", 707: "景龙元年", 708: "景龙二年", 710: "景云元年" };
-  if (EARLY[y]) return EARLY[y];
-  if (y >= 713 && y <= 741) return `开元${CN[y - 712]}年`;
-  if (y >= 742 && y <= 756) return `天宝${CN[y - 741]}年`;
-  if (y === 757) return "至德二年";
-  if (y === 758) return "乾元元年";
-  if (y === 759) return "乾元二年";
-  if (y === 760) return "上元元年";
-  if (y === 761) return "上元二年";
-  if (y === 762) return "宝应元年";
-  if (y === 763) return "宝应二年";
-  if (y === 764) return "广德二年";
-  if (y === 765) return "永泰元年";
-  if (y >= 766 && y <= 779) return `大历${CN[y - 765]}年`;
-  if (y >= 780 && y <= 783) return `建中${CN[y - 779]}年`;
-  if (y === 784) return "兴元元年";
-  if (y >= 785 && y <= 805) return `贞元${CN[y - 784]}年`;
-  return "";
-}
-/* 年中改元者附注 */
-const ERA_NOTES = { 756: "七月改元至德", 758: "二月改元乾元", 760: "闰四月改元上元", 762: "四月改元宝应", 763: "七月改元广德" };
-const ERA_NOTES_EN = { 756: "Zhide from the 7th month", 758: "Qianyuan from the 2nd month", 760: "Shangyuan from the intercalary 4th month", 762: "Baoying from the 4th month", 763: "Guangde from the 7th month" };
-
-/* English display derives its era and ordinal from the same chronology as Chinese. */
-function englishEraOf(y) {
-  return eraZhToEn(eraOf(y));
-}
-/* 「天宝十五年」→ "Tianbao 15"：年號表與 eraOf 同源；年中改元之分軌（ERA_SWITCH）亦經此轉 */
-function eraZhToEn(era) {
-  const match = (era || "").match(/^(.+?)(元|[一二三四五六七八九十]+)年$/);
-  if (!match) return "?";
-  const names = {
-    永徽: "Yonghui", 龙朔: "Longshuo", 上元: "Shangyuan", 仪凤: "Yifeng",
-    调露: "Tiaolu", 永隆: "Yonglong", 久视: "Jiushi", 长安: "Chang'an",
-    神龙: "Shenlong", 景龙: "Jinglong", 景云: "Jingyun", 开元: "Kaiyuan",
-    天宝: "Tianbao", 至德: "Zhide", 乾元: "Qianyuan", 宝应: "Baoying",
-    广德: "Guangde", 永泰: "Yongtai", 大历: "Dali", 建中: "Jianzhong",
-    兴元: "Xingyuan", 贞元: "Zhenyuan",
-  };
-  return `${names[match[1]] ?? match[1]} ${CN.indexOf(match[2])}`;
-}
 
 function lifespan(c) {
   if (c.birth == null && c.death == null) return "生卒待补";
@@ -886,13 +840,6 @@ const secYears = (s) => (s.from === s.to ? String(s.from) : `${s.from}–${s.to}
 const secLabel = (locale, s) => (locale === "en" ? s.en : s.label);
 /* 「若干事」：中文用漢字數目，英文用阿拉伯數字並分單複數（ui.js「{n}事」） */
 const evCount = (locale, t, n) => t("{n}事", { n: locale === "en" ? n : cnCount(n) });
-/* 年中改元者，月份標籤分軌（byMonth 僅施於單年段；756 七月改元至德） */
-const ERA_SWITCH = { 756: { at: 7, before: "天宝十五年", after: "至德元年" } };
-const eraOfYM = (y, m) => {
-  const s = ERA_SWITCH[y];
-  if (s && m != null) return m < s.at ? s.before : s.after;
-  return eraOf(y);
-};
 
 /* 門派色帶：段內各門派事件占比壓成一根橫向色帶；未標門派以中性深灰收尾 */
 function FacBand({ segs, none, height = 4, maxWidth }) {
@@ -910,7 +857,7 @@ function FacBand({ segs, none, height = 4, maxWidth }) {
 }
 
 /* 事件行：年表主列表単條，供平鋪與月組兩種佈局共用 */
-function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
+function EvRow({ e, showYear, onOpenChar, onOpenEcho, landed, flash }) {
   const locale = useLocale();
   const t = useT();
   const en = locale === "en";
@@ -919,7 +866,8 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
   const title = eventTitle(locale, e);
   const titleZh = en && title === e.title;
   return (
-    <div style={{ position: "relative", padding: "0 0 24px 26px", fontFamily: "HuiwenZhengKai" }}>
+    <div data-ev-landed={landed ? "" : undefined} tabIndex={landed ? -1 : undefined} className={flash ? "ev-flash" : undefined}
+      style={{ position: "relative", padding: "0 0 24px 26px", fontFamily: "HuiwenZhengKai", ...(landed ? { "--flash": T.hit } : null) }}>
       <div style={{ position: "absolute", left: -5, top: 7, width: 9, height: 9, background: showYear ? T.accent : T.faintLine, transform: "rotate(45deg)" }} />
       {showYear && (
         <div style={{ position: "absolute", left: -66, top: 1, fontFamily: "HuiwenZhengKai", fontSize: 16, color: T.accent, width: 48, textAlign: "right" }}>{e.year}</div>
@@ -967,7 +915,7 @@ function EvRow({ e, showYear, onOpenChar, onOpenEcho }) {
   );
 }
 
-function Timeline({ onOpenChar, onOpenEcho }) {
+function Timeline({ onOpenChar, onOpenEcho, focus, onFocused }) {
   const locale = useLocale();
   const t = useT();
   const en = locale === "en";
@@ -1024,15 +972,16 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     /* 英文界面：中文原文照查，另查英文译名、译題、年號（不分大小寫） */
     const enM = enMatcher(kw); /* 不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），見 content.js */
     const enHit = (str) => en && !!str && enM(str);
+    const has = zhIncludes(kw); /* 繁簡兩試：照繁體占位語打「雁門」亦中「雁门」，見 i18n/t2s.js */
     const hit = (e) =>
       kw === "" ||
-      e.title.includes(kw) ||
-      (e.seq || "").includes(kw) ||
-      e.loc.some((l) => l.includes(kw) || enHit(placeName(locale, l))) ||
-      e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
-      eraOfYM(e.year, e.month).includes(kw) ||
+      has(e.title) ||
+      has(e.seq) ||
+      e.loc.some((l) => has(l) || enHit(placeName(locale, l))) ||
+      e.fac.some((f) => has(f) || enHit(facName(locale, f))) ||
+      has(eraOfYM(e.year, e.month)) ||
       enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
+      e.chars.some((id) => has(byId[id].name) || has(namesText(byId[id])) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" || /* 已選人物則取其完整編年 */
       fsel === "all" ||
@@ -1146,6 +1095,32 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     setExpandedMonths(new Set(mk));
   };
   const collapseAll = () => { setExpanded(new Set()); setExpandedMonths(new Set()); };
+  /* 自全站檢索落到某事：清篩選、展開其段與月組，滾到該行居中、移焦，淡染一下（.ev-flash）。
+     月組之鍵同下方歸組：未標月為 -1 */
+  const [landEv, setLandEv] = useState(null); /* 落點之事：留著可聚焦（tabIndex -1），淡染退去後焦點不丟 */
+  const [flashEv, setFlashEv] = useState(null);
+  useEffect(() => {
+    if (!focus) return;
+    const e = focus.ev;
+    const s = TIMELINE_SECTIONS.find((x) => e.year <= x.to) || TIMELINE_SECTIONS[TIMELINE_SECTIONS.length - 1];
+    setFsel("all"); setWho("all"); setQ("");
+    setExpanded((prev) => new Set(prev).add(s.key));
+    if (s.byMonth) setExpandedMonths((prev) => new Set(prev).add(`${s.key}:${e.month == null ? -1 : e.month}`));
+    setLandEv(e);
+    setFlashEv(e);
+    onFocused?.();
+  }, [focus]); // eslint-disable-line react-hooks/exhaustive-deps -- 只隨落點而動
+  useEffect(() => {
+    if (!flashEv) return;
+    const el = document.querySelector("[data-ev-landed]");
+    if (el) {
+      const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+      el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+      el.focus({ preventScroll: true });
+    }
+    const id = setTimeout(() => setFlashEv(null), 2400);
+    return () => clearTimeout(id);
+  }, [flashEv]);
   /* 目錄點擊 = 展開 + 平滑滾動 二合一 */
   const jumpTo = (key) => {
     setExpanded((prev) => (prev.has(key) ? prev : new Set(prev).add(key)));
@@ -1338,7 +1313,7 @@ function Timeline({ onOpenChar, onOpenEcho }) {
                       const row = (e, key) => {
                         const showYear = e.year !== lastYear;
                         lastYear = e.year;
-                        return <EvRow key={key} e={e} showYear={showYear} onOpenChar={onOpenChar} onOpenEcho={onOpenEcho} />;
+                        return <EvRow key={key} e={e} showYear={showYear} onOpenChar={onOpenChar} onOpenEcho={onOpenEcho} landed={e === landEv} flash={e === flashEv} />;
                       };
                       if (!s.byMonth) return s.evs.map((e, i) => row(e, i));
                       /* 月份次級折疊：evs 已按 sortEvents 排定（未標月居首），依次歸組 */
@@ -2625,7 +2600,7 @@ function ringArc(cx, cy, r, a0, a1) {
 }
 
 /* ---------------- 山河輿圖 ---------------- */
-function GeoMap({ onOpenChar }) {
+function GeoMap({ onOpenChar, focus, onFocused }) {
   const locale = useLocale();
   const t = useT();
   const en = locale === "en";
@@ -2656,6 +2631,23 @@ function GeoMap({ onOpenChar }) {
   const [hoverSeg, setHoverSeg] = useState(null); /* 悬停動線段：{ti,i,x,y,w,...}，浮出繫此段之事 */
   useEffect(() => { setHoverSeg(null); }, [trackSel, tmode, tyear]);
   const narrow = useNarrow(920);
+  /* 自全站檢索落到某地：清篩選（門派、人物、檢索、時間回全程），選中該地、側欄出其全部編年；
+     側欄入視野並移焦（寬屏側欄在圖旁，回頁首即見；窄屏在圖下，捲到側欄） */
+  const sideRef = useRef(null);
+  const [landed, setLanded] = useState(0);
+  useEffect(() => {
+    if (!focus) return;
+    setFsel("all"); setWho("all"); setQ(""); setTmode("all");
+    setSel(focus.name);
+    setLanded(focus.n);
+    onFocused?.();
+  }, [focus]); // eslint-disable-line react-hooks/exhaustive-deps -- 只隨落點而動
+  useEffect(() => {
+    if (!landed || !sideRef.current) return;
+    if (narrow) sideRef.current.scrollIntoView({ block: "start" });
+    else window.scrollTo({ top: 0 });
+    sideRef.current.focus({ preventScroll: true });
+  }, [landed]); // eslint-disable-line react-hooks/exhaustive-deps -- 落點一次一捲
 
   const inEvents = useMemo(
     () =>
@@ -2690,15 +2682,16 @@ function GeoMap({ onOpenChar }) {
     const kw = q.trim();
     const enM = enMatcher(kw); /* 不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），見 content.js */
     const enHit = (str) => en && !!str && enM(str);
+    const has = zhIncludes(kw); /* 繁簡兩試：照繁體占位語打「雁門」亦中「雁门」，見 i18n/t2s.js */
     const hit = (e) =>
       kw === "" ||
-      e.title.includes(kw) ||
-      (e.seq || "").includes(kw) ||
-      e.loc.some((l) => l.includes(kw) || enHit(placeName(locale, l))) ||
-      e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
-      eraOfYM(e.year, e.month).includes(kw) ||
+      has(e.title) ||
+      has(e.seq) ||
+      e.loc.some((l) => has(l) || enHit(placeName(locale, l))) ||
+      e.fac.some((f) => has(f) || enHit(facName(locale, f))) ||
+      has(eraOfYM(e.year, e.month)) ||
       enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
+      e.chars.some((id) => has(byId[id].name) || has(namesText(byId[id])) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" ||
       fsel === "all" ||
@@ -3188,7 +3181,7 @@ function GeoMap({ onOpenChar }) {
         </div>
         {/* 側欄：選中地之編年 */}
         {sel && (
-          <div style={{ flex: narrow ? "1 1 auto" : "0 0 360px", width: narrow ? "100%" : 360, maxHeight: narrow ? "none" : 640, overflowY: "auto", border: `1px solid ${T.line}`, background: T.panel, padding: "14px 16px 6px 20px" }}>
+          <div ref={sideRef} tabIndex={-1} style={{ flex: narrow ? "1 1 auto" : "0 0 360px", width: narrow ? "100%" : 360, maxHeight: narrow ? "none" : 640, overflowY: "auto", border: `1px solid ${T.line}`, background: T.panel, padding: "14px 16px 6px 20px", outline: "none", scrollMarginTop: 12 }}>
             <div className="flex items-baseline" style={{ gap: 10, marginBottom: 4 }}>
               <span style={{ fontFamily: gUI, fontSize: 17, color: T.ink, fontWeight: 700 }}>
                 {sel === NOLOC_KEY ? t("無地點之事") : en && pn(sel) === sel ? <Zh>{sel}</Zh> : pn(sel)}
@@ -3296,7 +3289,7 @@ function HeaderMenu({ id, label, hint, options, value, onChange, locale }) {
   );
 }
 
-export default function Wiki({ onOpenLanding }) {
+export default function Wiki({ onOpenLanding, landingOpen }) {
   const locale = useLocale();
   const setLocale = useSetLocale();
   const en = locale === "en";
@@ -3361,6 +3354,37 @@ export default function Wiki({ onOpenLanding }) {
   }, [tab, openChar, route.novelPath, route.shock, route.fac, locale]); // eslint-disable-line react-hooks/exhaustive-deps -- en、t 皆由 locale 定
   const setTab = (k) => nav({ tab: k });
   const setOpenChar = (c) => nav({ char: c ? c.id : null });
+  /* 全站檢索（site-search.jsx）：頁頭鈕、/ 鍵、Ctrl／Cmd K 打開；定場在上時不應 */
+  const [searchOpen, setSearchOpen] = useState(false);
+  /* 檢索之落點：年表某事、輿圖某地、文庫某章之命中處——不入路由（事件無穩定 id，檢索本是浮層），
+     由各頁收到後定位、回報 onFocused 清掉，免日後再進該頁又跳一次 */
+  const [jump, setJump] = useState(null);
+  const jumpSeq = useRef(0);
+  useEffect(() => {
+    if (landingOpen) return;
+    const typing = (el) => !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+    const onKey = (e) => {
+      if (e.defaultPrevented || e.isComposing || e.altKey) return;
+      if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey) && !e.shiftKey) { e.preventDefault(); setSearchOpen(true); }
+      else if (e.key === "/" && !e.metaKey && !e.ctrlKey && !typing(document.activeElement)) { e.preventDefault(); setSearchOpen(true); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [landingOpen]);
+  /* 檢索結果 → 去處。人物：就地開檔案彈窗（文庫、餘波兩頁不帶彈窗，轉檔案頁開）；
+     其餘換頁，並把焦點移入正文——年表、輿圖收到落點後再移到那一事、那一地 */
+  const goSearch = (g) => {
+    setSearchOpen(false);
+    const n = ++jumpSeq.current;
+    if (g.kind === "char") { nav(tab === "novel" || tab === "echoes" ? { tab: "chars", char: g.id } : { char: g.id }); return; }
+    if (g.kind === "event") { nav({ tab: "timeline", char: null }); setJump({ kind: "event", ev: g.ev, n }); return; }
+    if (g.kind === "place") { nav({ tab: "map", char: null }); setJump({ kind: "place", name: g.name, n }); return; }
+    if (g.kind === "novel") { nav({ tab: "novel", char: null, novelPath: g.path }); setJump({ kind: "text", q: g.q, n }); }
+    else if (g.kind === "echo") { nav({ tab: "echoes", char: null, shock: g.shock, who: g.who }); setJump({ kind: "echo", n }); }
+    else if (g.kind === "posts") { nav({ tab: "posts", fac: g.fac, char: null }); window.scrollTo({ top: 0 }); }
+    mainRef.current?.focus({ preventScroll: true });
+  };
+  const jumpDone = useCallback(() => setJump(null), []);
   const [faction, setFaction] = useState("全部");
   const [q, setQ] = useState("");
 
@@ -3369,17 +3393,18 @@ export default function Wiki({ onOpenLanding }) {
   const qt = q.trim();
   const enM = enMatcher(qt); /* 不分大小寫、不計變音符（Rādīn 打作 Radin 亦中），見 content.js */
   const enHit = (str) => en && !!str && enM(str);
+  const has = zhIncludes(qt); /* 繁簡兩試，見 i18n/t2s.js */
   const shown = CHARACTERS.filter(
     (c) => {
       const tr = charEn(locale, c.id);
       return (faction === "全部" || c.belong.includes(faction)) &&
       (qt === "" ||
-        c.name.includes(qt) ||
-        namesText(c).includes(qt) ||
-        (c.epithet || "").includes(qt) ||
-        (c.hao || "").includes(qt) ||
-        (c.pin || "").includes(qt) ||
-        (c.birthplace || "").includes(qt) ||
+        has(c.name) ||
+        has(namesText(c)) ||
+        has(c.epithet) ||
+        has(c.hao) ||
+        has(c.pin) ||
+        has(c.birthplace) ||
         enHit(tr?.name) || enHit(tr?.name?.replace(/\s+/g, "")) || /* minfangcheng 連寫亦中 */
         enHit(tr?.zi) || enHit(tr?.hao) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
         (en && nameItemsEn(c).some(([, v]) => enHit(v))));
@@ -3397,7 +3422,7 @@ export default function Wiki({ onOpenLanding }) {
     <div className="site-root" style={{ minHeight: "100vh", backgroundColor: T.bg, color: T.ink, padding: "0 0 60px" }}>
       <button type="button" className="skip-link" onClick={skipToContent}
         style={{ background: T.panel, color: T.ink, border: `1px solid ${T.accent}`, fontFamily: "HuiwenZhengKai" }}>{t("跳至正文")}</button>
-      <header style={{ borderBottom: `1px solid ${T.line}`, padding: "34px 28px 22px", display: "flex", alignItems: "flex-end", gap: 20, flexWrap: "wrap" }}>
+      <header style={{ position: "relative", borderBottom: `1px solid ${T.line}`, padding: "34px 28px 22px", display: "flex", alignItems: "flex-end", gap: 20, flexWrap: "wrap" }}>
         <div>
           {/* 題頭：英文界面上行作英文站名與年代；「人山人海 · 檔案」英文作 Characters: Archive（作者 2026-11-22 定），冒號同中文之點著朱 */}
           <div lang={en ? "en" : undefined} style={{ fontFamily: "HuiwenZhengKai", fontSize: 11, letterSpacing: en ? "0.12em" : "0.5em", color: T.faint }}>{en ? "Eight Thousand Miles Away · 715–800 · Kaiyuan 3 to Zhenyuan 16" : "七一五 — 八〇〇 · 開元三年至貞元十六年"}</div>
@@ -3405,6 +3430,17 @@ export default function Wiki({ onOpenLanding }) {
             {en ? <>Characters<span style={{ color: T.accent }}>:</span> Archive</> : <>人山人海 <span style={{ color: T.accent }}>·</span> 檔案</>}
           </h1>
         </div>
+        {/* 全站檢索：居頁頭右上角（絕對定位，不入導航之 flex）——導航諸行本已排滿：中文手機、1024 寬、
+            英文手機與 1280 寬處再添一鈕即各多折一行；右上角各寬皆空。鈕上「查」字小方標同各頁檢索框左端那一枚；
+            寬屏另出「檢索」二字與 / 鍵提示，窄屏只出小方標。/ 與 Ctrl／Cmd K 亦可打開。
+            DOM 置導航之前：Tab 順序隨視覺，先右上、後導航 */}
+        <button type="button" onClick={() => setSearchOpen(true)} aria-haspopup="dialog" aria-keyshortcuts="/ Control+K Meta+K"
+          aria-label={t("全站檢索")} title={t("全站檢索（/）")} className="site-search-btn"
+          style={{ color: T.muted, border: `1px solid ${T.line}`, fontFamily: en ? '"Literata EN", "Songti SC", serif' : "JingHuaLaoSong", letterSpacing: en ? "0.02em" : undefined, "--hm-focus": T.accent }}>
+          <span aria-hidden="true" className="ss-tag" style={{ background: T.accent, color: T.onAccent, fontFamily: "HuiwenZhengKai" }}>查</span>
+          <span aria-hidden="true" className="ss-btn-label">{t("檢索")}</span>
+          <kbd aria-hidden="true" className="ss-btn-key" style={{ color: T.muted, border: `1px solid ${T.line}` }}>/</kbd>
+        </button>
         <nav className={locale === "en" ? "nav-en" : undefined} aria-label={t("站內導航")} lang={locale} style={{ display: "flex", flexWrap: "wrap", gap: 4, marginLeft: "auto" }}>
           {/* 末一籤按語言而異、同指 #/about：英文作 About（交代唐代背景與剑三來源），中文作「凡例」（說明站上體例，fanli.jsx） */}
           {/* 頁籤另包一層 .nav-tabs：桌面與中文 display: contents，排版一如其舊；
@@ -3480,19 +3516,24 @@ export default function Wiki({ onOpenLanding }) {
             )}
           </>
         )}
-        {tab === "timeline" && <Timeline onOpenChar={setOpenChar} onOpenEcho={(shock) => nav({ tab: "echoes", char: null, shock, who: null })} />}
+        {tab === "timeline" && <Timeline onOpenChar={setOpenChar} onOpenEcho={(shock) => nav({ tab: "echoes", char: null, shock, who: null })}
+          focus={jump?.kind === "event" ? jump : null} onFocused={jumpDone} />}
         {tab === "network" && <Planetary onOpenChar={setOpenChar} />}
-        {tab === "map" && <GeoMap onOpenChar={setOpenChar} />}
+        {tab === "map" && <GeoMap onOpenChar={setOpenChar} focus={jump?.kind === "place" ? jump : null} onFocused={jumpDone} />}
         {tab === "community" && <Community onOpenChar={setOpenChar} />}
         {tab === "echoes" && (
           <Echoes shockId={route.shock} who={route.who} locale={locale}
             onRoute={(p) => nav({ shock: p.shock, who: p.who })}
-            onOpenProfile={(id) => nav({ tab: "chars", char: id })} />
+            onOpenProfile={(id) => nav({ tab: "chars", char: id })}
+            focus={jump?.kind === "echo" ? jump : null} onFocused={jumpDone} />
         )}
         {tab === "about" && (en ? <About onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} /> : <Fanli onNav={(k) => { setTab(k); window.scrollTo(0, 0); }} />)}
-        {tab === "novel" && <NovelReader path={route.novelPath} onNav={(p, replace) => nav({ novelPath: p }, replace)} />}
+        {tab === "novel" && <NovelReader path={route.novelPath} onNav={(p, replace) => nav({ novelPath: p }, replace)}
+          seek={jump?.kind === "text" ? jump : null} onSeeked={jumpDone} />}
       </main>
 
+      {/* 常駐（關時渲染為空）：框內所查、已拉之文庫正文留著，再開即在 */}
+      <SiteSearch open={searchOpen} onClose={() => setSearchOpen(false)} onGo={goSearch} />
       <DetailPanel c={openChar} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
         onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
         onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })}

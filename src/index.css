@@ -1429,3 +1429,240 @@ html[data-skin="paper"] .texture-test-sm .items-baseline {
 @media (prefers-reduced-motion: reduce) {
   .echo-detail-hint { animation: none; }
 }
+
+/* ---------- 全站檢索（site-search.jsx）：結構在此，顏色由內聯 T 給 ----------
+   框居上方三分之一處（不居中：結果增減時輸入框不上下跳），寬至 640；手機貼左右各 10px。
+   結果區自捲、捲到底不帶動頁面；輸入 16px，iOS 聚焦不放大 */
+.site-search-btn {
+  position: absolute;
+  top: 12px;
+  right: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border-radius: 3px;
+  padding: 4px 6px 4px 5px;
+  font-size: 12.5px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.site-search-btn:hover {
+  border-color: var(--hm-focus) !important;
+}
+.site-search-btn:focus-visible {
+  outline: 1px solid var(--hm-focus);
+  outline-offset: 2px;
+}
+.site-search-btn .ss-tag {
+  width: 17px;
+  height: 17px;
+  font-size: 11px;
+}
+.ss-btn-key {
+  font: 11px/1 "Literata EN", serif;
+  border-radius: 2px;
+  padding: 1px 4px 2px;
+  letter-spacing: 0;
+}
+/* 窄屏：只出小方標，貼右上角 */
+@media (max-width: 599px) {
+  .site-search-btn {
+    top: 6px;
+    right: 14px;
+    padding: 4px;
+  }
+  .ss-btn-label,
+  .ss-btn-key {
+    display: none;
+  }
+}
+.ss-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: max(9vh, 12px) 10px 12px;
+}
+.ss-panel {
+  width: min(640px, 100%);
+  max-height: min(78vh, calc(100dvh - 24px));
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+  animation: header-menu-in .14s ease-out;
+}
+/* 頭、狀態行、腳不隨結果多寡被擠扁：框為縱向 flex，諸子默認可縮，結果多時狀態行曾被壓到 14／21px，
+   字與下方分組名相疊、失敗時「重新載入」鈕被結果區蓋住點不到；只讓結果區（.ss-body）縮 */
+.ss-head,
+.ss-status,
+.ss-foot {
+  flex: none;
+}
+.ss-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+}
+.ss-tag {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  font-size: 12px;
+}
+.ss-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  font-size: 16px;
+  padding: 2px 0;
+}
+.ss-close {
+  flex: none;
+  background: none;
+  border-radius: 3px;
+  padding: 2px 7px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.ss-close:focus-visible {
+  outline: 1px solid var(--ss-focus);
+  outline-offset: 2px;
+}
+.ss-status {
+  font-size: 11.5px;
+  padding: 0 16px;
+  min-height: 0;
+}
+.ss-status.on {
+  padding-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px; /* 窄屏「重新載入」折到次行時齊左，不帶縮進 */
+}
+.ss-retry {
+  background: none;
+  border-radius: 3px;
+  padding: 1px 7px;
+  font-size: 11.5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ss-retry:focus-visible {
+  outline: 1px solid var(--ss-focus);
+  outline-offset: 2px;
+}
+.ss-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 0 8px;
+}
+.ss-hint {
+  padding: 10px 16px 6px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.ss-hint p {
+  margin: 0;
+}
+.ss-keys {
+  font-size: 11.5px;
+}
+.ss-group {
+  padding-top: 6px;
+}
+.ss-ghead {
+  font-size: 11.5px;
+  letter-spacing: 0.3em;
+  padding: 6px 16px 4px;
+}
+.ss-gcount {
+  letter-spacing: 0;
+  margin-left: 4px;
+  font-size: 11px;
+}
+.ss-opt {
+  padding: 6px 16px 7px;
+  cursor: pointer;
+}
+.ss-row1 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.ss-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ss-meta {
+  flex: none;
+  max-width: 40%;
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ss-row2 {
+  font-size: 12.5px;
+  line-height: 1.65;
+  margin-top: 1px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ss-mark {
+  color: inherit;
+  border-radius: 2px;
+}
+.ss-more {
+  font-size: 12.5px;
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+.ss-foot {
+  font-size: 11px;
+  padding: 7px 16px;
+  letter-spacing: 0.05em;
+}
+/* 觸屏無實體鍵盤之可言：鍵位提示不出 */
+@media (pointer: coarse) {
+  .ss-foot,
+  .ss-keys { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-panel { animation: none; }
+}
+/* 自檢索落到年表某事：其行淡染一下再退去（Timeline focus）；減少動效時只染不漸 */
+.ev-flash {
+  animation: ev-flash 2.2s ease-out;
+  border-radius: 3px;
+}
+.ev-flash:focus {
+  outline: none;
+}
+@keyframes ev-flash {
+  0%, 35% { background-color: var(--flash); }
+  100% { background-color: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ev-flash { animation: none; background-color: var(--flash); }
+}

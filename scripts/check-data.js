@@ -340,7 +340,7 @@ for (let i = 0; i < TENURES.length; i++) for (let j = i + 1; j < TENURES.length;
 
   /* 界面字串：靜態掃 t("…")（余波頁另用 echoes.en.js，不在此列）；動態鍵（t(label) 之類）以「源碼中出現此字串」為用 */
   const SRC_DIR = new URL("../src/", import.meta.url);
-  const srcText = ["wiki.jsx", "posts.jsx", "novel-reader.jsx", "landing.jsx", "i18n/names.jsx", "i18n/content.js", "i18n/name-labels.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
+  const srcText = ["wiki.jsx", "posts.jsx", "novel-reader.jsx", "landing.jsx", "site-search.jsx", "search.js", "i18n/names.jsx", "i18n/content.js", "i18n/name-labels.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
   /* 動態鍵有出自數據層者：檔案八目之行標（wiki-data.js 之 F）、任期類別（posts-data.js 之 kind） */
   const dataText = ["wiki-data.js", "posts-data.js"].map((f) => readFileSync(new URL(f, SRC_DIR), "utf8")).join("\n");
   const used = new Set([...srcText.matchAll(/\b(?:t|t_|tr)\(\s*"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]));

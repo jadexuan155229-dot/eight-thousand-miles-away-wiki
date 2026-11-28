@@ -60,7 +60,7 @@ function nodeText(n) {
   return `${n.y}${n.m != null ? `.${n.m}` : ""}${n.q || ""}`;
 }
 
-export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile }) {
+export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile, focus, onFocused }) {
   const shock = SHOCKS.find((s) => s.id === shockId) || SHOCKS[0];
   const t = (k) => echoUi(locale, k);
   /* 翻面：带 flipOf 的条目不进震源选择栏，挂在所指震源之下，由正反两枚小签切换 */
@@ -101,6 +101,14 @@ export default function Echoes({ shockId, who, locale, onRoute, onOpenProfile })
     (row || root).scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: row ? "center" : "start" });
     row?.focus({ preventScroll: true });
   };
+  /* 自全站檢索落到某震源（或其某一行）：有選中行則居中移焦，否則回頁首 */
+  useEffect(() => {
+    if (!focus) return;
+    const row = chartRef.current?.querySelector('g[role="button"][aria-pressed="true"]');
+    if (row) { row.scrollIntoView({ block: "center" }); row.focus({ preventScroll: true }); }
+    else window.scrollTo({ top: 0 });
+    onFocused?.();
+  }, [focus]); // eslint-disable-line react-hooks/exhaustive-deps -- 只隨落點而動
   const goDetail = () => {
     const el = detailRef.current;
     if (!el) return;

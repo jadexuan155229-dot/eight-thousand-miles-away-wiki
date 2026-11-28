@@ -1,6 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from "react";
 import { serif, T, tone, toneText, useSkin, useNarrow } from "./theme";
 import { NOVELS, FLAT, loadTexts } from "./novel";
+import { queryKeys, hasKeys, hitRanges, snippetAt } from "./match";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { useLocale, useT } from "./i18n/locale";
@@ -82,7 +83,8 @@ function splitCharTerms(s, keyBase, onCharClick, activeKey) {
 }
 
 /* 正文體例：一行一段，段首縮進兩字；空行為節間距
-   hl：檢索關鍵詞——命中處以淺橘紅半透明底標出（拆分文本節點渲染，不用 innerHTML）；
+   hl：檢索詞之寫法（match.js queryKeys 所出、本章取定之一種，或 null）——命中處以淺橘紅半透明底標出
+     （拆分文本節點渲染，不用 innerHTML）；比對規矩同全站檢索（不分大小寫、不計變音符、繁簡兩試）；
    firstHitRef：全文首個命中 span 之 ref，供檢索結果點入後平滑滾動定位 */
 function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh = 2.1, pal = T }) {
   const t = useT();
@@ -93,22 +95,22 @@ function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh
   const out = [];
   let gap = false;
   let firstHit = true;
-  const kl = hl ? hl.toLowerCase() : "";
   text.split("\n").forEach((raw, i) => {
     const l = raw.trim();
     if (!l) { gap = true; return; }
     let content = splitCharTerms(l, i, onCharClick, activeCharKey);
-    if (kl && l.toLowerCase().includes(kl)) {
-      const ll = l.toLowerCase(), seg = [];
-      let at = 0, p;
-      while ((p = ll.indexOf(kl, at)) !== -1) {
+    const rs = hl ? hitRanges(l, hl) : [];
+    if (rs.length) {
+      const seg = [];
+      let at = 0;
+      for (const [p, e] of rs) {
         if (p > at) seg.push(splitCharTerms(l.slice(at, p), `${i}:${at}`, onCharClick, activeCharKey));
         seg.push(
           <span key={p} ref={firstHit ? firstHitRef : undefined}
-            style={{ background: T.hit, borderRadius: 2 }}>{l.slice(p, p + kl.length)}</span>
+            style={{ background: T.hit, borderRadius: 2 }}>{l.slice(p, e)}</span>
         );
         firstHit = false;
-        at = p + kl.length;
+        at = e;
       }
       if (at < l.length) seg.push(splitCharTerms(l.slice(at), `${i}:${at}`, onCharClick, activeCharKey));
       content = seg;
@@ -260,7 +262,7 @@ function MarginNote({ peek, bodyColRef, onClose, paper }) {
   );
 }
 
-export default function NovelReader({ path, onNav }) {
+export default function NovelReader({ path, onNav, seek, onSeeked }) {
   const narrow = useNarrow();
   /* 英文界面：目錄、設置、提示語作英文；章題「第一章」作 Chapter 1，故事線名與「定場」「序」待作者定，暫回落中文；
      正文不译（T3，見 docs/english-edition.md），故閱讀頁上方另注一行說明 */
@@ -271,14 +273,28 @@ export default function NovelReader({ path, onNav }) {
   /* 故事線標籤：中文作【生逢】，英文不用方頭括號，作「Born to It · 」 */
   const bt = (tag) => (locale === "en" ? `${nt(tag)} · ` : `【${nt(tag)}】`);
   /* 正文懶加載：進入文庫（本組件掛載）方動態拉入 texts.js 獨立塊，不佔首屏主包。
-     texts=null 為載入中；載入後為 { file: 正文 } 映射。各處取正文一律經 textOf。 */
+     texts=null 為載入中；載入後為 { file: 正文 } 映射。各處取正文一律經 textOf。
+     載入失敗（textsFailed）：正文處明說未能載入、給「重新載入頁面」，本頁檢索注明只查了題名——
+     原先失敗後正文處永遠停在「載入中」，檢索則報「未檢得」，兩樣都會被當真。
+     不做原地重試：失敗的動態 import 記在模塊表，同網址再 import 不發請求；常見之失敗又是頁開著時
+     站上已重新部署、舊塊已不存在，唯整頁重載可救（同 site-search.jsx） */
   const [texts, setTexts] = useState(null);
+  const [textsFailed, setTextsFailed] = useState(false);
   useEffect(() => {
     let alive = true;
-    loadTexts().then((t) => { if (alive) setTexts(t); }).catch(() => { /* 載入失敗：各章顯待錄，不崩 */ });
+    loadTexts().then((t) => { if (alive) setTexts(t); }, () => { if (alive) setTextsFailed(true); });
     return () => { alive = false; };
   }, []);
+  const textsPending = texts === null && !textsFailed; /* 尚在載入：諸待正文就位之定位到此為止 */
   const textOf = (ch) => (texts && ch && ch.file ? texts[ch.file] : "");
+  /* 正文高亮之寫法：繁簡兩試，取本章有命中之一種（照繁體打「雁門」，高亮正文之「雁门」）——
+     一章之內只用一種，命中數與目錄所報相合 */
+  const hlOf = (text) => {
+    const keys = queryKeys(q);
+    if (keys.length === 0) return null;
+    const k = keys.find((x) => hasKeys(text, [x]));
+    return k ? [k] : null;
+  };
   /* 章節由路由派生（#/novel/…，見 router.js）；壞路徑同無章 */
   const sel = path && byPath[path] ? path : null;
   /* 初訪 #/novel 無章：回上次閱讀處（replace 寫入不佔歷史，後退不折返）；
@@ -359,11 +375,11 @@ export default function NovelReader({ path, onNav }) {
   useEffect(() => {
     if (!sel || restoreScrollTo.current !== sel) return;
     /* 正文懶加載：待該章正文就位再定位，否則頁面尚矮、scrollTo 夠不到目標處 */
-    if (byPath[sel]?.ch.file && texts === null) return;
+    if (byPath[sel]?.ch.file && textsPending) return;
     restoreScrollTo.current = null;
     const s = readSavedScroll();
     if (s && s.path === sel) window.scrollTo({ top: s.y, behavior: "auto" });
-  }, [sel, texts]);
+  }, [sel, textsPending]);
   /* 滾動處保存：節流 200ms；離章（清理時窗口尚在舊章滾動處）與 pagehide 各補記一次 */
   useEffect(() => {
     if (!sel) return;
@@ -418,39 +434,40 @@ export default function NovelReader({ path, onNav }) {
     pendingScroll.current = true;
     jump(path, false);
   };
+  /* 自全站檢索入章：本頁檢索框填上同一詞（目錄轉為命中列表、正文高亮），待正文到位後滾至首個命中處 */
   useEffect(() => {
-    if (pendingScroll.current) {
-      pendingScroll.current = false;
-      if (firstHitEl.current) firstHitEl.current.scrollIntoView({ behavior: "smooth", block: "center" });
-      else window.scrollTo({ top: 0, behavior: "smooth" }); /* 僅標題命中、正文無命中：回頁首 */
-    }
-  }, [sel]);
+    if (!seek) return;
+    setInputValue(seek.q);
+    setQ(seek.q);
+    pendingScroll.current = true;
+    onSeeked?.();
+  }, [seek]); // eslint-disable-line react-hooks/exhaustive-deps -- 只隨落點而動
+  /* 待滾：正文懶加載，未到則等（texts 入依存）；檢索詞同批更新（q 入依存）；
+     同章同詞再自全站檢索點入，諸值皆不變——seek 由有轉無（onSeeked 清落點）亦觸發一次 */
+  useEffect(() => {
+    if (!pendingScroll.current) return;
+    if (textsPending && byPath[sel]?.ch.file) return;
+    pendingScroll.current = false;
+    if (firstHitEl.current) firstHitEl.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    else window.scrollTo({ top: 0, behavior: "smooth" }); /* 僅標題命中、正文無命中：回頁首 */
+  }, [sel, textsPending, q, seek]);
 
-  /* 全文檢索：字面匹配、不分英文大小寫、不作正則；每篇章至多一條結果 */
+  /* 全文檢索：字面匹配、不作正則，規矩同全站檢索（match.js：不分大小寫、不計變音符、繁簡兩試）；
+     每篇章至多一條結果，一章之內只取一種寫法（hitRanges 取首個有命中者），與正文高亮相合 */
   const results = useMemo(() => {
-    const k = q.trim();
-    if (!k) return [];
-    const kl = k.toLowerCase();
+    const keys = queryKeys(q);
+    if (keys.length === 0) return [];
     const out = [];
     for (const f of FLAT) {
       /* 題名：中文原題照查；英文界面另查英文題名（Climbing the Tower、Opening、Chapter 1） */
       const titles = [f.novel.tag, f.novel.title, f.group && f.group.title, f.ch.title].filter(Boolean);
-      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => t.toLowerCase().includes(kl));
+      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => hasKeys(t, keys));
       const text = (texts && f.ch.file && texts[f.ch.file]) || "";
-      const tl = text.toLowerCase();
-      let n = 0, first = -1, at = 0, p;
-      while ((p = tl.indexOf(kl, at)) !== -1) { if (first < 0) first = p; n++; at = p + kl.length; }
-      if (!titleHit && n === 0) continue;
-      let snip = null;
-      if (first >= 0) { /* 摘要：命中前後各截約 28 字，截斷處以省略號示之 */
-        const s = Math.max(0, first - 28), e = Math.min(text.length, first + k.length + 28);
-        snip = {
-          pre: (s > 0 ? "…" : "") + text.slice(s, first).replace(/\s+/g, " "),
-          hit: text.slice(first, first + k.length),
-          post: text.slice(first + k.length, e).replace(/\s+/g, " ") + (e < text.length ? "…" : ""),
-        };
-      }
-      out.push({ f, n, snip });
+      const rs = hitRanges(text, keys);
+      if (!titleHit && rs.length === 0) continue;
+      /* 摘要：命中前後各截約 28 字，截斷處以省略號示之 */
+      const snip = rs.length ? snippetAt(text, rs[0][0], rs[0][1], 28, 28) : null;
+      out.push({ f, n: rs.length, snip });
     }
     return out;
   }, [q, texts, en]); // eslint-disable-line react-hooks/exhaustive-deps -- nt 隨 locale，en 已列
@@ -484,12 +501,14 @@ export default function NovelReader({ path, onNav }) {
 
   const Tree = () => {
     const k = q.trim(); /* 檢索中：命中項與其必要上級保留；命中之上級則子項全示；展開態強制打開、原折疊狀態不動 */
+    const keys = queryKeys(k);
+    const has = (str) => hasKeys(str, keys); /* 規矩同正文檢索（match.js） */
     return (
     <div>
       {NOVELS.map((nv) => {
-        const nvHit = !k || nv.tag.includes(k) || nv.title.includes(k);
+        const nvHit = !k || has(nv.tag) || has(nv.title);
         const kids = nvHit ? nv.chapters : nv.chapters.filter((ch) =>
-          ch.chapters ? ch.title.includes(k) || ch.chapters.some((s) => s.title.includes(k)) : ch.title.includes(k));
+          ch.chapters ? has(ch.title) || ch.chapters.some((s) => has(s.title)) : has(ch.title));
         if (k && !nvHit && kids.length === 0) return null;
         const open = !!k || expanded.has(nv.id);
         return (
@@ -504,7 +523,7 @@ export default function NovelReader({ path, onNav }) {
               if (!ch.chapters) return <Leaf key={ch.id} nv={nv} ch={ch} />;
               const gk = `${nv.id}/${ch.id}`;
               const gOpen = !!k || expanded.has(gk);
-              const subs = !k || nvHit || ch.title.includes(k) ? ch.chapters : ch.chapters.filter((s) => s.title.includes(k));
+              const subs = !k || nvHit || has(ch.title) ? ch.chapters : ch.chapters.filter((s) => has(s.title));
               return (
                 <div key={ch.id}>
                   <button onClick={() => toggle(gk)}
@@ -527,6 +546,9 @@ export default function NovelReader({ path, onNav }) {
   /* 檢索結果視圖：一篇章一條——所屬書目／卷、篇題、含關鍵詞之正文摘要；點入滾至首個命中處 */
   const SearchResults = () => (
     <div>
+      {textsFailed && (
+        <div role="status" style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.ink, padding: "10px 8px 2px", letterSpacing: "0.1em", lineHeight: 1.7 }}>{t("正文未能載入，只查了題名。")}</div>
+      )}
       {results.length === 0 && (
         <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.faint, padding: "14px 8px", letterSpacing: "0.1em" }}>{t("未檢得相關文字")}</div>
       )}
@@ -671,9 +693,17 @@ export default function NovelReader({ path, onNav }) {
                       </div>
                     )}
                   </div>
-                  {cur.ch.file && texts === null
+                  {cur.ch.file && textsFailed
+                    ? <div role="alert" style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.muted, padding: "36px 0", letterSpacing: "0.15em", lineHeight: 2 }}>
+                        {t("正文未能載入。")}
+                        <button type="button" onClick={() => window.location.reload()}
+                          style={{ marginLeft: 12, fontFamily: "JingHuaLaoSong", fontSize: 13, letterSpacing: "0.1em", color: pal.ink, background: "none", border: `1px solid ${pal.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" }}>
+                          {t("重新載入頁面")}
+                        </button>
+                      </div>
+                    : cur.ch.file && texts === null
                     ? <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.faint, padding: "36px 0", letterSpacing: "0.15em" }}>{t("正文載入中……")}</div>
-                    : <Body text={textOf(cur.ch)} hl={q.trim() || null} firstHitRef={firstHitEl} onCharClick={openPeek} activeCharKey={peek ? peek.key : null}
+                    : <Body text={textOf(cur.ch)} hl={hlOf(textOf(cur.ch))} firstHitRef={firstHitEl} onCharClick={openPeek} activeCharKey={peek ? peek.key : null}
                         fs={FS_STEPS[view.fs]} lh={LH_STEPS[view.lh][1]} pal={pal} />}
                 </div>
                 <div style={{ maxWidth: bodyMaxWidth, display: "flex", justifyContent: "space-between", gap: 12, borderTop: `1px solid ${pal.line}`, marginTop: 44, paddingTop: 14, ...(narrow || paper ? null : { marginLeft: "auto", marginRight: "auto" }) }}>
