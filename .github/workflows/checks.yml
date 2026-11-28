@@ -3,6 +3,7 @@
 #   资料     npm run check-data              （有错即不过；警告只列出）
 #   代码     oxlint，零警告                    （有一条即不过）
 #   字体子集  node scripts/font-chars.js --check（站内有字符表外之字即不过，改法见 README「字体子集」）
+#   繁简对照  node scripts/t2s-table.js --check（检索用繁→简表与站内用字不合即不过，改法：npm run t2s）
 #   构建     npm run build
 #   前进后退  npm run check:history            （用 runner 自带的 Google Chrome）
 name: Checks
@@ -45,6 +46,10 @@ jobs:
       - name: 字体子集（font-chars --check）
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node scripts/font-chars.js --check
+
+      - name: 繁简对照（t2s --check）
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node scripts/t2s-table.js --check
 
       - name: 构建（build）
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}

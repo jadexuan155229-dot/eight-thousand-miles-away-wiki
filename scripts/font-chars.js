@@ -21,6 +21,9 @@ export const CHAR_LIST = join(ROOT, "scripts", "font-subset-chars.txt");
 
 const SCAN_DIRS = ["src"];
 const SCAN_FILES = ["index.html"];
+/* 不掃之檔：繁→简檢索對照表（scripts/t2s-table.js 生成）——表中千餘繁字只供比對、從不顯示，
+   收進字符表徒然撐大字體子集 */
+const SKIP = new Set([join(ROOT, "src", "i18n", "t2s-table.js")]);
 const EXTS = new Set([".js", ".jsx", ".ts", ".tsx", ".css", ".html", ".txt", ".md", ".json"]);
 
 /* ASCII 已全數在表；只收非 ASCII 的基本平面字元，私用區與變體選擇符不收 */
@@ -39,7 +42,7 @@ function walk(dir, out) {
 }
 
 export function siteChars() {
-  const files = SCAN_DIRS.flatMap((d) => walk(join(ROOT, d), [])).concat(SCAN_FILES.map((f) => join(ROOT, f)));
+  const files = SCAN_DIRS.flatMap((d) => walk(join(ROOT, d), [])).concat(SCAN_FILES.map((f) => join(ROOT, f))).filter((f) => !SKIP.has(f));
   const set = new Set();
   for (const f of files) for (const ch of readFileSync(f, "utf8")) if (wanted(ch.codePointAt(0))) set.add(ch);
   return set;

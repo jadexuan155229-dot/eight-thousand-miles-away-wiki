@@ -1,6 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from "react";
 import { serif, T, tone, toneText, useSkin, useNarrow } from "./theme";
 import { NOVELS, FLAT, loadTexts } from "./novel";
+import { zhVariants, zhIncludes } from "./i18n/t2s";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { useLocale, useT } from "./i18n/locale";
@@ -279,6 +280,13 @@ export default function NovelReader({ path, onNav }) {
     return () => { alive = false; };
   }, []);
   const textOf = (ch) => (texts && ch && ch.file ? texts[ch.file] : "");
+  /* 正文高亮之詞：繁簡兩試，取本章有命中之寫法（照繁體打「雁門」，高亮正文之「雁门」）；無命中則原樣 */
+  const hlOf = (text) => {
+    const k = q.trim();
+    if (!k) return null;
+    const tl = (text || "").toLowerCase();
+    return zhVariants(k).find((v) => tl.includes(v.toLowerCase())) || k;
+  };
   /* 章節由路由派生（#/novel/…，見 router.js）；壞路徑同無章 */
   const sel = path && byPath[path] ? path : null;
   /* 初訪 #/novel 無章：回上次閱讀處（replace 寫入不佔歷史，後退不折返）；
@@ -430,24 +438,25 @@ export default function NovelReader({ path, onNav }) {
   const results = useMemo(() => {
     const k = q.trim();
     if (!k) return [];
-    const kl = k.toLowerCase();
+    const kls = zhVariants(k).map((v) => v.toLowerCase()); /* 繁簡兩試（見 i18n/t2s.js）：原字在前 */
     const out = [];
     for (const f of FLAT) {
       /* 題名：中文原題照查；英文界面另查英文題名（Climbing the Tower、Opening、Chapter 1） */
       const titles = [f.novel.tag, f.novel.title, f.group && f.group.title, f.ch.title].filter(Boolean);
-      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => t.toLowerCase().includes(kl));
+      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => kls.some((kl) => t.toLowerCase().includes(kl)));
       const text = (texts && f.ch.file && texts[f.ch.file]) || "";
       const tl = text.toLowerCase();
+      const kl = kls.find((v) => tl.includes(v)) || kls[0]; /* 一章之內取有命中之寫法 */
       let n = 0, first = -1, at = 0, p;
       while ((p = tl.indexOf(kl, at)) !== -1) { if (first < 0) first = p; n++; at = p + kl.length; }
       if (!titleHit && n === 0) continue;
       let snip = null;
       if (first >= 0) { /* 摘要：命中前後各截約 28 字，截斷處以省略號示之 */
-        const s = Math.max(0, first - 28), e = Math.min(text.length, first + k.length + 28);
+        const s = Math.max(0, first - 28), e = Math.min(text.length, first + kl.length + 28);
         snip = {
           pre: (s > 0 ? "…" : "") + text.slice(s, first).replace(/\s+/g, " "),
-          hit: text.slice(first, first + k.length),
-          post: text.slice(first + k.length, e).replace(/\s+/g, " ") + (e < text.length ? "…" : ""),
+          hit: text.slice(first, first + kl.length),
+          post: text.slice(first + kl.length, e).replace(/\s+/g, " ") + (e < text.length ? "…" : ""),
         };
       }
       out.push({ f, n, snip });
@@ -484,12 +493,13 @@ export default function NovelReader({ path, onNav }) {
 
   const Tree = () => {
     const k = q.trim(); /* 檢索中：命中項與其必要上級保留；命中之上級則子項全示；展開態強制打開、原折疊狀態不動 */
+    const has = zhIncludes(k); /* 繁簡兩試 */
     return (
     <div>
       {NOVELS.map((nv) => {
-        const nvHit = !k || nv.tag.includes(k) || nv.title.includes(k);
+        const nvHit = !k || has(nv.tag) || has(nv.title);
         const kids = nvHit ? nv.chapters : nv.chapters.filter((ch) =>
-          ch.chapters ? ch.title.includes(k) || ch.chapters.some((s) => s.title.includes(k)) : ch.title.includes(k));
+          ch.chapters ? has(ch.title) || ch.chapters.some((s) => has(s.title)) : has(ch.title));
         if (k && !nvHit && kids.length === 0) return null;
         const open = !!k || expanded.has(nv.id);
         return (
@@ -504,7 +514,7 @@ export default function NovelReader({ path, onNav }) {
               if (!ch.chapters) return <Leaf key={ch.id} nv={nv} ch={ch} />;
               const gk = `${nv.id}/${ch.id}`;
               const gOpen = !!k || expanded.has(gk);
-              const subs = !k || nvHit || ch.title.includes(k) ? ch.chapters : ch.chapters.filter((s) => s.title.includes(k));
+              const subs = !k || nvHit || has(ch.title) ? ch.chapters : ch.chapters.filter((s) => has(s.title));
               return (
                 <div key={ch.id}>
                   <button onClick={() => toggle(gk)}
@@ -673,7 +683,7 @@ export default function NovelReader({ path, onNav }) {
                   </div>
                   {cur.ch.file && texts === null
                     ? <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.faint, padding: "36px 0", letterSpacing: "0.15em" }}>{t("正文載入中……")}</div>
-                    : <Body text={textOf(cur.ch)} hl={q.trim() || null} firstHitRef={firstHitEl} onCharClick={openPeek} activeCharKey={peek ? peek.key : null}
+                    : <Body text={textOf(cur.ch)} hl={hlOf(textOf(cur.ch))} firstHitRef={firstHitEl} onCharClick={openPeek} activeCharKey={peek ? peek.key : null}
                         fs={FS_STEPS[view.fs]} lh={LH_STEPS[view.lh][1]} pal={pal} />}
                 </div>
                 <div style={{ maxWidth: bodyMaxWidth, display: "flex", justifyContent: "space-between", gap: 12, borderTop: `1px solid ${pal.line}`, marginTop: 44, paddingTop: 14, ...(narrow || paper ? null : { marginLeft: "auto", marginRight: "auto" }) }}>

@@ -31,6 +31,7 @@ import { Zh, Tx } from "./i18n/zh";
 import { TIER1 } from "./i18n/tiers";
 import { enBulkReady } from "./i18n/en-bulk";
 import { CourtesyLine } from "./i18n/names";
+import { zhIncludes } from "./i18n/t2s";
 
 /* ============================================================
    八千里路 · 人山人海 檔案 — 可視化站點原型 v4
@@ -967,15 +968,16 @@ function Timeline({ onOpenChar, onOpenEcho }) {
     /* 英文界面：中文原文照查，另查英文译名、译題、年號（不分大小寫） */
     const enM = enMatcher(kw); /* 不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），見 content.js */
     const enHit = (str) => en && !!str && enM(str);
+    const has = zhIncludes(kw); /* 繁簡兩試：照繁體占位語打「雁門」亦中「雁门」，見 i18n/t2s.js */
     const hit = (e) =>
       kw === "" ||
-      e.title.includes(kw) ||
-      (e.seq || "").includes(kw) ||
-      e.loc.some((l) => l.includes(kw) || enHit(placeName(locale, l))) ||
-      e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
-      eraOfYM(e.year, e.month).includes(kw) ||
+      has(e.title) ||
+      has(e.seq) ||
+      e.loc.some((l) => has(l) || enHit(placeName(locale, l))) ||
+      e.fac.some((f) => has(f) || enHit(facName(locale, f))) ||
+      has(eraOfYM(e.year, e.month)) ||
       enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
+      e.chars.some((id) => has(byId[id].name) || has(namesText(byId[id])) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" || /* 已選人物則取其完整編年 */
       fsel === "all" ||
@@ -2633,15 +2635,16 @@ function GeoMap({ onOpenChar }) {
     const kw = q.trim();
     const enM = enMatcher(kw); /* 不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），見 content.js */
     const enHit = (str) => en && !!str && enM(str);
+    const has = zhIncludes(kw); /* 繁簡兩試：照繁體占位語打「雁門」亦中「雁门」，見 i18n/t2s.js */
     const hit = (e) =>
       kw === "" ||
-      e.title.includes(kw) ||
-      (e.seq || "").includes(kw) ||
-      e.loc.some((l) => l.includes(kw) || enHit(placeName(locale, l))) ||
-      e.fac.some((f) => f.includes(kw) || enHit(facName(locale, f))) ||
-      eraOfYM(e.year, e.month).includes(kw) ||
+      has(e.title) ||
+      has(e.seq) ||
+      e.loc.some((l) => has(l) || enHit(placeName(locale, l))) ||
+      e.fac.some((f) => has(f) || enHit(facName(locale, f))) ||
+      has(eraOfYM(e.year, e.month)) ||
       enHit(eventTitle(locale, e)) || enHit(englishEraOf(e.year)) ||
-      e.chars.some((id) => byId[id].name.includes(kw) || namesText(byId[id]).includes(kw) || enHit(charName(locale, byId[id])));
+      e.chars.some((id) => has(byId[id].name) || has(namesText(byId[id])) || enHit(charName(locale, byId[id])));
     const byFaction = (e) =>
       who !== "all" ||
       fsel === "all" ||
@@ -3312,17 +3315,18 @@ export default function Wiki({ onOpenLanding }) {
   const qt = q.trim();
   const enM = enMatcher(qt); /* 不分大小寫、不計變音符（Rādīn 打作 Radin 亦中），見 content.js */
   const enHit = (str) => en && !!str && enM(str);
+  const has = zhIncludes(qt); /* 繁簡兩試，見 i18n/t2s.js */
   const shown = CHARACTERS.filter(
     (c) => {
       const tr = charEn(locale, c.id);
       return (faction === "全部" || c.belong.includes(faction)) &&
       (qt === "" ||
-        c.name.includes(qt) ||
-        namesText(c).includes(qt) ||
-        (c.epithet || "").includes(qt) ||
-        (c.hao || "").includes(qt) ||
-        (c.pin || "").includes(qt) ||
-        (c.birthplace || "").includes(qt) ||
+        has(c.name) ||
+        has(namesText(c)) ||
+        has(c.epithet) ||
+        has(c.hao) ||
+        has(c.pin) ||
+        has(c.birthplace) ||
         enHit(tr?.name) || enHit(tr?.name?.replace(/\s+/g, "")) || /* minfangcheng 連寫亦中 */
         enHit(tr?.zi) || enHit(tr?.hao) || enHit(tr?.epithet) || enHit(tr?.birthplace) ||
         (en && nameItemsEn(c).some(([, v]) => enHit(v))));

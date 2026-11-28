@@ -20,7 +20,7 @@ npm run lint
 npm run build
 ```
 
-每个 PR、每次推到 main，GitHub Actions 都会自动跑一遍（`.github/workflows/checks.yml`）：资料（`check-data`）、代码（oxlint，零警告，有一条即不过）、字体子集（`node scripts/font-chars.js --check`，有字符表外之字即不过）、构建、前进后退（`check:history`）。任一项不过，PR 页底部显示红叉，点进去看是哪一项；各项互不连坐，一次看全。它与部署各跑各的，不挡部署；部署（`.github/workflows/deploy.yml`）自己在构建前再跑一次 `check-data`，资料有错即不发布，线上保持上一版。
+每个 PR、每次推到 main，GitHub Actions 都会自动跑一遍（`.github/workflows/checks.yml`）：资料（`check-data`）、代码（oxlint，零警告，有一条即不过）、字体子集（`node scripts/font-chars.js --check`，有字符表外之字即不过）、繁简对照（`node scripts/t2s-table.js --check`，见下）、构建、前进后退（`check:history`）。任一项不过，PR 页底部显示红叉，点进去看是哪一项；各项互不连坐，一次看全。它与部署各跑各的，不挡部署；部署（`.github/workflows/deploy.yml`）自己在构建前再跑一次 `check-data`，资料有错即不发布，线上保持上一版。
 
 ## 字体子集
 
@@ -39,6 +39,16 @@ npm run fonts
 node scripts/font-usage.js                   # 逐页打开站点，记三枚字体各在几页上用到哪些字（需本机 Chrome，约七分钟）
 python3 scripts/subset-fonts.py --reslice    # 据此整套重切
 ```
+
+## 繁简对照（检索用）
+
+界面是繁体、资料是简体，读者照着繁体占位语打「雁門關」，资料里只有「雁门关」。站上各检索框（全站检索、档案、年表、舆图、文库）都把查询逐字转简再试一次，原字与转后之字两试（`src/i18n/t2s.js`）。所用对照表 `src/i18n/t2s-table.js` 由脚本生成、勿手改：从 OpenCC 全表（`scripts/t2s-full.txt`，三千七百余对）里只留简体一侧见于站内者，千余对。新录正文、新增人物事件之后 CI 若报「繁简对照」不合，跑一次再提交即可（几秒）：
+
+```bash
+npm run t2s
+```
+
+不跑也不出错，只是新字的繁体写法查不到。表中繁字只供比对、从不显示，字体子集不收（`font-chars.js` 跳过此档）。
 
 ## 英文版
 
