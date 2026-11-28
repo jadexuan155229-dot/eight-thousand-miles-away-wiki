@@ -136,6 +136,7 @@ const en = {
   '文庫正文載入中……': 'Loading the library text…',
   '文庫正文未能載入，文庫只查了章節題名。': 'The library text failed to load, so only chapter titles were searched.',
   重新載入頁面: 'Reload page',
+  '正文未能載入。': 'The text failed to load.', '正文未能載入，只查了題名。': 'The text failed to load, so only titles were searched.',
   '可檢人物、事件、地點、餘波、編制與文庫正文；繁簡皆可。': 'Covers characters, events, places, aftershocks, posts and the library text. Chinese may be typed in traditional or simplified characters.',
   '隨處按 / 或 {mod} K 打開': ({ mod }) => `Press / or ${mod} K anywhere to open this.`,
   '上下鍵選擇　Enter 前往　Esc 關閉': 'Up and down to choose · Enter to go · Esc to close',

@@ -273,13 +273,19 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
   /* 故事線標籤：中文作【生逢】，英文不用方頭括號，作「Born to It · 」 */
   const bt = (tag) => (locale === "en" ? `${nt(tag)} · ` : `【${nt(tag)}】`);
   /* 正文懶加載：進入文庫（本組件掛載）方動態拉入 texts.js 獨立塊，不佔首屏主包。
-     texts=null 為載入中；載入後為 { file: 正文 } 映射。各處取正文一律經 textOf。 */
+     texts=null 為載入中；載入後為 { file: 正文 } 映射。各處取正文一律經 textOf。
+     載入失敗（textsFailed）：正文處明說未能載入、給「重新載入頁面」，本頁檢索注明只查了題名——
+     原先失敗後正文處永遠停在「載入中」，檢索則報「未檢得」，兩樣都會被當真。
+     不做原地重試：失敗的動態 import 記在模塊表，同網址再 import 不發請求；常見之失敗又是頁開著時
+     站上已重新部署、舊塊已不存在，唯整頁重載可救（同 site-search.jsx） */
   const [texts, setTexts] = useState(null);
+  const [textsFailed, setTextsFailed] = useState(false);
   useEffect(() => {
     let alive = true;
-    loadTexts().then((t) => { if (alive) setTexts(t); }).catch(() => { /* 載入失敗：各章顯待錄，不崩 */ });
+    loadTexts().then((t) => { if (alive) setTexts(t); }, () => { if (alive) setTextsFailed(true); });
     return () => { alive = false; };
   }, []);
+  const textsPending = texts === null && !textsFailed; /* 尚在載入：諸待正文就位之定位到此為止 */
   const textOf = (ch) => (texts && ch && ch.file ? texts[ch.file] : "");
   /* 正文高亮之寫法：繁簡兩試，取本章有命中之一種（照繁體打「雁門」，高亮正文之「雁门」）——
      一章之內只用一種，命中數與目錄所報相合 */
@@ -369,11 +375,11 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
   useEffect(() => {
     if (!sel || restoreScrollTo.current !== sel) return;
     /* 正文懶加載：待該章正文就位再定位，否則頁面尚矮、scrollTo 夠不到目標處 */
-    if (byPath[sel]?.ch.file && texts === null) return;
+    if (byPath[sel]?.ch.file && textsPending) return;
     restoreScrollTo.current = null;
     const s = readSavedScroll();
     if (s && s.path === sel) window.scrollTo({ top: s.y, behavior: "auto" });
-  }, [sel, texts]);
+  }, [sel, textsPending]);
   /* 滾動處保存：節流 200ms；離章（清理時窗口尚在舊章滾動處）與 pagehide 各補記一次 */
   useEffect(() => {
     if (!sel) return;
@@ -440,11 +446,11 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
      同章同詞再自全站檢索點入，諸值皆不變——seek 由有轉無（onSeeked 清落點）亦觸發一次 */
   useEffect(() => {
     if (!pendingScroll.current) return;
-    if (texts === null && byPath[sel]?.ch.file) return;
+    if (textsPending && byPath[sel]?.ch.file) return;
     pendingScroll.current = false;
     if (firstHitEl.current) firstHitEl.current.scrollIntoView({ behavior: "smooth", block: "center" });
     else window.scrollTo({ top: 0, behavior: "smooth" }); /* 僅標題命中、正文無命中：回頁首 */
-  }, [sel, texts, q, seek]);
+  }, [sel, textsPending, q, seek]);
 
   /* 全文檢索：字面匹配、不作正則，規矩同全站檢索（match.js：不分大小寫、不計變音符、繁簡兩試）；
      每篇章至多一條結果，一章之內只取一種寫法（hitRanges 取首個有命中者），與正文高亮相合 */
@@ -540,6 +546,9 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
   /* 檢索結果視圖：一篇章一條——所屬書目／卷、篇題、含關鍵詞之正文摘要；點入滾至首個命中處 */
   const SearchResults = () => (
     <div>
+      {textsFailed && (
+        <div role="status" style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.ink, padding: "10px 8px 2px", letterSpacing: "0.1em", lineHeight: 1.7 }}>{t("正文未能載入，只查了題名。")}</div>
+      )}
       {results.length === 0 && (
         <div style={{ fontFamily: "HuiwenMingChao", fontSize: 12, color: T.faint, padding: "14px 8px", letterSpacing: "0.1em" }}>{t("未檢得相關文字")}</div>
       )}
@@ -684,7 +693,15 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
                       </div>
                     )}
                   </div>
-                  {cur.ch.file && texts === null
+                  {cur.ch.file && textsFailed
+                    ? <div role="alert" style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.muted, padding: "36px 0", letterSpacing: "0.15em", lineHeight: 2 }}>
+                        {t("正文未能載入。")}
+                        <button type="button" onClick={() => window.location.reload()}
+                          style={{ marginLeft: 12, fontFamily: "JingHuaLaoSong", fontSize: 13, letterSpacing: "0.1em", color: pal.ink, background: "none", border: `1px solid ${pal.line}`, borderRadius: 3, padding: "2px 10px", cursor: "pointer" }}>
+                          {t("重新載入頁面")}
+                        </button>
+                      </div>
+                    : cur.ch.file && texts === null
                     ? <div style={{ fontFamily: "JingHuaLaoSong", fontSize: 14, color: pal.faint, padding: "36px 0", letterSpacing: "0.15em" }}>{t("正文載入中……")}</div>
                     : <Body text={textOf(cur.ch)} hl={hlOf(textOf(cur.ch))} firstHitRef={firstHitEl} onCharClick={openPeek} activeCharKey={peek ? peek.key : null}
                         fs={FS_STEPS[view.fs]} lh={LH_STEPS[view.lh][1]} pal={pal} />}
