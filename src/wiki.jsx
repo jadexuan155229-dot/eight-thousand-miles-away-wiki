@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef, useCallback, lazy, Suspense } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { fc as fcRaw, CHARACTERS, EVENTS, RELATIONS, LOC_COORDS, TRACK_SUPPLEMENTS, GEO_BASE } from "./wiki-data";
 import { serif, T, SKINS, tone, toneText, useSkin, useNarrow, useCoarsePointer, getSkin, dimAccent, BAND_DARK } from "./theme";
 
@@ -19,6 +19,9 @@ import Echoes from "./echoes";
 import Posts from "./posts";
 import About from "./about";
 import Fanli from "./fanli";
+/* 全站檢索框隨主包（gzip 約 5 KB）：曾另成一塊、閒時預取，但頁面初開即按 / 而塊未到時，框未掛上、
+   其間所打之字無處可落——為省 5 KB 留此邊角不值。文庫正文（115 KB）仍待首次打開時方拉 */
+import SiteSearch from "./site-search";
 import { grantsOf, tenureFac, tenuresOf } from "./posts-data";
 import { tenureTitleTx, tenureNoteTx, grantTx, tenureSpanText } from "./i18n/posts-content";
 import { SHOCKS, ECHOES } from "./echoes-data";
@@ -117,10 +120,6 @@ const CENTERS_META = [
   { id: "chengkai", tag: "天策線" },
 ];
 const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
-/* 全站檢索框另成一塊（索引、比對、框之組件，約 14 KB），不入首屏主包；頁面閒時預取（見 Wiki），
-   按 / 時塊已在手，不等網路 */
-const loadSiteSearch = () => import("./site-search");
-const SiteSearch = lazy(loadSiteSearch);
 /* 英译覆蓋數：覆蓋層為靜態模組，算一次即可（頁頭英文版說明用） */
 /* 英文版說明之計數：英文大表懶載（en-bulk.js），故不在模塊載入時算；英文界面繪製時表已載，算一次存起 */
 let coverageMemo = null;
@@ -3357,14 +3356,6 @@ export default function Wiki({ onOpenLanding, landingOpen }) {
   const setOpenChar = (c) => nav({ char: c ? c.id : null });
   /* 全站檢索（site-search.jsx）：頁頭鈕、/ 鍵、Ctrl／Cmd K 打開；定場在上時不應 */
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchMounted, setSearchMounted] = useState(false); /* 首次打開後常駐（框內所查、文庫正文留著，再開即在） */
-  useEffect(() => { if (searchOpen) setSearchMounted(true); }, [searchOpen]);
-  useEffect(() => {
-    const go = () => { loadSiteSearch().catch(() => { /* 預取失敗：打開時再拉 */ }); };
-    const idle = typeof window.requestIdleCallback === "function";
-    const id = idle ? window.requestIdleCallback(go, { timeout: 5000 }) : setTimeout(go, 2500);
-    return () => (idle ? window.cancelIdleCallback(id) : clearTimeout(id));
-  }, []);
   /* 檢索之落點：年表某事、輿圖某地、文庫某章之命中處——不入路由（事件無穩定 id，檢索本是浮層），
      由各頁收到後定位、回報 onFocused 清掉，免日後再進該頁又跳一次 */
   const [jump, setJump] = useState(null);
@@ -3541,11 +3532,8 @@ export default function Wiki({ onOpenLanding, landingOpen }) {
           seek={jump?.kind === "text" ? jump : null} onSeeked={jumpDone} />}
       </main>
 
-      {(searchOpen || searchMounted) && (
-        <Suspense fallback={null}>
-          <SiteSearch open={searchOpen} onClose={() => setSearchOpen(false)} onGo={goSearch} />
-        </Suspense>
-      )}
+      {/* 常駐（關時渲染為空）：框內所查、已拉之文庫正文留著，再開即在 */}
+      <SiteSearch open={searchOpen} onClose={() => setSearchOpen(false)} onGo={goSearch} />
       <DetailPanel c={openChar} onClose={() => setOpenChar(null)} onOpenChar={setOpenChar}
         onOpenNovel={(p) => nav({ tab: "novel", novelPath: p })}
         onOpenEcho={(shock, who) => nav({ tab: "echoes", char: null, shock, who })}
