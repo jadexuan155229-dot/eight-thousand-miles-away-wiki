@@ -18,7 +18,8 @@ import { groupTx } from "./i18n/posts-content";
 import { eraOfYM, englishEraOf, CN_MONTH } from "./era";
 import { loadTexts } from "./novel";
 import { CHARACTERS } from "./wiki-data";
-import { siteSearch, hitRanges, GROUPS } from "./search";
+import { siteSearch, GROUPS } from "./search";
+import { hitRanges } from "./match";
 
 const byId = Object.fromEntries(CHARACTERS.map((c) => [c.id, c]));
 /* 各類先出幾條；其餘收在「展開其餘 n 條」 */

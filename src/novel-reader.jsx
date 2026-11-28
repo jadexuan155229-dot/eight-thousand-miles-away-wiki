@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from "react";
 import { serif, T, tone, toneText, useSkin, useNarrow } from "./theme";
 import { NOVELS, FLAT, loadTexts } from "./novel";
-import { zhVariants, zhIncludes } from "./i18n/t2s";
+import { queryKeys, hasKeys, hitRanges, snippetAt } from "./match";
 import { CHAR_TERMS, scanCharTerms } from "./novel/char-terms";
 import { fc as fcRaw, CHARACTERS } from "./wiki-data";
 import { useLocale, useT } from "./i18n/locale";
@@ -83,7 +83,8 @@ function splitCharTerms(s, keyBase, onCharClick, activeKey) {
 }
 
 /* 正文體例：一行一段，段首縮進兩字；空行為節間距
-   hl：檢索關鍵詞——命中處以淺橘紅半透明底標出（拆分文本節點渲染，不用 innerHTML）；
+   hl：檢索詞之寫法（match.js queryKeys 所出、本章取定之一種，或 null）——命中處以淺橘紅半透明底標出
+     （拆分文本節點渲染，不用 innerHTML）；比對規矩同全站檢索（不分大小寫、不計變音符、繁簡兩試）；
    firstHitRef：全文首個命中 span 之 ref，供檢索結果點入後平滑滾動定位 */
 function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh = 2.1, pal = T }) {
   const t = useT();
@@ -94,22 +95,22 @@ function Body({ text, hl, firstHitRef, onCharClick, activeCharKey, fs = 15.5, lh
   const out = [];
   let gap = false;
   let firstHit = true;
-  const kl = hl ? hl.toLowerCase() : "";
   text.split("\n").forEach((raw, i) => {
     const l = raw.trim();
     if (!l) { gap = true; return; }
     let content = splitCharTerms(l, i, onCharClick, activeCharKey);
-    if (kl && l.toLowerCase().includes(kl)) {
-      const ll = l.toLowerCase(), seg = [];
-      let at = 0, p;
-      while ((p = ll.indexOf(kl, at)) !== -1) {
+    const rs = hl ? hitRanges(l, hl) : [];
+    if (rs.length) {
+      const seg = [];
+      let at = 0;
+      for (const [p, e] of rs) {
         if (p > at) seg.push(splitCharTerms(l.slice(at, p), `${i}:${at}`, onCharClick, activeCharKey));
         seg.push(
           <span key={p} ref={firstHit ? firstHitRef : undefined}
-            style={{ background: T.hit, borderRadius: 2 }}>{l.slice(p, p + kl.length)}</span>
+            style={{ background: T.hit, borderRadius: 2 }}>{l.slice(p, e)}</span>
         );
         firstHit = false;
-        at = p + kl.length;
+        at = e;
       }
       if (at < l.length) seg.push(splitCharTerms(l.slice(at), `${i}:${at}`, onCharClick, activeCharKey));
       content = seg;
@@ -280,12 +281,13 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
     return () => { alive = false; };
   }, []);
   const textOf = (ch) => (texts && ch && ch.file ? texts[ch.file] : "");
-  /* 正文高亮之詞：繁簡兩試，取本章有命中之寫法（照繁體打「雁門」，高亮正文之「雁门」）；無命中則原樣 */
+  /* 正文高亮之寫法：繁簡兩試，取本章有命中之一種（照繁體打「雁門」，高亮正文之「雁门」）——
+     一章之內只用一種，命中數與目錄所報相合 */
   const hlOf = (text) => {
-    const k = q.trim();
-    if (!k) return null;
-    const tl = (text || "").toLowerCase();
-    return zhVariants(k).find((v) => tl.includes(v.toLowerCase())) || k;
+    const keys = queryKeys(q);
+    if (keys.length === 0) return null;
+    const k = keys.find((x) => hasKeys(text, [x]));
+    return k ? [k] : null;
   };
   /* 章節由路由派生（#/novel/…，見 router.js）；壞路徑同無章 */
   const sel = path && byPath[path] ? path : null;
@@ -444,32 +446,22 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
     else window.scrollTo({ top: 0, behavior: "smooth" }); /* 僅標題命中、正文無命中：回頁首 */
   }, [sel, texts, q, seek]);
 
-  /* 全文檢索：字面匹配、不分英文大小寫、不作正則；每篇章至多一條結果 */
+  /* 全文檢索：字面匹配、不作正則，規矩同全站檢索（match.js：不分大小寫、不計變音符、繁簡兩試）；
+     每篇章至多一條結果，一章之內只取一種寫法（hitRanges 取首個有命中者），與正文高亮相合 */
   const results = useMemo(() => {
-    const k = q.trim();
-    if (!k) return [];
-    const kls = zhVariants(k).map((v) => v.toLowerCase()); /* 繁簡兩試（見 i18n/t2s.js）：原字在前 */
+    const keys = queryKeys(q);
+    if (keys.length === 0) return [];
     const out = [];
     for (const f of FLAT) {
       /* 題名：中文原題照查；英文界面另查英文題名（Climbing the Tower、Opening、Chapter 1） */
       const titles = [f.novel.tag, f.novel.title, f.group && f.group.title, f.ch.title].filter(Boolean);
-      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => kls.some((kl) => t.toLowerCase().includes(kl)));
+      const titleHit = (en ? [...titles, ...titles.map(nt)] : titles).some((t) => hasKeys(t, keys));
       const text = (texts && f.ch.file && texts[f.ch.file]) || "";
-      const tl = text.toLowerCase();
-      const kl = kls.find((v) => tl.includes(v)) || kls[0]; /* 一章之內取有命中之寫法 */
-      let n = 0, first = -1, at = 0, p;
-      while ((p = tl.indexOf(kl, at)) !== -1) { if (first < 0) first = p; n++; at = p + kl.length; }
-      if (!titleHit && n === 0) continue;
-      let snip = null;
-      if (first >= 0) { /* 摘要：命中前後各截約 28 字，截斷處以省略號示之 */
-        const s = Math.max(0, first - 28), e = Math.min(text.length, first + kl.length + 28);
-        snip = {
-          pre: (s > 0 ? "…" : "") + text.slice(s, first).replace(/\s+/g, " "),
-          hit: text.slice(first, first + kl.length),
-          post: text.slice(first + kl.length, e).replace(/\s+/g, " ") + (e < text.length ? "…" : ""),
-        };
-      }
-      out.push({ f, n, snip });
+      const rs = hitRanges(text, keys);
+      if (!titleHit && rs.length === 0) continue;
+      /* 摘要：命中前後各截約 28 字，截斷處以省略號示之 */
+      const snip = rs.length ? snippetAt(text, rs[0][0], rs[0][1], 28, 28) : null;
+      out.push({ f, n: rs.length, snip });
     }
     return out;
   }, [q, texts, en]); // eslint-disable-line react-hooks/exhaustive-deps -- nt 隨 locale，en 已列
@@ -503,7 +495,8 @@ export default function NovelReader({ path, onNav, seek, onSeeked }) {
 
   const Tree = () => {
     const k = q.trim(); /* 檢索中：命中項與其必要上級保留；命中之上級則子項全示；展開態強制打開、原折疊狀態不動 */
-    const has = zhIncludes(k); /* 繁簡兩試 */
+    const keys = queryKeys(k);
+    const has = (str) => hasKeys(str, keys); /* 規矩同正文檢索（match.js） */
     return (
     <div>
       {NOVELS.map((nv) => {

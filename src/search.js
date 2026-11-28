@@ -1,10 +1,8 @@
 /* ============================================================
    全站檢索 · 索引與比對 (search.js) —— 純函數，無 React
    六類：人物、事件、地點、餘波（震源與各行）、編制（按組）、文庫（按章）。
-   比對：字面包含，不作分詞、不作正則；
-     - 繁簡兩試（查詢逐字轉簡，見 i18n/t2s.js）；
-     - 拉丁字母不分大小寫、不計變音符（Lu Dingyi 中 Lü Dingyi），拼音 lv 作 lü（同 enMatcher）；
-     - 英文界面另查英文譯名、譯題、地名、年號，中文原文照查。
+   比對之規矩（繁簡兩試、拉丁字母去大小寫與變音符）見 match.js，與文庫閱讀器同用一套；
+   英文界面另查英文譯名、譯題、地名、年號，中文原文照查。
    排序：每類之內先「名」後「文」——w0 名號、事名、地名、題名；w1 出身、地點、年號、要旨；
      w2 檔案正文、軼事、余波各行之注。查詢與名號全同者居首。同級者依資料原序（事件依年月）。
    索引按語言建一次、存於模組（數據靜態）；文庫正文懶載，另按正文映射建一次。
@@ -17,37 +15,7 @@ import { eraOfYM, englishEraOf, sortEvents } from "./era";
 import { charEn, charName, profileRow, listField, nameItems, nameItemsEn, placeName, eventTitle, novelTitle } from "./i18n/content";
 import { shockTitle, shockGist, stanceText, stanceNoteText, arcNoteText, modeText } from "./i18n/echoes-tx";
 import { groupTx, postLabelTx } from "./i18n/posts-content";
-import { zhVariants } from "./i18n/t2s";
-
-/* ---------- 折疊：小寫、去變音符、曲撇號作直撇號 ----------
-   比對在折疊後之串上做，高亮要回到原串：逐碼元折疊並記下每個折疊碼元出自原串何處（map）。
-   純漢字之串無可折疊者 map 為 null，即恆等，免為數十萬字正文白建索引 */
-const LATIN_FOLD = /[A-Z\u00C0-\u024F\u1E00-\u1EFF\u2018\u2019\u02BC]/;
-const MARKS = /\p{M}/u;
-const needsFold = (s) => LATIN_FOLD.test(s) || MARKS.test(s);
-const foldUnit = (c) => c.normalize("NFD").replace(/\p{M}/gu, "").replace(/[\u2018\u2019\u02bc]/g, "'").toLowerCase();
-function fold(s) {
-  if (!needsFold(s)) return { f: s, map: null };
-  let f = "";
-  const map = [];
-  for (let i = 0; i < s.length; i++) {
-    const g = foldUnit(s[i]);
-    for (let j = 0; j < g.length; j++) { f += g[j]; map.push(i); }
-  }
-  return { f, map };
-}
-/* 折疊座標 → 原串座標 [起, 迄) */
-const span = (fld, a, len) => (fld.map ? [fld.map[a], fld.map[a + len - 1] + 1] : [a, a + len]);
-
-/* 查詢諸寫法（已折疊、去重）：原字、轉簡；拼音 lv → lu */
-export function queryKeys(q) {
-  const out = [];
-  for (const v of zhVariants(q.trim())) {
-    const k = fold(v).f.replace(/\b([ln])v/g, "$1u");
-    if (k && !out.includes(k)) out.push(k);
-  }
-  return out;
-}
+import { fold, span, queryKeys, snippetAt } from "./match";
 
 /* 一欄：原文、折疊、級別、標籤（摘錄前所注之欄名，界面鍵）、是否即標題 */
 function field(out, text, w, lab = null, title = false) {
@@ -191,26 +159,10 @@ function matchDoc(d, keys) {
   return best;
 }
 
-/* 原串上諸命中處 [[起, 迄), …]（標題高亮用） */
-export function hitRanges(text, keys) {
-  if (!text) return [];
-  const fld = { ...fold(text) };
-  for (const k of keys) {
-    const out = [];
-    let at = 0, p;
-    while ((p = fld.f.indexOf(k, at)) !== -1) { out.push(span(fld, p, k.length)); at = p + k.length; }
-    if (out.length) return out;
-  }
-  return [];
-}
-
-/* 摘錄：命中前後各截若干字，空白併作一格，截處示省略號 */
-function snippet(fld, a, len, pad = 22) {
+/* 摘錄：命中處（折疊座標）換回原串，前後各截若干字；注所出之欄 */
+function snippet(fld, a, len) {
   const [s0, e0] = span(fld, a, len);
-  const t = fld.t;
-  const s = Math.max(0, s0 - pad), e = Math.min(t.length, e0 + pad + 8);
-  const clean = (x) => x.replace(/\s+/g, " ");
-  return { pre: (s > 0 ? "…" : "") + clean(t.slice(s, s0)), hit: t.slice(s0, e0), post: clean(t.slice(e0, e)) + (e < t.length ? "…" : ""), lab: fld.lab };
+  return { ...snippetAt(fld.t, s0, e0), lab: fld.lab };
 }
 
 const countIn = (f, k) => { let n = 0, at = 0, p; while ((p = f.indexOf(k, at)) !== -1) { n++; at = p + k.length; } return n; };
